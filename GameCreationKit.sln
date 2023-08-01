@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameCreationKit", "GameCreationKit\GameCreationKit.vcxproj", "{3603BFE9-3582-48B8-B7CF-B28EED9C378E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Compiler", "Compiler\Compiler.vcxproj", "{ED117DAF-7B4C-4399-AA9C-BAA6F995A518}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6974978B-75AB-4D24-BC54-1D5CEFAC0B43}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{D94C0307-BE74-4A6D-AEEE-913F9E196898}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CompilerTests", "CompilerTests\CompilerTests.vcxproj", "{1E775FCF-353B-49F5-B5E5-D68EEEC2459F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3603BFE9-3582-48B8-B7CF-B28EED9C378E}.Debug|x64.ActiveCfg = Debug|x64
+		{3603BFE9-3582-48B8-B7CF-B28EED9C378E}.Debug|x64.Build.0 = Debug|x64
+		{3603BFE9-3582-48B8-B7CF-B28EED9C378E}.Release|x64.ActiveCfg = Release|x64
+		{3603BFE9-3582-48B8-B7CF-B28EED9C378E}.Release|x64.Build.0 = Release|x64
+		{ED117DAF-7B4C-4399-AA9C-BAA6F995A518}.Debug|x64.ActiveCfg = Debug|x64
+		{ED117DAF-7B4C-4399-AA9C-BAA6F995A518}.Debug|x64.Build.0 = Debug|x64
+		{ED117DAF-7B4C-4399-AA9C-BAA6F995A518}.Release|x64.ActiveCfg = Release|x64
+		{ED117DAF-7B4C-4399-AA9C-BAA6F995A518}.Release|x64.Build.0 = Release|x64
+		{1E775FCF-353B-49F5-B5E5-D68EEEC2459F}.Debug|x64.ActiveCfg = Debug|x64
+		{1E775FCF-353B-49F5-B5E5-D68EEEC2459F}.Debug|x64.Build.0 = Debug|x64
+		{1E775FCF-353B-49F5-B5E5-D68EEEC2459F}.Release|x64.ActiveCfg = Release|x64
+		{1E775FCF-353B-49F5-B5E5-D68EEEC2459F}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3603BFE9-3582-48B8-B7CF-B28EED9C378E} = {D94C0307-BE74-4A6D-AEEE-913F9E196898}
+		{ED117DAF-7B4C-4399-AA9C-BAA6F995A518} = {D94C0307-BE74-4A6D-AEEE-913F9E196898}
+		{1E775FCF-353B-49F5-B5E5-D68EEEC2459F} = {6974978B-75AB-4D24-BC54-1D5CEFAC0B43}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E593283B-C065-428C-9D9B-9D66363C3215}
+	EndGlobalSection
+EndGlobal
