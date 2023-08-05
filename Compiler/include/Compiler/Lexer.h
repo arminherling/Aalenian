@@ -20,6 +20,7 @@ private:
     void AdvanceCurrentIndexAndResetLine();
 
     Token LexIdentifier();
+    Token LexNumber();
 
     Token CreateTokenAndAdvance(TokenKind kind, const QString& lexeme);
 

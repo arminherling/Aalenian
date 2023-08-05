@@ -107,6 +107,33 @@ private slots:
         QCOMPARE(token.kind, TokenKind::Identifier);
         QCOMPARE(token.lexeme, expectedLexeme);
     }
+
+    void Numbers_data()
+    {
+        QTest::addColumn<QString>("input");
+        QTest::addColumn<QString>("expectedLexeme");
+
+        QTest::newRow("0") << "0" << "0";
+        QTest::newRow("  1234 ") << "  1234 " << "1234";
+        QTest::newRow("12.") << "12." << "12";
+        QTest::newRow("12.34") << "12.34" << "12.34";
+        QTest::newRow("12.34. ") << "12.34. " << "12.34";
+        QTest::newRow(" 1234567890") << " 1234567890" << "1234567890";
+    }
+    
+    void Numbers()
+    {
+        QFETCH(QString, input);
+        QFETCH(QString, expectedLexeme);
+
+        auto source = SourceText(input);
+        auto lexer = Lexer(source);
+
+        auto token = lexer.NextToken();
+
+        QCOMPARE(token.kind, TokenKind::Number);
+        QCOMPARE(token.lexeme, expectedLexeme);
+    }
 };
 
 QTEST_MAIN(LexerTests)

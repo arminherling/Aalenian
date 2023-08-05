@@ -15,6 +15,7 @@ enum class TokenKind
     CloseBracket,
 
     Identifier,
+    Number,
 
     Unknown,
     EndOfFile

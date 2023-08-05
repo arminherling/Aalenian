@@ -60,9 +60,13 @@ Token Lexer::NextToken()
                 return CreateTokenAndAdvance(TokenKind::EndOfFile, "\0");
             default:
             {
-                if (current.unicode() == '_' || current.isLetter())
+                if (current == '_' || current.isLetter())
                 {
                     return LexIdentifier();
+                }
+                else if (current.isNumber())
+                {
+                    return LexNumber();
                 }
 
                 auto token = CreateTokenAndAdvance(TokenKind::Unknown, current);
@@ -108,7 +112,7 @@ Token Lexer::LexIdentifier()
     auto start = m_index;
     
     auto current = PeekCurrentChar();
-    while (current.unicode() == '_' || current.isLetterOrNumber())
+    while (current == '_' || current.isLetterOrNumber())
     {
         AdvanceCurrentIndex();
         current = PeekCurrentChar();
@@ -117,6 +121,34 @@ Token Lexer::LexIdentifier()
     auto length = m_index - start;
     auto lexeme = m_source.text.sliced(start, length);
     return Token(TokenKind::Identifier, lexeme);
+}
+
+Token Lexer::LexNumber()
+{
+    auto start = m_index;
+
+    auto current = PeekCurrentChar();
+    while (current.isNumber())
+    {
+        AdvanceCurrentIndex();
+        current = PeekCurrentChar();
+    }
+
+    if (current == '.' && PeekNextChar().isNumber())
+    {
+        AdvanceCurrentIndex();
+        current = PeekCurrentChar();
+
+        while (current.isNumber())
+        {
+            AdvanceCurrentIndex();
+            current = PeekCurrentChar();
+        }
+    }
+
+    auto length = m_index - start;
+    auto lexeme = m_source.text.sliced(start, length);
+    return Token(TokenKind::Number, lexeme);
 }
 
 Token Lexer::CreateTokenAndAdvance(TokenKind kind, const QString& lexeme)
