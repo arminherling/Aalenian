@@ -13,6 +13,9 @@ enum class TokenKind
     CloseParenthesis,
     OpenBracket,
     CloseBracket,
+
+    Identifier,
+
     Unknown,
     EndOfFile
 };

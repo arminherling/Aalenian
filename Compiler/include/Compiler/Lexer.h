@@ -19,6 +19,8 @@ private:
     void AdvanceCurrentIndex();
     void AdvanceCurrentIndexAndResetLine();
 
+    Token LexIdentifier();
+
     Token CreateTokenAndAdvance(TokenKind kind, const QString& lexeme);
 
     SourceText m_source;

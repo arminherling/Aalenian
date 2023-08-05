@@ -60,6 +60,11 @@ Token Lexer::NextToken()
                 return CreateTokenAndAdvance(TokenKind::EndOfFile, "\0");
             default:
             {
+                if (current.unicode() == '_' || current.isLetter())
+                {
+                    return LexIdentifier();
+                }
+
                 auto token = CreateTokenAndAdvance(TokenKind::Unknown, current);
                 // TODO diagnostics
                 return token;
@@ -98,9 +103,25 @@ void Lexer::AdvanceCurrentIndexAndResetLine()
     m_lineNumber++;
 }
 
+Token Lexer::LexIdentifier()
+{
+    auto start = m_index;
+    
+    auto current = PeekCurrentChar();
+    while (current.unicode() == '_' || current.isLetterOrNumber())
+    {
+        AdvanceCurrentIndex();
+        current = PeekCurrentChar();
+    }
+
+    auto length = m_index - start;
+    auto lexeme = m_source.text.sliced(start, length);
+    return Token(TokenKind::Identifier, lexeme);
+}
+
 Token Lexer::CreateTokenAndAdvance(TokenKind kind, const QString& lexeme)
 {
     m_index += lexeme.length();
-    
+
     return Token(kind, lexeme);
 }

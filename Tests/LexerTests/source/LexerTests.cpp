@@ -56,10 +56,10 @@ private slots:
         QTest::newRow("") << "";
         QTest::newRow(" ") << " ";
         QTest::newRow("     ") << "     ";
-        QTest::newRow("t") << "\t";
-        QTest::newRow("r") << "\r";
-        QTest::newRow("n") << "\n";
-        QTest::newRow("rn") << "\r\n";
+        QTest::newRow("\\t") << "\t";
+        QTest::newRow("\\r") << "\r";
+        QTest::newRow("\\n") << "\n";
+        QTest::newRow("\\r\\n") << "\r\n";
     }
 
     void Lexer_Ignores_Whitespaces()
@@ -72,6 +72,40 @@ private slots:
         auto token = lexer.NextToken();
 
         QCOMPARE(token.kind, TokenKind::EndOfFile);
+    }
+
+    void Lexer_Lexes_Identifiers_data()
+    {
+        QTest::addColumn<QString>("input");
+        QTest::addColumn<QString>("expectedLexeme");
+
+        QTest::newRow("x") << "x" << "x";
+        QTest::newRow("foo") << "foo" << "foo";
+        QTest::newRow(" bar ") << " bar " << "bar";
+        QTest::newRow("i32") << "i32" << "i32";
+        QTest::newRow("use") << "use" << "use";
+        QTest::newRow("enum") << "enum" << "enum";
+        QTest::newRow("class") << "class" << "class";
+        QTest::newRow("define") << "define" << "define";
+        QTest::newRow("\\n return") << "\nreturn" << "return";
+        QTest::newRow("_") << "_" << "_";
+        QTest::newRow("_name") << " _name" << "_name";
+        QTest::newRow("m_index") << "m_index" << "m_index";
+        QTest::newRow("_10") << "_10" << "_10";
+    }
+    
+    void Lexer_Lexes_Identifiers()
+    {
+        QFETCH(QString, input);
+        QFETCH(QString, expectedLexeme);
+
+        auto source = SourceText(input);
+        auto lexer = Lexer(source);
+
+        auto token = lexer.NextToken();
+
+        QCOMPARE(token.kind, TokenKind::Identifier);
+        QCOMPARE(token.lexeme, expectedLexeme);
     }
 };
 
