@@ -134,6 +134,56 @@ private slots:
         QCOMPARE(token.kind, TokenKind::Number);
         QCOMPARE(token.lexeme, expectedLexeme);
     }
+
+    void Strings_data()
+    {
+        QTest::addColumn<QString>("input");
+        QTest::addColumn<QString>("expectedLexeme");
+
+        QTest::newRow(" \"\" ") << " \"\" " << "\"\"";
+        QTest::newRow("  \"1234\" ") << "  \"1234\" " << "\"1234\"";
+        QTest::newRow("\"string with whitespace\" ") << "\"string with whitespace\" " << "\"string with whitespace\"";
+        QTest::newRow(" \"1234567890\"") << " \"1234567890\"" << "\"1234567890\"";
+    }
+
+    void Strings()
+    {
+        QFETCH(QString, input);
+        QFETCH(QString, expectedLexeme);
+
+        auto source = SourceText(input);
+        auto lexer = Lexer(source);
+
+        auto token = lexer.NextToken();
+
+        QCOMPARE(token.kind, TokenKind::String);
+        QCOMPARE(token.lexeme, expectedLexeme);
+    }
+
+    void UnterminatedStrings_data()
+    {
+        QTest::addColumn<QString>("input");
+        QTest::addColumn<QString>("expectedLexeme");
+
+        QTest::newRow(" \" ") << " \" " << "\" ";
+        QTest::newRow("  \"1234 ") << "  \"1234 " << "\"1234 ";
+        QTest::newRow("\"string with whitespace ") << "\"string with whitespace " << "\"string with whitespace ";
+        QTest::newRow(" \"1234567890") << " \"1234567890" << "\"1234567890";
+    }
+
+    void UnterminatedStrings()
+    {
+        QFETCH(QString, input);
+        QFETCH(QString, expectedLexeme);
+
+        auto source = SourceText(input);
+        auto lexer = Lexer(source);
+
+        auto token = lexer.NextToken();
+
+        QCOMPARE(token.kind, TokenKind::Error);
+        QCOMPARE(token.lexeme, expectedLexeme);
+    }
 };
 
 QTEST_MAIN(LexerTests)

@@ -21,6 +21,7 @@ private:
 
     Token LexIdentifier();
     Token LexNumber();
+    Token LexString();
 
     Token CreateTokenAndAdvance(TokenKind kind, const QString& lexeme);
 

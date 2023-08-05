@@ -58,6 +58,8 @@ Token Lexer::NextToken()
                 return CreateTokenAndAdvance(TokenKind::CloseBracket, "}");
             case '\0':
                 return CreateTokenAndAdvance(TokenKind::EndOfFile, "\0");
+            case '\"':
+                return LexString();
             default:
             {
                 if (current == '_' || current.isLetter())
@@ -110,13 +112,8 @@ void Lexer::AdvanceCurrentIndexAndResetLine()
 Token Lexer::LexIdentifier()
 {
     auto start = m_index;
-    
-    auto current = PeekCurrentChar();
-    while (current == '_' || current.isLetterOrNumber())
-    {
+    while (PeekCurrentChar() == '_' || PeekCurrentChar().isLetterOrNumber())
         AdvanceCurrentIndex();
-        current = PeekCurrentChar();
-    }
 
     auto length = m_index - start;
     auto lexeme = m_source.text.sliced(start, length);
@@ -127,28 +124,47 @@ Token Lexer::LexNumber()
 {
     auto start = m_index;
 
-    auto current = PeekCurrentChar();
-    while (current.isNumber())
+    while (PeekCurrentChar().isNumber())
+        AdvanceCurrentIndex();
+
+    if (PeekCurrentChar() == '.' && PeekNextChar().isNumber())
     {
         AdvanceCurrentIndex();
-        current = PeekCurrentChar();
-    }
 
-    if (current == '.' && PeekNextChar().isNumber())
-    {
-        AdvanceCurrentIndex();
-        current = PeekCurrentChar();
-
-        while (current.isNumber())
-        {
+        while (PeekCurrentChar().isNumber())
             AdvanceCurrentIndex();
-            current = PeekCurrentChar();
-        }
     }
 
     auto length = m_index - start;
     auto lexeme = m_source.text.sliced(start, length);
     return Token(TokenKind::Number, lexeme);
+}
+
+Token Lexer::LexString()
+{
+    auto start = m_index;
+
+    // Consume opening quotation mark
+    AdvanceCurrentIndex();
+    while (PeekCurrentChar() != '\"' && PeekCurrentChar() != '\0')
+        AdvanceCurrentIndex();
+    
+    if (PeekCurrentChar() == '\"')
+    {
+        // Consume closing quotation mark
+        AdvanceCurrentIndex();
+
+        auto length = m_index - start;
+        auto lexeme = m_source.text.sliced(start, length);
+        return Token(TokenKind::String, lexeme);
+    }
+    else
+    {
+        // TODO diagnostics
+        auto length = m_index - start;
+        auto lexeme = m_source.text.sliced(start, length);
+        return Token(TokenKind::Error, lexeme);
+    }
 }
 
 Token Lexer::CreateTokenAndAdvance(TokenKind kind, const QString& lexeme)

@@ -16,7 +16,9 @@ enum class TokenKind
 
     Identifier,
     Number,
+    String,
 
+    Error,
     Unknown,
     EndOfFile
 };
