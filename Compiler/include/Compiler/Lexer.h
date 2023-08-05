@@ -23,6 +23,7 @@ private:
     Token LexNumber();
     Token LexString();
 
+    Token CreateLexemeAndToken(TokenKind kind, int startIndex);
     Token CreateTokenAndAdvance(TokenKind kind, const QString& lexeme);
 
     SourceText m_source;
