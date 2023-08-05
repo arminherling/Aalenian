@@ -122,14 +122,14 @@ Token Lexer::LexNumber()
 {
     auto start = m_index;
 
-    while (PeekCurrentChar().isNumber())
+    while (PeekCurrentChar().isNumber() || (PeekCurrentChar() == '_' && PeekNextChar() != '.'))
         AdvanceCurrentIndex();
 
     if (PeekCurrentChar() == '.' && PeekNextChar().isNumber())
     {
         AdvanceCurrentIndex();
 
-        while (PeekCurrentChar().isNumber())
+        while (PeekCurrentChar().isNumber() || PeekCurrentChar() == '_')
             AdvanceCurrentIndex();
     }
 
