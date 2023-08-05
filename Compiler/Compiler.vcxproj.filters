@@ -26,12 +26,21 @@
     <ClInclude Include="include\Compiler\SourceText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Compiler\Token.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Compiler\TokenKind.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Lexer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\SourceText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Token.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

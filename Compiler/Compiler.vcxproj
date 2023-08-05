@@ -93,6 +93,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Token.cpp" />
     <ClCompile Include="source\SourceText.cpp" />
     <ClCompile Include="source\Lexer.cpp" />
     <ClInclude Include="include\Compiler\Lexer.h" />
@@ -100,6 +101,8 @@
     <ClInclude Include="include\Compiler\Compiler.h" />
     <ClCompile Include="source\Compiler.cpp" />
     <ClInclude Include="include\Compiler\SourceText.h" />
+    <ClInclude Include="include\Compiler\Token.h" />
+    <ClInclude Include="include\Compiler\TokenKind.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

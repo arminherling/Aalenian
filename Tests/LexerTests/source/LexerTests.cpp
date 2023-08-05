@@ -2,17 +2,51 @@
 
 #include <Compiler/Lexer.h>
 #include <Compiler/SourceText.h>
+#include <Compiler/Token.h>
+#include <Compiler/TokenKind.h>
 
-class LexerTests :public QObject
+class LexerTests : public QObject
 {
     Q_OBJECT
 
 private slots:
+    void Lexer_Lexes_SingleCharacter_data()
+    {
+        QTest::addColumn<QString>("input");
+        QTest::addColumn<TokenKind>("expectedKind");
+        QTest::addColumn<QString>("expectedLexeme");
+
+        QTest::newRow("Plus") << "+" << TokenKind::Plus << "+";
+        QTest::newRow("Minus") << "-" << TokenKind::Minus << "-";
+        QTest::newRow("Star") << "*" << TokenKind::Star << "*";
+        QTest::newRow("Slash") << "/" << TokenKind::Slash << "/";
+
+        QTest::newRow("Dot") << "." << TokenKind::Dot << ".";
+        QTest::newRow("Comma") << "," << TokenKind::Comma << ",";
+        QTest::newRow("Equal") << "=" << TokenKind::Equal << "=";
+
+        QTest::newRow("OpenParenthesis") << "(" << TokenKind::OpenParenthesis << "(";
+        QTest::newRow("CloseParenthesis") << ")" << TokenKind::CloseParenthesis << ")";
+        QTest::newRow("OpenBracket") << "{" << TokenKind::OpenBracket << "{";
+        QTest::newRow("CloseBracket") << "}" << TokenKind::CloseBracket << "}";
+
+        QTest::newRow("Unknown") << "$" << TokenKind::Unknown << "$";
+        QTest::newRow("EOF") << "\0" << TokenKind::EndOfFile << "\0";
+    }
+
     void Lexer_Lexes_SingleCharacter()
     {
-        auto source = new SourceText(QString("+"));
+        QFETCH(QString, input);
+        QFETCH(TokenKind, expectedKind);
+        QFETCH(QString, expectedLexeme);
 
-        QFAIL("test");
+        auto source = SourceText(input);
+        auto lexer = Lexer(source);
+
+        auto token = lexer.NextToken();
+
+        QCOMPARE(token.kind, expectedKind);
+        QCOMPARE(token.lexeme, expectedLexeme);
     }
 };
 
