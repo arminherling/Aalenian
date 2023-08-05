@@ -11,13 +11,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Compiler\compiler_global.h">
+    <ClInclude Include="include\Compiler\CompilerApi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <QtMoc Include="include\Compiler\Compiler.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <ClCompile Include="source\Compiler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClInclude Include="include\Compiler\Lexer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Compiler\Compiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Compiler\SourceText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\Lexer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SourceText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

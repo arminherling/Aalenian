@@ -1,9 +1,8 @@
 #pragma once
-
 #include "CompilerApi.h"
 
-class COMPILER_API Compiler
+class COMPILER_API Lexer
 {
 public:
-    Compiler();
+    Lexer();
 };

@@ -4,10 +4,10 @@
 
 #ifndef BUILD_STATIC
 # if defined(COMPILER_LIB)
-#  define COMPILER_EXPORT Q_DECL_EXPORT
+#  define COMPILER_API Q_DECL_EXPORT
 # else
-#  define COMPILER_EXPORT Q_DECL_IMPORT
+#  define COMPILER_API Q_DECL_IMPORT
 # endif
 #else
-# define COMPILER_EXPORT
+# define COMPILER_API
 #endif

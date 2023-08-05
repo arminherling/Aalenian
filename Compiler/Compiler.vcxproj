@@ -44,8 +44,8 @@
     <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
   </Target>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <OutDir>$(SolutionDir)$(ProjectName)\bin\$(Configuration)-$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)$(ProjectName)\obj\$(Configuration)-$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="Shared" />
@@ -93,9 +93,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\Compiler\compiler_global.h" />
-    <QtMoc Include="include\Compiler\Compiler.h" />
+    <ClCompile Include="source\SourceText.cpp" />
+    <ClCompile Include="source\Lexer.cpp" />
+    <ClInclude Include="include\Compiler\Lexer.h" />
+    <ClInclude Include="include\Compiler\CompilerApi.h" />
+    <ClInclude Include="include\Compiler\Compiler.h" />
     <ClCompile Include="source\Compiler.cpp" />
+    <ClInclude Include="include\Compiler\SourceText.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
