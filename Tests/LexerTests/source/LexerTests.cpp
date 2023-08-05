@@ -10,7 +10,7 @@ class LexerTests : public QObject
     Q_OBJECT
 
 private slots:
-    void Lexer_Lexes_SingleCharacter_data()
+    void SingleCharacter_data()
     {
         QTest::addColumn<QString>("input");
         QTest::addColumn<TokenKind>("expectedKind");
@@ -34,7 +34,7 @@ private slots:
         QTest::newRow("EOF") << "\0" << TokenKind::EndOfFile << "\0";
     }
 
-    void Lexer_Lexes_SingleCharacter()
+    void SingleCharacter()
     {
         QFETCH(QString, input);
         QFETCH(TokenKind, expectedKind);
@@ -49,7 +49,7 @@ private slots:
         QCOMPARE(token.lexeme, expectedLexeme);
     }
 
-    void Lexer_Ignores_Whitespaces_data()
+    void IgnoresWhitespaces_data()
     {
         QTest::addColumn<QString>("input");
 
@@ -62,7 +62,7 @@ private slots:
         QTest::newRow("\\r\\n") << "\r\n";
     }
 
-    void Lexer_Ignores_Whitespaces()
+    void IgnoresWhitespaces()
     {
         QFETCH(QString, input);
 
@@ -74,7 +74,7 @@ private slots:
         QCOMPARE(token.kind, TokenKind::EndOfFile);
     }
 
-    void Lexer_Lexes_Identifiers_data()
+    void Identifiers_data()
     {
         QTest::addColumn<QString>("input");
         QTest::addColumn<QString>("expectedLexeme");
@@ -94,7 +94,7 @@ private slots:
         QTest::newRow("_10") << "_10" << "_10";
     }
     
-    void Lexer_Lexes_Identifiers()
+    void Identifiers()
     {
         QFETCH(QString, input);
         QFETCH(QString, expectedLexeme);
