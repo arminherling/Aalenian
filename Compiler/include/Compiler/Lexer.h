@@ -16,8 +16,12 @@ private:
     QChar PeekCurrentChar();
     QChar PeekNextChar();
     QChar PeekChar(int offset);
+    void AdvanceCurrentIndex();
+    void AdvanceCurrentIndexAndResetLine();
+
     Token CreateTokenAndAdvance(TokenKind kind, const QString& lexeme);
 
     SourceText m_source;
     int m_index;
+    int m_lineNumber;
 };

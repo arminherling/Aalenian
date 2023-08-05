@@ -48,6 +48,31 @@ private slots:
         QCOMPARE(token.kind, expectedKind);
         QCOMPARE(token.lexeme, expectedLexeme);
     }
+
+    void Lexer_Ignores_Whitespaces_data()
+    {
+        QTest::addColumn<QString>("input");
+
+        QTest::newRow("") << "";
+        QTest::newRow(" ") << " ";
+        QTest::newRow("     ") << "     ";
+        QTest::newRow("t") << "\t";
+        QTest::newRow("r") << "\r";
+        QTest::newRow("n") << "\n";
+        QTest::newRow("rn") << "\r\n";
+    }
+
+    void Lexer_Ignores_Whitespaces()
+    {
+        QFETCH(QString, input);
+
+        auto source = SourceText(input);
+        auto lexer = Lexer(source);
+
+        auto token = lexer.NextToken();
+
+        QCOMPARE(token.kind, TokenKind::EndOfFile);
+    }
 };
 
 QTEST_MAIN(LexerTests)

@@ -3,6 +3,7 @@
 Lexer::Lexer(const SourceText& source)
     : m_source(source)
     , m_index(0)
+    , m_lineNumber(0)
 {
 }
 
@@ -14,6 +15,25 @@ Token Lexer::NextToken()
 
         switch (current.unicode())
         {
+            case '\r':
+            {
+                if (PeekNextChar() == '\n')
+                    AdvanceCurrentIndex();
+
+                AdvanceCurrentIndexAndResetLine();
+                break;
+            }
+            case '\n':
+            {
+                AdvanceCurrentIndexAndResetLine();
+                break;
+            }
+            case '\t':
+            case ' ':
+            {
+                AdvanceCurrentIndex();
+                break;
+            }
             case '+':
                 return CreateTokenAndAdvance(TokenKind::Plus, "+");
             case '-':
@@ -65,6 +85,17 @@ QChar Lexer::PeekChar(int offset)
         return '\0';
 
     return m_source.text[index];
+}
+
+void Lexer::AdvanceCurrentIndex()
+{
+    m_index++;
+}
+
+void Lexer::AdvanceCurrentIndexAndResetLine()
+{
+    AdvanceCurrentIndex();
+    m_lineNumber++;
 }
 
 Token Lexer::CreateTokenAndAdvance(TokenKind kind, const QString& lexeme)
