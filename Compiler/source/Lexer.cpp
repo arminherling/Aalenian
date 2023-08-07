@@ -1,9 +1,9 @@
 #include "Lexer.h"
 
 Lexer::Lexer(const SourceText& source)
-    : m_source(source)
-    , m_index(0)
-    , m_lineNumber(0)
+    : source(source)
+    , currentIndex(0)
+    , lineNumber(0)
 {
 }
 
@@ -91,27 +91,27 @@ QChar Lexer::PeekNextChar()
 
 QChar Lexer::PeekChar(int offset)
 {
-    auto index = m_index + offset;
-    if (index >= m_source.text.length())
+    auto charIndex = currentIndex + offset;
+    if (charIndex >= source.text.length())
         return '\0';
 
-    return m_source.text[index];
+    return source.text[charIndex];
 }
 
 void Lexer::AdvanceCurrentIndex()
 {
-    m_index++;
+    currentIndex++;
 }
 
 void Lexer::AdvanceCurrentIndexAndResetLine()
 {
     AdvanceCurrentIndex();
-    m_lineNumber++;
+    lineNumber++;
 }
 
 Token Lexer::LexIdentifier()
 {
-    auto start = m_index;
+    auto start = currentIndex;
     while (PeekCurrentChar() == '_' || PeekCurrentChar().isLetterOrNumber())
         AdvanceCurrentIndex();
 
@@ -120,7 +120,7 @@ Token Lexer::LexIdentifier()
 
 Token Lexer::LexNumber()
 {
-    auto start = m_index;
+    auto start = currentIndex;
 
     while (PeekCurrentChar().isNumber() || (PeekCurrentChar() == '_' && PeekNextChar() != '.'))
         AdvanceCurrentIndex();
@@ -138,13 +138,13 @@ Token Lexer::LexNumber()
 
 Token Lexer::LexString()
 {
-    auto start = m_index;
+    auto start = currentIndex;
 
     // Consume opening quotation mark
     AdvanceCurrentIndex();
     while (PeekCurrentChar() != '\"' && PeekCurrentChar() != '\0')
         AdvanceCurrentIndex();
-    
+
     if (PeekCurrentChar() == '\"')
     {
         // Consume closing quotation mark
@@ -161,14 +161,16 @@ Token Lexer::LexString()
 
 Token Lexer::CreateLexemeAndToken(TokenKind kind, int startIndex)
 {
-    auto length = m_index - startIndex;
-    auto lexeme = m_source.text.sliced(startIndex, length);
-    return Token(kind, lexeme);
+    auto length = currentIndex - startIndex;
+    auto lexeme = source.text.sliced(startIndex, length);
+    auto location = SourceLocation(source.text, startIndex, currentIndex - 1);
+    return Token(kind, lexeme, location);
 }
 
 Token Lexer::CreateTokenAndAdvance(TokenKind kind, const QString& lexeme)
 {
-    m_index += lexeme.length();
-
-    return Token(kind, lexeme);
+    auto start = currentIndex;
+    currentIndex += lexeme.length();
+    auto location = SourceLocation(source.text, start, currentIndex - 1);
+    return Token(kind, lexeme, location);
 }

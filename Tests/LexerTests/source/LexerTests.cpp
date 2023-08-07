@@ -2,6 +2,7 @@
 
 #include <Compiler/Lexer.h>
 #include <Compiler/SourceText.h>
+#include <Compiler/SourceLocation.h>
 #include <Compiler/Token.h>
 #include <Compiler/TokenKind.h>
 
@@ -93,7 +94,7 @@ private slots:
         QTest::newRow("m_index") << "m_index" << "m_index";
         QTest::newRow("_10") << "_10" << "_10";
     }
-    
+
     void Identifiers()
     {
         QFETCH(QString, input);
@@ -123,7 +124,7 @@ private slots:
         QTest::newRow("12.34. ") << "12.34. " << "12.34";
         QTest::newRow(" 1234567890") << " 1234567890" << "1234567890";
     }
-    
+
     void Numbers()
     {
         QFETCH(QString, input);
@@ -186,6 +187,40 @@ private slots:
 
         QCOMPARE(token.kind, TokenKind::Error);
         QCOMPARE(token.lexeme, expectedLexeme);
+    }
+
+    void SourceLocations_data()
+    {
+        QTest::addColumn<QString>("input");
+        QTest::addColumn<SourceLocation>("expectedLocation");
+
+        const static auto source1 = QString("+");
+        QTest::newRow("+") << source1 << SourceLocation(source1, 0, 0);
+        const static auto source2 = QString(" bar ");
+        QTest::newRow(" bar ") << source2 << SourceLocation(source2, 1, 3);
+        const static auto source3 = QString("\nreturn");
+        QTest::newRow("\\nreturn") << source3 << SourceLocation(source3, 1, 6);
+        const static auto source4 = QString("\r\nreturn");
+        QTest::newRow("\\r\\nreturn") << source4 << SourceLocation(source4, 2, 7);
+        const static auto source5 = QString("  1_234 ");
+        QTest::newRow("  1_234 ") << source5 << SourceLocation(source5, 2, 6);
+        const static auto source6 = QString(" \"1234567890\"");
+        QTest::newRow(" \"1234567890\"") << source6 << SourceLocation(source6, 1, 12);
+    }
+
+    void SourceLocations()
+    {
+        QFETCH(QString, input);
+        QFETCH(SourceLocation, expectedLocation);
+
+        auto source = SourceText(input);
+        auto lexer = Lexer(source);
+
+        auto token = lexer.NextToken();
+
+        QCOMPARE(token.location.sourceText, expectedLocation.sourceText);
+        QCOMPARE(token.location.firstIndex, expectedLocation.firstIndex);
+        QCOMPARE(token.location.lastIndex, expectedLocation.lastIndex);
     }
 };
 

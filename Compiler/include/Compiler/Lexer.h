@@ -26,7 +26,7 @@ private:
     Token CreateLexemeAndToken(TokenKind kind, int startIndex);
     Token CreateTokenAndAdvance(TokenKind kind, const QString& lexeme);
 
-    SourceText m_source;
-    int m_index;
-    int m_lineNumber;
+    SourceText source;
+    int currentIndex;
+    int lineNumber;
 };
