@@ -184,7 +184,10 @@ private slots:
         auto source = SourceText(input);
         auto lexer = Lexer(source);
 
-        auto token = lexer.NextToken();
+        auto result = lexer.Lex();
+
+        QVERIFY(!result.diagnostics.Diagnostics().empty());
+        auto token = result.tokens.first();
 
         QCOMPARE(token.kind, TokenKind::Error);
         QCOMPARE(token.lexeme, expectedLexeme);
@@ -248,6 +251,7 @@ private slots:
 
         auto result = lexer.Lex();
 
+        QVERIFY(result.diagnostics.Diagnostics().empty());
         // Add one to tokenCount for the end of file token
         QCOMPARE(result.tokens.count(), tokenCount + 1);
     }

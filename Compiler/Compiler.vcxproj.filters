@@ -38,6 +38,18 @@
     <ClInclude Include="include\Compiler\LexerResult.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Compiler\DiagnosticLevel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Compiler\DiagnosticKind.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Compiler\Diagnostic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Compiler\DiagnosticsBag.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Lexer.cpp">
@@ -53,6 +65,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\LexerResult.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Diagnostic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DiagnosticsBag.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -72,7 +72,7 @@ Token Lexer::NextToken()
                 }
 
                 auto token = CreateTokenAndAdvance(TokenKind::Unknown, current);
-                // TODO diagnostics
+                diagnostics.AddError(DiagnosticKind::_0001_FoundIllegalCharacter, token.location);
                 return token;
             }
         }
@@ -92,7 +92,7 @@ LexerResult Lexer::Lex()
             break;
     }
 
-    return LexerResult(tokens);
+    return LexerResult(diagnostics, tokens);
 }
 
 QChar Lexer::PeekCurrentChar()
@@ -170,8 +170,9 @@ Token Lexer::LexString()
     }
     else
     {
-        // TODO diagnostics
-        return CreateLexemeAndToken(TokenKind::Error, start);
+        auto token = CreateLexemeAndToken(TokenKind::Error, start);
+        diagnostics.AddError(DiagnosticKind::_0002_UnterminatedString, token.location);
+        return token;
     }
 }
 

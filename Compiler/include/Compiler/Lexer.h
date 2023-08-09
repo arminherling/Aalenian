@@ -2,6 +2,7 @@
 
 #include "CompilerApi.h"
 
+#include "DiagnosticsBag.h"
 #include "LexerResult.h"
 #include "SourceText.h"
 #include "Token.h"
@@ -28,6 +29,7 @@ private:
     Token CreateLexemeAndToken(TokenKind kind, int startIndex);
     Token CreateTokenAndAdvance(TokenKind kind, const QString& lexeme);
 
+    DiagnosticsBag diagnostics;
     SourceText source;
     int currentIndex;
     int lineNumber;

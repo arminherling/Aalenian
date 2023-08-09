@@ -93,11 +93,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\DiagnosticsBag.cpp" />
+    <ClCompile Include="source\Diagnostic.cpp" />
     <ClCompile Include="source\LexerResult.cpp" />
     <ClCompile Include="source\SourceLocation.cpp" />
     <ClCompile Include="source\Token.cpp" />
     <ClCompile Include="source\SourceText.cpp" />
     <ClCompile Include="source\Lexer.cpp" />
+    <ClInclude Include="include\Compiler\DiagnosticsBag.h" />
+    <ClInclude Include="include\Compiler\Diagnostic.h" />
+    <ClInclude Include="include\Compiler\DiagnosticKind.h" />
+    <ClInclude Include="include\Compiler\DiagnosticLevel.h" />
     <ClInclude Include="include\Compiler\Lexer.h" />
     <ClInclude Include="include\Compiler\CompilerApi.h" />
     <ClInclude Include="include\Compiler\Compiler.h" />
