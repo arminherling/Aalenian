@@ -32,6 +32,7 @@ private slots:
         QTest::newRow("CloseBracket") << "}" << TokenKind::CloseBracket << "}";
 
         QTest::newRow("Unknown") << "$" << TokenKind::Unknown << "$";
+        QTest::newRow("EOF") << "" << TokenKind::EndOfFile << "";
         QTest::newRow("EOF") << "\0" << TokenKind::EndOfFile << "\0";
     }
 
@@ -221,6 +222,34 @@ private slots:
         QCOMPARE(token.location.sourceText, expectedLocation.sourceText);
         QCOMPARE(token.location.firstIndex, expectedLocation.firstIndex);
         QCOMPARE(token.location.lastIndex, expectedLocation.lastIndex);
+    }
+
+    void WholeInput_data()
+    {
+        QTest::addColumn<QString>("input");
+        QTest::addColumn<int>("tokenCount");
+
+        QTest::newRow("") << "" << 0;
+        QTest::newRow("name") << "name" << 1;
+        QTest::newRow("use name") << "use name" << 2;
+        QTest::newRow("return x, y") << "return x, y" << 4;
+        //QTest::newRow("a = () => 3") << "a = () => 3" << 7;
+        QTest::newRow("enum Value { A B = 5 C D }") << "enum Value { A B = 5 C D }" << 10;
+        QTest::newRow("define sum(a int, b int) { return a + b }") << "define sum(a int, b int) { return a + b }" << 15;
+    }
+
+    void WholeInput()
+    {
+        QFETCH(QString, input);
+        QFETCH(int, tokenCount);
+
+        auto source = SourceText(input);
+        auto lexer = Lexer(source);
+
+        auto result = lexer.Lex();
+
+        // Add one to tokenCount for the end of file token
+        QCOMPARE(result.tokens.count(), tokenCount + 1);
     }
 };
 

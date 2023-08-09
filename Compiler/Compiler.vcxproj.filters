@@ -35,6 +35,9 @@
     <ClInclude Include="include\Compiler\SourceLocation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Compiler\LexerResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Lexer.cpp">
@@ -47,6 +50,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\SourceLocation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\LexerResult.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

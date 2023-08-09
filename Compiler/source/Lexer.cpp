@@ -79,6 +79,22 @@ Token Lexer::NextToken()
     }
 }
 
+LexerResult Lexer::Lex()
+{
+    QList<Token> tokens;
+
+    while (true)
+    {
+        auto token = NextToken();
+        tokens.append(token);
+
+        if (token.kind == TokenKind::EndOfFile)
+            break;
+    }
+
+    return LexerResult(tokens);
+}
+
 QChar Lexer::PeekCurrentChar()
 {
     return PeekChar(0);
