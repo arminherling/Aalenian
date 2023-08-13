@@ -1,5 +1,9 @@
 #pragma once
 
+#include "CompilerApi.h"
+
+#include <QString>
+
 enum class TokenKind
 {
     Plus,
@@ -22,3 +26,5 @@ enum class TokenKind
     Unknown,
     EndOfFile
 };
+
+QString COMPILER_API Stringify(TokenKind kind);

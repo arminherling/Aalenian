@@ -35,29 +35,29 @@ Token Lexer::NextToken()
                 break;
             }
             case '+':
-                return CreateTokenAndAdvance(TokenKind::Plus, "+");
+                return CreateTokenAndAdvance(TokenKind::Plus, '+');
             case '-':
-                return CreateTokenAndAdvance(TokenKind::Minus, "-");
+                return CreateTokenAndAdvance(TokenKind::Minus, '-');
             case '*':
-                return CreateTokenAndAdvance(TokenKind::Star, "*");
+                return CreateTokenAndAdvance(TokenKind::Star, '*');
             case '/':
-                return CreateTokenAndAdvance(TokenKind::Slash, "/");
+                return CreateTokenAndAdvance(TokenKind::Slash, '/');
             case '.':
-                return CreateTokenAndAdvance(TokenKind::Dot, ".");
+                return CreateTokenAndAdvance(TokenKind::Dot, '.');
             case ',':
-                return CreateTokenAndAdvance(TokenKind::Comma, ",");
+                return CreateTokenAndAdvance(TokenKind::Comma, ',');
             case '=':
-                return CreateTokenAndAdvance(TokenKind::Equal, "=");
+                return CreateTokenAndAdvance(TokenKind::Equal, '=');
             case '(':
-                return CreateTokenAndAdvance(TokenKind::OpenParenthesis, "(");
+                return CreateTokenAndAdvance(TokenKind::OpenParenthesis, '(');
             case ')':
-                return CreateTokenAndAdvance(TokenKind::CloseParenthesis, ")");
+                return CreateTokenAndAdvance(TokenKind::CloseParenthesis, ')');
             case '{':
-                return CreateTokenAndAdvance(TokenKind::OpenBracket, "{");
+                return CreateTokenAndAdvance(TokenKind::OpenBracket, '{');
             case '}':
-                return CreateTokenAndAdvance(TokenKind::CloseBracket, "}");
+                return CreateTokenAndAdvance(TokenKind::CloseBracket, '}');
             case '\0':
-                return CreateTokenAndAdvance(TokenKind::EndOfFile, "\0");
+                return CreateTokenAndAdvance(TokenKind::EndOfFile, '\0');
             case '\"':
                 return LexString();
             default:
@@ -184,10 +184,10 @@ Token Lexer::CreateLexemeAndToken(TokenKind kind, int startIndex)
     return Token(kind, lexeme, location);
 }
 
-Token Lexer::CreateTokenAndAdvance(TokenKind kind, const QString& lexeme)
+Token Lexer::CreateTokenAndAdvance(TokenKind kind, const QChar& c)
 {
     auto start = currentIndex;
-    currentIndex += lexeme.length();
+    currentIndex++;
     auto location = SourceLocation(source.text, start, currentIndex - 1);
-    return Token(kind, lexeme, location);
+    return Token(kind, c, location);
 }

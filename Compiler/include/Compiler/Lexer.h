@@ -27,7 +27,7 @@ private:
     Token LexString();
 
     Token CreateLexemeAndToken(TokenKind kind, int startIndex);
-    Token CreateTokenAndAdvance(TokenKind kind, const QString& lexeme);
+    Token CreateTokenAndAdvance(TokenKind kind, const QChar& c);
 
     DiagnosticsBag diagnostics;
     SourceText source;

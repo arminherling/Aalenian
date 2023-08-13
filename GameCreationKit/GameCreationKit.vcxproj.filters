@@ -22,23 +22,4 @@
       <Extensions>ts</Extensions>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <QtRcc Include="GameCreationKit.qrc">
-      <Filter>Resource Files</Filter>
-    </QtRcc>
-    <QtUic Include="GameCreationKit.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtMoc Include="include\GameCreationKit\GameCreationKit.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <ClCompile Include="source\GameCreationKit.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="source\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
 </Project>
