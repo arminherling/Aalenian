@@ -11,3 +11,5 @@ struct COMPILER_API SourceText
     QString text;
     QString filePath;
 };
+
+using SourceTextSharedPtr = std::shared_ptr<SourceText>;

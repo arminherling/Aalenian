@@ -6,6 +6,9 @@
 
 enum class TokenKind
 {
+    Unknown,
+    Error,
+
     Plus,
     Minus,
     Star,
@@ -22,8 +25,6 @@ enum class TokenKind
     Number,
     String,
 
-    Error,
-    Unknown,
     EndOfFile
 };
 

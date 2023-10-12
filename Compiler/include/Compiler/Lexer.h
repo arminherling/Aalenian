@@ -10,7 +10,7 @@
 class COMPILER_API Lexer
 {
 public:
-    Lexer(const SourceText& source);
+    Lexer(const SourceTextSharedPtr& source);
 
     Token NextToken();
     LexerResult Lex();
@@ -26,11 +26,12 @@ private:
     Token LexNumber();
     Token LexString();
 
-    Token CreateLexemeAndToken(TokenKind kind, int startIndex);
-    Token CreateTokenAndAdvance(TokenKind kind, const QChar& c);
+    Token CreateLexemeAndToken(TokenKind kind, int startIndex, int startLine, int startColumn);
+    Token CreateTokenAndAdvance(TokenKind kind, const QString& lexeme);
 
+    SourceTextSharedPtr source;
     DiagnosticsBag diagnostics;
-    SourceText source;
     int currentIndex;
-    int lineNumber;
+    int currentLine;
+    int currentColumn;
 };

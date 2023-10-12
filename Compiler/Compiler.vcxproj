@@ -104,6 +104,7 @@
     <ClCompile Include="source\DiagnosticsBag.cpp" />
     <ClCompile Include="source\Diagnostic.cpp" />
     <ClCompile Include="source\LexerResult.cpp" />
+    <ClCompile Include="source\TokenBuffer.cpp" />
     <ClCompile Include="source\SourceLineAndColumns.cpp" />
     <ClCompile Include="source\SourceLocation.cpp" />
     <ClCompile Include="source\Token.cpp" />
@@ -122,6 +123,7 @@
     <ClInclude Include="include\Compiler\SourceLocation.h" />
     <ClInclude Include="include\Compiler\SourceText.h" />
     <ClInclude Include="include\Compiler\Token.h" />
+    <ClInclude Include="include\Compiler\TokenBuffer.h" />
     <ClInclude Include="include\Compiler\TokenKind.h" />
     <ClInclude Include="include\Compiler\LexerResult.h" />
   </ItemGroup>

@@ -1,7 +1,9 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
-#include "ui_GameCreationKit.h"
+
+#include <QTextEdit>
+#include "TokenListView.h"
 
 class GameCreationKit : public QMainWindow
 {
@@ -9,8 +11,11 @@ class GameCreationKit : public QMainWindow
 
 public:
     GameCreationKit(QWidget *parent = nullptr);
-    ~GameCreationKit();
+    virtual ~GameCreationKit() = default;
 
 private:
-    Ui::GameCreationKitClass ui;
+    QTextEdit* textEdit;
+    TokenListView* tokenList;
+
+    void onTextChanged();
 };

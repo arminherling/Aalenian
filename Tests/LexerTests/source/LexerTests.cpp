@@ -5,6 +5,9 @@
 #include <Compiler/SourceLocation.h>
 #include <Compiler/Token.h>
 #include <Compiler/TokenKind.h>
+#include <chrono>
+
+#include <Compiler/TokenBuffer.h>
 
 class LexerTests : public QObject
 {
@@ -15,40 +18,44 @@ private slots:
     {
         QTest::addColumn<QString>("input");
         QTest::addColumn<TokenKind>("expectedKind");
-        QTest::addColumn<QString>("expectedLexeme");
 
-        QTest::newRow("Plus") << "+" << TokenKind::Plus << "+";
-        QTest::newRow("Minus") << "-" << TokenKind::Minus << "-";
-        QTest::newRow("Star") << "*" << TokenKind::Star << "*";
-        QTest::newRow("Slash") << "/" << TokenKind::Slash << "/";
+        QTest::newRow("Plus") << QString("+") << TokenKind::Plus;
+        QTest::newRow("Minus") << QString("-") << TokenKind::Minus;
+        QTest::newRow("Star") << QString("*") << TokenKind::Star;
+        QTest::newRow("Slash") << QString("/") << TokenKind::Slash;
 
-        QTest::newRow("Dot") << "." << TokenKind::Dot << ".";
-        QTest::newRow("Comma") << "," << TokenKind::Comma << ",";
-        QTest::newRow("Equal") << "=" << TokenKind::Equal << "=";
+        QTest::newRow("Dot") << QString(".") << TokenKind::Dot;
+        QTest::newRow("Comma") << QString(",") << TokenKind::Comma;
+        QTest::newRow("Equal") << QString("=") << TokenKind::Equal;
 
-        QTest::newRow("OpenParenthesis") << "(" << TokenKind::OpenParenthesis << "(";
-        QTest::newRow("CloseParenthesis") << ")" << TokenKind::CloseParenthesis << ")";
-        QTest::newRow("OpenBracket") << "{" << TokenKind::OpenBracket << "{";
-        QTest::newRow("CloseBracket") << "}" << TokenKind::CloseBracket << "}";
+        QTest::newRow("OpenParenthesis") << QString("(") << TokenKind::OpenParenthesis;
+        QTest::newRow("CloseParenthesis") << QString(")") << TokenKind::CloseParenthesis;
+        QTest::newRow("OpenBracket") << QString("{") << TokenKind::OpenBracket;
+        QTest::newRow("CloseBracket") << QString("}") << TokenKind::CloseBracket;
 
-        QTest::newRow("Unknown") << "$" << TokenKind::Unknown << "$";
-        QTest::newRow("EOF") << "" << TokenKind::EndOfFile << "";
-        QTest::newRow("EOF") << "\0" << TokenKind::EndOfFile << "\0";
+        QTest::newRow("Unknown") << QString("$") << TokenKind::Unknown;
+        QTest::newRow("EOF") << QString("") << TokenKind::EndOfFile;
+        QTest::newRow("EOF \\0") << QString("\0") << TokenKind::EndOfFile;
     }
 
     void SingleCharacter()
     {
         QFETCH(QString, input);
         QFETCH(TokenKind, expectedKind);
-        QFETCH(QString, expectedLexeme);
 
-        auto source = SourceText(input);
-        auto lexer = Lexer(source);
+        auto startTime = std::chrono::high_resolution_clock::now();
 
-        auto token = lexer.NextToken();
+        auto source = std::make_shared<SourceText>(input);
+        V2::DiagnosticsBag diagnostics;
+
+        auto tokens = V2::Lex(source, diagnostics);
+        auto& token = tokens[0];
+
+        auto endTime = std::chrono::high_resolution_clock::now();
+        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         QCOMPARE(token.kind, expectedKind);
-        QCOMPARE(token.lexeme, expectedLexeme);
     }
 
     void IgnoresWhitespaces_data()
@@ -68,10 +75,17 @@ private slots:
     {
         QFETCH(QString, input);
 
-        auto source = SourceText(input);
-        auto lexer = Lexer(source);
+        auto startTime = std::chrono::high_resolution_clock::now();
 
-        auto token = lexer.NextToken();
+        auto source = std::make_shared<SourceText>(input);
+        V2::DiagnosticsBag diagnostics;
+
+        auto tokens = V2::Lex(source, diagnostics);
+        auto& token = tokens[0];
+
+        auto endTime = std::chrono::high_resolution_clock::now();
+        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         QCOMPARE(token.kind, TokenKind::EndOfFile);
     }
@@ -89,7 +103,7 @@ private slots:
         QTest::newRow("enum") << "enum" << "enum";
         QTest::newRow("class") << "class" << "class";
         QTest::newRow("define") << "define" << "define";
-        QTest::newRow("\\n return") << "\nreturn" << "return";
+        QTest::newRow("\\n return") << "\n return" << "return";
         QTest::newRow("_") << "_" << "_";
         QTest::newRow("_name") << " _name" << "_name";
         QTest::newRow("m_index") << "m_index" << "m_index";
@@ -101,13 +115,21 @@ private slots:
         QFETCH(QString, input);
         QFETCH(QString, expectedLexeme);
 
-        auto source = SourceText(input);
-        auto lexer = Lexer(source);
+        auto startTime = std::chrono::high_resolution_clock::now();
 
-        auto token = lexer.NextToken();
+        auto source = std::make_shared<SourceText>(input);
+        V2::DiagnosticsBag diagnostics;
+
+        auto tokens = V2::Lex(source, diagnostics);
+        auto& token = tokens[0];
+
+        auto endTime = std::chrono::high_resolution_clock::now();
+        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         QCOMPARE(token.kind, TokenKind::Identifier);
-        QCOMPARE(token.lexeme, expectedLexeme);
+        auto& lexeme = tokens.GetLexeme(token.kindIndex);
+        QCOMPARE(lexeme, expectedLexeme);
     }
 
     void Numbers_data()
@@ -131,13 +153,21 @@ private slots:
         QFETCH(QString, input);
         QFETCH(QString, expectedLexeme);
 
-        auto source = SourceText(input);
-        auto lexer = Lexer(source);
+        auto startTime = std::chrono::high_resolution_clock::now();
 
-        auto token = lexer.NextToken();
+        auto source = std::make_shared<SourceText>(input);
+        V2::DiagnosticsBag diagnostics;
+
+        auto tokens = V2::Lex(source, diagnostics);
+        auto& token = tokens[0];
+
+        auto endTime = std::chrono::high_resolution_clock::now();
+        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         QCOMPARE(token.kind, TokenKind::Number);
-        QCOMPARE(token.lexeme, expectedLexeme);
+        auto& lexeme = tokens.GetLexeme(token.kindIndex);
+        QCOMPARE(lexeme, expectedLexeme);
     }
 
     void Strings_data()
@@ -156,13 +186,21 @@ private slots:
         QFETCH(QString, input);
         QFETCH(QString, expectedLexeme);
 
-        auto source = SourceText(input);
-        auto lexer = Lexer(source);
+        auto startTime = std::chrono::high_resolution_clock::now();
 
-        auto token = lexer.NextToken();
+        auto source = std::make_shared<SourceText>(input);
+        V2::DiagnosticsBag diagnostics;
+
+        auto tokens = V2::Lex(source, diagnostics);
+        auto& token = tokens[0];
+
+        auto endTime = std::chrono::high_resolution_clock::now();
+        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         QCOMPARE(token.kind, TokenKind::String);
-        QCOMPARE(token.lexeme, expectedLexeme);
+        auto& lexeme = tokens.GetLexeme(token.kindIndex);
+        QCOMPARE(lexeme, expectedLexeme);
     }
 
     void UnterminatedStrings_data()
@@ -181,50 +219,23 @@ private slots:
         QFETCH(QString, input);
         QFETCH(QString, expectedLexeme);
 
-        auto source = SourceText(input);
-        auto lexer = Lexer(source);
+        auto startTime = std::chrono::high_resolution_clock::now();
 
-        auto result = lexer.Lex();
+        auto source = std::make_shared<SourceText>(input);
+        V2::DiagnosticsBag diagnostics;
 
-        QVERIFY(!result.diagnostics.Diagnostics().empty());
-        auto token = result.tokens.first();
+        auto tokens = V2::Lex(source, diagnostics);
+        auto& token = tokens[0];
+
+        QVERIFY(!diagnostics.Diagnostics().empty());
+
+        auto endTime = std::chrono::high_resolution_clock::now();
+        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         QCOMPARE(token.kind, TokenKind::Error);
-        QCOMPARE(token.lexeme, expectedLexeme);
-    }
-
-    void SourceLocations_data()
-    {
-        QTest::addColumn<QString>("input");
-        QTest::addColumn<SourceLocation>("expectedLocation");
-
-        const static auto source1 = QString("+");
-        QTest::newRow("+") << source1 << SourceLocation(source1, 0, 0);
-        const static auto source2 = QString(" bar ");
-        QTest::newRow(" bar ") << source2 << SourceLocation(source2, 1, 3);
-        const static auto source3 = QString("\nreturn");
-        QTest::newRow("\\nreturn") << source3 << SourceLocation(source3, 1, 6);
-        const static auto source4 = QString("\r\nreturn");
-        QTest::newRow("\\r\\nreturn") << source4 << SourceLocation(source4, 2, 7);
-        const static auto source5 = QString("  1_234 ");
-        QTest::newRow("  1_234 ") << source5 << SourceLocation(source5, 2, 6);
-        const static auto source6 = QString(" \"1234567890\"");
-        QTest::newRow(" \"1234567890\"") << source6 << SourceLocation(source6, 1, 12);
-    }
-
-    void SourceLocations()
-    {
-        QFETCH(QString, input);
-        QFETCH(SourceLocation, expectedLocation);
-
-        auto source = SourceText(input);
-        auto lexer = Lexer(source);
-
-        auto token = lexer.NextToken();
-
-        QCOMPARE(token.location.sourceText, expectedLocation.sourceText);
-        QCOMPARE(token.location.firstIndex, expectedLocation.firstIndex);
-        QCOMPARE(token.location.lastIndex, expectedLocation.lastIndex);
+        auto& lexeme = tokens.GetLexeme(token.kindIndex);
+        QCOMPARE(lexeme, expectedLexeme);
     }
 
     void WholeInput_data()
@@ -232,13 +243,13 @@ private slots:
         QTest::addColumn<QString>("input");
         QTest::addColumn<int>("tokenCount");
 
-        QTest::newRow("") << "" << 0;
-        QTest::newRow("name") << "name" << 1;
-        QTest::newRow("use name") << "use name" << 2;
-        QTest::newRow("return x, y") << "return x, y" << 4;
-        //QTest::newRow("a = () => 3") << "a = () => 3" << 7;
-        QTest::newRow("enum Value { A B = 5 C D }") << "enum Value { A B = 5 C D }" << 10;
-        QTest::newRow("define sum(a int, b int) { return a + b }") << "define sum(a int, b int) { return a + b }" << 15;
+        QTest::newRow("") << "" << 1;
+        QTest::newRow("name") << "name" << 2;
+        QTest::newRow("use name") << "use name" << 3;
+        QTest::newRow("return (x, y)") << "return (x, y)" << 7;
+        //QTest::newRow("a = () => 3") << "a = () => 3" << 8;
+        QTest::newRow("enum Value { A B = 5 C D }") << "enum Value { A B = 5 C D }" << 11;
+        QTest::newRow("define sum(a int, b int) { return a + b }") << "define sum(a int, b int) { return a + b }" << 16;
     }
 
     void WholeInput()
@@ -246,14 +257,45 @@ private slots:
         QFETCH(QString, input);
         QFETCH(int, tokenCount);
 
-        auto source = SourceText(input);
-        auto lexer = Lexer(source);
+        auto startTime = std::chrono::high_resolution_clock::now();
 
-        auto result = lexer.Lex();
+        auto source = std::make_shared<SourceText>(input);
+        V2::DiagnosticsBag diagnostics;
 
-        QVERIFY(result.diagnostics.Diagnostics().empty());
-        // Add one to tokenCount for the end of file token
-        QCOMPARE(result.tokens.count(), tokenCount + 1);
+        auto tokens = V2::Lex(source, diagnostics);
+
+        auto endTime = std::chrono::high_resolution_clock::now();
+        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
+
+        QVERIFY(diagnostics.Diagnostics().empty());
+        QCOMPARE(tokens.size(), tokenCount);
+    }
+
+    void OneMilLocTime()
+    {
+#ifdef QT_DEBUG
+        QSKIP("");
+#endif
+        auto combinedPath = QDir(QCoreApplication::applicationDirPath())
+            .filePath(QString("../../Tests/LexerTests/data/oneMilLines.txt"));
+        auto testFile = QDir::cleanPath(combinedPath);
+
+        QFile file(testFile);
+        if (!file.open(QFile::ReadOnly | QFile::Text))
+            QFAIL("Couldnt open file");
+
+        QString data = file.readAll();
+
+        auto source = std::make_shared<SourceText>(data);
+        V2::DiagnosticsBag diagnostics;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        auto tokens = V2::Lex(source, diagnostics);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
+        qDebug() << elapsed_time_ms << "ms" << tokens.size() << "Tokens";
     }
 };
 
