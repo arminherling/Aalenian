@@ -113,4 +113,4 @@ private slots:
 };
 
 QTEST_MAIN(SourceLindAndColumnsTests)
-#include "SourceLineAndColumnsTests.moc"
+#include "SourceLocationTests.moc"

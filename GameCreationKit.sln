@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6974978B
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LexerTests", "Tests\LexerTests\LexerTests.vcxproj", "{1E775FCF-353B-49F5-B5E5-D68EEEC2459F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SourceLineAndColumnsTests", "Tests\SourceLineAndColumnsTests\SourceLineAndColumnsTests.vcxproj", "{3F7ACACD-B81B-4CD2-A4C5-0FAD195EA617}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SourceLocationTests", "Tests\SourceLocationTests\SourceLocationTests.vcxproj", "{3F7ACACD-B81B-4CD2-A4C5-0FAD195EA617}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
