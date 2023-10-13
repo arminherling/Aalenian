@@ -5,9 +5,9 @@
 #include <Compiler/SourceLocation.h>
 #include <Compiler/Token.h>
 #include <Compiler/TokenKind.h>
-#include <chrono>
-
 #include <Compiler/TokenBuffer.h>
+
+#include <chrono>
 
 class LexerTests : public QObject
 {
