@@ -1,21 +1,20 @@
 #pragma once
 
 #include "CompilerApi.h"
-
 #include "Diagnostic.h"
 
-#include <QList>
+#include <vector>
 
 class COMPILER_API DiagnosticsBag
 {
 public:
     DiagnosticsBag() = default;
 
-    void AddWarning(DiagnosticKind kind, SourceLocation location);
-    void AddError(DiagnosticKind kind, SourceLocation location);
+    void AddWarning(DiagnosticKind kind, const SourceLocation& location);
+    void AddError(DiagnosticKind kind, const SourceLocation& location);
 
-    QList<Diagnostic> Diagnostics();
+    const std::vector<Diagnostic>& Diagnostics();
 
 private:
-    QList<Diagnostic> diagnostics;
+    std::vector<Diagnostic> diagnostics;
 };

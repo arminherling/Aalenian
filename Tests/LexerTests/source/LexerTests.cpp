@@ -46,9 +46,9 @@ private slots:
         auto startTime = std::chrono::high_resolution_clock::now();
 
         auto source = std::make_shared<SourceText>(input);
-        V2::DiagnosticsBag diagnostics;
+        DiagnosticsBag diagnostics;
 
-        auto tokens = V2::Lex(source, diagnostics);
+        auto tokens = Lex(source, diagnostics);
         auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
@@ -78,9 +78,9 @@ private slots:
         auto startTime = std::chrono::high_resolution_clock::now();
 
         auto source = std::make_shared<SourceText>(input);
-        V2::DiagnosticsBag diagnostics;
+        DiagnosticsBag diagnostics;
 
-        auto tokens = V2::Lex(source, diagnostics);
+        auto tokens = Lex(source, diagnostics);
         auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
@@ -118,9 +118,9 @@ private slots:
         auto startTime = std::chrono::high_resolution_clock::now();
 
         auto source = std::make_shared<SourceText>(input);
-        V2::DiagnosticsBag diagnostics;
+        DiagnosticsBag diagnostics;
 
-        auto tokens = V2::Lex(source, diagnostics);
+        auto tokens = Lex(source, diagnostics);
         auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
@@ -156,9 +156,9 @@ private slots:
         auto startTime = std::chrono::high_resolution_clock::now();
 
         auto source = std::make_shared<SourceText>(input);
-        V2::DiagnosticsBag diagnostics;
+        DiagnosticsBag diagnostics;
 
-        auto tokens = V2::Lex(source, diagnostics);
+        auto tokens = Lex(source, diagnostics);
         auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
@@ -189,9 +189,9 @@ private slots:
         auto startTime = std::chrono::high_resolution_clock::now();
 
         auto source = std::make_shared<SourceText>(input);
-        V2::DiagnosticsBag diagnostics;
+        DiagnosticsBag diagnostics;
 
-        auto tokens = V2::Lex(source, diagnostics);
+        auto tokens = Lex(source, diagnostics);
         auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
@@ -222,9 +222,9 @@ private slots:
         auto startTime = std::chrono::high_resolution_clock::now();
 
         auto source = std::make_shared<SourceText>(input);
-        V2::DiagnosticsBag diagnostics;
+        DiagnosticsBag diagnostics;
 
-        auto tokens = V2::Lex(source, diagnostics);
+        auto tokens = Lex(source, diagnostics);
         auto& token = tokens[0];
 
         QVERIFY(!diagnostics.Diagnostics().empty());
@@ -260,9 +260,9 @@ private slots:
         auto startTime = std::chrono::high_resolution_clock::now();
 
         auto source = std::make_shared<SourceText>(input);
-        V2::DiagnosticsBag diagnostics;
+        DiagnosticsBag diagnostics;
 
-        auto tokens = V2::Lex(source, diagnostics);
+        auto tokens = Lex(source, diagnostics);
 
         auto endTime = std::chrono::high_resolution_clock::now();
         double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
@@ -272,7 +272,7 @@ private slots:
         QCOMPARE(tokens.size(), tokenCount);
     }
 
-    void OneMilLocTime()
+    void OneMilLinesTime()
     {
 #ifdef QT_DEBUG
         QSKIP("");
@@ -288,10 +288,10 @@ private slots:
         QString data = file.readAll();
 
         auto source = std::make_shared<SourceText>(data);
-        V2::DiagnosticsBag diagnostics;
+        DiagnosticsBag diagnostics;
 
         auto startTime = std::chrono::high_resolution_clock::now();
-        auto tokens = V2::Lex(source, diagnostics);
+        auto tokens = Lex(source, diagnostics);
         auto endTime = std::chrono::high_resolution_clock::now();
 
         double elapsed_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();

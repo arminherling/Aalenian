@@ -1,17 +1,15 @@
 #pragma once
 
 #include "CompilerApi.h"
-
-#include <QString>
-#include <QStringView>
+#include "SourceText.h"
 
 struct COMPILER_API SourceLocation
 {
-    SourceLocation(const QStringView& sourcetext, int firstIndex, int lastIndex);
-
-    QString Stringify() const;
-
-    QStringView sourceText;
-    int firstIndex;
-    int lastIndex;
+    SourceTextSharedPtr source;
+    int startIndex = -1;
+    int endIndex = -1;
+    int startColumn = -1;
+    int endColumn = -1;
+    int startLine = -1;
+    int endLine = -1;
 };

@@ -1,16 +1,16 @@
 #include "DiagnosticsBag.h"
 
-void DiagnosticsBag::AddWarning(DiagnosticKind kind, SourceLocation location)
+void DiagnosticsBag::AddWarning(DiagnosticKind kind, const SourceLocation& location)
 {
-    diagnostics.append(Diagnostic(DiagnosticLevel::Warning, kind, location));
+    diagnostics.emplace_back(DiagnosticLevel::Warning, kind, location);
 }
 
-void DiagnosticsBag::AddError(DiagnosticKind kind, SourceLocation location)
+void DiagnosticsBag::AddError(DiagnosticKind kind, const SourceLocation& location)
 {
-    diagnostics.append(Diagnostic(DiagnosticLevel::Error, kind, location));
+    diagnostics.emplace_back(DiagnosticLevel::Error, kind, location);
 }
 
-QList<Diagnostic> DiagnosticsBag::Diagnostics()
+const std::vector<Diagnostic>& DiagnosticsBag::Diagnostics()
 {
     return diagnostics;
 }

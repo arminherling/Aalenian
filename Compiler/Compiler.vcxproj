@@ -102,12 +102,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\DiagnosticsBag.cpp" />
-    <ClCompile Include="source\Diagnostic.cpp" />
-    <ClCompile Include="source\LexerResult.cpp" />
     <ClCompile Include="source\TokenBuffer.cpp" />
-    <ClCompile Include="source\SourceLineAndColumns.cpp" />
-    <ClCompile Include="source\SourceLocation.cpp" />
-    <ClCompile Include="source\Token.cpp" />
     <ClCompile Include="source\SourceText.cpp" />
     <ClCompile Include="source\Lexer.cpp" />
     <ClCompile Include="source\TokenKind.cpp" />
@@ -119,13 +114,11 @@
     <ClInclude Include="include\Compiler\CompilerApi.h" />
     <ClInclude Include="include\Compiler\Compiler.h" />
     <ClCompile Include="source\Compiler.cpp" />
-    <ClInclude Include="include\Compiler\SourceLineAndColumns.h" />
     <ClInclude Include="include\Compiler\SourceLocation.h" />
     <ClInclude Include="include\Compiler\SourceText.h" />
     <ClInclude Include="include\Compiler\Token.h" />
     <ClInclude Include="include\Compiler\TokenBuffer.h" />
     <ClInclude Include="include\Compiler\TokenKind.h" />
-    <ClInclude Include="include\Compiler\LexerResult.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

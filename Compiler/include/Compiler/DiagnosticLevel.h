@@ -2,6 +2,7 @@
 
 enum class DiagnosticLevel
 {
+    Unknown,
     Warning,
     Error
 };

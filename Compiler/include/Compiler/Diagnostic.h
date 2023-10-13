@@ -8,9 +8,7 @@
 
 struct COMPILER_API Diagnostic
 {
-    Diagnostic(DiagnosticLevel level, DiagnosticKind kind, SourceLocation location);
-
-    DiagnosticLevel level;
-    DiagnosticKind kind;
+    DiagnosticLevel level = DiagnosticLevel::Unknown;
+    DiagnosticKind kind = DiagnosticKind::Unknown;
     SourceLocation location;
 };
