@@ -1,8 +1,8 @@
 <UI version="4.0" >
- <class>GameCreationKitClass</class>
- <widget class="QMainWindow" name="GameCreationKitClass" >
+ <class>DebugToolsClass</class>
+ <widget class="QMainWindow" name="DebugToolsClass" >
   <property name="objectName" >
-   <string notr="true">GameCreationKitClass</string>
+   <string notr="true">DebugToolsClass</string>
   </property>
   <property name="geometry" >
    <rect>
@@ -13,7 +13,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>GameCreationKit</string>
+   <string>DebugTools</string>
   </property>  <widget class="QMenuBar" name="menuBar" />
   <widget class="QToolBar" name="mainToolBar" />
   <widget class="QWidget" name="centralWidget" />
@@ -22,7 +22,7 @@
  <layoutDefault spacing="6" margin="11" />
  <pixmapfunction></pixmapfunction>
  <resources>
-   <include location="GameCreationKit.qrc"/>
+   <include location="DebugTools.qrc"/>
  </resources>
  <connections/>
 </UI>

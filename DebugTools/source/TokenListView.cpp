@@ -35,9 +35,9 @@ void TokenListView::setTokens(const QList<Token>& tokens)
     {
         auto& token = tokens.at(i);
 
-        model->setItem(i, 0, new QStandardItem(token.lexeme));
-        model->setItem(i, 1, new QStandardItem(Stringify(token.kind)));
-        model->setItem(i, 2, new QStandardItem(token.location.Stringify()));
+        //model->setItem(i, 0, new QStandardItem(token.lexeme));
+        //model->setItem(i, 1, new QStandardItem(Stringify(token.kind)));
+        //model->setItem(i, 2, new QStandardItem(token.location.Stringify()));
     }
     //resizeColumnsToContents();
     auto end = std::chrono::steady_clock::now();

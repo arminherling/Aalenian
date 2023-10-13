@@ -1,4 +1,4 @@
-#include "GameCreationKit.h"
+#include "DebugTools.h"
 
 #include <QTextEdit>
 #include <QDockWidget>
@@ -12,7 +12,7 @@
 
 #include "TokenListView.h"
 
-GameCreationKit::GameCreationKit(QWidget *parent)
+DebugTools::DebugTools(QWidget *parent)
     : QMainWindow(parent)
 {
     setWindowTitle(" ");
@@ -37,7 +37,7 @@ GameCreationKit::GameCreationKit(QWidget *parent)
     textEdit->setPlainText("define sum(a int, b int) \r\n{\r\n    return a + b \r\n}\r\n");
     textEdit->createStandardContextMenu();
     textEdit->setLineWrapMode(QTextEdit::LineWrapMode::NoWrap);
-    connect(textEdit, &QTextEdit::textChanged, this, &GameCreationKit::onTextChanged);
+    connect(textEdit, &QTextEdit::textChanged, this, &DebugTools::onTextChanged);
 
 
     centralLayout->addWidget(textEdit);
@@ -62,7 +62,7 @@ GameCreationKit::GameCreationKit(QWidget *parent)
 }
 #include <chrono>
 #include <qdebug.h>
-void GameCreationKit::onTextChanged()
+void DebugTools::onTextChanged()
 {
     auto input = textEdit->toPlainText();
 

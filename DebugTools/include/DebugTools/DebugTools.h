@@ -5,13 +5,13 @@
 #include <QTextEdit>
 #include "TokenListView.h"
 
-class GameCreationKit : public QMainWindow
+class DebugTools : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    GameCreationKit(QWidget *parent = nullptr);
-    virtual ~GameCreationKit() = default;
+    DebugTools(QWidget *parent = nullptr);
+    virtual ~DebugTools() = default;
 
 private:
     QTextEdit* textEdit;

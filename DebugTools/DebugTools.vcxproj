@@ -100,10 +100,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\TokenListView.cpp" />
-    <QtRcc Include="GameCreationKit.qrc" />
-    <QtUic Include="GameCreationKit.ui" />
-    <QtMoc Include="include\GameCreationKit\GameCreationKit.h" />
-    <ClCompile Include="source\GameCreationKit.cpp" />
+    <QtRcc Include="DebugTools.qrc" />
+    <QtUic Include="DebugTools.ui" />
+    <QtMoc Include="include\DebugTools\DebugTools.h" />
+    <ClCompile Include="source\DebugTools.cpp" />
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -112,7 +112,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\GameCreationKit\TokenListView.h" />
+    <ClInclude Include="include\DebugTools\TokenListView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
