@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LexerTests", "Tests\LexerTe
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SourceLocationTests", "Tests\SourceLocationTests\SourceLocationTests.vcxproj", "{3F7ACACD-B81B-4CD2-A4C5-0FAD195EA617}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParserTests", "Tests\ParserTests\ParserTests.vcxproj", "{144F645F-38BA-4DD2-B37A-DBE6A6877C4A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -35,6 +37,10 @@ Global
 		{3F7ACACD-B81B-4CD2-A4C5-0FAD195EA617}.Debug|x64.Build.0 = Debug|x64
 		{3F7ACACD-B81B-4CD2-A4C5-0FAD195EA617}.Release|x64.ActiveCfg = Release|x64
 		{3F7ACACD-B81B-4CD2-A4C5-0FAD195EA617}.Release|x64.Build.0 = Release|x64
+		{144F645F-38BA-4DD2-B37A-DBE6A6877C4A}.Debug|x64.ActiveCfg = Debug|x64
+		{144F645F-38BA-4DD2-B37A-DBE6A6877C4A}.Debug|x64.Build.0 = Debug|x64
+		{144F645F-38BA-4DD2-B37A-DBE6A6877C4A}.Release|x64.ActiveCfg = Release|x64
+		{144F645F-38BA-4DD2-B37A-DBE6A6877C4A}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +48,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{1E775FCF-353B-49F5-B5E5-D68EEEC2459F} = {6974978B-75AB-4D24-BC54-1D5CEFAC0B43}
 		{3F7ACACD-B81B-4CD2-A4C5-0FAD195EA617} = {6974978B-75AB-4D24-BC54-1D5CEFAC0B43}
+		{144F645F-38BA-4DD2-B37A-DBE6A6877C4A} = {6974978B-75AB-4D24-BC54-1D5CEFAC0B43}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E593283B-C065-428C-9D9B-9D66363C3215}
