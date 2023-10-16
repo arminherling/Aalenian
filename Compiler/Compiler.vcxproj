@@ -101,6 +101,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Node.cpp" />
+    <ClCompile Include="source\ParseTree.cpp" />
+    <ClCompile Include="source\Parser.cpp" />
     <ClCompile Include="source\DiagnosticsBag.cpp" />
     <ClCompile Include="source\TokenBuffer.cpp" />
     <ClCompile Include="source\SourceText.cpp" />
@@ -119,6 +122,9 @@
     <ClInclude Include="include\Compiler\Token.h" />
     <ClInclude Include="include\Compiler\TokenBuffer.h" />
     <ClInclude Include="include\Compiler\TokenKind.h" />
+    <ClInclude Include="include\Compiler\Parser.h" />
+    <ClInclude Include="include\Compiler\ParseTree.h" />
+    <ClInclude Include="include\Compiler\Node.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
