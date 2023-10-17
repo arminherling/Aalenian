@@ -42,6 +42,10 @@ private slots:
         const static auto source6 = std::make_shared<SourceText>(QString(" \"1234567890\""));
         QTest::newRow(" \"1234567890\"") << source6 
             << SourceLocation{.source = source6, .startIndex = 1, .endIndex = 13, .startColumn = 2, .endColumn = 14, .startLine = 1, .endLine = 1};
+
+        const static auto source7 = std::make_shared<SourceText>(QString("$"));
+        QTest::newRow("$") << source7
+            << SourceLocation{.source = source7, .startIndex = 0, .endIndex = 1, .startColumn = 1, .endColumn = 2, .startLine = 1, .endLine = 1};
     }
 
     void SingleSourceLocation()

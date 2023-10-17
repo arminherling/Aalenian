@@ -27,7 +27,7 @@
     if (auto result = tokenSizes.find(kind); result != tokenSizes.end())
         return result->second;
 
-    return 0;
+    return 1;
 }
 
 [[nodiscard]] auto PeekChar(const SourceTextSharedPtr& source, int& currentIndex, int offset) noexcept
