@@ -5,18 +5,19 @@
 [[nodiscard]] auto InitializeTokenSizes() noexcept
 {
     return std::unordered_map<TokenKind, int>{
-        {TokenKind::Plus, 1},
-        {TokenKind::Minus, 1},
-        {TokenKind::Star, 1},
-        {TokenKind::Slash, 1},
-        {TokenKind::Dot, 1},
-        {TokenKind::Comma, 1},
-        {TokenKind::Equal, 1},
-        {TokenKind::OpenParenthesis, 1},
-        {TokenKind::CloseParenthesis, 1},
-        {TokenKind::OpenBracket, 1},
-        {TokenKind::CloseBracket, 1},
-        {TokenKind::EndOfFile, 0},
+        { TokenKind::Plus, 1 },
+        { TokenKind::Minus, 1 },
+        { TokenKind::Star, 1 },
+        { TokenKind::Slash, 1 },
+        { TokenKind::Dot, 1 },
+        { TokenKind::Comma, 1 },
+        { TokenKind::Equal, 1 },
+        { TokenKind::Underscore, 1 },
+        { TokenKind::OpenParenthesis, 1 },
+        { TokenKind::CloseParenthesis, 1 },
+        { TokenKind::OpenBracket, 1 },
+        { TokenKind::CloseBracket, 1 },
+        { TokenKind::EndOfFile, 0 },
     };
 }
 
@@ -264,7 +265,12 @@ auto LexString(TokenBuffer& tokenBuffer, DiagnosticsBag& diagnostics, const Sour
             }
             default:
             {
-                if (IsLetterOrUnderscore(current))
+                if (current == QChar('_') && !IsLetterOrNumberOrUnderscore(PeekNextChar(source, currentIndex)))
+                {
+                    AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Underscore);
+                    break;
+                }
+                else if (IsLetterOrUnderscore(current))
                 {
                     LexIdentifier(tokenBuffer, source, currentLine, currentIndex, currentColumn);
                     break;

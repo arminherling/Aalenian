@@ -27,6 +27,7 @@ private slots:
         QTest::newRow("Dot") << QString(".") << TokenKind::Dot;
         QTest::newRow("Comma") << QString(",") << TokenKind::Comma;
         QTest::newRow("Equal") << QString("=") << TokenKind::Equal;
+        QTest::newRow("Underscore") << QString("_") << TokenKind::Underscore;
 
         QTest::newRow("OpenParenthesis") << QString("(") << TokenKind::OpenParenthesis;
         QTest::newRow("CloseParenthesis") << QString(")") << TokenKind::CloseParenthesis;
@@ -104,7 +105,6 @@ private slots:
         QTest::newRow("class") << "class" << "class";
         QTest::newRow("define") << "define" << "define";
         QTest::newRow("\\n return") << "\n return" << "return";
-        QTest::newRow("_") << "_" << "_";
         QTest::newRow("_name") << " _name" << "_name";
         QTest::newRow("m_index") << "m_index" << "m_index";
         QTest::newRow("_10") << "_10" << "_10";

@@ -16,6 +16,7 @@ enum class TokenKind
     Dot,
     Comma,
     Equal,
+    Underscore,
     OpenParenthesis,
     CloseParenthesis,
     OpenBracket,
