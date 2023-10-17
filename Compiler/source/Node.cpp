@@ -20,9 +20,30 @@ Expression::Expression(NodeKind kind)
 {
 }
 
+Discard::Discard(const Token& token)
+    : Expression(NodeKind::Discard)
+{
+}
+
 Name::Name(const Token& token)
     : Expression(NodeKind::Name)
     , m_token{ token }
+{
+}
+
+Arguments::Arguments(
+    const Token& openParenthesis,
+    const Token& closeParenthesis)
+    : Node(NodeKind::Arguments)
+    , m_openParenthesis{ openParenthesis }
+    , m_closeParenthesis{ closeParenthesis }
+{
+}
+
+FunctionCall::FunctionCall(const Token& nameToken, const Arguments& arguments)
+    : Expression(NodeKind::FunctionCall)
+    , m_nameToken{ nameToken }
+    , m_arguments{ arguments }
 {
 }
 

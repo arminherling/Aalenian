@@ -22,10 +22,12 @@ private:
     Expression* ParseBinaryExpression(int parentPrecedence);
     Expression* ParsePrimaryExpression();
     Expression* ParseFunctionCallOrName();
+    Arguments ParseArguments();
     Expression* ParseName();
     Expression* ParseNumberLiteral();
 
     Token AdvanceOnMatch(TokenKind kind);
+    void SkipUntil(TokenKind kind);
 
     Token Peek(int offset);
     Token CurrentToken() { return Peek(0); }

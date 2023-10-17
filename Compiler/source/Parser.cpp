@@ -23,9 +23,10 @@ QList<Statement*> Parser::ParseGlobalStatements()
     {
         switch (currentToken.kind)
         {
+            case TokenKind::Underscore:
             case TokenKind::Identifier:
             {
-                auto nameOrCallExpression = ParseFunctionCallOrName();
+                auto nameOrCallExpression = ParsePrimaryExpression();
 
                 auto nextToken = CurrentToken();
                 if (nextToken.kind == TokenKind::Equal)
@@ -43,6 +44,9 @@ QList<Statement*> Parser::ParseGlobalStatements()
             }
             default:
             {
+                const auto& location = m_tokens.GetSourceLocation(currentToken.locationIndex);
+                m_diagnostics.AddError(DiagnosticKind::Unknown, location);
+
                 AdvanceCurrentIndex();
                 break;
             }
@@ -71,9 +75,14 @@ Expression* Parser::ParseBinaryExpression(int parentPrecedence)
 Expression* Parser::ParsePrimaryExpression()
 {
     auto currentToken = CurrentToken();
-
+    
     switch (currentToken.kind)
     {
+        case TokenKind::Underscore:
+        {
+            AdvanceCurrentIndex();
+            return new Discard(currentToken);
+        }
         case TokenKind::Identifier:
         {
             return ParseFunctionCallOrName();
@@ -84,7 +93,9 @@ Expression* Parser::ParsePrimaryExpression()
         }
         default:
         {
-            // error
+            const auto& location = m_tokens.GetSourceLocation(currentToken.locationIndex);
+            m_diagnostics.AddError(DiagnosticKind::Unknown, location);
+
             AdvanceCurrentIndex();
             return nullptr;
         }
@@ -93,13 +104,30 @@ Expression* Parser::ParsePrimaryExpression()
 
 Expression* Parser::ParseFunctionCallOrName()
 {
-    auto name = ParseName();
-    auto nextToken = CurrentToken();
+    auto nextToken = NextToken();
 
-    //if (nextToken.kind == TokenKind::OpenParenthesis)
-    //    return ParseFunctionCallExpression(name);
+    if (nextToken.kind == TokenKind::OpenParenthesis)
+    {
+        auto name = AdvanceOnMatch(TokenKind::Identifier);
+        auto arguments = ParseArguments();
+        return new FunctionCall(name, arguments);
+    }
+    else
+    {
+        return ParseName();
+    }
+}
 
-    return name;
+Arguments Parser::ParseArguments()
+{
+    auto openParenthesis = AdvanceOnMatch(TokenKind::OpenParenthesis);
+    
+    // TODO
+    SkipUntil(TokenKind::CloseParenthesis);
+
+    auto closeParenthesis = AdvanceOnMatch(TokenKind::CloseParenthesis);
+
+    return Arguments(openParenthesis, closeParenthesis);
 }
 
 Expression* Parser::ParseName()
@@ -117,7 +145,6 @@ Expression* Parser::ParseNumberLiteral()
 Token Parser::AdvanceOnMatch(TokenKind kind)
 {
     auto currentToken = CurrentToken();
-
     if (currentToken.kind == kind)
     {
         AdvanceCurrentIndex();
@@ -125,8 +152,18 @@ Token Parser::AdvanceOnMatch(TokenKind kind)
     }
     else
     {
-        // error expected x but got y
+        // todo add error expected x but got y
         return Token::ToError(currentToken);
+    }
+}
+
+void Parser::SkipUntil(TokenKind kind)
+{
+    auto currentToken = CurrentToken();
+    while (currentToken.kind != kind || currentToken.kind == TokenKind::EndOfFile)
+    {
+        AdvanceCurrentIndex();
+        currentToken = CurrentToken();
     }
 }
 

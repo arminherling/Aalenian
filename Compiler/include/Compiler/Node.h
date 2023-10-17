@@ -7,7 +7,10 @@ enum class COMPILER_API NodeKind
 {
     Unknown,
     AssignmentStatement,
-    Name,
+    Discard,
+    Arguments,
+    FunctionCall,
+    Name, 
     Number
 };
 
@@ -45,6 +48,12 @@ private:
     Expression* m_rightExpression;
 };
 
+class COMPILER_API Discard : public Expression
+{
+public:
+    Discard(const Token& token);
+};
+
 class COMPILER_API Name : public Expression
 {
 public:
@@ -58,6 +67,48 @@ public:
 private:
     Token m_token;
 };
+
+
+class COMPILER_API Arguments : public Node
+{
+public:
+    Arguments(const Token& openParenthesis, const Token& closeParenthesis);
+
+    [[nodiscard]] const Token& OpenParenthesis() noexcept
+    {
+        return m_openParenthesis;
+    }
+
+    [[nodiscard]] const Token& CloseParenthesis() noexcept
+    {
+        return m_closeParenthesis;
+    }
+
+private:
+    Token m_openParenthesis;
+    Token m_closeParenthesis;
+};
+
+class COMPILER_API FunctionCall : public Expression
+{
+public:
+    FunctionCall(const Token& nameToken, const Arguments& arguments);
+
+    [[nodiscard]] const Token& Name() noexcept
+    {
+        return m_nameToken;
+    }
+
+    [[nodiscard]] const Arguments& arguments()
+    {
+        return m_arguments;
+    }
+
+private:
+    Token m_nameToken;
+    Arguments m_arguments;
+};
+
 
 class COMPILER_API Number : public Expression
 {

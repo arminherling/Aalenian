@@ -20,6 +20,16 @@ private slots:
             << 1 
             << (QList<NodeKind>() << NodeKind::AssignmentStatement);
 
+        QTest::newRow("a = func()")
+            << QString("a = func()")
+            << 1
+            << (QList<NodeKind>() << NodeKind::AssignmentStatement);
+
+        QTest::newRow("_ = func()")
+            << QString("_ = func()")
+            << 1
+            << (QList<NodeKind>() << NodeKind::AssignmentStatement);
+
         QTest::newRow("a = 1   b = a") 
             << QString("a = 1   b = a") 
             << 2 
