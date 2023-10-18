@@ -9,7 +9,7 @@ class ParserTests : public QObject
     Q_OBJECT
 
 private slots:
-    void GlobalVariableDeclarations_data()
+    void GlobalStatements_data()
     {
         QTest::addColumn<QString>("input");
         QTest::addColumn<int>("expectedCount");
@@ -30,13 +30,28 @@ private slots:
             << 1
             << (QList<NodeKind>() << NodeKind::AssignmentStatement);
 
-        QTest::newRow("a = 1   b = a") 
-            << QString("a = 1   b = a") 
-            << 2 
+        QTest::newRow("a = 1   b = a")
+            << QString("a = 1   b = a")
+            << 2
             << (QList<NodeKind>() << NodeKind::AssignmentStatement << NodeKind::AssignmentStatement);
+
+        QTest::newRow("func()")
+            << QString("func()")
+            << 1
+            << (QList<NodeKind>() << NodeKind::ExpressionStatement);
+
+        QTest::newRow("define func() {  }")
+            << QString("define func() {  }")
+            << 1
+            << (QList<NodeKind>() << NodeKind::FunctionDefinitionStatement);
+
+        QTest::newRow("define func() { a = 0   return a }")
+            << QString("define func() { a = 0   return a}")
+            << 1
+            << (QList<NodeKind>() << NodeKind::FunctionDefinitionStatement);
     }
 
-    void GlobalVariableDeclarations()
+    void GlobalStatements()
     {
         QFETCH(QString, input);
         QFETCH(int, expectedCount);

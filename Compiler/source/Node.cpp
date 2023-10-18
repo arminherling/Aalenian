@@ -5,11 +5,6 @@ Node::Node(NodeKind kind)
 {
 }
 
-NodeKind Node::Kind()
-{
-    return m_kind;
-}
-
 Statement::Statement(NodeKind kind)
     : Node(kind)
 {
@@ -31,6 +26,15 @@ Name::Name(const Token& token)
 {
 }
 
+Parameters::Parameters(
+    const Token& openParenthesis,
+    const Token& closeParenthesis)
+    : Node(NodeKind::Parameters)
+    , m_openParenthesis{ openParenthesis }
+    , m_closeParenthesis{ closeParenthesis }
+{
+}
+
 Arguments::Arguments(
     const Token& openParenthesis,
     const Token& closeParenthesis)
@@ -40,7 +44,16 @@ Arguments::Arguments(
 {
 }
 
-FunctionCall::FunctionCall(const Token& nameToken, const Arguments& arguments)
+Block::Block(
+    const Token& openBracket,
+    const Token& closeBracket)
+    : Node(NodeKind::Block)
+    , m_openBracket{ openBracket }
+    , m_closeBracket{ closeBracket }
+{
+}
+
+FunctionCall::FunctionCall(const Token& nameToken, Arguments* arguments)
     : Expression(NodeKind::FunctionCall)
     , m_nameToken{ nameToken }
     , m_arguments{ arguments }
@@ -58,5 +71,33 @@ AssignmentStatement::AssignmentStatement(Expression* leftExpression, const Token
     , m_leftExpression{ leftExpression }
     , m_equalsToken{ equalsToken }
     , m_rightExpression{ rightExpression }
+{
+}
+
+ExpressionStatement::ExpressionStatement(Expression* expression)
+    : Statement(NodeKind::ExpressionStatement)
+    , m_expression{ expression }
+{
+}
+
+ReturnStatement::ReturnStatement(
+    const Token& returnKeyword,
+    Expression* expression)
+    : Statement(NodeKind::ReturnStatement)
+    , m_returnKeyword{ returnKeyword }
+    , m_expression{ expression }
+{
+}
+
+FunctionDefinitionStatement::FunctionDefinitionStatement(
+    const Token& keyword,
+    const Token& name,
+    Parameters* parameters,
+    Block* body)
+    : Statement(NodeKind::FunctionDefinitionStatement)
+    , m_keyword{ keyword }
+    , m_name{ name }
+    , m_parameters{ parameters }
+    , m_body{ body }
 {
 }

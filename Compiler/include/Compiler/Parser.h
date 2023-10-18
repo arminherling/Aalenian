@@ -16,13 +16,27 @@ public:
     ParseTree Parse();
 
 private:
+    enum StatementScope
+    {
+        Global,
+        Function
+    };
+
     QList<Statement*> ParseGlobalStatements();
-    Statement* ParseAssignmentStatement(Expression* leftExpression, const Token& equals);
+    QList<Statement*> ParseStatements(StatementScope scope);
+    Statement* ParseAssignmentStatement();
+    Statement* ParseExpressionStatement();
+    Statement* ParseFunctionDefinitionStatement();
+    Statement* ParseReturnStatement();
     Expression* ParseExpression();
     Expression* ParseBinaryExpression(int parentPrecedence);
     Expression* ParsePrimaryExpression();
     Expression* ParseFunctionCallOrName();
-    Arguments ParseArguments();
+    Expression* ParseFunctionCall();
+    Parameters* ParseParameters();
+    Arguments* ParseArguments();
+    Block* ParseFunctionBody();
+    Block* ParseBlock(StatementScope scope);
     Expression* ParseName();
     Expression* ParseNumberLiteral();
 
