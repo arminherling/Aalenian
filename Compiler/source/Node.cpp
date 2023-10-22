@@ -1,5 +1,39 @@
 #include "Node.h"
 
+QString StringifyNodeKind(NodeKind kind)
+{
+    switch (kind)
+    {
+        case NodeKind::Unknown:
+            return QString("Unknown");
+        case NodeKind::AssignmentStatement:
+            return QString("AssignmentStatement");
+        case NodeKind::ExpressionStatement:
+            return QString("ExpressionStatement");
+        case NodeKind::FunctionDefinitionStatement:
+            return QString("FunctionDefinitionStatement");
+        case NodeKind::ReturnStatement:
+            return QString("ReturnStatement");
+        case NodeKind::Discard:
+            return QString("Discard");
+        case NodeKind::Parameters:
+            return QString("Parameters");
+        case NodeKind::Arguments:
+            return QString("Arguments");
+        case NodeKind::Block:
+            return QString("Block");
+        case NodeKind::FunctionCall:
+            return QString("FunctionCall");
+        case NodeKind::Name:
+            return QString("Name");
+        case NodeKind::Number:
+            return QString("Number");
+        default:
+            assert(!"String for TokenKind value was not defined yet");
+            return QString();
+    }
+}
+
 Node::Node(NodeKind kind)
     : m_kind{ kind }
 {
@@ -46,9 +80,11 @@ Arguments::Arguments(
 
 Block::Block(
     const Token& openBracket,
+    const QList<Statement*>& statements,
     const Token& closeBracket)
     : Node(NodeKind::Block)
     , m_openBracket{ openBracket }
+    , m_statements{ statements }
     , m_closeBracket{ closeBracket }
 {
 }

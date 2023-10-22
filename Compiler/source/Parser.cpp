@@ -22,7 +22,7 @@ ParseTree Parser::Parse()
 {
     auto globalStatements = ParseGlobalStatements();
 
-    return ParseTree(globalStatements);
+    return ParseTree(m_tokens, globalStatements);
 }
 QList<Statement*> Parser::ParseGlobalStatements()
 {
@@ -249,7 +249,7 @@ Block* Parser::ParseBlock(StatementScope scope)
     auto statements = ParseStatements(scope);
     auto closeBracket = AdvanceOnMatch(TokenKind::CloseBracket);
 
-    return new Block(openBracket, closeBracket);
+    return new Block(openBracket, statements, closeBracket);
 }
 
 Token Parser::AdvanceOnMatch(TokenKind kind)

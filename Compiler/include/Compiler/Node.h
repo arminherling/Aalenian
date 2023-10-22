@@ -3,6 +3,8 @@
 #include "CompilerApi.h"
 #include "Token.h"
 
+#include <qlist.h>
+
 enum class COMPILER_API NodeKind
 {
     Unknown,
@@ -18,6 +20,9 @@ enum class COMPILER_API NodeKind
     Name,
     Number
 };
+
+COMPILER_API QString StringifyNodeKind(NodeKind kind);
+
 
 class COMPILER_API Node
 {
@@ -47,6 +52,9 @@ class COMPILER_API AssignmentStatement : public Statement
 public:
     AssignmentStatement(Expression* leftExpression, const Token& equalsToken, Expression* rightExpression);
 
+    [[nodiscard]] Expression* LeftExpression() noexcept { return m_leftExpression; }
+    [[nodiscard]] Expression* RightExpression() noexcept { return m_rightExpression; }
+
 private:
     Expression* m_leftExpression;
     Token m_equalsToken;
@@ -58,6 +66,8 @@ class COMPILER_API ExpressionStatement : public Statement
 public:
     ExpressionStatement(Expression* expression);
 
+    [[nodiscard]] Expression* expression() noexcept { return m_expression; }
+
 private:
     Expression* m_expression;
 };
@@ -66,6 +76,8 @@ class COMPILER_API ReturnStatement : public Statement
 {
 public:
     ReturnStatement(const Token& returnKeyword, Expression* expression);
+
+    [[nodiscard]] Expression* expression() noexcept { return m_expression; }
 
 private:
     Token m_returnKeyword;
@@ -118,13 +130,15 @@ private:
 class COMPILER_API Block : public Node
 {
 public:
-    Block(const Token& openBracket, const Token& closeBracket);
+    Block(const Token& openBracket, const QList<Statement*>& statements, const Token& closeBracket);
 
     [[nodiscard]] const Token& OpenBracket() noexcept { return m_openBracket; }
+    [[nodiscard]] const QList<Statement*>& Statements() noexcept { return m_statements; }
     [[nodiscard]] const Token& CloseBracket() noexcept { return m_closeBracket; }
 
 private:
     Token m_openBracket;
+    QList<Statement*> m_statements;
     Token m_closeBracket;
 };
 

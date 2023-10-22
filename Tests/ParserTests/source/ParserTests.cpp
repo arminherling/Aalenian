@@ -3,6 +3,7 @@
 #include <Compiler/DiagnosticsBag.h>
 #include <Compiler/Lexer.h>
 #include <Compiler/Parser.h>
+#include <Compiler/ParseTreePrinter.h>
 
 class ParserTests : public QObject
 {
@@ -64,6 +65,11 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         auto parseTree = Parse(tokens, diagnostics);
+
+
+        ParseTreePrinter printer{ parseTree };
+        auto output = printer.PrettyPrint();
+
 
         auto endTime = std::chrono::high_resolution_clock::now();
         double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
