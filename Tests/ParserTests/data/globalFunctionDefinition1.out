@@ -1,0 +1,7 @@
+FunctionDefinitionStatement: {
+    Name: func
+    Parameters(0): {
+    }
+    Block(0): {
+    }
+}

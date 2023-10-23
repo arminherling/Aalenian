@@ -4,60 +4,46 @@
 #include <Compiler/Lexer.h>
 #include <Compiler/Parser.h>
 #include <Compiler/ParseTreePrinter.h>
+#include <Compiler/File.h>
 
 class ParserTests : public QObject
 {
     Q_OBJECT
 
 private slots:
-    void GlobalStatements_data()
+    void FileTests_data()
     {
-        QTest::addColumn<QString>("input");
-        QTest::addColumn<int>("expectedCount");
-        QTest::addColumn<QList<NodeKind>>("expectedNodeKind");
+        QTest::addColumn<QString>("inputFilePath");
+        QTest::addColumn<QString>("outputFilePath");
+        QTest::addColumn<QString>("errorFilePath");
 
-        QTest::newRow("a = 1") 
-            << QString("a = 1") 
-            << 1 
-            << (QList<NodeKind>() << NodeKind::AssignmentStatement);
+        auto appDir = QDir(QCoreApplication::applicationDirPath());
+        auto testDataDir = QDir(appDir.filePath(QString("../../Tests/ParserTests/data")));
+        auto absolutePath = testDataDir.absolutePath();
+        for (const auto& file : testDataDir.entryInfoList(QStringList() << QString("*.in"), QDir::Files))
+        {
+            auto fileName = file.completeBaseName();
 
-        QTest::newRow("a = func()")
-            << QString("a = func()")
-            << 1
-            << (QList<NodeKind>() << NodeKind::AssignmentStatement);
+            auto inPath = QDir::cleanPath(absolutePath + QDir::separator() + file.completeBaseName() + QString(".in"));
+            auto outPath = QDir::cleanPath(absolutePath + QDir::separator() + file.completeBaseName() + QString(".out"));
+            auto errorPath = QDir::cleanPath(absolutePath + QDir::separator() + file.completeBaseName() + QString(".error"));
 
-        QTest::newRow("_ = func()")
-            << QString("_ = func()")
-            << 1
-            << (QList<NodeKind>() << NodeKind::AssignmentStatement);
-
-        QTest::newRow("a = 1   b = a")
-            << QString("a = 1   b = a")
-            << 2
-            << (QList<NodeKind>() << NodeKind::AssignmentStatement << NodeKind::AssignmentStatement);
-
-        QTest::newRow("func()")
-            << QString("func()")
-            << 1
-            << (QList<NodeKind>() << NodeKind::ExpressionStatement);
-
-        QTest::newRow("define func() {  }")
-            << QString("define func() {  }")
-            << 1
-            << (QList<NodeKind>() << NodeKind::FunctionDefinitionStatement);
-
-        QTest::newRow("define func() { a = 0   return a }")
-            << QString("define func() { a = 0   return a}")
-            << 1
-            << (QList<NodeKind>() << NodeKind::FunctionDefinitionStatement);
+            QTest::newRow(fileName.toStdString().c_str()) << inPath << outPath << errorPath;
+        }
     }
 
-    void GlobalStatements()
+    void FileTests()
     {
-        QFETCH(QString, input);
-        QFETCH(int, expectedCount);
-        QFETCH(QList<NodeKind>, expectedNodeKind);
+        QFETCH(QString, inputFilePath);
+        QFETCH(QString, outputFilePath);
+        QFETCH(QString, errorFilePath);
 
+        if (!QFile::exists(inputFilePath))
+            QFAIL("In file missing");
+        if (!QFile::exists(outputFilePath))
+            QFAIL("Out file missing");
+
+        auto input = File::ReadAllText(inputFilePath);
         auto source = std::make_shared<SourceText>(input);
         DiagnosticsBag diagnostics;
 
@@ -65,23 +51,24 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         auto parseTree = Parse(tokens, diagnostics);
+        auto endTime = std::chrono::high_resolution_clock::now();
 
+        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         ParseTreePrinter printer{ parseTree };
         auto output = printer.PrettyPrint();
 
+        auto expectedOutput = File::ReadAllText(outputFilePath);
 
-        auto endTime = std::chrono::high_resolution_clock::now();
-        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
-
-        auto statements = parseTree.GlobalStatements();
-
-        QVERIFY(diagnostics.Diagnostics().empty());
-        QCOMPARE(statements.count(), expectedCount);
-        for (int i = 0; i < statements.size(); i++)
+        QCOMPARE(output, expectedOutput);
+        if (!QFile::exists(errorFilePath))
         {
-            QCOMPARE(statements[i]->Kind(), expectedNodeKind[i]);
+            QVERIFY(diagnostics.Diagnostics().empty());
+        }
+        else
+        {
+            QFAIL("TODO compare errors with error file once we got some");
         }
     }
 };

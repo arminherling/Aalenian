@@ -1,0 +1,12 @@
+AssignmentStatement: {
+    Left: {
+        Discard: _
+    }
+    Right: {
+        FunctionCall: {
+            Name: func
+            Arguments(0): {
+            }
+        }
+    }
+}

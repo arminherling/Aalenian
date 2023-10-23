@@ -101,6 +101,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\File.cpp" />
     <ClCompile Include="source\ParseTreePrinter.cpp" />
     <ClCompile Include="source\Node.cpp" />
     <ClCompile Include="source\ParseTree.cpp" />
@@ -110,6 +111,7 @@
     <ClCompile Include="source\SourceText.cpp" />
     <ClCompile Include="source\Lexer.cpp" />
     <ClCompile Include="source\TokenKind.cpp" />
+    <ClInclude Include="include\Compiler\File.h" />
     <ClInclude Include="include\Compiler\DiagnosticsBag.h" />
     <ClInclude Include="include\Compiler\Diagnostic.h" />
     <ClInclude Include="include\Compiler\DiagnosticKind.h" />

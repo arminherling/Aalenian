@@ -41,6 +41,9 @@
     <ClCompile Include="source\ParseTreePrinter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\File.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Compiler\DiagnosticsBag.h">
@@ -89,6 +92,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Compiler\ParseTreePrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Compiler\File.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -16,7 +16,6 @@ QString ParseTreePrinter::PrettyPrint()
         PrettyPrintNode(globalStatement);
     }
 
-
     return toUtf8();
 }
 

@@ -1,0 +1,8 @@
+AssignmentStatement: {
+    Left: {
+        Name: a
+    }
+    Right: {
+        Number: 1
+    }
+}

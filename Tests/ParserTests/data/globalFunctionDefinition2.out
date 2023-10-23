@@ -1,0 +1,18 @@
+FunctionDefinitionStatement: {
+    Name: func
+    Parameters(0): {
+    }
+    Block(2): {
+        AssignmentStatement: {
+            Left: {
+                Name: a
+            }
+            Right: {
+                Number: 0
+            }
+        }
+        ReturnStatement: {
+            Name: a
+        }
+    }
+}
