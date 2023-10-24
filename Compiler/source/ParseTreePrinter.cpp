@@ -63,6 +63,11 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
             PrettyPrintNumber((Number*)node);
             break;
         }
+        case NodeKind::Error:
+        {
+            PrettyPrintError((Error*)node);
+            break;
+        }
         default:
             break;
     }
@@ -88,7 +93,6 @@ void ParseTreePrinter::PrettyPrintAssignmentStatement(AssignmentStatement* state
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
-
 }
 
 void ParseTreePrinter::PrettyPrintExpressionStatement(ExpressionStatement* statement)
@@ -113,7 +117,6 @@ void ParseTreePrinter::PrettyPrintFunctionDefinitionStatement(FunctionDefinition
     PrettyPrintBlock(statement->body());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
-
 }
 
 void ParseTreePrinter::PrettyPrintReturnStatement(ReturnStatement* statement)
@@ -176,7 +179,6 @@ void ParseTreePrinter::PrettyPrintFunctionCall(FunctionCall* functionCall)
     PrettyPrintArguments(functionCall->arguments());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
-
 }
 
 void ParseTreePrinter::PrettyPrintName(Name* name)
@@ -191,4 +193,9 @@ void ParseTreePrinter::PrettyPrintNumber(Number* number)
     auto token = number->token();
     auto lexeme = m_parseTree.Tokens().GetLexeme(token.kindIndex);
     stream() << Indentation() << StringifyNodeKind(number->Kind()) << QString(": %1").arg(lexeme) << NewLine();
+}
+
+void ParseTreePrinter::PrettyPrintError(Error* error)
+{
+    stream() << Indentation() << QString("Error!!") << NewLine();
 }

@@ -189,7 +189,7 @@ Expression* Parser::ParsePrimaryExpression()
             m_diagnostics.AddError(DiagnosticKind::Unknown, location);
 
             AdvanceCurrentIndex();
-            return nullptr;
+            return new Error(currentToken);
         }
     }
 }

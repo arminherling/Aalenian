@@ -116,6 +116,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="data\globalAssignment1.in" />
+    <None Include="data\globalAssignment1.out" />
     <None Include="data\globalAssignment2.in" />
     <None Include="data\globalAssignment2.out" />
     <None Include="data\globalAssignment3.in" />
@@ -126,10 +128,8 @@
     <None Include="data\globalFunctionDefinition1.out" />
     <None Include="data\globalFunctionDefinition2.in" />
     <None Include="data\globalFunctionDefinition2.out" />
+    <None Include="data\multipleGlobalAssignments1.in" />
     <None Include="data\multipleGlobalAssignments1.out" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="data\multipleGlobalAssignments1.in" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

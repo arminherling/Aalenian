@@ -8,14 +8,18 @@
 enum class COMPILER_API NodeKind
 {
     Unknown,
+    Error,
+
     AssignmentStatement,
     ExpressionStatement,
     FunctionDefinitionStatement,
     ReturnStatement,
-    Discard,
+
     Parameters,
     Arguments,
     Block,
+
+    Discard,
     FunctionCall,
     Name,
     Number
@@ -176,6 +180,17 @@ class COMPILER_API Number : public Expression
 {
 public:
     Number(const Token& token);
+
+    [[nodiscard]] const Token& token() noexcept { return m_token; }
+
+private:
+    Token m_token;
+};
+
+class COMPILER_API Error : public Expression
+{
+public:
+    Error(const Token& token);
 
     [[nodiscard]] const Token& token() noexcept { return m_token; }
 

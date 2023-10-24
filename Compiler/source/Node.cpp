@@ -6,6 +6,8 @@ QString StringifyNodeKind(NodeKind kind)
     {
         case NodeKind::Unknown:
             return QString("Unknown");
+        case NodeKind::Error:
+            return QString("Error");
         case NodeKind::AssignmentStatement:
             return QString("AssignmentStatement");
         case NodeKind::ExpressionStatement:
@@ -135,5 +137,11 @@ FunctionDefinitionStatement::FunctionDefinitionStatement(
     , m_name{ name }
     , m_parameters{ parameters }
     , m_body{ body }
+{
+}
+
+Error::Error(const Token& token)
+    : Expression(NodeKind::Error)
+    , m_token{ token }
 {
 }
