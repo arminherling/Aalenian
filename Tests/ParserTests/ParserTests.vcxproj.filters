@@ -31,9 +31,10 @@
     <None Include="data\multipleGlobalAssignments1.in" />
     <None Include="data\multipleGlobalAssignments1.out" />
     <None Include="data\typeDefinition1.in" />
-    <None Include="data\typeDefinition2.in" />
     <None Include="data\typeDefinition3.in" />
+    <None Include="data\typeDefinition2.in" />
     <None Include="data\globalAssignment4.in" />
     <None Include="data\typeDefinition1.out" />
+    <None Include="data\typeDefinition2.out" />
   </ItemGroup>
 </Project>

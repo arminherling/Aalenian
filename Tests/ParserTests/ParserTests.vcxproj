@@ -133,8 +133,9 @@
     <None Include="data\multipleGlobalAssignments1.out" />
     <None Include="data\typeDefinition1.in" />
     <None Include="data\typeDefinition1.out" />
-    <None Include="data\typeDefinition2.in" />
+    <None Include="data\typeDefinition2.out" />
     <None Include="data\typeDefinition3.in" />
+    <None Include="data\typeDefinition2.in" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -1,0 +1,29 @@
+TypeDefinitionStatement: {
+    Name: Vector3D
+    Block(3): {
+        AssignmentStatement: {
+            Left: {
+                Name: x
+            }
+            Right: {
+                Number: 0
+            }
+        }
+        AssignmentStatement: {
+            Left: {
+                Name: y
+            }
+            Right: {
+                Number: 0
+            }
+        }
+        AssignmentStatement: {
+            Left: {
+                Name: z
+            }
+            Right: {
+                Number: 0
+            }
+        }
+    }
+}
