@@ -19,7 +19,8 @@ private:
     enum StatementScope
     {
         Global,
-        Function
+        Function,
+        Type
     };
 
     QList<Statement*> ParseGlobalStatements();
@@ -27,6 +28,7 @@ private:
     Statement* ParseAssignmentStatement();
     Statement* ParseExpressionStatement();
     Statement* ParseFunctionDefinitionStatement();
+    Statement* ParseTypeDefinitionStatement();
     Statement* ParseReturnStatement();
     Expression* ParseExpression();
     Expression* ParseBinaryExpression(int parentPrecedence);
@@ -36,6 +38,7 @@ private:
     Parameters* ParseParameters();
     Arguments* ParseArguments();
     Block* ParseFunctionBody();
+    Block* ParseTypeBody();
     Block* ParseBlock(StatementScope scope);
     Expression* ParseName();
     Expression* ParseNumberLiteral();

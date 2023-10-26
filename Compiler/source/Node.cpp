@@ -14,6 +14,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("ExpressionStatement");
         case NodeKind::FunctionDefinitionStatement:
             return QString("FunctionDefinitionStatement");
+        case NodeKind::TypeDefinitionStatement:
+            return QString("TypeDefinitionStatement");
         case NodeKind::ReturnStatement:
             return QString("ReturnStatement");
         case NodeKind::Discard:
@@ -136,6 +138,17 @@ FunctionDefinitionStatement::FunctionDefinitionStatement(
     , m_keyword{ keyword }
     , m_name{ name }
     , m_parameters{ parameters }
+    , m_body{ body }
+{
+}
+
+TypeDefinitionStatement::TypeDefinitionStatement(
+    const Token& keyword,
+    const Token& name,
+    Block* body)
+    : Statement(NodeKind::TypeDefinitionStatement)
+    , m_keyword{ keyword }
+    , m_name{ name }
     , m_body{ body }
 {
 }

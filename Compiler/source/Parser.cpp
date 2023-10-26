@@ -1,9 +1,13 @@
 #include "Parser.h"
 
-
 bool IsFunctionDefinitionKeyword(const QStringView& lexeme)
 {
     return lexeme == QString("define");
+}
+
+bool IsTypeDefinitionKeyword(const QStringView& lexeme)
+{
+    return lexeme == QString("type");
 }
 
 bool IsReturnKeyword(const QStringView& lexeme)
@@ -50,6 +54,11 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                     if (IsFunctionDefinitionKeyword(m_tokens.GetLexeme(currentToken.kindIndex)))
                     {
                         statements.append(ParseFunctionDefinitionStatement());
+                        break;
+                    }
+                    else if (IsTypeDefinitionKeyword(m_tokens.GetLexeme(currentToken.kindIndex)))
+                    {
+                        statements.append(ParseTypeDefinitionStatement());
                         break;
                     }
                 }
@@ -132,6 +141,15 @@ Statement* Parser::ParseFunctionDefinitionStatement()
     auto body = ParseFunctionBody();
 
     return new FunctionDefinitionStatement(keyword, name, signature, body);
+}
+
+Statement* Parser::ParseTypeDefinitionStatement()
+{
+    auto keyword = AdvanceOnMatch(TokenKind::Identifier);
+    auto name = AdvanceOnMatch(TokenKind::Identifier);
+    auto body = ParseTypeBody();
+
+    return new TypeDefinitionStatement(keyword, name, body);
 }
 
 Statement* Parser::ParseReturnStatement()
@@ -241,6 +259,11 @@ Expression* Parser::ParseNumberLiteral()
 Block* Parser::ParseFunctionBody()
 {
     return ParseBlock(StatementScope::Function);
+}
+
+Block* Parser::ParseTypeBody()
+{
+    return ParseBlock(StatementScope::Type);
 }
 
 Block* Parser::ParseBlock(StatementScope scope)

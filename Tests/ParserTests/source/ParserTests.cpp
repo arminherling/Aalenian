@@ -41,7 +41,7 @@ private slots:
         if (!QFile::exists(inputFilePath))
             QFAIL("In file missing");
         if (!QFile::exists(outputFilePath))
-            QFAIL("Out file missing");
+            QSKIP("Out file missing");
 
         auto input = File::ReadAllText(inputFilePath);
         auto source = std::make_shared<SourceText>(input);

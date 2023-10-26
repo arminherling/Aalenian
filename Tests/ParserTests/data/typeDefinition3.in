@@ -1,0 +1,5 @@
+type Vector2D
+{
+    x :i32
+    y :i32
+}

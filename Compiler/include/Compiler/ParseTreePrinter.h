@@ -19,6 +19,7 @@ private:
     void PrettyPrintAssignmentStatement(AssignmentStatement* statement);
     void PrettyPrintExpressionStatement(ExpressionStatement* statement);
     void PrettyPrintFunctionDefinitionStatement(FunctionDefinitionStatement* statement);
+    void PrettyPrintTypeDefinitionStatement(TypeDefinitionStatement* statement);
     void PrettyPrintReturnStatement(ReturnStatement* statement);
     void PrettyPrintArguments(Arguments* arguments);
     void PrettyPrintParameters(Parameters* parameters);

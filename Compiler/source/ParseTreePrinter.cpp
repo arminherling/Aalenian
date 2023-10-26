@@ -38,6 +38,11 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
             PrettyPrintFunctionDefinitionStatement((FunctionDefinitionStatement*)node);
             break;
         }
+        case NodeKind::TypeDefinitionStatement:
+        {
+            PrettyPrintTypeDefinitionStatement((TypeDefinitionStatement*)node);
+            break;
+        }
         case NodeKind::ReturnStatement:
         {
             PrettyPrintReturnStatement((ReturnStatement*)node);
@@ -69,6 +74,7 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
             break;
         }
         default:
+            stream() << Indentation() << QString("Missing NodeKind!!") << NewLine();
             break;
     }
 }
@@ -114,6 +120,19 @@ void ParseTreePrinter::PrettyPrintFunctionDefinitionStatement(FunctionDefinition
     PushIndentation();
     stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
     PrettyPrintParameters(statement->parameters());
+    PrettyPrintBlock(statement->body());
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void ParseTreePrinter::PrettyPrintTypeDefinitionStatement(TypeDefinitionStatement* statement)
+{
+    auto nameToken = statement->name();
+    auto nameLexeme = m_parseTree.Tokens().GetLexeme(nameToken.kindIndex);
+
+    stream() << Indentation() << StringifyNodeKind(statement->Kind()) << QString(": {") << NewLine();
+    PushIndentation();
+    stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
     PrettyPrintBlock(statement->body());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
