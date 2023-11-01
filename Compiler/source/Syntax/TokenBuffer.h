@@ -1,11 +1,10 @@
 #pragma once
 
-#include "CompilerApi.h"
-
-#include "SourceText.h"
-#include "SourceLocation.h"
-#include "DiagnosticsBag.h"
-#include "Token.h"
+#include <API.h>
+#include <Compiler/DiagnosticsBag.h>
+#include <Syntax/Token.h>
+#include <Text/SourceText.h>
+#include <Text/SourceLocation.h>
 
 #include <vector>
 

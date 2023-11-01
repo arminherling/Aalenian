@@ -1,10 +1,10 @@
 #pragma once
 
-#include "CompilerApi.h"
+#include <API.h>
 
-#include "DiagnosticLevel.h"
-#include "DiagnosticKind.h"
-#include "SourceLocation.h"
+#include <Compiler/DiagnosticLevel.h>
+#include <Compiler/DiagnosticKind.h>
+#include <Text/SourceLocation.h>
 
 struct COMPILER_API Diagnostic
 {

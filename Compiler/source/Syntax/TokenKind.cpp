@@ -1,4 +1,4 @@
-#include "TokenKind.h"
+#include <Syntax/TokenKind.h>
 
 QString Stringify(TokenKind kind)
 {

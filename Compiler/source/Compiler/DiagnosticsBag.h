@@ -1,7 +1,7 @@
 #pragma once
 
-#include "CompilerApi.h"
-#include "Diagnostic.h"
+#include <API.h>
+#include <Compiler/Diagnostic.h>
 
 #include <vector>
 

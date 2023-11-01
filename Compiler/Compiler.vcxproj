@@ -65,13 +65,13 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\include\$(ProjectName);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\include\$(ProjectName);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -101,34 +101,34 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\File.cpp" />
-    <ClCompile Include="source\ParseTreePrinter.cpp" />
-    <ClCompile Include="source\Node.cpp" />
-    <ClCompile Include="source\ParseTree.cpp" />
-    <ClCompile Include="source\Parser.cpp" />
-    <ClCompile Include="source\DiagnosticsBag.cpp" />
-    <ClCompile Include="source\TokenBuffer.cpp" />
-    <ClCompile Include="source\SourceText.cpp" />
-    <ClCompile Include="source\Lexer.cpp" />
-    <ClCompile Include="source\TokenKind.cpp" />
-    <ClInclude Include="include\Compiler\File.h" />
-    <ClInclude Include="include\Compiler\DiagnosticsBag.h" />
-    <ClInclude Include="include\Compiler\Diagnostic.h" />
-    <ClInclude Include="include\Compiler\DiagnosticKind.h" />
-    <ClInclude Include="include\Compiler\DiagnosticLevel.h" />
-    <ClInclude Include="include\Compiler\Lexer.h" />
-    <ClInclude Include="include\Compiler\CompilerApi.h" />
-    <ClInclude Include="include\Compiler\Compiler.h" />
-    <ClCompile Include="source\Compiler.cpp" />
-    <ClInclude Include="include\Compiler\SourceLocation.h" />
-    <ClInclude Include="include\Compiler\SourceText.h" />
-    <ClInclude Include="include\Compiler\Token.h" />
-    <ClInclude Include="include\Compiler\TokenBuffer.h" />
-    <ClInclude Include="include\Compiler\TokenKind.h" />
-    <ClInclude Include="include\Compiler\Parser.h" />
-    <ClInclude Include="include\Compiler\ParseTree.h" />
-    <ClInclude Include="include\Compiler\Node.h" />
-    <ClInclude Include="include\Compiler\ParseTreePrinter.h" />
+    <ClCompile Include="source\Compiler\File.cpp" />
+    <ClCompile Include="source\Debug\ParseTreePrinter.cpp" />
+    <ClCompile Include="source\Syntax\Node.cpp" />
+    <ClCompile Include="source\Syntax\ParseTree.cpp" />
+    <ClCompile Include="source\Syntax\Parser.cpp" />
+    <ClCompile Include="source\Compiler\DiagnosticsBag.cpp" />
+    <ClCompile Include="source\Syntax\TokenBuffer.cpp" />
+    <ClCompile Include="source\Text\SourceText.cpp" />
+    <ClCompile Include="source\Syntax\Lexer.cpp" />
+    <ClCompile Include="source\Syntax\TokenKind.cpp" />
+    <ClInclude Include="source\Compiler\File.h" />
+    <ClInclude Include="source\Compiler\DiagnosticsBag.h" />
+    <ClInclude Include="source\Compiler\Diagnostic.h" />
+    <ClInclude Include="source\Compiler\DiagnosticKind.h" />
+    <ClInclude Include="source\Compiler\DiagnosticLevel.h" />
+    <ClInclude Include="source\Syntax\Lexer.h" />
+    <ClInclude Include="source\API.h" />
+    <ClInclude Include="source\Compiler\Compiler.h" />
+    <ClCompile Include="source\Compiler\Compiler.cpp" />
+    <ClInclude Include="source\Text\SourceLocation.h" />
+    <ClInclude Include="source\Text\SourceText.h" />
+    <ClInclude Include="source\Syntax\Token.h" />
+    <ClInclude Include="source\Syntax\TokenBuffer.h" />
+    <ClInclude Include="source\Syntax\TokenKind.h" />
+    <ClInclude Include="source\Syntax\Parser.h" />
+    <ClInclude Include="source\Syntax\ParseTree.h" />
+    <ClInclude Include="source\Syntax\Node.h" />
+    <ClInclude Include="source\Debug\ParseTreePrinter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

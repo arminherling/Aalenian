@@ -11,90 +11,90 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\DiagnosticsBag.cpp">
+    <ClCompile Include="source\Compiler\DiagnosticsBag.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\TokenBuffer.cpp">
+    <ClCompile Include="source\Syntax\TokenBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\SourceText.cpp">
+    <ClCompile Include="source\Text\SourceText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Lexer.cpp">
+    <ClCompile Include="source\Syntax\Lexer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\TokenKind.cpp">
+    <ClCompile Include="source\Syntax\TokenKind.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Compiler.cpp">
+    <ClCompile Include="source\Compiler\Compiler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Parser.cpp">
+    <ClCompile Include="source\Syntax\Parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\ParseTree.cpp">
+    <ClCompile Include="source\Syntax\ParseTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Node.cpp">
+    <ClCompile Include="source\Syntax\Node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\ParseTreePrinter.cpp">
+    <ClCompile Include="source\Debug\ParseTreePrinter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\File.cpp">
+    <ClCompile Include="source\Compiler\File.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Compiler\DiagnosticsBag.h">
+    <ClInclude Include="source\Compiler\DiagnosticsBag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Compiler\Diagnostic.h">
+    <ClInclude Include="source\Compiler\Diagnostic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Compiler\DiagnosticKind.h">
+    <ClInclude Include="source\Compiler\DiagnosticKind.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Compiler\DiagnosticLevel.h">
+    <ClInclude Include="source\Compiler\DiagnosticLevel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Compiler\Lexer.h">
+    <ClInclude Include="source\Syntax\Lexer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Compiler\CompilerApi.h">
+    <ClInclude Include="source\API.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Compiler\Compiler.h">
+    <ClInclude Include="source\Compiler\Compiler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Compiler\SourceLocation.h">
+    <ClInclude Include="source\Text\SourceLocation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Compiler\SourceText.h">
+    <ClInclude Include="source\Text\SourceText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Compiler\Token.h">
+    <ClInclude Include="source\Syntax\Token.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Compiler\TokenBuffer.h">
+    <ClInclude Include="source\Syntax\TokenBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Compiler\TokenKind.h">
+    <ClInclude Include="source\Syntax\TokenKind.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Compiler\Parser.h">
+    <ClInclude Include="source\Syntax\Parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Compiler\ParseTree.h">
+    <ClInclude Include="source\Syntax\ParseTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Compiler\Node.h">
+    <ClInclude Include="source\Syntax\Node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Compiler\ParseTreePrinter.h">
+    <ClInclude Include="source\Debug\ParseTreePrinter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Compiler\File.h">
+    <ClInclude Include="source\Compiler\File.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

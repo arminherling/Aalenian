@@ -1,4 +1,4 @@
-#include "TokenBuffer.h"
+#include <Syntax/TokenBuffer.h>
 
 TokenBuffer::TokenBuffer(int initialSize)
     : tokens{}

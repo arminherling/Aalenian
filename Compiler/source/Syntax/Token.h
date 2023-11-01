@@ -1,7 +1,7 @@
 #pragma once
 
-#include "CompilerApi.h"
-#include "TokenKind.h"
+#include <API.h>
+#include <Syntax/TokenKind.h>
 
 #include <QString>
 

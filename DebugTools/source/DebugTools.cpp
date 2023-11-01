@@ -7,8 +7,8 @@
 #include <QStatusBar>
 #include <QHBoxLayout>
 
-#include <Compiler/SourceText.h>
-#include <Compiler/Lexer.h>
+#include <Text/SourceText.h>
+#include <Syntax/Lexer.h>
 
 #include "TokenListView.h"
 

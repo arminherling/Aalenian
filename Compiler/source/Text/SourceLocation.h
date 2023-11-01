@@ -1,7 +1,7 @@
 #pragma once
 
-#include "CompilerApi.h"
-#include "SourceText.h"
+#include <API.h>
+#include <Text/SourceText.h>
 
 struct COMPILER_API SourceLocation
 {

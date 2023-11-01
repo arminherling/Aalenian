@@ -65,13 +65,13 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\include\$(ProjectName);$(SolutionDir)Compiler\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Compiler\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\include\$(ProjectName);$(SolutionDir)Compiler\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Compiler\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -102,7 +102,7 @@
     <ClCompile Include="source\TokenListView.cpp" />
     <QtRcc Include="DebugTools.qrc" />
     <QtUic Include="DebugTools.ui" />
-    <QtMoc Include="include\DebugTools\DebugTools.h" />
+    <QtMoc Include="source\DebugTools.h" />
     <ClCompile Include="source\DebugTools.cpp" />
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
@@ -112,7 +112,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\DebugTools\TokenListView.h" />
+    <ClInclude Include="source\TokenListView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

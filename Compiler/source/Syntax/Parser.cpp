@@ -1,4 +1,4 @@
-#include "Parser.h"
+#include <Syntax/Parser.h>
 
 bool IsFunctionDefinitionKeyword(const QStringView& lexeme)
 {

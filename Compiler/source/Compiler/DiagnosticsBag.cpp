@@ -1,4 +1,4 @@
-#include "DiagnosticsBag.h"
+#include <Compiler/DiagnosticsBag.h>
 
 void DiagnosticsBag::AddWarning(DiagnosticKind kind, const SourceLocation& location)
 {

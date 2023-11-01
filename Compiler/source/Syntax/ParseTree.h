@@ -1,8 +1,8 @@
 #pragma once
 
-#include "CompilerApi.h"
-#include "TokenBuffer.h"
-#include "Node.h"
+#include <API.h>
+#include <Syntax/TokenBuffer.h>
+#include <Syntax/Node.h>
 
 #include <QList>
 

@@ -2,8 +2,8 @@
 #include <QtWidgets/QApplication>
 
 #include "TokenListView.h"
-#include <Compiler/SourceText.h>
-#include <Compiler/Lexer.h>
+#include <Text/SourceText.h>
+#include <Syntax/Lexer.h>
 
 int main(int argc, char *argv[])
 {

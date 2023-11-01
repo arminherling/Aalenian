@@ -1,10 +1,10 @@
 #include <QTest>
 
 #include <Compiler/DiagnosticsBag.h>
-#include <Compiler/Lexer.h>
-#include <Compiler/Parser.h>
-#include <Compiler/ParseTreePrinter.h>
 #include <Compiler/File.h>
+#include <Syntax/Lexer.h>
+#include <Syntax/Parser.h>
+#include <Debug/ParseTreePrinter.h>
 
 class ParserTests : public QObject
 {

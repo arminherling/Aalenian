@@ -1,9 +1,8 @@
 #pragma once
 
-#include "CompilerApi.h"
-
-#include "ParseTree.h"
-#include "Node.h"
+#include <API.h>
+#include <Syntax/ParseTree.h>
+#include <Syntax/Node.h>
 
 #include <qtextstream.h>
 

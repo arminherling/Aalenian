@@ -1,12 +1,10 @@
 #pragma once
 
-#include "CompilerApi.h"
-#include "TokenBuffer.h"
-#include "DiagnosticsBag.h"
-#include "ParseTree.h"
-
-#include "Node.h"
-#include <QList>
+#include <API.h>
+#include <Compiler/DiagnosticsBag.h>
+#include <Syntax/TokenBuffer.h>
+#include <Syntax/ParseTree.h>
+#include <Syntax/Node.h>
 
 class COMPILER_API Parser
 {

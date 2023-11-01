@@ -1,4 +1,4 @@
-#include "File.h"
+#include <Compiler/File.h>
 
 #include <qfile.h>
 

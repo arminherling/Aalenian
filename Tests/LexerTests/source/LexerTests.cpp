@@ -1,11 +1,11 @@
 #include <QTest>
 
-#include <Compiler/Lexer.h>
-#include <Compiler/SourceText.h>
-#include <Compiler/SourceLocation.h>
-#include <Compiler/Token.h>
-#include <Compiler/TokenKind.h>
-#include <Compiler/TokenBuffer.h>
+#include <Syntax/Lexer.h>
+#include <Syntax/Token.h>
+#include <Syntax/TokenKind.h>
+#include <Syntax/TokenBuffer.h>
+#include <Text/SourceText.h>
+#include <Text/SourceLocation.h>
 
 #include <chrono>
 

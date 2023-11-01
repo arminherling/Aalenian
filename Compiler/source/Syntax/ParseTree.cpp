@@ -1,4 +1,4 @@
-#include "ParseTree.h"
+#include <Syntax/ParseTree.h>
 
 ParseTree::ParseTree(const TokenBuffer& tokens, const QList<Statement*>& statements)
     : m_tokens{ tokens }

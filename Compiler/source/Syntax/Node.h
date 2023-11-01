@@ -1,7 +1,7 @@
 #pragma once
 
-#include "CompilerApi.h"
-#include "Token.h"
+#include <API.h>
+#include <Syntax/Token.h>
 
 #include <qlist.h>
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Compiler/Token.h>
+#include <Syntax/Token.h>
 
 #include <QList>
 #include <QTableView>

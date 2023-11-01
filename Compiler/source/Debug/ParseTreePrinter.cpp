@@ -1,4 +1,4 @@
-#include "ParseTreePrinter.h"
+#include <Debug/ParseTreePrinter.h>
 
 ParseTreePrinter::ParseTreePrinter(ParseTree& parseTree, int indentation)
     : m_parseTree{ parseTree }

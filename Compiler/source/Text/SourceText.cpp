@@ -1,4 +1,4 @@
-#include "SourceText.h"
+#include <Text/SourceText.h>
 
 SourceText::SourceText(
     const QString& text,
