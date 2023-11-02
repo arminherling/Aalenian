@@ -38,6 +38,7 @@ private:
     Block* ParseFunctionBody();
     Block* ParseTypeBody();
     Block* ParseBlock(StatementScope scope);
+    Expression* ParseType();
     Expression* ParseName();
     Expression* ParseNumberLiteral();
 

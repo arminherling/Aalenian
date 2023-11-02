@@ -196,11 +196,16 @@ class COMPILER_API Number : public Expression
 {
 public:
     Number(const Token& token);
+    Number(const Token& token, const Token& colon, Name* type);
 
     [[nodiscard]] const Token& token() noexcept { return m_token; }
+    [[nodiscard]] const std::optional<Token>& colon() noexcept { return m_colon; }
+    [[nodiscard]] const std::optional<Name*>& type() noexcept { return m_type; }
 
 private:
     Token m_token;
+    std::optional<Token> m_colon;
+    std::optional<Name*> m_type;
 };
 
 class COMPILER_API Error : public Expression

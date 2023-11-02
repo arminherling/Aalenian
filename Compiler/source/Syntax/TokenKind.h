@@ -14,6 +14,7 @@ enum class TokenKind
     Star,
     Slash,
     Dot,
+    Colon,
     Comma,
     Equal,
     Underscore,

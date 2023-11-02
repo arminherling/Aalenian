@@ -1,0 +1,9 @@
+AssignmentStatement: {
+    Left: {
+        Name: a
+    }
+    Right: {
+        Number: 0
+        Type: i32
+    }
+}

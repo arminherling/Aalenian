@@ -244,6 +244,11 @@ Arguments* Parser::ParseArguments()
     return new Arguments(openParenthesis, closeParenthesis);
 }
 
+Expression* Parser::ParseType()
+{
+    return ParseName();
+}
+
 Expression* Parser::ParseName()
 {
     auto name = AdvanceOnMatch(TokenKind::Identifier);
@@ -253,6 +258,15 @@ Expression* Parser::ParseName()
 Expression* Parser::ParseNumberLiteral()
 {
     auto number = AdvanceOnMatch(TokenKind::Number);
+
+    auto current = CurrentToken();
+    if (current.kind == TokenKind::Colon)
+    {
+        AdvanceCurrentIndex();
+        auto type = (Name*)ParseType();
+        return new Number(number, current, type);
+    }
+
     return new Number(number);
 }
 

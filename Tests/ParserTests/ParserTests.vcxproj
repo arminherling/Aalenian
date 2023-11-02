@@ -123,6 +123,7 @@
     <None Include="data\globalAssignment3.in" />
     <None Include="data\globalAssignment3.out" />
     <None Include="data\globalAssignment4.in" />
+    <None Include="data\globalAssignment4.out" />
     <None Include="data\globalFunctionCall1.in" />
     <None Include="data\globalFunctionCall1.out" />
     <None Include="data\globalFunctionDefinition1.in" />

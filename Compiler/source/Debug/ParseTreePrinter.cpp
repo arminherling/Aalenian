@@ -200,6 +200,13 @@ void ParseTreePrinter::PrettyPrintFunctionCall(FunctionCall* functionCall)
     stream() << Indentation() << QString("}") << NewLine();
 }
 
+QString ParseTreePrinter::StringifyType(Name* name)
+{
+    auto token = name->Identifier();
+    auto lexeme = m_parseTree.Tokens().GetLexeme(token.kindIndex);
+    return lexeme.toString();
+}
+
 void ParseTreePrinter::PrettyPrintName(Name* name)
 {
     auto token = name->Identifier();
@@ -212,6 +219,13 @@ void ParseTreePrinter::PrettyPrintNumber(Number* number)
     auto token = number->token();
     auto lexeme = m_parseTree.Tokens().GetLexeme(token.kindIndex);
     stream() << Indentation() << StringifyNodeKind(number->Kind()) << QString(": %1").arg(lexeme) << NewLine();
+
+    auto optionalType = number->type();
+    if (!optionalType.has_value())
+        return;
+
+    auto type = optionalType.value();
+    stream() << Indentation() << QString("Type: ") << StringifyType(type) << NewLine();
 }
 
 void ParseTreePrinter::PrettyPrintError(Error* error)

@@ -106,6 +106,17 @@ Number::Number(const Token& token)
 {
 }
 
+Number::Number(
+    const Token& token, 
+    const Token& colon, 
+    Name* type)
+    : Expression(NodeKind::Number)
+    , m_token{ token }
+    , m_colon{ colon }
+    , m_type{ type }
+{
+}
+
 AssignmentStatement::AssignmentStatement(Expression* leftExpression, const Token& equalsToken, Expression* rightExpression)
     : Statement(NodeKind::AssignmentStatement)
     , m_leftExpression{ leftExpression }
