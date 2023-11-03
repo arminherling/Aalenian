@@ -15,6 +15,7 @@ public:
 
 private:
     void PrettyPrintNode(Node* node);
+    void PrettyPrintDeclarationStatement(DeclarationStatement* statement);
     void PrettyPrintAssignmentStatement(AssignmentStatement* statement);
     void PrettyPrintExpressionStatement(ExpressionStatement* statement);
     void PrettyPrintFunctionDefinitionStatement(FunctionDefinitionStatement* statement);

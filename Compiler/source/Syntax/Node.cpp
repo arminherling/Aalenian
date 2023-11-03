@@ -8,6 +8,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("Unknown");
         case NodeKind::Error:
             return QString("Error");
+        case NodeKind::DeclarationStatement:
+            return QString("DeclarationStatement");
         case NodeKind::AssignmentStatement:
             return QString("AssignmentStatement");
         case NodeKind::ExpressionStatement:
@@ -107,13 +109,39 @@ Number::Number(const Token& token)
 }
 
 Number::Number(
-    const Token& token, 
-    const Token& colon, 
+    const Token& token,
+    const Token& colon,
     Name* type)
     : Expression(NodeKind::Number)
     , m_token{ token }
     , m_colon{ colon }
     , m_type{ type }
+{
+}
+
+DeclarationStatement::DeclarationStatement(
+    Expression* leftExpression,
+    const Token& colonToken,
+    Name* type)
+    : Statement(NodeKind::DeclarationStatement)
+    , m_leftExpression{ leftExpression }
+    , m_colon{ colonToken }
+    , m_type{ type }
+{
+}
+
+DeclarationStatement::DeclarationStatement(
+    Expression* leftExpression,
+    const Token& colonToken,
+    Name* type,
+    const Token& equalsToken,
+    Expression* rightExpression)
+    : Statement(NodeKind::DeclarationStatement)
+    , m_leftExpression{ leftExpression }
+    , m_colon{ colonToken }
+    , m_type{ type }
+    , m_equals{ equalsToken }
+    , m_rightExpression{ rightExpression }
 {
 }
 

@@ -23,6 +23,11 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
 {
     switch (node->Kind())
     {
+        case NodeKind::DeclarationStatement:
+        {
+            PrettyPrintDeclarationStatement((DeclarationStatement*)node);
+            break;
+        }
         case NodeKind::AssignmentStatement:
         {
             PrettyPrintAssignmentStatement((AssignmentStatement*)node);
@@ -79,19 +84,44 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
     }
 }
 
+void ParseTreePrinter::PrettyPrintDeclarationStatement(DeclarationStatement* statement)
+{
+    stream() << Indentation() << StringifyNodeKind(statement->Kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << QString("Field: {") << NewLine();
+    PushIndentation();
+    PrettyPrintNode(statement->leftExpression());
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    stream() << Indentation() << QString("Type: ") << StringifyType(statement->type()) << NewLine();
+
+    if (statement->rightExpression().has_value())
+    {
+        stream() << Indentation() << QString("Value: {") << NewLine();
+        PushIndentation();
+        PrettyPrintNode(statement->rightExpression().value());
+        PopIndentation();
+        stream() << Indentation() << QString("}") << NewLine();
+    }
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
 void ParseTreePrinter::PrettyPrintAssignmentStatement(AssignmentStatement* statement)
 {
     stream() << Indentation() << StringifyNodeKind(statement->Kind()) << QString(": {") << NewLine();
     PushIndentation();
-    stream() << Indentation() << QString("Left: {") << NewLine();
     
+    stream() << Indentation() << QString("Left: {") << NewLine();
     PushIndentation();
     PrettyPrintNode(statement->LeftExpression());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 
     stream() << Indentation() << QString("Right: {") << NewLine();
-    
     PushIndentation();
     PrettyPrintNode(statement->RightExpression());
     PopIndentation();

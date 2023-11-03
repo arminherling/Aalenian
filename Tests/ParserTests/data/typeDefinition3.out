@@ -1,0 +1,20 @@
+TypeDefinitionStatement: {
+    Name: Vector2D
+    Block(2): {
+        DeclarationStatement: {
+            Field: {
+                Name: x
+            }
+            Type: i32
+            Value: {
+                Number: 0
+            }
+        }
+        DeclarationStatement: {
+            Field: {
+                Name: y
+            }
+            Type: i32
+        }
+    }
+}

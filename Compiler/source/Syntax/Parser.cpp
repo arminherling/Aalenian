@@ -76,6 +76,10 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                 {
                     statements.append(ParseAssignmentStatement());
                 }
+                else if (nextToken.kind == TokenKind::Colon)
+                {
+                    statements.append(ParseDeclarationStatement());
+                }
                 else if (nextToken.kind == TokenKind::OpenParenthesis)
                 {
                     auto expressionStatement = ParseExpressionStatement();
@@ -117,6 +121,23 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
 
         currentToken = CurrentToken();
     }
+}
+
+Statement* Parser::ParseDeclarationStatement()
+{
+    auto leftExpression = ParsePrimaryExpression();
+    auto colon = AdvanceOnMatch(TokenKind::Colon);
+    auto type = (Name*)ParseType();
+
+    auto equals = CurrentToken();
+    if (equals.kind == TokenKind::Equal)
+    {
+        AdvanceCurrentIndex();
+        auto value = ParseExpression();
+        return new DeclarationStatement(leftExpression, colon, type, equals, value);
+    }
+
+    return new DeclarationStatement(leftExpression, colon, type);
 }
 
 Statement* Parser::ParseAssignmentStatement()

@@ -137,6 +137,7 @@
     <None Include="data\typeDefinition2.out" />
     <None Include="data\typeDefinition3.in" />
     <None Include="data\typeDefinition2.in" />
+    <None Include="data\typeDefinition3.out" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

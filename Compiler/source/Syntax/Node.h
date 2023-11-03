@@ -10,6 +10,7 @@ enum class COMPILER_API NodeKind
     Unknown,
     Error,
 
+    DeclarationStatement,
     AssignmentStatement,
     ExpressionStatement,
     FunctionDefinitionStatement,
@@ -50,6 +51,36 @@ class COMPILER_API Expression : public Node
 {
 public:
     Expression(NodeKind kind);
+};
+
+class COMPILER_API Name : public Expression
+{
+public:
+    Name(const Token& token);
+
+    [[nodiscard]] const Token& Identifier() noexcept { return m_token; }
+
+private:
+    Token m_token;
+};
+
+class COMPILER_API DeclarationStatement : public Statement
+{
+public:
+    DeclarationStatement(Expression* leftExpression, const Token& colonToken, Name* type);
+    DeclarationStatement(Expression* leftExpression, const Token& colonToken, Name* type, const Token& equalsToken, Expression* rightExpression);
+
+    [[nodiscard]] Expression* leftExpression() noexcept { return m_leftExpression; }
+    [[nodiscard]] const Token& colon() noexcept { return m_colon; }
+    [[nodiscard]] Name* type() noexcept { return m_type; }
+    [[nodiscard]] const std::optional<Token>& equals() noexcept { return m_equals; }
+    [[nodiscard]] const std::optional<Expression*>& rightExpression() noexcept { return m_rightExpression; }
+private:
+    Expression* m_leftExpression;
+    Token m_colon;
+    Name* m_type;
+    std::optional<Token> m_equals;
+    std::optional<Expression*> m_rightExpression;
 };
 
 class COMPILER_API AssignmentStatement : public Statement
@@ -93,17 +124,6 @@ class COMPILER_API Discard : public Expression
 {
 public:
     Discard(const Token& token);
-};
-
-class COMPILER_API Name : public Expression
-{
-public:
-    Name(const Token& token);
-
-    [[nodiscard]] const Token& Identifier() noexcept { return m_token; }
-
-private:
-    Token m_token;
 };
 
 class COMPILER_API Parameters : public Node

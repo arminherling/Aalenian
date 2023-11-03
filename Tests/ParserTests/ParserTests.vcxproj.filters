@@ -37,5 +37,6 @@
     <None Include="data\typeDefinition1.out" />
     <None Include="data\typeDefinition2.out" />
     <None Include="data\globalAssignment4.out" />
+    <None Include="data\typeDefinition3.out" />
   </ItemGroup>
 </Project>

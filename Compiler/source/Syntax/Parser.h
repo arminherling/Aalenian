@@ -23,6 +23,7 @@ private:
 
     QList<Statement*> ParseGlobalStatements();
     QList<Statement*> ParseStatements(StatementScope scope);
+    Statement* ParseDeclarationStatement();
     Statement* ParseAssignmentStatement();
     Statement* ParseExpressionStatement();
     Statement* ParseFunctionDefinitionStatement();
