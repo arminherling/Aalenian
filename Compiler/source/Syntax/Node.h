@@ -10,11 +10,11 @@ enum class COMPILER_API NodeKind
     Unknown,
     Error,
 
-    DeclarationStatement,
     AssignmentStatement,
     ExpressionStatement,
     FunctionDefinitionStatement,
     TypeDefinitionStatement,
+    FieldDeclarationStatement,
     ReturnStatement,
 
     Parameters,
@@ -64,23 +64,28 @@ private:
     Token m_token;
 };
 
-class COMPILER_API DeclarationStatement : public Statement
+class COMPILER_API FieldDeclarationStatement : public Statement
 {
 public:
-    DeclarationStatement(Expression* leftExpression, const Token& colonToken, Name* type);
-    DeclarationStatement(Expression* leftExpression, const Token& colonToken, Name* type, const Token& equalsToken, Expression* rightExpression);
+    FieldDeclarationStatement(
+        Name* name, 
+        const std::optional<Token>& colon, 
+        const std::optional<Name*>& type,
+        const std::optional<Token>& equals, 
+        const std::optional<Expression*>& expression);
 
-    [[nodiscard]] Expression* leftExpression() noexcept { return m_leftExpression; }
-    [[nodiscard]] const Token& colon() noexcept { return m_colon; }
-    [[nodiscard]] Name* type() noexcept { return m_type; }
+    [[nodiscard]] Name* name() noexcept { return m_name; }
+    [[nodiscard]] const std::optional<Token>& colon() noexcept { return m_colon; }
+    [[nodiscard]] const std::optional<Name*>& type() noexcept { return m_type; }
     [[nodiscard]] const std::optional<Token>& equals() noexcept { return m_equals; }
-    [[nodiscard]] const std::optional<Expression*>& rightExpression() noexcept { return m_rightExpression; }
+    [[nodiscard]] const std::optional<Expression*>& expression() noexcept { return m_expression; }
+
 private:
-    Expression* m_leftExpression;
-    Token m_colon;
-    Name* m_type;
+    Name* m_name;
+    std::optional<Token> m_colon;
+    std::optional<Name*> m_type;
     std::optional<Token> m_equals;
-    std::optional<Expression*> m_rightExpression;
+    std::optional<Expression*> m_expression;
 };
 
 class COMPILER_API AssignmentStatement : public Statement

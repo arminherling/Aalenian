@@ -1,7 +1,7 @@
 TypeDefinitionStatement: {
     Name: Vector2D
     Block(2): {
-        DeclarationStatement: {
+        FieldDeclarationStatement: {
             Field: {
                 Name: x
             }
@@ -10,7 +10,7 @@ TypeDefinitionStatement: {
                 Number: 0
             }
         }
-        DeclarationStatement: {
+        FieldDeclarationStatement: {
             Field: {
                 Name: y
             }

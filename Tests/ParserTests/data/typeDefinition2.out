@@ -1,27 +1,27 @@
 TypeDefinitionStatement: {
     Name: Vector3D
     Block(3): {
-        AssignmentStatement: {
-            Left: {
+        FieldDeclarationStatement: {
+            Field: {
                 Name: x
             }
-            Right: {
+            Value: {
                 Number: 0
             }
         }
-        AssignmentStatement: {
-            Left: {
+        FieldDeclarationStatement: {
+            Field: {
                 Name: y
             }
-            Right: {
+            Value: {
                 Number: 0
             }
         }
-        AssignmentStatement: {
-            Left: {
+        FieldDeclarationStatement: {
+            Field: {
                 Name: z
             }
-            Right: {
+            Value: {
                 Number: 0
             }
         }

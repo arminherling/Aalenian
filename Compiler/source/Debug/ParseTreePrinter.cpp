@@ -23,11 +23,6 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
 {
     switch (node->Kind())
     {
-        case NodeKind::DeclarationStatement:
-        {
-            PrettyPrintDeclarationStatement((DeclarationStatement*)node);
-            break;
-        }
         case NodeKind::AssignmentStatement:
         {
             PrettyPrintAssignmentStatement((AssignmentStatement*)node);
@@ -46,6 +41,11 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
         case NodeKind::TypeDefinitionStatement:
         {
             PrettyPrintTypeDefinitionStatement((TypeDefinitionStatement*)node);
+            break;
+        }
+        case NodeKind::FieldDeclarationStatement:
+        {
+            PrettyPrintFieldDeclarationStatement((FieldDeclarationStatement*)node);
             break;
         }
         case NodeKind::ReturnStatement:
@@ -84,24 +84,25 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
     }
 }
 
-void ParseTreePrinter::PrettyPrintDeclarationStatement(DeclarationStatement* statement)
+void ParseTreePrinter::PrettyPrintFieldDeclarationStatement(FieldDeclarationStatement* statement)
 {
     stream() << Indentation() << StringifyNodeKind(statement->Kind()) << QString(": {") << NewLine();
     PushIndentation();
 
     stream() << Indentation() << QString("Field: {") << NewLine();
     PushIndentation();
-    PrettyPrintNode(statement->leftExpression());
+    PrettyPrintNode(statement->name());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 
-    stream() << Indentation() << QString("Type: ") << StringifyType(statement->type()) << NewLine();
+    if(statement->type().has_value())
+        stream() << Indentation() << QString("Type: ") << StringifyType(statement->type().value()) << NewLine();
 
-    if (statement->rightExpression().has_value())
+    if (statement->expression().has_value())
     {
         stream() << Indentation() << QString("Value: {") << NewLine();
         PushIndentation();
-        PrettyPrintNode(statement->rightExpression().value());
+        PrettyPrintNode(statement->expression().value());
         PopIndentation();
         stream() << Indentation() << QString("}") << NewLine();
     }

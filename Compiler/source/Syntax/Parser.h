@@ -23,11 +23,11 @@ private:
 
     QList<Statement*> ParseGlobalStatements();
     QList<Statement*> ParseStatements(StatementScope scope);
-    Statement* ParseDeclarationStatement();
     Statement* ParseAssignmentStatement();
     Statement* ParseExpressionStatement();
     Statement* ParseFunctionDefinitionStatement();
     Statement* ParseTypeDefinitionStatement();
+    Statement* ParseFieldDeclarationStatement();
     Statement* ParseReturnStatement();
     Expression* ParseExpression();
     Expression* ParseBinaryExpression(int parentPrecedence);

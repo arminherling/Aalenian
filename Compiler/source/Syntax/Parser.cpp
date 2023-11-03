@@ -70,15 +70,23 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                         break;
                     }
                 }
+                else if (scope == StatementScope::Type)
+                {
+                    //if (IsFunctionDefinitionKeyword(m_tokens.GetLexeme(currentToken.kindIndex)))
+                    //{
+                    //    statements.append(ParseMethodDefinitionStatement());
+                    //    break;
+                    //}
+
+                    statements.append(ParseFieldDeclarationStatement());
+                    break;
+                }
+
 
                 auto nextToken = NextToken();
                 if (nextToken.kind == TokenKind::Equal)
                 {
                     statements.append(ParseAssignmentStatement());
-                }
-                else if (nextToken.kind == TokenKind::Colon)
-                {
-                    statements.append(ParseDeclarationStatement());
                 }
                 else if (nextToken.kind == TokenKind::OpenParenthesis)
                 {
@@ -123,23 +131,6 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
     }
 }
 
-Statement* Parser::ParseDeclarationStatement()
-{
-    auto leftExpression = ParsePrimaryExpression();
-    auto colon = AdvanceOnMatch(TokenKind::Colon);
-    auto type = (Name*)ParseType();
-
-    auto equals = CurrentToken();
-    if (equals.kind == TokenKind::Equal)
-    {
-        AdvanceCurrentIndex();
-        auto value = ParseExpression();
-        return new DeclarationStatement(leftExpression, colon, type, equals, value);
-    }
-
-    return new DeclarationStatement(leftExpression, colon, type);
-}
-
 Statement* Parser::ParseAssignmentStatement()
 {
     auto leftExpression = ParsePrimaryExpression();
@@ -171,6 +162,32 @@ Statement* Parser::ParseTypeDefinitionStatement()
     auto body = ParseTypeBody();
 
     return new TypeDefinitionStatement(keyword, name, body);
+}
+
+Statement* Parser::ParseFieldDeclarationStatement()
+{
+    auto name = (Name*)ParseName();
+    auto current = CurrentToken();
+    std::optional<Token> colon;
+    std::optional<Name*> type;
+    if (current.kind == TokenKind::Colon)
+    {
+        AdvanceCurrentIndex();
+        colon = current;
+        type = (Name*)ParseType();
+        current = CurrentToken();
+    }
+
+    std::optional<Token> equals;
+    std::optional<Expression*> expression;
+    if (current.kind == TokenKind::Equal)
+    {
+        equals = current;
+        AdvanceCurrentIndex();
+        expression = ParseExpression();
+    }
+
+    return new FieldDeclarationStatement(name, colon, type, equals, expression);
 }
 
 Statement* Parser::ParseReturnStatement()
