@@ -15,11 +15,12 @@ public:
 
 private:
     void PrettyPrintNode(Node* node);
-    void PrettyPrintFieldDeclarationStatement(FieldDeclarationStatement* statement);
     void PrettyPrintAssignmentStatement(AssignmentStatement* statement);
     void PrettyPrintExpressionStatement(ExpressionStatement* statement);
     void PrettyPrintFunctionDefinitionStatement(FunctionDefinitionStatement* statement);
     void PrettyPrintTypeDefinitionStatement(TypeDefinitionStatement* statement);
+    void PrettyPrintFieldDeclarationStatement(FieldDeclarationStatement* statement);
+    void PrettyPrintMethodDefinitionStatement(MethodDefinitionStatement* statement);
     void PrettyPrintReturnStatement(ReturnStatement* statement);
     void PrettyPrintArguments(Arguments* arguments);
     void PrettyPrintParameters(Parameters* parameters);

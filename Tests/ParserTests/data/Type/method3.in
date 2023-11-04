@@ -1,0 +1,14 @@
+type Two
+{
+    one = 1
+
+    define value()
+    {
+        return .one() + .one()
+    }
+
+    define one()
+    {
+        return .one
+    }
+}

@@ -72,11 +72,11 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                 }
                 else if (scope == StatementScope::Type)
                 {
-                    //if (IsFunctionDefinitionKeyword(m_tokens.GetLexeme(currentToken.kindIndex)))
-                    //{
-                    //    statements.append(ParseMethodDefinitionStatement());
-                    //    break;
-                    //}
+                    if (IsFunctionDefinitionKeyword(m_tokens.GetLexeme(currentToken.kindIndex)))
+                    {
+                        statements.append(ParseMethodDefinitionStatement());
+                        break;
+                    }
 
                     statements.append(ParseFieldDeclarationStatement());
                     break;
@@ -188,6 +188,16 @@ Statement* Parser::ParseFieldDeclarationStatement()
     }
 
     return new FieldDeclarationStatement(name, colon, type, equals, expression);
+}
+
+Statement* Parser::ParseMethodDefinitionStatement()
+{
+    auto keyword = AdvanceOnMatch(TokenKind::Identifier);
+    auto name = AdvanceOnMatch(TokenKind::Identifier);
+    auto signature = ParseParameters();
+    auto body = ParseFunctionBody();
+
+    return new MethodDefinitionStatement(keyword, name, signature, body);
 }
 
 Statement* Parser::ParseReturnStatement()

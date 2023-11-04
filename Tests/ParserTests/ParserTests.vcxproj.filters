@@ -38,5 +38,9 @@
     <None Include="data\Type\fields1.out" />
     <None Include="data\Global\assignment4.out" />
     <None Include="data\Type\fields2.out" />
+    <None Include="data\Type\method1.in" />
+    <None Include="data\Type\method2.in" />
+    <None Include="data\Type\method3.in" />
+    <None Include="data\Type\method1.out" />
   </ItemGroup>
 </Project>

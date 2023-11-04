@@ -1,0 +1,23 @@
+TypeDefinitionStatement: {
+    Name: Zero
+    Block(1): {
+        MethodDefinitionStatement: {
+            Name: value
+            Parameters(0): {
+            }
+            Block(2): {
+                AssignmentStatement: {
+                    Left: {
+                        Name: zero
+                    }
+                    Right: {
+                        Number: 0
+                    }
+                }
+                ReturnStatement: {
+                    Name: zero
+                }
+            }
+        }
+    }
+}

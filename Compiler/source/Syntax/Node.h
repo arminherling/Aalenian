@@ -15,6 +15,7 @@ enum class COMPILER_API NodeKind
     FunctionDefinitionStatement,
     TypeDefinitionStatement,
     FieldDeclarationStatement,
+    MethodDefinitionStatement,
     ReturnStatement,
 
     Parameters,
@@ -201,6 +202,24 @@ private:
     Parameters* m_parameters;
     Block* m_body;
 };
+
+class COMPILER_API MethodDefinitionStatement : public Statement
+{
+public:
+    MethodDefinitionStatement(const Token& keyword, const Token& name, Parameters* parameters, Block* body);
+
+    [[nodiscard]] const Token& keyword() noexcept { return m_keyword; }
+    [[nodiscard]] const Token& name() noexcept { return m_name; }
+    [[nodiscard]] Parameters* parameters()  noexcept { return m_parameters; }
+    [[nodiscard]] Block* body() noexcept { return m_body; }
+
+private:
+    Token m_keyword;
+    Token m_name;
+    Parameters* m_parameters;
+    Block* m_body;
+};
+
 
 class COMPILER_API TypeDefinitionStatement : public Statement
 {

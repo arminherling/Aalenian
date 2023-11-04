@@ -1,0 +1,8 @@
+type Zero
+{
+    define value()
+    {
+        zero = 0
+        return zero
+    }
+}

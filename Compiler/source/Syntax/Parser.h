@@ -28,6 +28,7 @@ private:
     Statement* ParseFunctionDefinitionStatement();
     Statement* ParseTypeDefinitionStatement();
     Statement* ParseFieldDeclarationStatement();
+    Statement* ParseMethodDefinitionStatement();
     Statement* ParseReturnStatement();
     Expression* ParseExpression();
     Expression* ParseBinaryExpression(int parentPrecedence);

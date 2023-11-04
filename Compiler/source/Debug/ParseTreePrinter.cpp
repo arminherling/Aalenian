@@ -48,6 +48,11 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
             PrettyPrintFieldDeclarationStatement((FieldDeclarationStatement*)node);
             break;
         }
+        case NodeKind::MethodDefinitionStatement:
+        {
+            PrettyPrintMethodDefinitionStatement((MethodDefinitionStatement*)node);
+            break;
+        }
         case NodeKind::ReturnStatement:
         {
             PrettyPrintReturnStatement((ReturnStatement*)node);
@@ -82,33 +87,6 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
             stream() << Indentation() << QString("Missing NodeKind!!") << NewLine();
             break;
     }
-}
-
-void ParseTreePrinter::PrettyPrintFieldDeclarationStatement(FieldDeclarationStatement* statement)
-{
-    stream() << Indentation() << StringifyNodeKind(statement->Kind()) << QString(": {") << NewLine();
-    PushIndentation();
-
-    stream() << Indentation() << QString("Field: {") << NewLine();
-    PushIndentation();
-    PrettyPrintNode(statement->name());
-    PopIndentation();
-    stream() << Indentation() << QString("}") << NewLine();
-
-    if(statement->type().has_value())
-        stream() << Indentation() << QString("Type: ") << StringifyType(statement->type().value()) << NewLine();
-
-    if (statement->expression().has_value())
-    {
-        stream() << Indentation() << QString("Value: {") << NewLine();
-        PushIndentation();
-        PrettyPrintNode(statement->expression().value());
-        PopIndentation();
-        stream() << Indentation() << QString("}") << NewLine();
-    }
-
-    PopIndentation();
-    stream() << Indentation() << QString("}") << NewLine();
 }
 
 void ParseTreePrinter::PrettyPrintAssignmentStatement(AssignmentStatement* statement)
@@ -164,6 +142,47 @@ void ParseTreePrinter::PrettyPrintTypeDefinitionStatement(TypeDefinitionStatemen
     stream() << Indentation() << StringifyNodeKind(statement->Kind()) << QString(": {") << NewLine();
     PushIndentation();
     stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
+    PrettyPrintBlock(statement->body());
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void ParseTreePrinter::PrettyPrintFieldDeclarationStatement(FieldDeclarationStatement* statement)
+{
+    stream() << Indentation() << StringifyNodeKind(statement->Kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << QString("Field: {") << NewLine();
+    PushIndentation();
+    PrettyPrintNode(statement->name());
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    if (statement->type().has_value())
+        stream() << Indentation() << QString("Type: ") << StringifyType(statement->type().value()) << NewLine();
+
+    if (statement->expression().has_value())
+    {
+        stream() << Indentation() << QString("Value: {") << NewLine();
+        PushIndentation();
+        PrettyPrintNode(statement->expression().value());
+        PopIndentation();
+        stream() << Indentation() << QString("}") << NewLine();
+    }
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void ParseTreePrinter::PrettyPrintMethodDefinitionStatement(MethodDefinitionStatement* statement)
+{
+    auto nameToken = statement->name();
+    auto nameLexeme = m_parseTree.Tokens().GetLexeme(nameToken.kindIndex);
+
+    stream() << Indentation() << StringifyNodeKind(statement->Kind()) << QString(": {") << NewLine();
+    PushIndentation();
+    stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
+    PrettyPrintParameters(statement->parameters());
     PrettyPrintBlock(statement->body());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
