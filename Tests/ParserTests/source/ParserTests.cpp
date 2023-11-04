@@ -26,14 +26,15 @@ private slots:
         while (it.hasNext())
         {
             auto file = QFileInfo(it.next());
-            auto fullFilePathWithoutExtension = QDir(file.absolutePath()).filePath(file.baseName());
+            auto directory = QDir(file.absolutePath());
+            auto fullFilePathWithoutExtension = directory.filePath(file.baseName());
 
             auto inPath = QDir::cleanPath(fullFilePathWithoutExtension + QString(".in"));
             auto outPath = QDir::cleanPath(fullFilePathWithoutExtension + QString(".out"));
             auto errorPath = QDir::cleanPath(fullFilePathWithoutExtension + QString(".error"));
 
-            auto fileName = file.completeBaseName();
-            QTest::newRow(fileName.toStdString().c_str()) << inPath << outPath << errorPath;
+            auto testName = directory.dirName() + '/' + file.completeBaseName();
+            QTest::newRow(testName.toStdString().c_str()) << inPath << outPath << errorPath;
         }
     }
 
