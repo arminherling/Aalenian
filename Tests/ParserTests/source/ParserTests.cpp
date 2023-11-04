@@ -1,4 +1,5 @@
 #include <QTest>
+#include <QDirIterator>
 
 #include <Compiler/DiagnosticsBag.h>
 #include <Compiler/File.h>
@@ -20,14 +21,18 @@ private slots:
         auto appDir = QDir(QCoreApplication::applicationDirPath());
         auto testDataDir = QDir(appDir.filePath(QString("../../Tests/ParserTests/data")));
         auto absolutePath = testDataDir.absolutePath();
-        for (const auto& file : testDataDir.entryInfoList(QStringList() << QString("*.in"), QDir::Files))
+
+        QDirIterator it(absolutePath, QStringList() << QString("*.in"), QDir::Filter::Files, QDirIterator::IteratorFlag::Subdirectories);
+        while (it.hasNext())
         {
+            auto file = QFileInfo(it.next());
+            auto fullFilePathWithoutExtension = QDir(file.absolutePath()).filePath(file.baseName());
+
+            auto inPath = QDir::cleanPath(fullFilePathWithoutExtension + QString(".in"));
+            auto outPath = QDir::cleanPath(fullFilePathWithoutExtension + QString(".out"));
+            auto errorPath = QDir::cleanPath(fullFilePathWithoutExtension + QString(".error"));
+
             auto fileName = file.completeBaseName();
-
-            auto inPath = QDir::cleanPath(absolutePath + QDir::separator() + file.completeBaseName() + QString(".in"));
-            auto outPath = QDir::cleanPath(absolutePath + QDir::separator() + file.completeBaseName() + QString(".out"));
-            auto errorPath = QDir::cleanPath(absolutePath + QDir::separator() + file.completeBaseName() + QString(".error"));
-
             QTest::newRow(fileName.toStdString().c_str()) << inPath << outPath << errorPath;
         }
     }

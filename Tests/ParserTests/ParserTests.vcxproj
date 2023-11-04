@@ -116,28 +116,28 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\globalAssignment1.in" />
-    <None Include="data\globalAssignment1.out" />
-    <None Include="data\globalAssignment2.in" />
-    <None Include="data\globalAssignment2.out" />
-    <None Include="data\globalAssignment3.in" />
-    <None Include="data\globalAssignment3.out" />
-    <None Include="data\globalAssignment4.in" />
-    <None Include="data\globalAssignment4.out" />
-    <None Include="data\globalFunctionCall1.in" />
-    <None Include="data\globalFunctionCall1.out" />
-    <None Include="data\globalFunctionDefinition1.in" />
-    <None Include="data\globalFunctionDefinition1.out" />
-    <None Include="data\globalFunctionDefinition2.in" />
-    <None Include="data\globalFunctionDefinition2.out" />
-    <None Include="data\multipleGlobalAssignments1.in" />
-    <None Include="data\multipleGlobalAssignments1.out" />
-    <None Include="data\typeDefinition1.in" />
-    <None Include="data\typeDefinition1.out" />
-    <None Include="data\typeDefinition2.out" />
-    <None Include="data\typeDefinition3.in" />
-    <None Include="data\typeDefinition2.in" />
-    <None Include="data\typeDefinition3.out" />
+    <None Include="data\Global\assignment1.in" />
+    <None Include="data\Global\assignment1.out" />
+    <None Include="data\Global\assignment2.in" />
+    <None Include="data\Global\assignment2.out" />
+    <None Include="data\Global\assignment3.in" />
+    <None Include="data\Global\assignment3.out" />
+    <None Include="data\Global\assignment4.in" />
+    <None Include="data\Global\assignment4.out" />
+    <None Include="data\Global\functionCall1.in" />
+    <None Include="data\Global\functionCall1.out" />
+    <None Include="data\Global\functionDefinition1.in" />
+    <None Include="data\Global\functionDefinition1.out" />
+    <None Include="data\Global\functionDefinition2.in" />
+    <None Include="data\Global\functionDefinition2.out" />
+    <None Include="data\Global\assignments5.in" />
+    <None Include="data\Global\assignments5.out" />
+    <None Include="data\Type\empty1.in" />
+    <None Include="data\Type\empty1.out" />
+    <None Include="data\Type\fields1.out" />
+    <None Include="data\Type\fields2.in" />
+    <None Include="data\Type\fields1.in" />
+    <None Include="data\Type\fields2.out" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
