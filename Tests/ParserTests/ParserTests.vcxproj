@@ -143,6 +143,7 @@
     <None Include="data\Type\method2.in" />
     <None Include="data\Type\method2.out" />
     <None Include="data\Type\method3.in" />
+    <None Include="data\Type\method3-todo.out" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

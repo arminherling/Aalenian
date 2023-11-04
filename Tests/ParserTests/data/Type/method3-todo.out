@@ -1,0 +1,55 @@
+TypeDefinitionStatement: {
+    Name: Two
+    Block(3): {
+        FieldDeclarationStatement: {
+            Field: {
+                Name: one
+            }
+            Value: {
+                Number: 1
+            }
+        }
+        MethodDefinitionStatement: {
+            Name: value
+            Parameters(0): {
+            }
+            Block(1): {
+                ReturnStatement: {
+                    Binary: {
+                        Left: {
+                            MemberAccess: {
+                                FunctionCall: {
+                                    Name: one
+                                    Arguments(0): {
+                                    }
+                                }
+                            }
+                        }
+                        Op: Addition
+                        Right: {
+                            MemberAccess: {
+                                FunctionCall: {
+                                    Name: one
+                                    Arguments(0): {
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        MethodDefinitionStatement: {
+            Name: one
+            Parameters(0): {
+            }
+            Block(1): {
+                ReturnStatement: {
+                    MemberAccess: {
+                        Name: one
+                    }
+                }
+            }
+        }
+    }
+}
