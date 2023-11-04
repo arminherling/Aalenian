@@ -25,7 +25,8 @@ enum class COMPILER_API NodeKind
     Discard,
     FunctionCall,
     Name,
-    Number
+    Number,
+    MemberAccess
 };
 
 COMPILER_API QString StringifyNodeKind(NodeKind kind);
@@ -36,7 +37,7 @@ class COMPILER_API Node
 public:
     Node(NodeKind kind);
 
-    NodeKind Kind() { return m_kind; }
+    NodeKind kind() { return m_kind; }
 
 private:
     NodeKind m_kind;
@@ -59,7 +60,7 @@ class COMPILER_API Name : public Expression
 public:
     Name(const Token& token);
 
-    [[nodiscard]] const Token& Identifier() noexcept { return m_token; }
+    [[nodiscard]] const Token& identifier() noexcept { return m_token; }
 
 private:
     Token m_token;
@@ -94,8 +95,8 @@ class COMPILER_API AssignmentStatement : public Statement
 public:
     AssignmentStatement(Expression* leftExpression, const Token& equalsToken, Expression* rightExpression);
 
-    [[nodiscard]] Expression* LeftExpression() noexcept { return m_leftExpression; }
-    [[nodiscard]] Expression* RightExpression() noexcept { return m_rightExpression; }
+    [[nodiscard]] Expression* leftExpression() noexcept { return m_leftExpression; }
+    [[nodiscard]] Expression* rightExpression() noexcept { return m_rightExpression; }
 
 private:
     Expression* m_leftExpression;
@@ -132,13 +133,27 @@ public:
     Discard(const Token& token);
 };
 
+class COMPILER_API MemberAccess : public Expression
+{
+public:
+    MemberAccess(const Token& dot, Expression* expression);
+
+    [[nodiscard]] const Token& dot() noexcept { return m_dot; }
+    [[nodiscard]] Expression* expression() noexcept { return m_expression; }
+
+private:
+    Token m_dot;
+    Expression* m_expression;
+};
+
+
 class COMPILER_API Parameters : public Node
 {
 public:
     Parameters(const Token& openParenthesis, const Token& closeParenthesis);
 
-    [[nodiscard]] const Token& OpenParenthesis() noexcept { return m_openParenthesis; }
-    [[nodiscard]] const Token& CloseParenthesis() noexcept { return m_closeParenthesis; }
+    [[nodiscard]] const Token& openParenthesis() noexcept { return m_openParenthesis; }
+    [[nodiscard]] const Token& closeParenthesis() noexcept { return m_closeParenthesis; }
 
 private:
     Token m_openParenthesis;
@@ -150,8 +165,8 @@ class COMPILER_API Arguments : public Node
 public:
     Arguments(const Token& openParenthesis, const Token& closeParenthesis);
 
-    [[nodiscard]] const Token& OpenParenthesis() noexcept { return m_openParenthesis; }
-    [[nodiscard]] const Token& CloseParenthesis() noexcept { return m_closeParenthesis; }
+    [[nodiscard]] const Token& openParenthesis() noexcept { return m_openParenthesis; }
+    [[nodiscard]] const Token& closeParenthesis() noexcept { return m_closeParenthesis; }
 
 private:
     Token m_openParenthesis;
@@ -163,9 +178,9 @@ class COMPILER_API Block : public Node
 public:
     Block(const Token& openBracket, const QList<Statement*>& statements, const Token& closeBracket);
 
-    [[nodiscard]] const Token& OpenBracket() noexcept { return m_openBracket; }
-    [[nodiscard]] const QList<Statement*>& Statements() noexcept { return m_statements; }
-    [[nodiscard]] const Token& CloseBracket() noexcept { return m_closeBracket; }
+    [[nodiscard]] const Token& openBracket() noexcept { return m_openBracket; }
+    [[nodiscard]] const QList<Statement*>& statements() noexcept { return m_statements; }
+    [[nodiscard]] const Token& closeBracket() noexcept { return m_closeBracket; }
 
 private:
     Token m_openBracket;
@@ -178,7 +193,7 @@ class COMPILER_API FunctionCall : public Expression
 public:
     FunctionCall(const Token& nameToken, Arguments* arguments);
 
-    [[nodiscard]] const Token& Name() noexcept { return m_nameToken; }
+    [[nodiscard]] const Token& name() noexcept { return m_nameToken; }
     [[nodiscard]] Arguments* arguments() { return m_arguments; }
 
 private:

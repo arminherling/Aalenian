@@ -44,7 +44,7 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
         {
             case TokenKind::Underscore:
             {
-                statements.append(ParseAssignmentStatement());
+                statements.append(ParseAssignmentStatement(scope));
                 break;
             }
             case TokenKind::Identifier:
@@ -62,11 +62,11 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                         break;
                     }
                 }
-                else if (scope == StatementScope::Function)
+                else if (scope == StatementScope::Function || scope == StatementScope::Method)
                 {
                     if (IsReturnKeyword(m_tokens.GetLexeme(currentToken.kindIndex)))
                     {
-                        statements.append(ParseReturnStatement());
+                        statements.append(ParseReturnStatement(scope));
                         break;
                     }
                 }
@@ -86,11 +86,11 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                 auto nextToken = NextToken();
                 if (nextToken.kind == TokenKind::Equal)
                 {
-                    statements.append(ParseAssignmentStatement());
+                    statements.append(ParseAssignmentStatement(scope));
                 }
                 else if (nextToken.kind == TokenKind::OpenParenthesis)
                 {
-                    auto expressionStatement = ParseExpressionStatement();
+                    auto expressionStatement = ParseExpressionStatement(scope);
                     statements.append(expressionStatement);
                 }
                 else
@@ -131,17 +131,17 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
     }
 }
 
-Statement* Parser::ParseAssignmentStatement()
+Statement* Parser::ParseAssignmentStatement(StatementScope scope)
 {
-    auto leftExpression = ParsePrimaryExpression();
+    auto leftExpression = ParsePrimaryExpression(scope);
     auto equals = AdvanceOnMatch(TokenKind::Equal);
-    auto rightExpression = ParseExpression();
+    auto rightExpression = ParseExpression(scope);
     return new AssignmentStatement(leftExpression, equals, rightExpression);
 }
 
-Statement* Parser::ParseExpressionStatement()
+Statement* Parser::ParseExpressionStatement(StatementScope scope)
 {
-    auto expression = ParseExpression();
+    auto expression = ParseExpression(scope);
     return new ExpressionStatement(expression);
 }
 
@@ -184,7 +184,7 @@ Statement* Parser::ParseFieldDeclarationStatement()
     {
         equals = current;
         AdvanceCurrentIndex();
-        expression = ParseExpression();
+        expression = ParseExpression(StatementScope::Type);
     }
 
     return new FieldDeclarationStatement(name, colon, type, equals, expression);
@@ -195,15 +195,15 @@ Statement* Parser::ParseMethodDefinitionStatement()
     auto keyword = AdvanceOnMatch(TokenKind::Identifier);
     auto name = AdvanceOnMatch(TokenKind::Identifier);
     auto signature = ParseParameters();
-    auto body = ParseFunctionBody();
+    auto body = ParseMethodBody();
 
     return new MethodDefinitionStatement(keyword, name, signature, body);
 }
 
-Statement* Parser::ParseReturnStatement()
+Statement* Parser::ParseReturnStatement(StatementScope scope)
 {
     auto keyword = AdvanceOnMatch(TokenKind::Identifier);
-    auto expression = ParseExpression();
+    auto expression = ParseExpression(scope);
     return new ReturnStatement(keyword, expression);
 }
 
@@ -220,17 +220,17 @@ Parameters* Parser::ParseParameters()
 }
 
 
-Expression* Parser::ParseExpression()
+Expression* Parser::ParseExpression(StatementScope scope)
 {
-    return ParseBinaryExpression(0);
+    return ParseBinaryExpression(scope, 0);
 }
 
-Expression* Parser::ParseBinaryExpression(int parentPrecedence)
+Expression* Parser::ParseBinaryExpression(StatementScope scope, int parentPrecedence)
 {
-    return ParsePrimaryExpression();
+    return ParsePrimaryExpression(scope);
 }
 
-Expression* Parser::ParsePrimaryExpression()
+Expression* Parser::ParsePrimaryExpression(StatementScope scope)
 {
     auto currentToken = CurrentToken();
 
@@ -248,6 +248,15 @@ Expression* Parser::ParsePrimaryExpression()
         case TokenKind::Number:
         {
             return ParseNumberLiteral();
+        }
+        case TokenKind::Dot:
+        {
+            if (scope == StatementScope::Method)
+            {
+                AdvanceCurrentIndex();
+                auto expression = ParseFunctionCallOrName();
+                return new MemberAccess(currentToken, expression);
+            }
         }
         default:
         {
@@ -326,6 +335,11 @@ Block* Parser::ParseFunctionBody()
 Block* Parser::ParseTypeBody()
 {
     return ParseBlock(StatementScope::Type);
+}
+
+Block* Parser::ParseMethodBody()
+{
+    return ParseBlock(StatementScope::Method);
 }
 
 Block* Parser::ParseBlock(StatementScope scope)

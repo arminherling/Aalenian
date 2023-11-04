@@ -42,5 +42,6 @@
     <None Include="data\Type\method2.in" />
     <None Include="data\Type\method3.in" />
     <None Include="data\Type\method1.out" />
+    <None Include="data\Type\method2.out" />
   </ItemGroup>
 </Project>

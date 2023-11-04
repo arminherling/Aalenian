@@ -36,6 +36,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("Name");
         case NodeKind::Number:
             return QString("Number");
+        case NodeKind::MemberAccess:
+            return QString("MemberAccess");
         default:
             assert(!"String for TokenKind value was not defined yet");
             return QString();
@@ -59,6 +61,15 @@ Expression::Expression(NodeKind kind)
 
 Discard::Discard(const Token& token)
     : Expression(NodeKind::Discard)
+{
+}
+
+MemberAccess::MemberAccess(
+    const Token& dot,
+    Expression* expression)
+    : Expression(NodeKind::MemberAccess)
+    , m_dot{ dot }
+    , m_expression{ expression }
 {
 }
 
@@ -122,10 +133,10 @@ Number::Number(
 }
 
 FieldDeclarationStatement::FieldDeclarationStatement(
-    Name* name, 
-    const std::optional<Token>& colon, 
-    const std::optional<Name*>& type, 
-    const std::optional<Token>& equals, 
+    Name* name,
+    const std::optional<Token>& colon,
+    const std::optional<Name*>& type,
+    const std::optional<Token>& equals,
     const std::optional<Expression*>& expression)
     : Statement(NodeKind::FieldDeclarationStatement)
     , m_name{ name }

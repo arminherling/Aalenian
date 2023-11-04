@@ -18,27 +18,29 @@ private:
     {
         Global,
         Function,
+        Method,
         Type
     };
 
     QList<Statement*> ParseGlobalStatements();
     QList<Statement*> ParseStatements(StatementScope scope);
-    Statement* ParseAssignmentStatement();
-    Statement* ParseExpressionStatement();
+    Statement* ParseAssignmentStatement(StatementScope scope);
+    Statement* ParseExpressionStatement(StatementScope scope);
     Statement* ParseFunctionDefinitionStatement();
     Statement* ParseTypeDefinitionStatement();
     Statement* ParseFieldDeclarationStatement();
     Statement* ParseMethodDefinitionStatement();
-    Statement* ParseReturnStatement();
-    Expression* ParseExpression();
-    Expression* ParseBinaryExpression(int parentPrecedence);
-    Expression* ParsePrimaryExpression();
+    Statement* ParseReturnStatement(StatementScope scope);
+    Expression* ParseExpression(StatementScope scope);
+    Expression* ParseBinaryExpression(StatementScope scope, int parentPrecedence);
+    Expression* ParsePrimaryExpression(StatementScope scope);
     Expression* ParseFunctionCallOrName();
     Expression* ParseFunctionCall();
     Parameters* ParseParameters();
     Arguments* ParseArguments();
     Block* ParseFunctionBody();
     Block* ParseTypeBody();
+    Block* ParseMethodBody();
     Block* ParseBlock(StatementScope scope);
     Expression* ParseType();
     Expression* ParseName();

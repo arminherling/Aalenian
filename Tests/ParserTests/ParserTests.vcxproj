@@ -141,6 +141,7 @@
     <None Include="data\Type\method1.in" />
     <None Include="data\Type\method1.out" />
     <None Include="data\Type\method2.in" />
+    <None Include="data\Type\method2.out" />
     <None Include="data\Type\method3.in" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

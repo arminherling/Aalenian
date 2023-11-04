@@ -30,6 +30,7 @@ private:
     void PrettyPrintFunctionCall(FunctionCall* functionCall);
     void PrettyPrintName(Name* name);
     void PrettyPrintNumber(Number* number);
+    void PrettyPrintMemberAccess(MemberAccess* memberAccess);
     void PrettyPrintError(Error* error);
 
     void PushIndentation() { m_indentationLevel++; }
