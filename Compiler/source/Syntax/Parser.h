@@ -24,16 +24,16 @@ private:
 
     QList<Statement*> ParseGlobalStatements();
     QList<Statement*> ParseStatements(StatementScope scope);
-    Statement* ParseAssignmentStatement(StatementScope scope);
-    Statement* ParseExpressionStatement(StatementScope scope);
+    Statement* ParseAssignmentStatement();
+    Statement* ParseExpressionStatement();
     Statement* ParseFunctionDefinitionStatement();
     Statement* ParseTypeDefinitionStatement();
     Statement* ParseFieldDeclarationStatement();
     Statement* ParseMethodDefinitionStatement();
-    Statement* ParseReturnStatement(StatementScope scope);
-    Expression* ParseExpression(StatementScope scope);
-    Expression* ParseBinaryExpression(StatementScope scope, int parentPrecedence);
-    Expression* ParsePrimaryExpression(StatementScope scope);
+    Statement* ParseReturnStatement();
+    Expression* ParseExpression();
+    Expression* ParseBinaryExpression(int parentPrecedence);
+    Expression* ParsePrimaryExpression();
     Expression* ParseFunctionCallOrName();
     Expression* ParseFunctionCall();
     Parameters* ParseParameters();

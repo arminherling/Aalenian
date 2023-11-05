@@ -44,7 +44,7 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
         {
             case TokenKind::Underscore:
             {
-                statements.append(ParseAssignmentStatement(scope));
+                statements.append(ParseAssignmentStatement());
                 break;
             }
             case TokenKind::Identifier:
@@ -66,7 +66,7 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                 {
                     if (IsReturnKeyword(m_tokens.GetLexeme(currentToken.kindIndex)))
                     {
-                        statements.append(ParseReturnStatement(scope));
+                        statements.append(ParseReturnStatement());
                         break;
                     }
                 }
@@ -86,11 +86,11 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                 auto nextToken = NextToken();
                 if (nextToken.kind == TokenKind::Equal)
                 {
-                    statements.append(ParseAssignmentStatement(scope));
+                    statements.append(ParseAssignmentStatement());
                 }
                 else if (nextToken.kind == TokenKind::OpenParenthesis)
                 {
-                    auto expressionStatement = ParseExpressionStatement(scope);
+                    auto expressionStatement = ParseExpressionStatement();
                     statements.append(expressionStatement);
                 }
                 else
@@ -131,17 +131,17 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
     }
 }
 
-Statement* Parser::ParseAssignmentStatement(StatementScope scope)
+Statement* Parser::ParseAssignmentStatement()
 {
-    auto leftExpression = ParsePrimaryExpression(scope);
+    auto leftExpression = ParsePrimaryExpression();
     auto equals = AdvanceOnMatch(TokenKind::Equal);
-    auto rightExpression = ParseExpression(scope);
+    auto rightExpression = ParseExpression();
     return new AssignmentStatement(leftExpression, equals, rightExpression);
 }
 
-Statement* Parser::ParseExpressionStatement(StatementScope scope)
+Statement* Parser::ParseExpressionStatement()
 {
-    auto expression = ParseExpression(scope);
+    auto expression = ParseExpression();
     return new ExpressionStatement(expression);
 }
 
@@ -184,7 +184,7 @@ Statement* Parser::ParseFieldDeclarationStatement()
     {
         equals = current;
         AdvanceCurrentIndex();
-        expression = ParseExpression(StatementScope::Type);
+        expression = ParseExpression();
     }
 
     return new FieldDeclarationStatement(name, colon, type, equals, expression);
@@ -200,10 +200,10 @@ Statement* Parser::ParseMethodDefinitionStatement()
     return new MethodDefinitionStatement(keyword, name, signature, body);
 }
 
-Statement* Parser::ParseReturnStatement(StatementScope scope)
+Statement* Parser::ParseReturnStatement()
 {
     auto keyword = AdvanceOnMatch(TokenKind::Identifier);
-    auto expression = ParseExpression(scope);
+    auto expression = ParseExpression();
     return new ReturnStatement(keyword, expression);
 }
 
@@ -219,18 +219,17 @@ Parameters* Parser::ParseParameters()
     return new Parameters(openParenthesis, closeParenthesis);
 }
 
-
-Expression* Parser::ParseExpression(StatementScope scope)
+Expression* Parser::ParseExpression()
 {
-    return ParseBinaryExpression(scope, 0);
+    return ParseBinaryExpression(0);
 }
 
-Expression* Parser::ParseBinaryExpression(StatementScope scope, int parentPrecedence)
+Expression* Parser::ParseBinaryExpression(int parentPrecedence)
 {
-    return ParsePrimaryExpression(scope);
+    return ParsePrimaryExpression();
 }
 
-Expression* Parser::ParsePrimaryExpression(StatementScope scope)
+Expression* Parser::ParsePrimaryExpression()
 {
     auto currentToken = CurrentToken();
 
@@ -251,12 +250,9 @@ Expression* Parser::ParsePrimaryExpression(StatementScope scope)
         }
         case TokenKind::Dot:
         {
-            if (scope == StatementScope::Method)
-            {
-                AdvanceCurrentIndex();
-                auto expression = ParseFunctionCallOrName();
-                return new MemberAccess(currentToken, expression);
-            }
+            AdvanceCurrentIndex();
+            auto expression = ParseFunctionCallOrName();
+            return new MemberAccess(currentToken, expression);
         }
         default:
         {
