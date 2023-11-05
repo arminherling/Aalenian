@@ -1,0 +1,6 @@
+enum Values 
+{
+    First
+    Second
+    Third
+}

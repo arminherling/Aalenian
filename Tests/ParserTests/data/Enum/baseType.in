@@ -1,0 +1,4 @@
+enum Values : i32
+{
+    Value
+}

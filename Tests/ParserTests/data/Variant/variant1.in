@@ -1,0 +1,35 @@
+variant V
+{
+    d1:Vector1D
+    d2:Vector2D
+    d3:Vector3D
+
+    define distance()
+    {
+        case Vector1D d
+        {
+            return 1
+        }
+        case Vector2D d
+        {
+            return 2
+        }
+        case Vector3D d
+        {
+            return 3
+        }
+    }
+}
+
+extend variant V
+{
+    Vector4D
+
+    define distance()
+    {
+        case Vector4d d
+        {
+            return 4
+        }
+    }
+}

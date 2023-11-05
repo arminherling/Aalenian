@@ -116,6 +116,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="data\Enum\baseType.in" />
+    <None Include="data\Expressions\addition1.in" />
+    <None Include="data\Expressions\addition2.in" />
+    <None Include="data\Expressions\division1.in" />
+    <None Include="data\Expressions\division2.in" />
+    <None Include="data\Expressions\grouping1.in" />
+    <None Include="data\Expressions\grouping2.in" />
+    <None Include="data\Expressions\mixed1.in" />
+    <None Include="data\Expressions\mixed2.in" />
+    <None Include="data\Expressions\mixed3.in" />
+    <None Include="data\Expressions\mixed4.in" />
+    <None Include="data\Expressions\multiplication1.in" />
+    <None Include="data\Expressions\multiplication2.in" />
+    <None Include="data\Expressions\subtraction1.in" />
+    <None Include="data\Expressions\subtraction2.in" />
+    <None Include="data\Enum\customValues1.in" />
+    <None Include="data\Enum\defaultValues1.in" />
+    <None Include="data\Enum\empty1.in" />
     <None Include="data\Global\assignment1.in" />
     <None Include="data\Global\assignment1.out" />
     <None Include="data\Global\assignment2.in" />
@@ -144,6 +162,7 @@
     <None Include="data\Type\method2.out" />
     <None Include="data\Type\method3.in" />
     <None Include="data\Type\method3-todo.out" />
+    <None Include="data\Variant\variant1.in" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
