@@ -82,7 +82,6 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                     break;
                 }
 
-
                 auto nextToken = NextToken();
                 if (nextToken.kind == TokenKind::Equal)
                 {
@@ -226,7 +225,25 @@ Expression* Parser::ParseExpression()
 
 Expression* Parser::ParseBinaryExpression(int parentPrecedence)
 {
-    return ParsePrimaryExpression();
+    auto left = ParsePrimaryExpression();
+
+
+    while (true)
+    {
+        auto binaryOperator = CurrentToken();
+        if (binaryOperator.kind == TokenKind::EndOfFile)
+            break;
+
+        auto binaryPrecedence = BinaryOperatorPrecedence(binaryOperator.kind);
+        if (binaryPrecedence == 0 || binaryPrecedence <= parentPrecedence)
+            break;
+
+        AdvanceCurrentIndex();
+        auto right = ParseBinaryExpression(binaryPrecedence);
+        left = new BinaryExpression(left, binaryOperator, right);
+    }
+
+    return left;
 }
 
 Expression* Parser::ParsePrimaryExpression()

@@ -27,10 +27,12 @@ enum class COMPILER_API NodeKind
     Name,
     Number,
     Grouping,
+    BinaryExpression,
     MemberAccess
 };
 
 COMPILER_API QString StringifyNodeKind(NodeKind kind);
+COMPILER_API QString StringifyOperation(TokenKind kind);
 
 
 class COMPILER_API Node
@@ -147,6 +149,21 @@ private:
     Token m_openParenthesis;
     Expression* m_expression;
     Token m_closeParenthesis;
+};
+
+class COMPILER_API BinaryExpression : public Expression
+{
+public:
+    BinaryExpression(Expression* leftExpression, const Token& binaryOperator, Expression* rightExpression);
+
+    [[nodiscard]] Expression* leftExpression() noexcept { return m_leftExpression; }
+    [[nodiscard]] const Token& binaryOperator() noexcept { return m_binaryOperator; }
+    [[nodiscard]] Expression* rightExpression() noexcept { return m_rightExpression; }
+
+private:
+    Expression* m_leftExpression;
+    Token m_binaryOperator;
+    Expression* m_rightExpression;
 };
 
 class COMPILER_API MemberAccess : public Expression

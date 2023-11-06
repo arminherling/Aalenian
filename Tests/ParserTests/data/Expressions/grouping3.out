@@ -1,0 +1,28 @@
+AssignmentStatement: {
+    Left: {
+        Discard: _
+    }
+    Right: {
+        Grouping: {
+            BinaryExpression: {
+                Left: {
+                    Grouping: {
+                        BinaryExpression: {
+                            Left: {
+                                Number: 1
+                            }
+                            Operation: Addition
+                            Right: {
+                                Number: 2
+                            }
+                        }
+                    }
+                }
+                Operation: Multiplication
+                Right: {
+                    Number: 5
+                }
+            }
+        }
+    }
+}

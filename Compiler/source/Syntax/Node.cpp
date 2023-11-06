@@ -38,8 +38,28 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("Number");
         case NodeKind::Grouping:
             return QString("Grouping");
+        case NodeKind::BinaryExpression:
+            return QString("BinaryExpression");
         case NodeKind::MemberAccess:
             return QString("MemberAccess");
+        default:
+            assert(!"String for NodeKind value was not defined yet");
+            return QString();
+    }
+}
+
+COMPILER_API QString StringifyOperation(TokenKind kind)
+{
+    switch (kind)
+    {
+        case TokenKind::Plus:
+            return QString("Addition");
+        case TokenKind::Minus:
+            return QString("Subtraction");
+        case TokenKind::Star:
+            return QString("Multiplication");
+        case TokenKind::Slash:
+            return QString("Division");
         default:
             assert(!"String for TokenKind value was not defined yet");
             return QString();
@@ -76,6 +96,15 @@ Grouping::Grouping(
     , m_closeParenthesis{ closeParenthesis }
 {
 }
+
+BinaryExpression::BinaryExpression(Expression* leftExpression, const Token& binaryOperator, Expression* rightExpression)
+    : Expression(NodeKind::BinaryExpression)
+    , m_leftExpression{ leftExpression }
+    , m_binaryOperator{ binaryOperator }
+    , m_rightExpression{ rightExpression }
+{
+}
+
 MemberAccess::MemberAccess(
     const Token& dot,
     Expression* expression)

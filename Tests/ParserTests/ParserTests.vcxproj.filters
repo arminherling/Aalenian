@@ -65,5 +65,19 @@
     <None Include="data\Enum\baseType.in" />
     <None Include="data\Expressions\grouping3.in" />
     <None Include="data\Expressions\grouping1.out" />
+    <None Include="data\Expressions\addition1.out" />
+    <None Include="data\Expressions\addition2.out" />
+    <None Include="data\Expressions\subtraction1.out" />
+    <None Include="data\Expressions\subtraction2.out" />
+    <None Include="data\Expressions\grouping2.out" />
+    <None Include="data\Expressions\division1.out" />
+    <None Include="data\Expressions\division2.out" />
+    <None Include="data\Expressions\multiplication1.out" />
+    <None Include="data\Expressions\multiplication2.out" />
+    <None Include="data\Expressions\grouping3.out" />
+    <None Include="data\Expressions\mixed1.out" />
+    <None Include="data\Expressions\mixed2.out" />
+    <None Include="data\Expressions\mixed3.out" />
+    <None Include="data\Expressions\mixed4.out" />
   </ItemGroup>
 </Project>

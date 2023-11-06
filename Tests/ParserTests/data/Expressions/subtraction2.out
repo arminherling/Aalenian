@@ -1,0 +1,24 @@
+AssignmentStatement: {
+    Left: {
+        Discard: _
+    }
+    Right: {
+        BinaryExpression: {
+            Left: {
+                BinaryExpression: {
+                    Left: {
+                        Number: 1
+                    }
+                    Operation: Subtraction
+                    Right: {
+                        Number: 2
+                    }
+                }
+            }
+            Operation: Subtraction
+            Right: {
+                Number: 3
+            }
+        }
+    }
+}
