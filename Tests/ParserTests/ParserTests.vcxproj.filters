@@ -63,5 +63,7 @@
     <None Include="data\Expressions\grouping1.in" />
     <None Include="data\Expressions\grouping2.in" />
     <None Include="data\Enum\baseType.in" />
+    <None Include="data\Expressions\grouping3.in" />
+    <None Include="data\Expressions\grouping1.out" />
   </ItemGroup>
 </Project>

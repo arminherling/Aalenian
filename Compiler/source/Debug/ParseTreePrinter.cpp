@@ -78,6 +78,11 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
             PrettyPrintNumber((Number*)node);
             break;
         }
+        case NodeKind::Grouping:
+        {
+            PrettyPrintGrouping((Grouping*)node);
+            break;
+        }
         case NodeKind::MemberAccess:
         {
             PrettyPrintMemberAccess((MemberAccess*)node);
@@ -281,6 +286,17 @@ void ParseTreePrinter::PrettyPrintNumber(Number* number)
 
     auto type = optionalType.value();
     stream() << Indentation() << QString("Type: ") << StringifyType(type) << NewLine();
+}
+
+void ParseTreePrinter::PrettyPrintGrouping(Grouping* grouping)
+{
+    stream() << Indentation() << StringifyNodeKind(grouping->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    PrettyPrintNode(grouping->expression());
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
 }
 
 void ParseTreePrinter::PrettyPrintMemberAccess(MemberAccess* memberAccess)

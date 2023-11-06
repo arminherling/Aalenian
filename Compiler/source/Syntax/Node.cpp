@@ -36,6 +36,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("Name");
         case NodeKind::Number:
             return QString("Number");
+        case NodeKind::Grouping:
+            return QString("Grouping");
         case NodeKind::MemberAccess:
             return QString("MemberAccess");
         default:
@@ -64,6 +66,16 @@ Discard::Discard(const Token& token)
 {
 }
 
+Grouping::Grouping(
+    const Token& openParenthesis,
+    Expression* expression,
+    const Token& closeParenthesis)
+    : Expression(NodeKind::Grouping)
+    , m_openParenthesis{ openParenthesis }
+    , m_expression{ expression }
+    , m_closeParenthesis{ closeParenthesis }
+{
+}
 MemberAccess::MemberAccess(
     const Token& dot,
     Expression* expression)

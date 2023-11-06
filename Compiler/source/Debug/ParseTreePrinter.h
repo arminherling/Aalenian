@@ -30,6 +30,7 @@ private:
     void PrettyPrintFunctionCall(FunctionCall* functionCall);
     void PrettyPrintName(Name* name);
     void PrettyPrintNumber(Number* number);
+    void PrettyPrintGrouping(Grouping* grouping);
     void PrettyPrintMemberAccess(MemberAccess* memberAccess);
     void PrettyPrintError(Error* error);
 

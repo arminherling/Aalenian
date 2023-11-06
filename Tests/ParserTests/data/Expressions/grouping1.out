@@ -1,0 +1,10 @@
+AssignmentStatement: {
+    Left: {
+        Discard: _
+    }
+    Right: {
+        Grouping: {
+            Number: 1
+        }
+    }
+}

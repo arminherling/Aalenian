@@ -45,6 +45,7 @@ private:
     Expression* ParseType();
     Expression* ParseName();
     Expression* ParseNumberLiteral();
+    Expression* ParseGrouping();
 
     Token AdvanceOnMatch(TokenKind kind);
     void SkipUntil(TokenKind kind);

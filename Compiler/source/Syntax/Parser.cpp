@@ -248,6 +248,10 @@ Expression* Parser::ParsePrimaryExpression()
         {
             return ParseNumberLiteral();
         }
+        case TokenKind::OpenParenthesis:
+        {
+            return ParseGrouping();
+        }
         case TokenKind::Dot:
         {
             AdvanceCurrentIndex();
@@ -321,6 +325,15 @@ Expression* Parser::ParseNumberLiteral()
     }
 
     return new Number(number);
+}
+
+Expression* Parser::ParseGrouping()
+{
+    auto openParenthesis = AdvanceOnMatch(TokenKind::OpenParenthesis);
+    auto expression = ParseExpression();
+    auto closeParenthesis = AdvanceOnMatch(TokenKind::CloseParenthesis);
+
+    return new Grouping(openParenthesis, expression, closeParenthesis);
 }
 
 Block* Parser::ParseFunctionBody()
