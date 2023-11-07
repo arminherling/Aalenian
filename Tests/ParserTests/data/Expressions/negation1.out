@@ -1,0 +1,13 @@
+AssignmentStatement: {
+    Left: {
+        Discard: _
+    }
+    Right: {
+        UnaryExpression: {
+            Operation: Negation
+            Expression: {
+                Number: 1
+            }
+        }
+    }
+}

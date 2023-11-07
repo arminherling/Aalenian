@@ -31,6 +31,7 @@ private:
     void PrettyPrintName(Name* name);
     void PrettyPrintNumber(Number* number);
     void PrettyPrintGrouping(Grouping* grouping);
+    void PrettyPrintUnaryExpression(UnaryExpression* unaryExpression);
     void PrettyPrintBinaryExpression(BinaryExpression* binaryExpression);
     void PrettyPrintMemberAccess(MemberAccess* memberAccess);
     void PrettyPrintError(Error* error);

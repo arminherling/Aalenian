@@ -38,6 +38,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("Number");
         case NodeKind::Grouping:
             return QString("Grouping");
+        case NodeKind::UnaryExpression:
+            return QString("UnaryExpression");
         case NodeKind::BinaryExpression:
             return QString("BinaryExpression");
         case NodeKind::MemberAccess:
@@ -48,10 +50,24 @@ QString StringifyNodeKind(NodeKind kind)
     }
 }
 
-COMPILER_API QString StringifyOperation(TokenKind kind)
+COMPILER_API QString StringifyUnaryOperation(TokenKind kind)
 {
     switch (kind)
     {
+        case TokenKind::Minus:
+            return QString("Negation");
+        default:
+            assert(!"String for TokenKind value was not defined yet");
+            return QString();
+    }
+}
+
+COMPILER_API QString StringifyBinaryOperation(TokenKind kind)
+{
+    switch (kind)
+    {
+        case TokenKind::Dot:
+            return QString("Member Access");
         case TokenKind::Plus:
             return QString("Addition");
         case TokenKind::Minus:
@@ -94,6 +110,13 @@ Grouping::Grouping(
     , m_openParenthesis{ openParenthesis }
     , m_expression{ expression }
     , m_closeParenthesis{ closeParenthesis }
+{
+}
+
+UnaryExpression::UnaryExpression(const Token& unaryOperator, Expression* expression)
+    : Expression(NodeKind::UnaryExpression)
+    , m_unaryOperator{ unaryOperator }
+    , m_expression{ expression }
 {
 }
 

@@ -43,7 +43,7 @@
     <None Include="data\Type\method3.in" />
     <None Include="data\Type\method1.out" />
     <None Include="data\Type\method2.out" />
-    <None Include="data\Type\method3-todo.out" />
+    <None Include="data\Type\method3.out" />
     <None Include="data\Enum\empty1.in" />
     <None Include="data\Enum\defaultValues1.in" />
     <None Include="data\Enum\customValues1.in" />
@@ -79,5 +79,11 @@
     <None Include="data\Expressions\mixed2.out" />
     <None Include="data\Expressions\mixed3.out" />
     <None Include="data\Expressions\mixed4.out" />
+    <None Include="data\Expressions\negation1.in" />
+    <None Include="data\Expressions\negation2.in" />
+    <None Include="data\Expressions\negation1.out" />
+    <None Include="data\Expressions\negation2.out" />
+    <None Include="data\Expressions\negation3.in" />
+    <None Include="data\Expressions\negation3.out" />
   </ItemGroup>
 </Project>

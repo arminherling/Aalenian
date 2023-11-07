@@ -225,8 +225,20 @@ Expression* Parser::ParseExpression()
 
 Expression* Parser::ParseBinaryExpression(int parentPrecedence)
 {
-    auto left = ParsePrimaryExpression();
+    Expression* left = nullptr;
+    auto unaryOperator = CurrentToken();
 
+    auto unaryPrecedence = UnaryOperatorPrecedence(unaryOperator.kind);
+    if (unaryPrecedence == 0 || unaryPrecedence < parentPrecedence)
+    {
+        left = ParsePrimaryExpression();
+    }
+    else
+    {
+        AdvanceCurrentIndex();
+        auto expression = ParseBinaryExpression(unaryPrecedence);
+        left = new UnaryExpression(unaryOperator, expression);
+    }
 
     while (true)
     {
