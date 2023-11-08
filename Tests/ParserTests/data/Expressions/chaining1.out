@@ -1,0 +1,32 @@
+AssignmentStatement: {
+    Left: {
+        Discard: _
+    }
+    Right: {
+        BinaryExpression: {
+            Left: {
+                BinaryExpression: {
+                    Left: {
+                        Name: object
+                    }
+                    Operation: Member Access
+                    Right: {
+                        FunctionCall: {
+                            Name: func
+                            Arguments(0): {
+                            }
+                        }
+                    }
+                }
+            }
+            Operation: Member Access
+            Right: {
+                FunctionCall: {
+                    Name: func
+                    Arguments(0): {
+                    }
+                }
+            }
+        }
+    }
+}
