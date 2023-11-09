@@ -19,9 +19,11 @@ AssignmentStatement: {
     }
 }
 ExpressionStatement: {
-    FunctionCall: {
-        Name: func
-        Arguments(0): {
+    MemberAccess: {
+        FunctionCall: {
+            Name: func
+            Arguments(0): {
+            }
         }
     }
 }

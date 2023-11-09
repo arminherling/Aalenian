@@ -47,6 +47,11 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                 statements.append(ParseAssignmentStatement());
                 break;
             }
+            case TokenKind::Dot:
+            {
+                statements.append(ParseExpressionStatement());
+                break;
+            }
             case TokenKind::Identifier:
             {
                 if (scope == StatementScope::Global)
@@ -250,6 +255,10 @@ Expression* Parser::ParseBinaryExpression(int parentPrecedence)
         if (binaryPrecedence == 0 || binaryPrecedence <= parentPrecedence)
             break;
 
+        // empty lines prevent unintended method chaining
+        if (HasLineBreakSinceLastMemberAccess())
+            break;
+
         AdvanceCurrentIndex();
         auto right = ParseBinaryExpression(binaryPrecedence);
         left = new BinaryExpression(left, binaryOperator, right);
@@ -425,6 +434,20 @@ Token Parser::Peek(int offset)
         return Token{ .kind = TokenKind::EndOfFile };
 
     return m_tokens[index];
+}
+
+bool Parser::HasLineBreakSinceLastMemberAccess()
+{
+    auto currentToken = CurrentToken();
+    if (currentToken.kind != TokenKind::Dot)
+        return false;
+
+    auto lastToken = Peek(-1);
+    auto lastTokenLocation = m_tokens.GetSourceLocation(lastToken.locationIndex);
+    auto currentTokenLocation = m_tokens.GetSourceLocation(currentToken.locationIndex);
+
+    auto hasEmptyLineBreak = (currentTokenLocation.endLine - lastTokenLocation.endLine) >= 2;
+    return hasEmptyLineBreak;
 }
 
 COMPILER_API ParseTree Parse(const TokenBuffer& tokens, DiagnosticsBag& diagnostics) noexcept

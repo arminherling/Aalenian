@@ -55,6 +55,8 @@ private:
     Token NextToken() { return Peek(1); }
     void AdvanceCurrentIndex() { m_currentIndex++; }
 
+    bool HasLineBreakSinceLastMemberAccess();
+
     TokenBuffer m_tokens;
     DiagnosticsBag& m_diagnostics;
     int m_currentIndex;
