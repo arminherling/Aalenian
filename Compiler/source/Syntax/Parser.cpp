@@ -5,6 +5,11 @@ bool IsFunctionDefinitionKeyword(const QStringView& lexeme)
     return lexeme == QString("define");
 }
 
+bool IsEnumDefinitionKeyword(const QStringView& lexeme)
+{
+    return lexeme == QString("enum");
+}
+
 bool IsTypeDefinitionKeyword(const QStringView& lexeme)
 {
     return lexeme == QString("type");
@@ -54,22 +59,28 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
             }
             case TokenKind::Identifier:
             {
+                auto lexeme = m_tokens.GetLexeme(currentToken.kindIndex);
                 if (scope == StatementScope::Global)
                 {
-                    if (IsFunctionDefinitionKeyword(m_tokens.GetLexeme(currentToken.kindIndex)))
+                    if (IsFunctionDefinitionKeyword(lexeme))
                     {
                         statements.append(ParseFunctionDefinitionStatement());
                         break;
                     }
-                    else if (IsTypeDefinitionKeyword(m_tokens.GetLexeme(currentToken.kindIndex)))
+                    else if (IsTypeDefinitionKeyword(lexeme))
                     {
                         statements.append(ParseTypeDefinitionStatement());
+                        break;
+                    }
+                    else if (IsEnumDefinitionKeyword(lexeme))
+                    {
+                        statements.append(ParseEnumDefinitionStatement());
                         break;
                     }
                 }
                 else if (scope == StatementScope::Function || scope == StatementScope::Method)
                 {
-                    if (IsReturnKeyword(m_tokens.GetLexeme(currentToken.kindIndex)))
+                    if (IsReturnKeyword(lexeme))
                     {
                         statements.append(ParseReturnStatement());
                         break;
@@ -77,7 +88,7 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                 }
                 else if (scope == StatementScope::Type)
                 {
-                    if (IsFunctionDefinitionKeyword(m_tokens.GetLexeme(currentToken.kindIndex)))
+                    if (IsFunctionDefinitionKeyword(lexeme))
                     {
                         statements.append(ParseMethodDefinitionStatement());
                         break;
@@ -157,6 +168,15 @@ Statement* Parser::ParseFunctionDefinitionStatement()
     auto body = ParseFunctionBody();
 
     return new FunctionDefinitionStatement(keyword, name, signature, body);
+}
+
+Statement* Parser::ParseEnumDefinitionStatement()
+{
+    auto keyword = AdvanceOnMatch(TokenKind::Identifier);
+    auto name = AdvanceOnMatch(TokenKind::Identifier);
+    auto body = ParseEnumBody();
+
+    return new EnumDefinitionStatement(keyword, name, body);
 }
 
 Statement* Parser::ParseTypeDefinitionStatement()
@@ -377,6 +397,11 @@ Expression* Parser::ParseGrouping()
 Block* Parser::ParseFunctionBody()
 {
     return ParseBlock(StatementScope::Function);
+}
+
+Block* Parser::ParseEnumBody()
+{
+    return ParseBlock(StatementScope::Enum);
 }
 
 Block* Parser::ParseTypeBody()

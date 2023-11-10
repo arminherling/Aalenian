@@ -16,6 +16,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("FunctionDefinitionStatement");
         case NodeKind::TypeDefinitionStatement:
             return QString("TypeDefinitionStatement");
+        case NodeKind::EnumDefinitionStatement:
+            return QString("EnumDefinitionStatement");
         case NodeKind::FieldDeclarationStatement:
             return QString("FieldDeclarationStatement");
         case NodeKind::MethodDefinitionStatement:
@@ -256,6 +258,17 @@ MethodDefinitionStatement::MethodDefinitionStatement(
     , m_keyword{ keyword }
     , m_name{ name }
     , m_parameters{ parameters }
+    , m_body{ body }
+{
+}
+
+EnumDefinitionStatement::EnumDefinitionStatement(
+    const Token& keyword,
+    const Token& name,
+    Block* body)
+    : Statement(NodeKind::EnumDefinitionStatement)
+    , m_keyword{ keyword }
+    , m_name{ name }
     , m_body{ body }
 {
 }

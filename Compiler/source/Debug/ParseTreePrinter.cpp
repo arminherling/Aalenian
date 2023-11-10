@@ -38,6 +38,11 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
             PrettyPrintFunctionDefinitionStatement((FunctionDefinitionStatement*)node);
             break;
         }
+        case NodeKind::EnumDefinitionStatement:
+        {
+            PrettyPrintEnumDefinitionStatement((EnumDefinitionStatement*)node);
+            break;
+        }
         case NodeKind::TypeDefinitionStatement:
         {
             PrettyPrintTypeDefinitionStatement((TypeDefinitionStatement*)node);
@@ -149,6 +154,19 @@ void ParseTreePrinter::PrettyPrintFunctionDefinitionStatement(FunctionDefinition
     PushIndentation();
     stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
     PrettyPrintParameters(statement->parameters());
+    PrettyPrintBlock(statement->body());
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void ParseTreePrinter::PrettyPrintEnumDefinitionStatement(EnumDefinitionStatement* statement)
+{
+    auto nameToken = statement->name();
+    auto nameLexeme = m_parseTree.Tokens().GetLexeme(nameToken.kindIndex);
+
+    stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+    stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
     PrettyPrintBlock(statement->body());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();

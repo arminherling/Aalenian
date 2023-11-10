@@ -11,11 +11,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="source\ParserTests.cpp">
-      <Filter>Source Files</Filter>
-    </QtMoc>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="data\Global\assignment1.in" />
     <None Include="data\Global\assignment1.out" />
     <None Include="data\Global\assignment2.in" />
@@ -91,5 +86,11 @@
     <None Include="data\Expressions\chaining1.out" />
     <None Include="data\Expressions\chaining2.out" />
     <None Include="data\Expressions\chaining3.out" />
+    <None Include="data\Enum\empty1.out" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="source\ParserTests.cpp">
+      <Filter>Source Files</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>

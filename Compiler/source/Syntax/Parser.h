@@ -19,6 +19,7 @@ private:
         Global,
         Function,
         Method,
+        Enum,
         Type
     };
 
@@ -27,6 +28,7 @@ private:
     Statement* ParseAssignmentStatement();
     Statement* ParseExpressionStatement();
     Statement* ParseFunctionDefinitionStatement();
+    Statement* ParseEnumDefinitionStatement();
     Statement* ParseTypeDefinitionStatement();
     Statement* ParseFieldDeclarationStatement();
     Statement* ParseMethodDefinitionStatement();
@@ -39,6 +41,7 @@ private:
     Parameters* ParseParameters();
     Arguments* ParseArguments();
     Block* ParseFunctionBody();
+    Block* ParseEnumBody();
     Block* ParseTypeBody();
     Block* ParseMethodBody();
     Block* ParseBlock(StatementScope scope);
