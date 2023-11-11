@@ -172,6 +172,10 @@ void ParseTreePrinter::PrettyPrintEnumDefinitionStatement(EnumDefinitionStatemen
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
     stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
+
+    if (statement->baseType().has_value())
+        stream() << Indentation() << QString("Type: ") << StringifyType(statement->baseType().value()) << NewLine();
+
     PrettyPrintBlock(statement->body());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();

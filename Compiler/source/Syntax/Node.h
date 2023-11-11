@@ -288,15 +288,21 @@ private:
 class COMPILER_API EnumDefinitionStatement : public Statement
 {
 public:
-    EnumDefinitionStatement(const Token& keyword, const Token& name, Block* body);
+    EnumDefinitionStatement(
+        const Token& keyword, 
+        const Token& name, 
+        const std::optional<Name*>& type, 
+        Block* body);
 
     [[nodiscard]] const Token& keyword() noexcept { return m_keyword; }
     [[nodiscard]] const Token& name() noexcept { return m_name; }
+    [[nodiscard]] const std::optional<Name*>& baseType() noexcept { return m_baseType; }
     [[nodiscard]] Block* body() noexcept { return m_body; }
 
 private:
     Token m_keyword;
     Token m_name;
+    std::optional<Name*> m_baseType;
     Block* m_body;
 };
 

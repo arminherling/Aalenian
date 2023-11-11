@@ -116,7 +116,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\Enum\baseType.in" />
+    <None Include="data\Enum\baseType1.in" />
+    <None Include="data\Enum\baseType1.out" />
     <None Include="data\Enum\customValues1.out" />
     <None Include="data\Enum\defaultValues1.out" />
     <None Include="data\Enum\empty1.out" />

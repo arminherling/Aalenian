@@ -179,9 +179,19 @@ Statement* Parser::ParseEnumDefinitionStatement()
 {
     auto keyword = AdvanceOnMatch(TokenKind::Identifier);
     auto name = AdvanceOnMatch(TokenKind::Identifier);
+
+    auto current = CurrentToken();
+    std::optional<Name*> baseType;
+    if (current.kind == TokenKind::Colon)
+    {
+        AdvanceCurrentIndex();
+        baseType = (Name*)ParseType();
+        current = CurrentToken();
+    }
+
     auto body = ParseEnumBody();
 
-    return new EnumDefinitionStatement(keyword, name, body);
+    return new EnumDefinitionStatement(keyword, name, baseType, body);
 }
 
 Statement* Parser::ParseTypeDefinitionStatement()

@@ -1,0 +1,9 @@
+EnumDefinitionStatement: {
+    Name: Values
+    Type: i32
+    Block(1): {
+        EnumMember: {
+            Name: Value
+        }
+    }
+}
