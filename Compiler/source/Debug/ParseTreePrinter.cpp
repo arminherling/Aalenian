@@ -315,9 +315,9 @@ void ParseTreePrinter::PrettyPrintFunctionCall(FunctionCall* functionCall)
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-QString ParseTreePrinter::StringifyType(Name* name)
+QString ParseTreePrinter::StringifyType(const Type& type)
 {
-    auto token = name->identifier();
+    auto token = type.name()->identifier();
     auto lexeme = m_parseTree.Tokens().GetLexeme(token.kindIndex);
     return lexeme.toString();
 }

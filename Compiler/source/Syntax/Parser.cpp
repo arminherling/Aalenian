@@ -181,11 +181,11 @@ Statement* Parser::ParseEnumDefinitionStatement()
     auto name = AdvanceOnMatch(TokenKind::Identifier);
 
     auto current = CurrentToken();
-    std::optional<Name*> baseType;
+    std::optional<Type> baseType;
     if (current.kind == TokenKind::Colon)
     {
         AdvanceCurrentIndex();
-        baseType = (Name*)ParseType();
+        baseType = ParseType();
         current = CurrentToken();
     }
 
@@ -208,12 +208,12 @@ Statement* Parser::ParseFieldDeclarationStatement()
     auto name = ParseName();
     auto current = CurrentToken();
     std::optional<Token> colon;
-    std::optional<Name*> type;
+    std::optional<Type> type;
     if (current.kind == TokenKind::Colon)
     {
         AdvanceCurrentIndex();
         colon = current;
-        type = (Name*)ParseType();
+        type = ParseType();
         current = CurrentToken();
     }
 
@@ -374,9 +374,10 @@ Arguments* Parser::ParseArguments()
     return new Arguments(openParenthesis, closeParenthesis);
 }
 
-Expression* Parser::ParseType()
+Type Parser::ParseType()
 {
-    return ParseName();
+    auto name = ParseName();
+    return Type(name);
 }
 
 Name* Parser::ParseName()
@@ -393,7 +394,7 @@ Number* Parser::ParseNumberLiteral()
     if (current.kind == TokenKind::Colon)
     {
         AdvanceCurrentIndex();
-        auto type = (Name*)ParseType();
+        auto type = ParseType();
         return new Number(number, current, type);
     }
 

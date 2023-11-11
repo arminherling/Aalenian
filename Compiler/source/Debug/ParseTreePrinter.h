@@ -43,7 +43,7 @@ private:
     QTextStream& stream() { return m_stream; }
     QByteArray toUtf8() { return m_output.toUtf8(); }
 
-    QString StringifyType(Name* name);
+    QString StringifyType(const Type& type);
     QString Indentation() { return QString(" ").repeated(m_indentation * m_indentationLevel); }
     QString NewLine() { return QString("\r\n"); }
 

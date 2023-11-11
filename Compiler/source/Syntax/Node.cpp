@@ -147,6 +147,12 @@ Name::Name(const Token& token)
 {
 }
 
+Type::Type(Name* name)
+    : Node(NodeKind::Type)
+    , m_name{ name}
+{
+}
+
 Parameters::Parameters(
     const Token& openParenthesis,
     const Token& closeParenthesis)
@@ -192,7 +198,7 @@ Number::Number(const Token& token)
 Number::Number(
     const Token& token,
     const Token& colon,
-    Name* type)
+    const Type& type)
     : Expression(NodeKind::Number)
     , m_token{ token }
     , m_colon{ colon }
@@ -203,7 +209,7 @@ Number::Number(
 FieldDeclarationStatement::FieldDeclarationStatement(
     Name* name,
     const std::optional<Token>& colon,
-    const std::optional<Name*>& type,
+    const std::optional<Type>& type,
     const std::optional<Token>& equals,
     const std::optional<Expression*>& expression)
     : Statement(NodeKind::FieldDeclarationStatement)
@@ -267,7 +273,7 @@ MethodDefinitionStatement::MethodDefinitionStatement(
 EnumDefinitionStatement::EnumDefinitionStatement(
     const Token& keyword,
     const Token& name,
-    const std::optional<Name*>& baseType,
+    const std::optional<Type>& baseType,
     Block* body)
     : Statement(NodeKind::EnumDefinitionStatement)
     , m_keyword{ keyword }

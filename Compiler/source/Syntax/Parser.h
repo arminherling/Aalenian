@@ -14,7 +14,7 @@ public:
     ParseTree Parse();
 
 private:
-    enum StatementScope
+    enum class StatementScope
     {
         Global,
         Function,
@@ -45,7 +45,7 @@ private:
     Block* ParseTypeBody();
     Block* ParseMethodBody();
     Block* ParseBlock(StatementScope scope);
-    Expression* ParseType();
+    Type ParseType();
     Name* ParseName();
     Number* ParseNumberLiteral();
     Grouping* ParseGrouping();

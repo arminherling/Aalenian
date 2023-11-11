@@ -19,6 +19,9 @@ enum class COMPILER_API NodeKind
     MethodDefinitionStatement,
     ReturnStatement,
 
+    UnaryExpression,
+    BinaryExpression,
+    Type,
     Parameters,
     Arguments,
     Block,
@@ -29,8 +32,6 @@ enum class COMPILER_API NodeKind
     Name,
     Number,
     Grouping,
-    UnaryExpression,
-    BinaryExpression,
     MemberAccess
 };
 
@@ -73,26 +74,37 @@ private:
     Token m_token;
 };
 
+class COMPILER_API Type : public Node
+{
+public:
+    Type(Name* name);
+
+    [[nodiscard]] Name* name() const noexcept { return m_name; }
+
+private:
+    Name* m_name;
+};
+
 class COMPILER_API FieldDeclarationStatement : public Statement
 {
 public:
     FieldDeclarationStatement(
         Name* name, 
         const std::optional<Token>& colon, 
-        const std::optional<Name*>& type,
+        const std::optional<Type>& type,
         const std::optional<Token>& equals, 
         const std::optional<Expression*>& expression);
 
     [[nodiscard]] Name* name() noexcept { return m_name; }
     [[nodiscard]] const std::optional<Token>& colon() noexcept { return m_colon; }
-    [[nodiscard]] const std::optional<Name*>& type() noexcept { return m_type; }
+    [[nodiscard]] const std::optional<Type>& type() noexcept { return m_type; }
     [[nodiscard]] const std::optional<Token>& equals() noexcept { return m_equals; }
     [[nodiscard]] const std::optional<Expression*>& expression() noexcept { return m_expression; }
 
 private:
     Name* m_name;
     std::optional<Token> m_colon;
-    std::optional<Name*> m_type;
+    std::optional<Type> m_type;
     std::optional<Token> m_equals;
     std::optional<Expression*> m_expression;
 };
@@ -196,7 +208,6 @@ private:
     Expression* m_expression;
 };
 
-
 class COMPILER_API Parameters : public Node
 {
 public:
@@ -291,18 +302,18 @@ public:
     EnumDefinitionStatement(
         const Token& keyword, 
         const Token& name, 
-        const std::optional<Name*>& type, 
+        const std::optional<Type>& type, 
         Block* body);
 
     [[nodiscard]] const Token& keyword() noexcept { return m_keyword; }
     [[nodiscard]] const Token& name() noexcept { return m_name; }
-    [[nodiscard]] const std::optional<Name*>& baseType() noexcept { return m_baseType; }
+    [[nodiscard]] const std::optional<Type>& baseType() noexcept { return m_baseType; }
     [[nodiscard]] Block* body() noexcept { return m_body; }
 
 private:
     Token m_keyword;
     Token m_name;
-    std::optional<Name*> m_baseType;
+    std::optional<Type> m_baseType;
     Block* m_body;
 };
 
@@ -325,16 +336,16 @@ class COMPILER_API Number : public Expression
 {
 public:
     Number(const Token& token);
-    Number(const Token& token, const Token& colon, Name* type);
+    Number(const Token& token, const Token& colon, const Type& type);
 
     [[nodiscard]] const Token& token() noexcept { return m_token; }
     [[nodiscard]] const std::optional<Token>& colon() noexcept { return m_colon; }
-    [[nodiscard]] const std::optional<Name*>& type() noexcept { return m_type; }
+    [[nodiscard]] const std::optional<Type>& type() noexcept { return m_type; }
 
 private:
     Token m_token;
     std::optional<Token> m_colon;
-    std::optional<Name*> m_type;
+    std::optional<Type> m_type;
 };
 
 class COMPILER_API EnumMember : public Statement
