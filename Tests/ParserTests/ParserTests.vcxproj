@@ -117,6 +117,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="data\Enum\baseType.in" />
+    <None Include="data\Enum\customValues1.out" />
+    <None Include="data\Enum\defaultValues1.out" />
     <None Include="data\Enum\empty1.out" />
     <None Include="data\Expressions\addition1.in" />
     <None Include="data\Expressions\addition1.out" />

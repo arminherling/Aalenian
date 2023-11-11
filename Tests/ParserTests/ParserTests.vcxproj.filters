@@ -87,6 +87,8 @@
     <None Include="data\Expressions\chaining2.out" />
     <None Include="data\Expressions\chaining3.out" />
     <None Include="data\Enum\empty1.out" />
+    <None Include="data\Enum\defaultValues1.out" />
+    <None Include="data\Enum\customValues1.out" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="source\ParserTests.cpp">

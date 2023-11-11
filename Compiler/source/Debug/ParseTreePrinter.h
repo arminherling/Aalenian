@@ -19,6 +19,7 @@ private:
     void PrettyPrintExpressionStatement(ExpressionStatement* statement);
     void PrettyPrintFunctionDefinitionStatement(FunctionDefinitionStatement* statement);
     void PrettyPrintEnumDefinitionStatement(EnumDefinitionStatement* statement);
+    void PrettyPrintEnumMember(EnumMember* statement);
     void PrettyPrintTypeDefinitionStatement(TypeDefinitionStatement* statement);
     void PrettyPrintFieldDeclarationStatement(FieldDeclarationStatement* statement);
     void PrettyPrintMethodDefinitionStatement(MethodDefinitionStatement* statement);

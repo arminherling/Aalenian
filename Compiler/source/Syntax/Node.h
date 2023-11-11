@@ -22,6 +22,7 @@ enum class COMPILER_API NodeKind
     Parameters,
     Arguments,
     Block,
+    EnumMember,
 
     Discard,
     FunctionCall,
@@ -328,6 +329,22 @@ private:
     Token m_token;
     std::optional<Token> m_colon;
     std::optional<Name*> m_type;
+};
+
+class COMPILER_API EnumMember : public Statement
+{
+public:
+    EnumMember(Name* name);
+    EnumMember(Name* name, const Token& equal, Number* value);
+
+    [[nodiscard]] Name* name() noexcept { return m_name; }
+    [[nodiscard]] const std::optional<Token>& equal() noexcept { return m_equal; }
+    [[nodiscard]] const std::optional<Number*>& value() noexcept { return m_value; }
+
+private:
+    Name* m_name;
+    std::optional<Token> m_equal;
+    std::optional<Number*> m_value;
 };
 
 class COMPILER_API Error : public Expression

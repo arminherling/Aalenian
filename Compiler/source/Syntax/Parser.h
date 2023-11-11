@@ -46,9 +46,10 @@ private:
     Block* ParseMethodBody();
     Block* ParseBlock(StatementScope scope);
     Expression* ParseType();
-    Expression* ParseName();
-    Expression* ParseNumberLiteral();
-    Expression* ParseGrouping();
+    Name* ParseName();
+    Number* ParseNumberLiteral();
+    Grouping* ParseGrouping();
+    EnumMember* ParseEnumMember();
 
     Token AdvanceOnMatch(TokenKind kind);
     void SkipUntil(TokenKind kind);

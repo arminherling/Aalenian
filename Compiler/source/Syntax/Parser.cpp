@@ -97,6 +97,11 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                     statements.append(ParseFieldDeclarationStatement());
                     break;
                 }
+                else if (scope == StatementScope::Enum)
+                {
+                    statements.append(ParseEnumMember());
+                    break;
+                }
 
                 auto nextToken = NextToken();
                 if (nextToken.kind == TokenKind::Equal)
@@ -190,7 +195,7 @@ Statement* Parser::ParseTypeDefinitionStatement()
 
 Statement* Parser::ParseFieldDeclarationStatement()
 {
-    auto name = (Name*)ParseName();
+    auto name = ParseName();
     auto current = CurrentToken();
     std::optional<Token> colon;
     std::optional<Name*> type;
@@ -364,13 +369,13 @@ Expression* Parser::ParseType()
     return ParseName();
 }
 
-Expression* Parser::ParseName()
+Name* Parser::ParseName()
 {
     auto name = AdvanceOnMatch(TokenKind::Identifier);
     return new Name(name);
 }
 
-Expression* Parser::ParseNumberLiteral()
+Number* Parser::ParseNumberLiteral()
 {
     auto number = AdvanceOnMatch(TokenKind::Number);
 
@@ -385,13 +390,28 @@ Expression* Parser::ParseNumberLiteral()
     return new Number(number);
 }
 
-Expression* Parser::ParseGrouping()
+Grouping* Parser::ParseGrouping()
 {
     auto openParenthesis = AdvanceOnMatch(TokenKind::OpenParenthesis);
     auto expression = ParseExpression();
     auto closeParenthesis = AdvanceOnMatch(TokenKind::CloseParenthesis);
 
     return new Grouping(openParenthesis, expression, closeParenthesis);
+}
+
+EnumMember* Parser::ParseEnumMember()
+{
+    auto memberName = ParseName();
+
+    auto current = CurrentToken();
+    if (current.kind == TokenKind::Equal)
+    {
+        AdvanceCurrentIndex();
+        auto value = ParseNumberLiteral();
+        return new EnumMember(memberName, current, value);
+    }
+
+    return new EnumMember(memberName);
 }
 
 Block* Parser::ParseFunctionBody()

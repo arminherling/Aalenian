@@ -18,6 +18,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("TypeDefinitionStatement");
         case NodeKind::EnumDefinitionStatement:
             return QString("EnumDefinitionStatement");
+        case NodeKind::EnumMember:
+            return QString("EnumMember");
         case NodeKind::FieldDeclarationStatement:
             return QString("FieldDeclarationStatement");
         case NodeKind::MethodDefinitionStatement:
@@ -270,6 +272,23 @@ EnumDefinitionStatement::EnumDefinitionStatement(
     , m_keyword{ keyword }
     , m_name{ name }
     , m_body{ body }
+{
+}
+
+EnumMember::EnumMember(Name* name)
+    : Statement(NodeKind::EnumMember)
+    , m_name{ name }
+{
+}
+
+EnumMember::EnumMember(
+    Name* name, 
+    const Token& equal, 
+    Number* value)
+    : Statement(NodeKind::EnumMember)
+    , m_name{ name }
+    , m_equal{ equal }
+    , m_value{ value }
 {
 }
 

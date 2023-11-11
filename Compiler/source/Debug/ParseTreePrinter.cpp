@@ -43,6 +43,11 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
             PrettyPrintEnumDefinitionStatement((EnumDefinitionStatement*)node);
             break;
         }
+        case NodeKind::EnumMember:
+        {
+            PrettyPrintEnumMember((EnumMember*)node);
+            break;
+        }
         case NodeKind::TypeDefinitionStatement:
         {
             PrettyPrintTypeDefinitionStatement((TypeDefinitionStatement*)node);
@@ -168,6 +173,24 @@ void ParseTreePrinter::PrettyPrintEnumDefinitionStatement(EnumDefinitionStatemen
     PushIndentation();
     stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
     PrettyPrintBlock(statement->body());
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void ParseTreePrinter::PrettyPrintEnumMember(EnumMember* statement)
+{
+    auto nameToken = statement->name()->identifier();
+    auto nameLexeme = m_parseTree.Tokens().GetLexeme(nameToken.kindIndex);
+
+    stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+    stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
+
+    if (statement->value().has_value())
+    {
+        PrettyPrintNode(statement->value().value());
+    }
+
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 }

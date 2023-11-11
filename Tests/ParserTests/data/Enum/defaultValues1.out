@@ -1,0 +1,14 @@
+EnumDefinitionStatement: {
+    Name: Values
+    Block(3): {
+        EnumMember: {
+            Name: First
+        }
+        EnumMember: {
+            Name: Second
+        }
+        EnumMember: {
+            Name: Third
+        }
+    }
+}
