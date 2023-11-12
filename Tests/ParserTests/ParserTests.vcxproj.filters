@@ -98,6 +98,8 @@
     <None Include="data\FlowControl\return2.out" />
     <None Include="data\FlowControl\return3.in" />
     <None Include="data\FlowControl\return3.out" />
+    <None Include="data\FlowControl\if1.out" />
+    <None Include="data\FlowControl\while1.out" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="source\ParserTests.cpp">

@@ -32,6 +32,7 @@ private:
     Statement* ParseTypeDefinitionStatement();
     Statement* ParseFieldDeclarationStatement();
     Statement* ParseMethodDefinitionStatement();
+    Statement* ParseIfStatement(StatementScope scope);
     Statement* ParseReturnStatement();
     Expression* ParseExpression();
     Expression* ParseBinaryExpression(int parentPrecedence);

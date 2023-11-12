@@ -15,6 +15,11 @@ bool IsTypeDefinitionKeyword(const QStringView& lexeme)
     return lexeme == QString("type");
 }
 
+bool IsIfKeyword(const QStringView& lexeme)
+{
+    return lexeme == QString("if");
+}
+
 bool IsReturnKeyword(const QStringView& lexeme)
 {
     return lexeme == QString("return");
@@ -81,7 +86,12 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                 }
                 else if (scope == StatementScope::Function || scope == StatementScope::Method)
                 {
-                    if (IsReturnKeyword(lexeme))
+                    if (IsIfKeyword(lexeme))
+                    {
+                        statements.append(ParseIfStatement(scope));
+                        break;
+                    }
+                    else if (IsReturnKeyword(lexeme))
                     {
                         statements.append(ParseReturnStatement());
                         break;
@@ -238,6 +248,15 @@ Statement* Parser::ParseMethodDefinitionStatement()
     auto body = ParseMethodBody();
 
     return new MethodDefinitionStatement(keyword, name, signature, body);
+}
+
+Statement* Parser::ParseIfStatement(StatementScope scope)
+{
+    auto keyword = AdvanceOnMatch(TokenKind::Identifier);
+    auto condition = ParseExpression();
+    auto block = ParseBlock(scope);
+
+    return new IfStatement(keyword, condition, block);
 }
 
 Statement* Parser::ParseReturnStatement()

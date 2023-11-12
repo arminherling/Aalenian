@@ -2,8 +2,8 @@ define func()
 { 
     if true
     {
-        return 1
+        return
     }
 
-    return 2
+    return
 }

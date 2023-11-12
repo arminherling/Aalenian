@@ -24,6 +24,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("FieldDeclarationStatement");
         case NodeKind::MethodDefinitionStatement:
             return QString("MethodDefinitionStatement");
+        case NodeKind::IfStatement:
+            return QString("IfStatement");
         case NodeKind::ReturnStatement:
             return QString("ReturnStatement");
         case NodeKind::Discard:
@@ -232,6 +234,17 @@ AssignmentStatement::AssignmentStatement(Expression* leftExpression, const Token
 ExpressionStatement::ExpressionStatement(Expression* expression)
     : Statement(NodeKind::ExpressionStatement)
     , m_expression{ expression }
+{
+}
+
+IfStatement::IfStatement(
+    const Token& ifKeyword, 
+    Expression* condition,
+    Block* body)
+    : Statement(NodeKind::IfStatement)
+    , m_ifKeyword{ ifKeyword }
+    , m_condition{ condition }
+    , m_body{ body}
 {
 }
 

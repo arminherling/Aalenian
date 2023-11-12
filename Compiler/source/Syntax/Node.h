@@ -17,6 +17,7 @@ enum class COMPILER_API NodeKind
     TypeDefinitionStatement,
     FieldDeclarationStatement,
     MethodDefinitionStatement,
+    IfStatement,
     ReturnStatement,
 
     UnaryExpression,
@@ -134,6 +135,35 @@ private:
     Expression* m_expression;
 };
 
+class COMPILER_API Block : public Node
+{
+public:
+    Block(const Token& openBracket, const QList<Statement*>& statements, const Token& closeBracket);
+
+    [[nodiscard]] const Token& openBracket() noexcept { return m_openBracket; }
+    [[nodiscard]] const QList<Statement*>& statements() noexcept { return m_statements; }
+    [[nodiscard]] const Token& closeBracket() noexcept { return m_closeBracket; }
+
+private:
+    Token m_openBracket;
+    QList<Statement*> m_statements;
+    Token m_closeBracket;
+};
+
+class COMPILER_API IfStatement : public Statement
+{
+public:
+    IfStatement(const Token& ifKeyword, Expression* condition, Block* body);
+
+    [[nodiscard]] Expression* condition() noexcept { return m_condition; }
+    [[nodiscard]] Block* body() noexcept { return m_body; }
+
+private:
+    Token m_ifKeyword;
+    Expression* m_condition;
+    Block* m_body;
+};
+
 class COMPILER_API ReturnStatement : public Statement
 {
 public:
@@ -232,21 +262,6 @@ public:
 private:
     Token m_openParenthesis;
     Token m_closeParenthesis;
-};
-
-class COMPILER_API Block : public Node
-{
-public:
-    Block(const Token& openBracket, const QList<Statement*>& statements, const Token& closeBracket);
-
-    [[nodiscard]] const Token& openBracket() noexcept { return m_openBracket; }
-    [[nodiscard]] const QList<Statement*>& statements() noexcept { return m_statements; }
-    [[nodiscard]] const Token& closeBracket() noexcept { return m_closeBracket; }
-
-private:
-    Token m_openBracket;
-    QList<Statement*> m_statements;
-    Token m_closeBracket;
 };
 
 class COMPILER_API FunctionCall : public Expression

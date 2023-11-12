@@ -63,6 +63,11 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
             PrettyPrintMethodDefinitionStatement((MethodDefinitionStatement*)node);
             break;
         }
+        case NodeKind::IfStatement:
+        {
+            PrettyPrintIfStatement((IfStatement*)node);
+            break;
+        }
         case NodeKind::ReturnStatement:
         {
             PrettyPrintReturnStatement((ReturnStatement*)node);
@@ -249,6 +254,23 @@ void ParseTreePrinter::PrettyPrintMethodDefinitionStatement(MethodDefinitionStat
     stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
     PrettyPrintParameters(statement->parameters());
     PrettyPrintBlock(statement->body());
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void ParseTreePrinter::PrettyPrintIfStatement(IfStatement* statement)
+{
+    stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+    
+    stream() << Indentation() << QString("Condition: {") << NewLine();
+    PushIndentation();
+    PrettyPrintNode(statement->condition());
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    PrettyPrintBlock(statement->body());
+
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 }

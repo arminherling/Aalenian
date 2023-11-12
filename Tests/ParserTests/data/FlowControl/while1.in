@@ -2,7 +2,7 @@ define func()
 { 
     while true
     {
-        return 1
+        return
     }
 
     return

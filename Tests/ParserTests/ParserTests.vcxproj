@@ -167,6 +167,7 @@
     <None Include="data\Enum\empty1.in" />
     <None Include="data\Expressions\subtraction2.out" />
     <None Include="data\FlowControl\if1.in" />
+    <None Include="data\FlowControl\if1.out" />
     <None Include="data\FlowControl\return1.in" />
     <None Include="data\FlowControl\return1.out" />
     <None Include="data\FlowControl\return2.in" />
@@ -174,6 +175,7 @@
     <None Include="data\FlowControl\return3.in" />
     <None Include="data\FlowControl\return3.out" />
     <None Include="data\FlowControl\while1.in" />
+    <None Include="data\FlowControl\while1.out" />
     <None Include="data\Global\assignment1.in" />
     <None Include="data\Global\assignment1.out" />
     <None Include="data\Global\assignment2.in" />
