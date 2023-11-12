@@ -237,7 +237,7 @@ ExpressionStatement::ExpressionStatement(Expression* expression)
 
 ReturnStatement::ReturnStatement(
     const Token& returnKeyword,
-    Expression* expression)
+    const std::optional<Expression*>& expression)
     : Statement(NodeKind::ReturnStatement)
     , m_returnKeyword{ returnKeyword }
     , m_expression{ expression }

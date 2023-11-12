@@ -137,13 +137,13 @@ private:
 class COMPILER_API ReturnStatement : public Statement
 {
 public:
-    ReturnStatement(const Token& returnKeyword, Expression* expression);
+    ReturnStatement(const Token& returnKeyword, const std::optional<Expression*>& expression);
 
-    [[nodiscard]] Expression* expression() noexcept { return m_expression; }
+    [[nodiscard]] std::optional<Expression*> expression() noexcept { return m_expression; }
 
 private:
     Token m_returnKeyword;
-    Expression* m_expression;
+    std::optional<Expression*> m_expression;
 };
 
 class COMPILER_API Discard : public Expression

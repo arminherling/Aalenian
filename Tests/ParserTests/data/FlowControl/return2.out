@@ -1,0 +1,18 @@
+FunctionDefinitionStatement: {
+    Name: func
+    Parameters(0): {
+    }
+    Block(1): {
+        ReturnStatement: {
+            BinaryExpression: {
+                Left: {
+                    Number: 1
+                }
+                Operation: Addition
+                Right: {
+                    Number: 1
+                }
+            }
+        }
+    }
+}

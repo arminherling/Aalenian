@@ -257,7 +257,10 @@ void ParseTreePrinter::PrettyPrintReturnStatement(ReturnStatement* statement)
 {
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
-    PrettyPrintNode(statement->expression());
+
+    if(statement->expression().has_value())
+        PrettyPrintNode(statement->expression().value());
+
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 }

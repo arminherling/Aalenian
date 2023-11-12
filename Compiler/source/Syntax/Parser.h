@@ -60,6 +60,7 @@ private:
     void AdvanceCurrentIndex() { m_currentIndex++; }
 
     bool HasLineBreakSinceLastMemberAccess();
+    bool HasPossibleReturnValue(const Token& returnKeyword);
 
     TokenBuffer m_tokens;
     DiagnosticsBag& m_diagnostics;

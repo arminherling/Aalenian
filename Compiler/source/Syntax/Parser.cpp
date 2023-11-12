@@ -53,6 +53,7 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                 break;
             }
             case TokenKind::Dot:
+            case TokenKind::Number:
             {
                 statements.append(ParseExpressionStatement());
                 break;
@@ -242,7 +243,13 @@ Statement* Parser::ParseMethodDefinitionStatement()
 Statement* Parser::ParseReturnStatement()
 {
     auto keyword = AdvanceOnMatch(TokenKind::Identifier);
-    auto expression = ParseExpression();
+
+    std::optional<Expression*> expression;
+    // Special case: we need to disambiguate between returns in void functions and normal functions
+    // we do this by breaking the code up with a line break
+    if(HasPossibleReturnValue(keyword))
+        expression = ParseExpression();
+    
     return new ReturnStatement(keyword, expression);
 }
 
@@ -290,7 +297,7 @@ Expression* Parser::ParseBinaryExpression(int parentPrecedence)
         if (binaryPrecedence == 0 || binaryPrecedence <= parentPrecedence)
             break;
 
-        // empty lines prevent unintended method chaining
+        // Special case: empty lines prevent unintended method chaining
         if (HasLineBreakSinceLastMemberAccess())
             break;
 
@@ -504,6 +511,19 @@ bool Parser::HasLineBreakSinceLastMemberAccess()
 
     auto hasEmptyLineBreak = (currentTokenLocation.endLine - lastTokenLocation.endLine) >= 2;
     return hasEmptyLineBreak;
+}
+
+bool Parser::HasPossibleReturnValue(const Token& returnKeyword)
+{
+    auto currentToken = CurrentToken();
+    if (currentToken.kind == TokenKind::CloseBracket)
+        return false;
+
+    auto returnTokenLocation = m_tokens.GetSourceLocation(returnKeyword.locationIndex);
+    auto currentTokenLocation = m_tokens.GetSourceLocation(currentToken.locationIndex);
+
+    auto isOnSameLine = returnTokenLocation.endLine == currentTokenLocation.endLine;
+    return isOnSameLine;
 }
 
 COMPILER_API ParseTree Parse(const TokenBuffer& tokens, DiagnosticsBag& diagnostics) noexcept

@@ -67,6 +67,9 @@ private slots:
 
         auto expectedOutput = File::ReadAllText(outputFilePath);
 
+        if (output != expectedOutput)
+            int i = 0;
+
         QCOMPARE(output, expectedOutput);
         if (!QFile::exists(errorFilePath))
         {

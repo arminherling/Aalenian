@@ -90,6 +90,14 @@
     <None Include="data\Enum\defaultValues1.out" />
     <None Include="data\Enum\customValues1.out" />
     <None Include="data\Enum\baseType1.out" />
+    <None Include="data\FlowControl\if1.in" />
+    <None Include="data\FlowControl\while1.in" />
+    <None Include="data\FlowControl\return1.in" />
+    <None Include="data\FlowControl\return2.in" />
+    <None Include="data\FlowControl\return1.out" />
+    <None Include="data\FlowControl\return2.out" />
+    <None Include="data\FlowControl\return3.in" />
+    <None Include="data\FlowControl\return3.out" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="source\ParserTests.cpp">
