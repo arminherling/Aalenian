@@ -103,6 +103,7 @@
     <None Include="data\Global\functionDefinition3.in" />
     <None Include="data\Global\functionDefinition4.in" />
     <None Include="data\Global\functionDefinition3.out" />
+    <None Include="data\Global\functionDefinition4.out" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="source\ParserTests.cpp">

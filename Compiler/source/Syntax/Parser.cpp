@@ -301,6 +301,9 @@ Parameters* Parser::ParseParameters()
     while (currentToken.kind != TokenKind::CloseParenthesis)
     {
         parameters.append(ParseParameter());
+        if (CurrentToken().kind == TokenKind::Comma)
+            AdvanceCurrentIndex();
+
         currentToken = CurrentToken();
     }
 
@@ -427,8 +430,9 @@ Arguments* Parser::ParseArguments()
 
 Type Parser::ParseType()
 {
+    auto ref = MaybeMatchKeyword(QString("ref"));
     auto name = ParseName();
-    return Type(name);
+    return Type(ref, name);
 }
 
 Name* Parser::ParseName()
@@ -528,6 +532,19 @@ Token Parser::AdvanceOnMatch(TokenKind kind)
         m_diagnostics.AddError(DiagnosticKind::_0003_ExpectedXButGotY, location);
         return Token::ToError(currentToken);
     }
+}
+
+std::optional<Token> Parser::MaybeMatchKeyword(const QStringView& keyword)
+{
+    auto currentToken = CurrentToken();
+    if (currentToken.kind == TokenKind::Identifier 
+        && m_tokens.GetLexeme(currentToken.kindIndex) == keyword)
+    {
+        AdvanceCurrentIndex();
+        return currentToken;
+    }
+
+    return std::optional<Token>();
 }
 
 void Parser::SkipUntil(TokenKind kind)

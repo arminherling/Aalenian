@@ -1,0 +1,39 @@
+FunctionDefinitionStatement: {
+    Name: swap
+    Parameters(2): {
+        Parameter: {
+            Name: a
+            Type: ref i32
+        }
+        Parameter: {
+            Name: b
+            Type: ref i32
+        }
+    }
+    Block(3): {
+        AssignmentStatement: {
+            Left: {
+                Name: temp
+            }
+            Right: {
+                Name: a
+            }
+        }
+        AssignmentStatement: {
+            Left: {
+                Name: a
+            }
+            Right: {
+                Name: b
+            }
+        }
+        AssignmentStatement: {
+            Left: {
+                Name: b
+            }
+            Right: {
+                Name: temp
+            }
+        }
+    }
+}

@@ -195,6 +195,7 @@
     <None Include="data\Global\functionDefinition3.in" />
     <None Include="data\Global\functionDefinition3.out" />
     <None Include="data\Global\functionDefinition4.in" />
+    <None Include="data\Global\functionDefinition4.out" />
     <None Include="data\Type\empty1.in" />
     <None Include="data\Type\empty1.out" />
     <None Include="data\Type\fields1.out" />

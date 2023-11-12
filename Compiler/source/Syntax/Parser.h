@@ -55,6 +55,7 @@ private:
     EnumMember* ParseEnumMember();
 
     Token AdvanceOnMatch(TokenKind kind);
+    std::optional<Token> MaybeMatchKeyword(const QStringView& keyword);
     void SkipUntil(TokenKind kind);
 
     Token Peek(int offset);

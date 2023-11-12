@@ -80,11 +80,15 @@ private:
 class COMPILER_API Type : public Node
 {
 public:
-    Type(Name* name);
+    Type(const std::optional<Token>& ref, Name* name);
 
+    [[nodiscard]] const std::optional<Token>& ref() const noexcept { return m_ref; }
     [[nodiscard]] Name* name() const noexcept { return m_name; }
 
+    [[nodiscard]] bool isReference() const noexcept { return m_ref.has_value(); }
+
 private:
+    std::optional<Token> m_ref;
     Name* m_name;
 };
 
@@ -96,6 +100,7 @@ public:
     [[nodiscard]] Name* name() const noexcept { return m_name; }
     [[nodiscard]] const Token& colon() noexcept { return m_colon; }
     [[nodiscard]] const Type& type() noexcept { return m_type; }
+
 private:
     Name* m_name;
     Token m_colon;

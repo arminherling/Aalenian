@@ -153,8 +153,11 @@ Name::Name(const Token& token)
 {
 }
 
-Type::Type(Name* name)
+Type::Type(
+    const std::optional<Token>& ref, 
+    Name* name)
     : Node(NodeKind::Type)
+    , m_ref{ ref }
     , m_name{ name }
 {
 }
