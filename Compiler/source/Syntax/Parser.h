@@ -47,6 +47,7 @@ private:
     Block* ParseTypeBody();
     Block* ParseMethodBody();
     Block* ParseBlock(StatementScope scope);
+    Parameter* ParseParameter();
     Type ParseType();
     Name* ParseName();
     Number* ParseNumberLiteral();

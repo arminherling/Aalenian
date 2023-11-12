@@ -1,0 +1,22 @@
+FunctionDefinitionStatement: {
+    Name: square
+    Parameters(1): {
+        Parameter: {
+            Name: x
+            Type: i32
+        }
+    }
+    Block(1): {
+        ReturnStatement: {
+            BinaryExpression: {
+                Left: {
+                    Name: x
+                }
+                Operation: Multiplication
+                Right: {
+                    Name: x
+                }
+            }
+        }
+    }
+}

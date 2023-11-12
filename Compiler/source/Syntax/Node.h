@@ -24,6 +24,7 @@ enum class COMPILER_API NodeKind
     UnaryExpression,
     BinaryExpression,
     Type,
+    Parameter,
     Parameters,
     Arguments,
     Block,
@@ -85,6 +86,20 @@ public:
 
 private:
     Name* m_name;
+};
+
+class COMPILER_API Parameter : public Node
+{
+public:
+    Parameter(Name* name, const Token& colon, const Type& type);
+
+    [[nodiscard]] Name* name() const noexcept { return m_name; }
+    [[nodiscard]] const Token& colon() noexcept { return m_colon; }
+    [[nodiscard]] const Type& type() noexcept { return m_type; }
+private:
+    Name* m_name;
+    Token m_colon;
+    Type m_type;
 };
 
 class COMPILER_API FieldDeclarationStatement : public Statement
@@ -256,13 +271,18 @@ private:
 class COMPILER_API Parameters : public Node
 {
 public:
-    Parameters(const Token& openParenthesis, const Token& closeParenthesis);
+    Parameters(
+        const Token& openParenthesis, 
+        const QList<Parameter*>& parameters,
+        const Token& closeParenthesis);
 
     [[nodiscard]] const Token& openParenthesis() noexcept { return m_openParenthesis; }
+    [[nodiscard]] const QList<Parameter*>& parameters() noexcept { return m_parameters; }
     [[nodiscard]] const Token& closeParenthesis() noexcept { return m_closeParenthesis; }
 
 private:
     Token m_openParenthesis;
+    const QList<Parameter*> m_parameters;
     Token m_closeParenthesis;
 };
 

@@ -27,11 +27,13 @@ private:
     void PrettyPrintWhileStatement(WhileStatement* statement);
     void PrettyPrintReturnStatement(ReturnStatement* statement);
     void PrettyPrintArguments(Arguments* arguments);
+    void PrettyPrintParameter(Parameter* parameter);
     void PrettyPrintParameters(Parameters* parameters);
     void PrettyPrintBlock(Block* block);
 
     void PrettyPrintDiscard(Discard* discard);
     void PrettyPrintFunctionCall(FunctionCall* functionCall);
+    void PrettyPrintType(const Type& type);
     void PrettyPrintName(Name* name);
     void PrettyPrintNumber(Number* number);
     void PrettyPrintGrouping(Grouping* grouping);
@@ -45,7 +47,6 @@ private:
     QTextStream& stream() { return m_stream; }
     QByteArray toUtf8() { return m_output.toUtf8(); }
 
-    QString StringifyType(const Type& type);
     QString Indentation() { return QString(" ").repeated(m_indentation * m_indentationLevel); }
     QString NewLine() { return QString("\r\n"); }
 

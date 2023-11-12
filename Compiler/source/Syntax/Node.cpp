@@ -32,6 +32,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("ReturnStatement");
         case NodeKind::Discard:
             return QString("Discard");
+        case NodeKind::Parameter:
+            return QString("Parameter");
         case NodeKind::Parameters:
             return QString("Parameters");
         case NodeKind::Arguments:
@@ -153,15 +155,28 @@ Name::Name(const Token& token)
 
 Type::Type(Name* name)
     : Node(NodeKind::Type)
-    , m_name{ name}
+    , m_name{ name }
+{
+}
+
+Parameter::Parameter(
+    Name* name,
+    const Token& colon,
+    const Type& type)
+    : Node(NodeKind::Parameter)
+    , m_name{ name }
+    , m_colon{ colon }
+    , m_type{ type }
 {
 }
 
 Parameters::Parameters(
     const Token& openParenthesis,
+    const QList<Parameter*>& parameters,
     const Token& closeParenthesis)
     : Node(NodeKind::Parameters)
     , m_openParenthesis{ openParenthesis }
+    , m_parameters{ parameters }
     , m_closeParenthesis{ closeParenthesis }
 {
 }
@@ -316,8 +331,8 @@ EnumMember::EnumMember(Name* name)
 }
 
 EnumMember::EnumMember(
-    Name* name, 
-    const Token& equal, 
+    Name* name,
+    const Token& equal,
     Number* value)
     : Statement(NodeKind::EnumMember)
     , m_name{ name }

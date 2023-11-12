@@ -295,12 +295,18 @@ Parameters* Parser::ParseParameters()
 {
     auto openParenthesis = AdvanceOnMatch(TokenKind::OpenParenthesis);
 
-    // TODO
-    SkipUntil(TokenKind::CloseParenthesis);
+    auto currentToken = CurrentToken();
+
+    QList<Parameter*> parameters;
+    while (currentToken.kind != TokenKind::CloseParenthesis)
+    {
+        parameters.append(ParseParameter());
+        currentToken = CurrentToken();
+    }
 
     auto closeParenthesis = AdvanceOnMatch(TokenKind::CloseParenthesis);
 
-    return new Parameters(openParenthesis, closeParenthesis);
+    return new Parameters(openParenthesis, parameters, closeParenthesis);
 }
 
 Expression* Parser::ParseExpression()
@@ -497,6 +503,15 @@ Block* Parser::ParseBlock(StatementScope scope)
     auto closeBracket = AdvanceOnMatch(TokenKind::CloseBracket);
 
     return new Block(openBracket, statements, closeBracket);
+}
+
+Parameter* Parser::ParseParameter()
+{
+    auto name = ParseName();
+    auto colon = AdvanceOnMatch(TokenKind::Colon);
+    auto type = ParseType();
+
+    return new Parameter(name, colon, type);
 }
 
 Token Parser::AdvanceOnMatch(TokenKind kind)
