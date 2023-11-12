@@ -68,6 +68,11 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
             PrettyPrintIfStatement((IfStatement*)node);
             break;
         }
+        case NodeKind::WhileStatement:
+        {
+            PrettyPrintWhileStatement((WhileStatement*)node);
+            break;
+        }
         case NodeKind::ReturnStatement:
         {
             PrettyPrintReturnStatement((ReturnStatement*)node);
@@ -262,7 +267,24 @@ void ParseTreePrinter::PrettyPrintIfStatement(IfStatement* statement)
 {
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
-    
+
+    stream() << Indentation() << QString("Condition: {") << NewLine();
+    PushIndentation();
+    PrettyPrintNode(statement->condition());
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    PrettyPrintBlock(statement->body());
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void ParseTreePrinter::PrettyPrintWhileStatement(WhileStatement* statement)
+{
+    stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
     stream() << Indentation() << QString("Condition: {") << NewLine();
     PushIndentation();
     PrettyPrintNode(statement->condition());

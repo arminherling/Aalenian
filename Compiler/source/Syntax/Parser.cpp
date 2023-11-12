@@ -20,6 +20,11 @@ bool IsIfKeyword(const QStringView& lexeme)
     return lexeme == QString("if");
 }
 
+bool IsWhileKeyword(const QStringView& lexeme)
+{
+    return lexeme == QString("while");
+}
+
 bool IsReturnKeyword(const QStringView& lexeme)
 {
     return lexeme == QString("return");
@@ -89,6 +94,11 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                     if (IsIfKeyword(lexeme))
                     {
                         statements.append(ParseIfStatement(scope));
+                        break;
+                    }
+                    else if (IsWhileKeyword(lexeme))
+                    {
+                        statements.append(ParseWhileStatement(scope));
                         break;
                     }
                     else if (IsReturnKeyword(lexeme))
@@ -257,6 +267,15 @@ Statement* Parser::ParseIfStatement(StatementScope scope)
     auto block = ParseBlock(scope);
 
     return new IfStatement(keyword, condition, block);
+}
+
+Statement* Parser::ParseWhileStatement(StatementScope scope)
+{
+    auto keyword = AdvanceOnMatch(TokenKind::Identifier);
+    auto condition = ParseExpression();
+    auto block = ParseBlock(scope);
+
+    return new WhileStatement(keyword, condition, block);
 }
 
 Statement* Parser::ParseReturnStatement()

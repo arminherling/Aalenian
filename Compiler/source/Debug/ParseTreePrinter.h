@@ -24,6 +24,7 @@ private:
     void PrettyPrintFieldDeclarationStatement(FieldDeclarationStatement* statement);
     void PrettyPrintMethodDefinitionStatement(MethodDefinitionStatement* statement);
     void PrettyPrintIfStatement(IfStatement* statement);
+    void PrettyPrintWhileStatement(WhileStatement* statement);
     void PrettyPrintReturnStatement(ReturnStatement* statement);
     void PrettyPrintArguments(Arguments* arguments);
     void PrettyPrintParameters(Parameters* parameters);
