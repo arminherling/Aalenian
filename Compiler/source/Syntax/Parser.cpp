@@ -294,7 +294,6 @@ Statement* Parser::ParseReturnStatement()
 Parameters* Parser::ParseParameters()
 {
     auto openParenthesis = AdvanceOnMatch(TokenKind::OpenParenthesis);
-
     auto currentToken = CurrentToken();
 
     QList<Parameter*> parameters;
@@ -302,13 +301,16 @@ Parameters* Parser::ParseParameters()
     {
         parameters.append(ParseParameter());
         if (CurrentToken().kind == TokenKind::Comma)
+        {
             AdvanceCurrentIndex();
 
+            // if(CurrentToken().kind == TokenKind::CloseParenthesis)
+            // Too many commas or too few parameters
+        }
         currentToken = CurrentToken();
     }
 
     auto closeParenthesis = AdvanceOnMatch(TokenKind::CloseParenthesis);
-
     return new Parameters(openParenthesis, parameters, closeParenthesis);
 }
 
@@ -420,12 +422,24 @@ Expression* Parser::ParseFunctionCall()
 Arguments* Parser::ParseArguments()
 {
     auto openParenthesis = AdvanceOnMatch(TokenKind::OpenParenthesis);
+    auto currentToken = CurrentToken();
 
-    SkipUntil(TokenKind::CloseParenthesis);
+    QList<Argument*> arguments;
+    while (currentToken.kind != TokenKind::CloseParenthesis)
+    {
+        arguments.append(ParseArgument());
+        if (CurrentToken().kind == TokenKind::Comma)
+        {
+            AdvanceCurrentIndex();
+
+            // if(CurrentToken().kind == TokenKind::CloseParenthesis)
+            // Too many commas or too few arguments
+        }
+        currentToken = CurrentToken();
+    }
 
     auto closeParenthesis = AdvanceOnMatch(TokenKind::CloseParenthesis);
-
-    return new Arguments(openParenthesis, closeParenthesis);
+    return new Arguments(openParenthesis, arguments, closeParenthesis);
 }
 
 Type Parser::ParseType()
@@ -516,6 +530,14 @@ Parameter* Parser::ParseParameter()
     auto type = ParseType();
 
     return new Parameter(name, colon, type);
+}
+
+Argument* Parser::ParseArgument()
+{
+    auto ref = MaybeMatchKeyword(QString("ref"));
+    auto expression = ParseExpression();
+
+    return new Argument(ref, expression);
 }
 
 Token Parser::AdvanceOnMatch(TokenKind kind)

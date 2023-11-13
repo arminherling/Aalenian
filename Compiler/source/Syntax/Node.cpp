@@ -32,12 +32,14 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("ReturnStatement");
         case NodeKind::Discard:
             return QString("Discard");
+        case NodeKind::Argument:
+            return QString("Argument");
+        case NodeKind::Arguments:
+            return QString("Arguments");
         case NodeKind::Parameter:
             return QString("Parameter");
         case NodeKind::Parameters:
             return QString("Parameters");
-        case NodeKind::Arguments:
-            return QString("Arguments");
         case NodeKind::Block:
             return QString("Block");
         case NodeKind::FunctionCall:
@@ -154,7 +156,7 @@ Name::Name(const Token& token)
 }
 
 Type::Type(
-    const std::optional<Token>& ref, 
+    const std::optional<Token>& ref,
     Name* name)
     : Node(NodeKind::Type)
     , m_ref{ ref }
@@ -173,6 +175,15 @@ Parameter::Parameter(
 {
 }
 
+Argument::Argument(
+    const std::optional<Token>& ref,
+    Expression* expression)
+    : Node(NodeKind::Argument)
+    , m_ref{ ref }
+    , m_expression{ expression }
+{
+}
+
 Parameters::Parameters(
     const Token& openParenthesis,
     const QList<Parameter*>& parameters,
@@ -186,9 +197,11 @@ Parameters::Parameters(
 
 Arguments::Arguments(
     const Token& openParenthesis,
+    const QList<Argument*>& arguments,
     const Token& closeParenthesis)
     : Node(NodeKind::Arguments)
     , m_openParenthesis{ openParenthesis }
+    , m_arguments{ arguments }
     , m_closeParenthesis{ closeParenthesis }
 {
 }

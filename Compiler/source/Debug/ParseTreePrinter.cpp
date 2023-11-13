@@ -78,6 +78,11 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
             PrettyPrintReturnStatement((ReturnStatement*)node);
             break;
         }
+        case NodeKind::Argument:
+        {
+            PrettyPrintArgument((Argument*)node);
+            break;
+        }
         case NodeKind::Parameter:
         {
             PrettyPrintParameter((Parameter*)node);
@@ -314,12 +319,28 @@ void ParseTreePrinter::PrettyPrintReturnStatement(ReturnStatement* statement)
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-void ParseTreePrinter::PrettyPrintArguments(Arguments* arguments)
+void ParseTreePrinter::PrettyPrintArgument(Argument* argument)
 {
-    stream() << Indentation() << StringifyNodeKind(arguments->kind()) << QString("(0): {") << NewLine();
-
+    stream() << Indentation() << StringifyNodeKind(argument->kind()) << QString(": {") << NewLine();
     PushIndentation();
 
+    if (argument->isReference())
+        stream() << Indentation() << QString("Ref: true") << NewLine();
+
+    PrettyPrintNode(argument->expression());
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void ParseTreePrinter::PrettyPrintArguments(Arguments* node)
+{
+    const auto& arguments = node->arguments();
+    stream() << Indentation() << StringifyNodeKind(node->kind()) << QString("(%1): {").arg(arguments.size()) << NewLine();
+    PushIndentation();
+
+    for (const auto& argument : arguments)
+        PrettyPrintNode(argument);
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();

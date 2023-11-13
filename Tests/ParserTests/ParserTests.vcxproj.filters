@@ -112,6 +112,7 @@
     <None Include="data\Global\functionCall8.in" />
     <None Include="data\Global\functionCall1.in" />
     <None Include="data\Global\functionCall1.out" />
+    <None Include="data\Global\functionCall3.out" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="source\ParserTests.cpp">

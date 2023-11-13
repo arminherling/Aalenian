@@ -26,6 +26,7 @@ enum class COMPILER_API NodeKind
     Type,
     Parameter,
     Parameters,
+    Argument,
     Arguments,
     Block,
     EnumMember,
@@ -83,9 +84,8 @@ public:
     Type(const std::optional<Token>& ref, Name* name);
 
     [[nodiscard]] const std::optional<Token>& ref() const noexcept { return m_ref; }
-    [[nodiscard]] Name* name() const noexcept { return m_name; }
-
     [[nodiscard]] bool isReference() const noexcept { return m_ref.has_value(); }
+    [[nodiscard]] Name* name() const noexcept { return m_name; }
 
 private:
     std::optional<Token> m_ref;
@@ -105,6 +105,20 @@ private:
     Name* m_name;
     Token m_colon;
     Type m_type;
+};
+
+class COMPILER_API Argument : public Node
+{
+public:
+    Argument(const std::optional<Token>& ref, Expression* expression);
+
+    [[nodiscard]] const std::optional<Token>& ref() const noexcept { return m_ref; }
+    [[nodiscard]] bool isReference() const noexcept { return m_ref.has_value(); }
+    [[nodiscard]] Expression* expression() const noexcept { return m_expression; }
+
+private:
+    std::optional<Token> m_ref;
+    Expression* m_expression;
 };
 
 class COMPILER_API FieldDeclarationStatement : public Statement
@@ -294,13 +308,18 @@ private:
 class COMPILER_API Arguments : public Node
 {
 public:
-    Arguments(const Token& openParenthesis, const Token& closeParenthesis);
+    Arguments(
+        const Token& openParenthesis, 
+        const QList<Argument*>& arguments,
+        const Token& closeParenthesis);
 
     [[nodiscard]] const Token& openParenthesis() noexcept { return m_openParenthesis; }
+    [[nodiscard]] const QList<Argument*>& arguments() noexcept { return m_arguments; }
     [[nodiscard]] const Token& closeParenthesis() noexcept { return m_closeParenthesis; }
 
 private:
     Token m_openParenthesis;
+    QList<Argument*> m_arguments;
     Token m_closeParenthesis;
 };
 

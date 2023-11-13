@@ -26,6 +26,7 @@ private:
     void PrettyPrintIfStatement(IfStatement* statement);
     void PrettyPrintWhileStatement(WhileStatement* statement);
     void PrettyPrintReturnStatement(ReturnStatement* statement);
+    void PrettyPrintArgument(Argument* argument);
     void PrettyPrintArguments(Arguments* arguments);
     void PrettyPrintParameter(Parameter* parameter);
     void PrettyPrintParameters(Parameters* parameters);
