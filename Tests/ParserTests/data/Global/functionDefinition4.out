@@ -3,11 +3,13 @@ FunctionDefinitionStatement: {
     Parameters(2): {
         Parameter: {
             Name: a
-            Type: ref i32
+            Ref: true
+            Type: i32
         }
         Parameter: {
             Name: b
-            Type: ref i32
+            Ref: true
+            Type: i32
         }
     }
     Block(3): {

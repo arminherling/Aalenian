@@ -385,11 +385,10 @@ void ParseTreePrinter::PrettyPrintType(const Type& type)
 {
     auto token = type.name()->identifier();
     auto lexeme = m_parseTree.Tokens().GetLexeme(token.kindIndex);
-    stream() << Indentation() << QString("Type: "); 
-    if(type.isReference())
-        stream() << QString("ref ");
+    if (type.isReference())
+        stream() << Indentation() << QString("Ref: true") << NewLine();
 
-    stream() << lexeme << NewLine();
+    stream() << Indentation() << QString("Type: ") << lexeme << NewLine();
 }
 
 void ParseTreePrinter::PrettyPrintName(Name* name)
