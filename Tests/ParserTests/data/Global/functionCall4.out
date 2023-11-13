@@ -1,0 +1,38 @@
+FunctionDefinitionStatement: {
+    Name: inner
+    Parameters(1): {
+        Parameter: {
+            Name: x
+            Ref: true
+            Type: i32
+        }
+    }
+    Block(0): {
+    }
+}
+FunctionDefinitionStatement: {
+    Name: outer
+    Parameters(0): {
+    }
+    Block(2): {
+        AssignmentStatement: {
+            Left: {
+                Name: x
+            }
+            Right: {
+                Number: 20
+            }
+        }
+        ExpressionStatement: {
+            FunctionCall: {
+                Name: inner
+                Arguments(1): {
+                    Argument: {
+                        Ref: true
+                        Name: x
+                    }
+                }
+            }
+        }
+    }
+}
