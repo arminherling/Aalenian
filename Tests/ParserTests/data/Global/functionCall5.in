@@ -1,0 +1,13 @@
+define one() 
+{ 
+    return 1:i32
+}
+
+define inner(x: i32) 
+{ 
+}
+
+define outer()
+{
+    inner(one())
+}

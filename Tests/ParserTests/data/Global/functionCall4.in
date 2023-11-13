@@ -1,0 +1,9 @@
+define inner(x: ref i32) 
+{ 
+}
+
+define outer()
+{
+    x = 20
+    inner(ref x)
+}

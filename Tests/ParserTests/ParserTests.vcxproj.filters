@@ -17,8 +17,8 @@
     <None Include="data\Global\assignment2.out" />
     <None Include="data\Global\assignment3.in" />
     <None Include="data\Global\assignment3.out" />
-    <None Include="data\Global\functionCall1.in" />
-    <None Include="data\Global\functionCall1.out" />
+    <None Include="data\Global\functionCall2.in" />
+    <None Include="data\Global\functionCall2.out" />
     <None Include="data\Global\functionDefinition1.in" />
     <None Include="data\Global\functionDefinition1.out" />
     <None Include="data\Global\functionDefinition2.in" />
@@ -104,6 +104,14 @@
     <None Include="data\Global\functionDefinition4.in" />
     <None Include="data\Global\functionDefinition3.out" />
     <None Include="data\Global\functionDefinition4.out" />
+    <None Include="data\Global\functionCall3.in" />
+    <None Include="data\Global\functionCall4.in" />
+    <None Include="data\Global\functionCall5.in" />
+    <None Include="data\Global\functionCall6.in" />
+    <None Include="data\Global\functionCall7.in" />
+    <None Include="data\Global\functionCall8.in" />
+    <None Include="data\Global\functionCall1.in" />
+    <None Include="data\Global\functionCall1.out" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="source\ParserTests.cpp">

@@ -1,0 +1,14 @@
+enum Values 
+{
+    First
+    Second
+}
+
+define inner(x: Values) 
+{ 
+}
+
+define outer()
+{
+    inner(Values::First)
+}
