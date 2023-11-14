@@ -5,7 +5,7 @@ FunctionDefinitionStatement: {
     Block(2): {
         WhileStatement: {
             Condition: {
-                Name: true
+                Bool: true
             }
             Block(1): {
                 ReturnStatement: {

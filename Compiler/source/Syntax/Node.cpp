@@ -44,6 +44,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("Block");
         case NodeKind::FunctionCall:
             return QString("FunctionCall");
+        case NodeKind::Bool:
+            return QString("Bool");
         case NodeKind::Name:
             return QString("Name");
         case NodeKind::Number:
@@ -221,6 +223,12 @@ FunctionCall::FunctionCall(const Token& nameToken, Arguments* arguments)
     : Expression(NodeKind::FunctionCall)
     , m_nameToken{ nameToken }
     , m_arguments{ arguments }
+{
+}
+
+Bool::Bool(bool value)
+    : Expression(NodeKind::Bool)
+    , m_value{ value }
 {
 }
 

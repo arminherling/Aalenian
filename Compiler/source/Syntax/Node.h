@@ -34,6 +34,7 @@ enum class COMPILER_API NodeKind
     Discard,
     FunctionCall,
     Name,
+    Bool,
     Number,
     Grouping,
     MemberAccess
@@ -404,6 +405,17 @@ private:
     Token m_keyword;
     Token m_name;
     Block* m_body;
+};
+
+class COMPILER_API Bool : public Expression
+{
+public:
+    Bool(bool value);
+
+    [[nodiscard]]bool value() noexcept { return m_value; }
+
+private:
+    bool m_value;
 };
 
 class COMPILER_API Number : public Expression

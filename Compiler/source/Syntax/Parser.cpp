@@ -30,6 +30,16 @@ bool IsReturnKeyword(const QStringView& lexeme)
     return lexeme == QString("return");
 }
 
+bool IsTrueKeyword(const QStringView& lexeme)
+{
+    return lexeme == QString("true");
+}
+
+bool IsFalseKeyword(const QStringView& lexeme)
+{
+    return lexeme == QString("false");
+}
+
 Parser::Parser(const TokenBuffer& tokens, DiagnosticsBag& diagnostics)
     : m_tokens{ tokens }
     , m_diagnostics{ diagnostics }
@@ -43,6 +53,7 @@ ParseTree Parser::Parse()
 
     return ParseTree(m_tokens, globalStatements);
 }
+
 QList<Statement*> Parser::ParseGlobalStatements()
 {
     return ParseStatements(StatementScope::Global);
@@ -371,6 +382,10 @@ Expression* Parser::ParsePrimaryExpression()
         }
         case TokenKind::Identifier:
         {
+            auto maybeBool = TryParseBool();
+            if (maybeBool.has_value())
+                return maybeBool.value();
+
             return ParseFunctionCallOrName();
         }
         case TokenKind::Number:
@@ -444,7 +459,7 @@ Arguments* Parser::ParseArguments()
 
 Type Parser::ParseType()
 {
-    auto ref = MaybeMatchKeyword(QString("ref"));
+    auto ref = TryMatchKeyword(QString("ref"));
     auto name = ParseName();
     return Type(ref, name);
 }
@@ -534,7 +549,7 @@ Parameter* Parser::ParseParameter()
 
 Argument* Parser::ParseArgument()
 {
-    auto ref = MaybeMatchKeyword(QString("ref"));
+    auto ref = TryMatchKeyword(QString("ref"));
     auto expression = ParseExpression();
 
     return new Argument(ref, expression);
@@ -556,7 +571,24 @@ Token Parser::AdvanceOnMatch(TokenKind kind)
     }
 }
 
-std::optional<Token> Parser::MaybeMatchKeyword(const QStringView& keyword)
+std::optional<Bool*> Parser::TryParseBool()
+{
+    auto currentToken = CurrentToken();
+    auto lexeme = m_tokens.GetLexeme(currentToken.kindIndex);
+    if (IsTrueKeyword(lexeme))
+    {
+        AdvanceCurrentIndex();
+        return new Bool(true);
+    }
+    else if (IsFalseKeyword(lexeme))
+    {
+        AdvanceCurrentIndex();
+        return new Bool(false);
+    }
+    return {};
+}
+
+std::optional<Token> Parser::TryMatchKeyword(const QStringView& keyword)
 {
     auto currentToken = CurrentToken();
     if (currentToken.kind == TokenKind::Identifier 

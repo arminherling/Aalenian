@@ -98,6 +98,11 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
             PrettyPrintFunctionCall((FunctionCall*)node);
             break;
         }
+        case NodeKind::Bool:
+        {
+            PrettyPrintBool((Bool*)node);
+            break;
+        }
         case NodeKind::Name:
         {
             PrettyPrintName((Name*)node);
@@ -410,6 +415,12 @@ void ParseTreePrinter::PrettyPrintType(const Type& type)
         stream() << Indentation() << QString("Ref: true") << NewLine();
 
     stream() << Indentation() << QString("Type: ") << lexeme << NewLine();
+}
+
+void ParseTreePrinter::PrettyPrintBool(Bool* node)
+{
+    auto value = node->value() ? QString("true") : QString("false");
+    stream() << Indentation() << QString("Bool: ") << value << NewLine();
 }
 
 void ParseTreePrinter::PrettyPrintName(Name* name)

@@ -35,6 +35,7 @@ private:
     void PrettyPrintDiscard(Discard* discard);
     void PrettyPrintFunctionCall(FunctionCall* functionCall);
     void PrettyPrintType(const Type& type);
+    void PrettyPrintBool(Bool* node);
     void PrettyPrintName(Name* name);
     void PrettyPrintNumber(Number* number);
     void PrettyPrintGrouping(Grouping* grouping);
