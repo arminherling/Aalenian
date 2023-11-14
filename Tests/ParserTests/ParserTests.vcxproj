@@ -197,6 +197,7 @@
     <None Include="data\Global\functionCall6.in" />
     <None Include="data\Global\functionCall6.out" />
     <None Include="data\Global\functionCall7.in" />
+    <None Include="data\Global\functionCall7.out" />
     <None Include="data\Global\functionCall8.in" />
     <None Include="data\Global\functionDefinition1.in" />
     <None Include="data\Global\functionDefinition1.out" />
