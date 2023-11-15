@@ -1,0 +1,27 @@
+EnumDefinitionStatement: {
+    Name: Values
+    Block(2): {
+        EnumMember: {
+            Name: First
+        }
+        EnumMember: {
+            Name: Second
+        }
+    }
+}
+AssignmentStatement: {
+    Left: {
+        Discard: _
+    }
+    Right: {
+        BinaryExpression: {
+            Left: {
+                Name: Values
+            }
+            Operation: Scope Access
+            Right: {
+                Name: First
+            }
+        }
+    }
+}

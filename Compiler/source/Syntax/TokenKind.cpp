@@ -57,6 +57,7 @@ int COMPILER_API BinaryOperatorPrecedence(TokenKind kind)
 	switch (kind)
 	{
 		case TokenKind::Dot:
+		case TokenKind::DoubleColon:
 			return 3;
 		case TokenKind::Star:
 		case TokenKind::Slash:

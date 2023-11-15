@@ -80,6 +80,8 @@ COMPILER_API QString StringifyBinaryOperation(TokenKind kind)
 {
     switch (kind)
     {
+        case TokenKind::DoubleColon:
+            return QString("Scope Access");
         case TokenKind::Dot:
             return QString("Member Access");
         case TokenKind::Plus:
@@ -147,6 +149,15 @@ MemberAccess::MemberAccess(
     Expression* expression)
     : Expression(NodeKind::MemberAccess)
     , m_dot{ dot }
+    , m_expression{ expression }
+{
+}
+
+ScopeAccess::ScopeAccess(
+    const Token& doubleColon,
+    Expression* expression)
+    : Expression(NodeKind::ScopeAccess)
+    , m_doubleColon{ doubleColon }
     , m_expression{ expression }
 {
 }

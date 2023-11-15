@@ -26,6 +26,7 @@ private slots:
 
         QTest::newRow("Dot") << QString(".") << TokenKind::Dot;
         QTest::newRow("Colon") << QString(":") << TokenKind::Colon;
+        QTest::newRow("DoubleColon") << QString("::") << TokenKind::DoubleColon;
         QTest::newRow("Comma") << QString(",") << TokenKind::Comma;
         QTest::newRow("Equal") << QString("=") << TokenKind::Equal;
         QTest::newRow("Underscore") << QString("_") << TokenKind::Underscore;

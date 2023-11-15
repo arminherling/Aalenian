@@ -10,6 +10,8 @@
         { TokenKind::Star, 1 },
         { TokenKind::Slash, 1 },
         { TokenKind::Dot, 1 },
+        { TokenKind::Colon, 1 },
+        { TokenKind::DoubleColon, 2 },
         { TokenKind::Comma, 1 },
         { TokenKind::Equal, 1 },
         { TokenKind::Underscore, 1 },
@@ -202,7 +204,6 @@ auto LexString(TokenBuffer& tokenBuffer, DiagnosticsBag& diagnostics, const Sour
                 AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::EndOfFile);
                 return tokenBuffer;
             }
-
             case '+':
             {
                 AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Plus);
@@ -230,6 +231,13 @@ auto LexString(TokenBuffer& tokenBuffer, DiagnosticsBag& diagnostics, const Sour
             }
             case ':':
             {
+                if (PeekNextChar(source, currentIndex) == QChar(':'))
+                {
+                    AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::DoubleColon);
+                    AdvanceCurrentIndex(currentIndex, currentColumn);
+                    break;
+                }
+
                 AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Colon);
                 break;
             }

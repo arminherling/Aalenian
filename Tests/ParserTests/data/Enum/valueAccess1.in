@@ -1,0 +1,7 @@
+enum Values 
+{
+    First
+    Second
+}
+
+_ = Values::First

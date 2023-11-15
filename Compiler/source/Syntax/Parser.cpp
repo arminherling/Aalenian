@@ -402,6 +402,12 @@ Expression* Parser::ParsePrimaryExpression()
             auto expression = ParseFunctionCallOrName();
             return new MemberAccess(currentToken, expression);
         }
+        case TokenKind::DoubleColon:
+        {
+            AdvanceCurrentIndex();
+            auto expression = ParseFunctionCallOrName();
+            return new ScopeAccess(currentToken, expression);
+        }
         default:
         {
             const auto& location = m_tokens.GetSourceLocation(currentToken.locationIndex);

@@ -121,6 +121,8 @@
     <None Include="data\Enum\customValues1.out" />
     <None Include="data\Enum\defaultValues1.out" />
     <None Include="data\Enum\empty1.out" />
+    <None Include="data\Enum\valueAccess1.in" />
+    <None Include="data\Enum\valueAccess1.out" />
     <None Include="data\Expressions\addition1.in" />
     <None Include="data\Expressions\addition1.out" />
     <None Include="data\Expressions\addition2.in" />
@@ -199,6 +201,7 @@
     <None Include="data\Global\functionCall7.in" />
     <None Include="data\Global\functionCall7.out" />
     <None Include="data\Global\functionCall8.in" />
+    <None Include="data\Global\functionCall8.out" />
     <None Include="data\Global\functionDefinition1.in" />
     <None Include="data\Global\functionDefinition1.out" />
     <None Include="data\Global\functionDefinition2.in" />

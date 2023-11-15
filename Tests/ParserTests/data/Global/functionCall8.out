@@ -1,0 +1,47 @@
+EnumDefinitionStatement: {
+    Name: Values
+    Block(2): {
+        EnumMember: {
+            Name: First
+        }
+        EnumMember: {
+            Name: Second
+        }
+    }
+}
+FunctionDefinitionStatement: {
+    Name: inner
+    Parameters(1): {
+        Parameter: {
+            Name: x
+            Type: Values
+        }
+    }
+    Block(0): {
+    }
+}
+FunctionDefinitionStatement: {
+    Name: outer
+    Parameters(0): {
+    }
+    Block(1): {
+        ExpressionStatement: {
+            FunctionCall: {
+                Name: inner
+                Arguments(1): {
+                    Argument: {
+                        BinaryExpression: {
+                            Left: {
+                                Name: Values
+                            }
+                            Operation: Scope Access
+                            Right: {
+                                Name: First
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

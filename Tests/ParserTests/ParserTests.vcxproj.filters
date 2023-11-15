@@ -117,6 +117,9 @@
     <None Include="data\Global\functionCall5.out" />
     <None Include="data\Global\functionCall6.out" />
     <None Include="data\Global\functionCall7.out" />
+    <None Include="data\Enum\valueAccess1.in" />
+    <None Include="data\Enum\valueAccess1.out" />
+    <None Include="data\Global\functionCall8.out" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="source\ParserTests.cpp">
