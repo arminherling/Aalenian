@@ -1,6 +1,7 @@
 #pragma once
 
 #include <API.h>
+#include <TypeDefs.h>
 #include <Compiler/DiagnosticsBag.h>
 #include <Syntax/TokenBuffer.h>
 #include <Syntax/ParseTree.h>
@@ -36,7 +37,7 @@ private:
     Statement* ParseWhileStatement(StatementScope scope);
     Statement* ParseReturnStatement();
     Expression* ParseExpression();
-    Expression* ParseBinaryExpression(int parentPrecedence);
+    Expression* ParseBinaryExpression(i32 parentPrecedence);
     Expression* ParsePrimaryExpression();
     Expression* ParseFunctionCallOrName();
     Expression* ParseFunctionCall();
@@ -60,7 +61,7 @@ private:
     std::optional<Token> TryMatchKeyword(const QStringView& keyword);
     void SkipUntil(TokenKind kind);
 
-    Token Peek(int offset);
+    Token Peek(i32 offset);
     Token CurrentToken() { return Peek(0); }
     Token NextToken() { return Peek(1); }
     void AdvanceCurrentIndex() { m_currentIndex++; }
@@ -70,7 +71,7 @@ private:
 
     TokenBuffer m_tokens;
     DiagnosticsBag& m_diagnostics;
-    int m_currentIndex;
+    i32 m_currentIndex;
 };
 
 COMPILER_API ParseTree Parse(const TokenBuffer& tokens, DiagnosticsBag& diagnostics) noexcept;

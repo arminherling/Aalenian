@@ -1,6 +1,6 @@
 #include <Syntax/TokenBuffer.h>
 
-TokenBuffer::TokenBuffer(int initialSize)
+TokenBuffer::TokenBuffer(i32 initialSize)
     : tokens{}
     , sourceLocations{}
 {
@@ -15,34 +15,34 @@ Token TokenBuffer::AddToken(const Token& token) noexcept
     return token;
 }
 
-int TokenBuffer::AddLexeme(const QStringView& lexeme) noexcept
+i32 TokenBuffer::AddLexeme(const QStringView& lexeme) noexcept
 {
     lexemes.push_back(lexeme);
     return lexemes.size() - 1;
 }
 
-int TokenBuffer::AddSourceLocation(const SourceLocation& sourceLocation) noexcept
+i32 TokenBuffer::AddSourceLocation(const SourceLocation& sourceLocation) noexcept
 {
     sourceLocations.push_back(sourceLocation);
     return sourceLocations.size() - 1;
 }
 
-int TokenBuffer::size() const noexcept
+i32 TokenBuffer::size() const noexcept
 {
     return tokens.size();
 }
 
-const Token& TokenBuffer::operator[](int position) const noexcept
+const Token& TokenBuffer::operator[](i32 position) const noexcept
 {
     return tokens.at(position);
 }
 
-const SourceLocation& TokenBuffer::GetSourceLocation(int sourceLocationIndex) const noexcept
+const SourceLocation& TokenBuffer::GetSourceLocation(i32 sourceLocationIndex) const noexcept
 {
     return sourceLocations.at(sourceLocationIndex);
 }
 
-const QStringView& TokenBuffer::GetLexeme(int lexemeIndex) const noexcept
+const QStringView& TokenBuffer::GetLexeme(i32 lexemeIndex) const noexcept
 {
     return lexemes.at(lexemeIndex);
 }

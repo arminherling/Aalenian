@@ -330,7 +330,7 @@ Expression* Parser::ParseExpression()
     return ParseBinaryExpression(0);
 }
 
-Expression* Parser::ParseBinaryExpression(int parentPrecedence)
+Expression* Parser::ParseBinaryExpression(i32 parentPrecedence)
 {
     Expression* left = nullptr;
     auto unaryOperator = CurrentToken();
@@ -620,7 +620,7 @@ void Parser::SkipUntil(TokenKind kind)
     }
 }
 
-Token Parser::Peek(int offset)
+Token Parser::Peek(i32 offset)
 {
     auto index = m_currentIndex + offset;
     if (index >= m_tokens.size())

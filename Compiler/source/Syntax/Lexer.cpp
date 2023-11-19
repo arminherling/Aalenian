@@ -1,10 +1,12 @@
 #include <Syntax/Lexer.h>
 
+#include <TypeDefs.h>
+
 #include <unordered_map>
 
 [[nodiscard]] auto InitializeTokenSizes() noexcept
 {
-    return std::unordered_map<TokenKind, int>{
+    return std::unordered_map<TokenKind, i32>{
         { TokenKind::Plus, 1 },
         { TokenKind::Minus, 1 },
         { TokenKind::Star, 1 },
@@ -32,7 +34,7 @@
     return 1;
 }
 
-[[nodiscard]] auto PeekChar(const SourceTextSharedPtr& source, int& currentIndex, int offset) noexcept
+[[nodiscard]] auto PeekChar(const SourceTextSharedPtr& source, i32& currentIndex, i32 offset) noexcept
 {
     auto charIndex = currentIndex + offset;
     if (charIndex >= source->text.length())
@@ -56,23 +58,23 @@
     return c.isLetterOrNumber() || c == QChar('_');
 }
 
-[[nodiscard]] auto PeekCurrentChar(const SourceTextSharedPtr& source, int& currentIndex) noexcept { return PeekChar(source, currentIndex, 0); };
-[[nodiscard]] auto PeekNextChar(const SourceTextSharedPtr& source, int& currentIndex) noexcept { return PeekChar(source, currentIndex, 1); };
+[[nodiscard]] auto PeekCurrentChar(const SourceTextSharedPtr& source, i32& currentIndex) noexcept { return PeekChar(source, currentIndex, 0); };
+[[nodiscard]] auto PeekNextChar(const SourceTextSharedPtr& source, i32& currentIndex) noexcept { return PeekChar(source, currentIndex, 1); };
 
-auto AdvanceCurrentIndex(int& currentIndex, int& currentColumn) noexcept
+auto AdvanceCurrentIndex(i32& currentIndex, i32& currentColumn) noexcept
 {
     currentIndex++;
     currentColumn++;
 };
 
-auto AdvanceCurrentIndexAndResetLine(int& currentIndex, int& currentLine, int& currentColumn) noexcept
+auto AdvanceCurrentIndexAndResetLine(i32& currentIndex, i32& currentLine, i32& currentColumn) noexcept
 {
     currentIndex++;
     currentLine++;
     currentColumn = 1;
 };
 
-auto AddTokenKindAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, int& currentLine, int& currentIndex, int& currentColumn, TokenKind tokenKind) noexcept
+auto AddTokenKindAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn, TokenKind tokenKind) noexcept
 {
     auto tokenSize = TokenSize(tokenKind);
     auto locationIndex = tokenBuffer.AddSourceLocation(
@@ -89,7 +91,7 @@ auto AddTokenKindAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr&
     return tokenBuffer.AddToken({ .kind = tokenKind, .locationIndex = locationIndex });
 };
 
-[[nodiscard]] auto AddLexemeAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, int& currentLine, int& currentIndex, int& currentColumn, TokenKind tokenKind, int startIndex, int startColumn, int startLine) noexcept
+[[nodiscard]] auto AddLexemeAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn, TokenKind tokenKind, i32 startIndex, i32 startColumn, i32 startLine) noexcept
 {
     auto length = currentIndex - startIndex;
     auto identifierIndex = tokenBuffer.AddLexeme(QStringView(source->text).sliced(startIndex, length));
@@ -106,7 +108,7 @@ auto AddTokenKindAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr&
     return tokenBuffer.AddToken({ .kind = tokenKind, .kindIndex = identifierIndex, .locationIndex = locationIndex });
 };
 
-auto LexIdentifier(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, int& currentLine, int& currentIndex, int& currentColumn) noexcept
+auto LexIdentifier(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn) noexcept
 {
     auto startIndex = currentIndex;
     auto startLine = currentLine;
@@ -117,7 +119,7 @@ auto LexIdentifier(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, 
     return AddLexemeAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Identifier, startIndex, startColumn, startLine);
 };
 
-auto LexNumber(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, int& currentLine, int& currentIndex, int& currentColumn) noexcept
+auto LexNumber(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn) noexcept
 {
     auto startIndex = currentIndex;
     auto startLine = currentLine;
@@ -141,7 +143,7 @@ auto LexNumber(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, int&
     return AddLexemeAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Number, startIndex, startColumn, startLine);
 };
 
-auto LexString(TokenBuffer& tokenBuffer, DiagnosticsBag& diagnostics, const SourceTextSharedPtr& source, int& currentLine, int& currentIndex, int& currentColumn) noexcept
+auto LexString(TokenBuffer& tokenBuffer, DiagnosticsBag& diagnostics, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn) noexcept
 {
     auto startIndex = currentIndex;
     auto startLine = currentLine;
@@ -169,10 +171,10 @@ auto LexString(TokenBuffer& tokenBuffer, DiagnosticsBag& diagnostics, const Sour
 
 [[nodiscard]] TokenBuffer Lex(const SourceTextSharedPtr& source, DiagnosticsBag& diagnostics) noexcept
 {
-    TokenBuffer tokenBuffer{ static_cast<int>(source->text.size()) };
-    int currentIndex = 0;
-    int currentLine = 1;
-    int currentColumn = 1;
+    TokenBuffer tokenBuffer{ static_cast<i32>(source->text.size()) };
+    i32 currentIndex = 0;
+    i32 currentLine = 1;
+    i32 currentColumn = 1;
 
     while (true)
     {

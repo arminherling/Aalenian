@@ -1,6 +1,6 @@
 #include <Debug/ParseTreePrinter.h>
 
-ParseTreePrinter::ParseTreePrinter(ParseTree& parseTree, int indentation)
+ParseTreePrinter::ParseTreePrinter(ParseTree& parseTree, i32 indentation)
     : m_parseTree{ parseTree }
     , m_indentation{ indentation }
     , m_indentationLevel{ 0 }

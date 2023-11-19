@@ -5,7 +5,7 @@
 #include <Text/SourceText.h>
 #include <Syntax/Lexer.h>
 
-int main(int argc, char *argv[])
+i32 main(i32 argc, char *argv[])
 {
     QApplication a(argc, argv);
     DebugTools w;

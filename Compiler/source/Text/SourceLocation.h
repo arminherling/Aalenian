@@ -1,15 +1,16 @@
 #pragma once
 
 #include <API.h>
+#include <TypeDefs.h>
 #include <Text/SourceText.h>
 
 struct COMPILER_API SourceLocation
 {
     SourceTextSharedPtr source;
-    int startIndex = -1;
-    int endIndex = -1;
-    int startColumn = -1;
-    int endColumn = -1;
-    int startLine = -1;
-    int endLine = -1;
+    i32 startIndex = -1;
+    i32 endIndex = -1;
+    i32 startColumn = -1;
+    i32 endColumn = -1;
+    i32 startLine = -1;
+    i32 endLine = -1;
 };

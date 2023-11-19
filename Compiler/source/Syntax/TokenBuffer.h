@@ -1,6 +1,7 @@
 #pragma once
 
 #include <API.h>
+#include <TypeDefs.h>
 #include <Compiler/DiagnosticsBag.h>
 #include <Syntax/Token.h>
 #include <Text/SourceText.h>
@@ -11,17 +12,17 @@
 class COMPILER_API TokenBuffer
 {
 public:
-    TokenBuffer(int initialSize);
+    TokenBuffer(i32 initialSize);
 
     Token AddToken(const Token& token) noexcept;
-    int AddLexeme(const QStringView& lexeme) noexcept;
-    int AddSourceLocation(const SourceLocation& sourceLocation) noexcept;
+    i32 AddLexeme(const QStringView& lexeme) noexcept;
+    i32 AddSourceLocation(const SourceLocation& sourceLocation) noexcept;
 
-    int size() const noexcept;
-    const Token& operator[](int position) const noexcept;
+    i32 size() const noexcept;
+    const Token& operator[](i32 position) const noexcept;
 
-    const SourceLocation& GetSourceLocation(int sourceLocationIndex) const noexcept;
-    const QStringView& GetLexeme(int lexemeIndex) const noexcept;
+    const SourceLocation& GetSourceLocation(i32 sourceLocationIndex) const noexcept;
+    const QStringView& GetLexeme(i32 lexemeIndex) const noexcept;
 
 private:
     std::vector<Token> tokens;

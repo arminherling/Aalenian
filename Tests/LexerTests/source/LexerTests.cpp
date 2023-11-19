@@ -55,7 +55,7 @@ private slots:
         auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         QCOMPARE(token.kind, expectedKind);
@@ -87,7 +87,7 @@ private slots:
         auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         QCOMPARE(token.kind, TokenKind::EndOfFile);
@@ -126,7 +126,7 @@ private slots:
         auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         QCOMPARE(token.kind, TokenKind::Identifier);
@@ -164,7 +164,7 @@ private slots:
         auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         QCOMPARE(token.kind, TokenKind::Number);
@@ -197,7 +197,7 @@ private slots:
         auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         QCOMPARE(token.kind, TokenKind::String);
@@ -232,7 +232,7 @@ private slots:
         QVERIFY(!diagnostics.Diagnostics().empty());
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         QCOMPARE(token.kind, TokenKind::Error);
@@ -243,7 +243,7 @@ private slots:
     void WholeInput_data()
     {
         QTest::addColumn<QString>("input");
-        QTest::addColumn<int>("tokenCount");
+        QTest::addColumn<i32>("tokenCount");
 
         QTest::newRow("") << "" << 1;
         QTest::newRow("name") << "name" << 2;
@@ -257,7 +257,7 @@ private slots:
     void WholeInput()
     {
         QFETCH(QString, input);
-        QFETCH(int, tokenCount);
+        QFETCH(i32, tokenCount);
 
         auto startTime = std::chrono::high_resolution_clock::now();
 
@@ -267,7 +267,7 @@ private slots:
         auto tokens = Lex(source, diagnostics);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         QVERIFY(diagnostics.Diagnostics().empty());
@@ -296,7 +296,7 @@ private slots:
         auto tokens = Lex(source, diagnostics);
         auto endTime = std::chrono::high_resolution_clock::now();
 
-        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
         qDebug() << elapsed_time_ms << "ms" << tokens.size() << "Tokens";
     }
 };

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <API.h>
+#include <TypeDefs.h>
 #include <Syntax/ParseTree.h>
 #include <Syntax/Node.h>
 
@@ -9,7 +10,7 @@
 class COMPILER_API ParseTreePrinter
 {
 public:
-    ParseTreePrinter(ParseTree& parseTree, int indentation = 4);
+    ParseTreePrinter(ParseTree& parseTree, i32 indentation = 4);
 
     QString PrettyPrint();
 
@@ -52,10 +53,9 @@ private:
     QString Indentation() { return QString(" ").repeated(m_indentation * m_indentationLevel); }
     QString NewLine() { return QString("\r\n"); }
 
-    int m_indentation;
-    int m_indentationLevel;
+    i32 m_indentation;
+    i32 m_indentationLevel;
     ParseTree& m_parseTree;
     QString m_output;
     QTextStream m_stream;
 };
-

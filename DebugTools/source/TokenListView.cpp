@@ -31,7 +31,7 @@ void TokenListView::setTokens(const QList<Token>& tokens)
     //model->clear();
     model->removeRows(0, model->rowCount());
     //model->setHorizontalHeaderLabels(QStringList() << QString("Lexeme")  << QString("Kind") << QString("Location"));
-    for (int i = 0; i < tokens.length(); i++)
+    for (i32 i = 0; i < tokens.length(); i++)
     {
         auto& token = tokens.at(i);
 

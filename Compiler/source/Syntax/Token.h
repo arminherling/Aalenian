@@ -1,6 +1,7 @@
 #pragma once
 
 #include <API.h>
+#include <TypeDefs.h>
 #include <Syntax/TokenKind.h>
 
 #include <QString>
@@ -8,8 +9,8 @@
 struct COMPILER_API Token
 {
     TokenKind kind = TokenKind::Unknown;
-    int kindIndex = -1;
-    int locationIndex = -1;
+    i32 kindIndex = -1;
+    i32 locationIndex = -1;
 
     [[nodiscard]] static Token ToError(const Token& token) noexcept
     {

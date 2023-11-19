@@ -60,7 +60,7 @@ private slots:
         auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto& location = tokens.GetSourceLocation(token.locationIndex);
@@ -99,11 +99,11 @@ private slots:
         auto tokens = Lex(input, diagnostics);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         QCOMPARE(tokens.size(), expectedList.size());
-        for (int i = 0; i < tokens.size(); i++)
+        for (i32 i = 0; i < tokens.size(); i++)
         {
             auto index = tokens[i].locationIndex;
             auto& location = tokens.GetSourceLocation(index);

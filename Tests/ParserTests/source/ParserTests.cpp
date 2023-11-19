@@ -59,7 +59,7 @@ private slots:
         auto parseTree = Parse(tokens, diagnostics);
         auto endTime = std::chrono::high_resolution_clock::now();
 
-        double elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         ParseTreePrinter printer{ parseTree };
@@ -68,7 +68,7 @@ private slots:
         auto expectedOutput = File::ReadAllText(outputFilePath);
 
         if (output != expectedOutput)
-            int i = 0;
+            i32 i = 0;
 
         QCOMPARE(output, expectedOutput);
         if (!QFile::exists(errorFilePath))
