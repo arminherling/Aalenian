@@ -101,6 +101,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\VirtualMachine\BytecodeGenerator.cpp" />
+    <ClCompile Include="source\VirtualMachine\ByteCode.cpp" />
     <ClCompile Include="source\Compiler\File.cpp" />
     <ClCompile Include="source\Debug\ParseTreePrinter.cpp" />
     <ClCompile Include="source\Syntax\Node.cpp" />
@@ -111,6 +113,11 @@
     <ClCompile Include="source\Text\SourceText.cpp" />
     <ClCompile Include="source\Syntax\Lexer.cpp" />
     <ClCompile Include="source\Syntax\TokenKind.cpp" />
+    <ClCompile Include="source\VirtualMachine\VM.cpp" />
+    <ClCompile Include="source\VirtualMachine\Value.cpp" />
+    <ClInclude Include="source\VirtualMachine\BytecodeGenerator.h" />
+    <ClInclude Include="source\VirtualMachine\ByteCode.h" />
+    <ClInclude Include="source\VirtualMachine\Register.h" />
     <ClInclude Include="source\Compiler\File.h" />
     <ClInclude Include="source\Compiler\DiagnosticsBag.h" />
     <ClInclude Include="source\Compiler\Diagnostic.h" />
@@ -129,6 +136,9 @@
     <ClInclude Include="source\Syntax\ParseTree.h" />
     <ClInclude Include="source\Syntax\Node.h" />
     <ClInclude Include="source\Debug\ParseTreePrinter.h" />
+    <ClInclude Include="source\VirtualMachine\VM.h" />
+    <ClInclude Include="source\TypeDefs.h" />
+    <ClInclude Include="source\VirtualMachine\Value.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

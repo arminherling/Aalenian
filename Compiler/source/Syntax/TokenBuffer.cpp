@@ -2,6 +2,7 @@
 
 TokenBuffer::TokenBuffer(i32 initialSize)
     : tokens{}
+    , lexemes{}
     , sourceLocations{}
 {
     tokens.reserve(initialSize);

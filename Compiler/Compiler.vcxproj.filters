@@ -44,6 +44,18 @@
     <ClCompile Include="source\Compiler\File.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\VirtualMachine\VM.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\VirtualMachine\ByteCode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\VirtualMachine\BytecodeGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\VirtualMachine\Value.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Compiler\DiagnosticsBag.h">
@@ -95,6 +107,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Compiler\File.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\VirtualMachine\VM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\VirtualMachine\Register.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\VirtualMachine\ByteCode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\TypeDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\VirtualMachine\BytecodeGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\VirtualMachine\Value.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
