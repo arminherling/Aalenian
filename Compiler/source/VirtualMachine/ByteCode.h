@@ -12,6 +12,7 @@ enum Op : u8
     AddInt32,
     SubtractInt32,
     MultiplyInt32,
+    DivideInt32,
     Halt
 };
 
@@ -24,6 +25,7 @@ public:
     void writeAddInt32(Register target, Register rhs, Register lhs);
     void writeSubtractInt32(Register target, Register rhs, Register lhs);
     void writeMultiplyInt32(Register target, Register rhs, Register lhs);
+    void writeDivideInt32(Register target, Register rhs, Register lhs);
     void writeHalt();
 
     u8 readUInt8();
