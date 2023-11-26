@@ -10,6 +10,7 @@ enum Op : u8
 {
     LoadInt32,
     AddInt32,
+    SubtractInt32,
     Halt
 };
 
@@ -20,6 +21,7 @@ public:
     
     void writeLoadInt32(Register reg, i32 value);
     void writeAddInt32(Register target, Register rhs, Register lhs);
+    void writeSubtractInt32(Register target, Register rhs, Register lhs);
     void writeHalt();
 
     u8 readUInt8();
