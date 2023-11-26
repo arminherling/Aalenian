@@ -108,6 +108,40 @@ private slots:
         QCOMPARE(loadedValue.as.numI32, expectedResult);
     }
 
+    void MultiplyInt32_data()
+    {
+        QTest::addColumn<i32>("lhs");
+        QTest::addColumn<i32>("rhs");
+        QTest::addColumn<i32>("expectedResult");
+
+        QTest::newRow("10 * 100 = 1000") << 10 << 100 << 1000;
+        QTest::newRow("5 * -100 = -500") << 5 << -100 << -500;
+    }
+
+    void MultiplyInt32()
+    {
+        QFETCH(i32, lhs);
+        QFETCH(i32, rhs);
+        QFETCH(i32, expectedResult);
+
+        ByteCode code;
+        code.writeLoadInt32(1, lhs);
+        code.writeLoadInt32(2, rhs);
+        code.writeMultiplyInt32(0, 1, 2);
+        code.writeHalt();
+        VM vm;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        vm.run(code);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
+
+        auto loadedValue = vm.getValue(0);
+        QCOMPARE(loadedValue.type, Value::Type::I32);
+        QCOMPARE(loadedValue.as.numI32, expectedResult);
+    }
 };
 
 QTEST_MAIN(VirtualMachineTests)

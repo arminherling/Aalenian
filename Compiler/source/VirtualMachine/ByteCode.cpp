@@ -23,6 +23,14 @@ void ByteCode::writeSubtractInt32(Register target, Register rhs, Register lhs)
     writeUInt16(lhs.index);
 }
 
+void ByteCode::writeMultiplyInt32(Register target, Register rhs, Register lhs)
+{
+    writeUInt8(Op::MultiplyInt32);
+    writeUInt16(target.index);
+    writeUInt16(rhs.index);
+    writeUInt16(lhs.index);
+}
+
 void ByteCode::writeHalt()
 {
     writeUInt8(Op::Halt);
