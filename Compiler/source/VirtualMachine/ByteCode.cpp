@@ -124,6 +124,12 @@ void ByteCode::writeLessOrEqualInt32(Register target, Register rhs, Register lhs
     writeUInt16(lhs.index);
 }
 
+void ByteCode::writeJump(u16 target)
+{
+    writeUInt8(Op::Jump);
+    writeUInt16(target);
+}
+
 void ByteCode::writeHalt()
 {
     writeUInt8(Op::Halt);
@@ -142,6 +148,11 @@ u16 ByteCode::readUInt16()
 i32 ByteCode::readInt32()
 {
     return (i32)(m_byteCode[m_ip++] | (m_byteCode[m_ip++] << 8) | (m_byteCode[m_ip++] << 16) | (m_byteCode[m_ip++] << 24));
+}
+
+void ByteCode::setInstructionPointer(u16 value)
+{
+    m_ip = value;
 }
 
 inline void ByteCode::writeUInt8(u8 value)

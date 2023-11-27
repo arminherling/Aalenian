@@ -24,6 +24,7 @@ enum Op : u8
     GreaterOrEqualInt32,
     LessInt32,
     LessOrEqualInt32,
+    Jump,
     Halt
 };
 
@@ -48,11 +49,14 @@ public:
     void writeGreaterOrEqualInt32(Register target, Register rhs, Register lhs);
     void writeLessInt32(Register target, Register rhs, Register lhs);
     void writeLessOrEqualInt32(Register target, Register rhs, Register lhs);
+    void writeJump(u16 target);
     void writeHalt();
 
     u8 readUInt8();
     u16 readUInt16();
     i32 readInt32();
+
+    void setInstructionPointer(u16 value);
 
 private:
     i32 m_ip = 0;

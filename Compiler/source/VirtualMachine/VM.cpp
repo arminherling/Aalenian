@@ -232,6 +232,14 @@ i32 VM::run(ByteCode& code)
 
                 break;
             }
+            case Op::Jump: 
+            {
+                auto target = code.readUInt16();
+
+                code.setInstructionPointer(target);
+
+                break;
+            }
             case Op::Halt:
             {
                 return 0;

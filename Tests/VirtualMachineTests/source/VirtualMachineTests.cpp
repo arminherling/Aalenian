@@ -557,6 +557,27 @@ private slots:
         QCOMPARE(loadedValue.type, Value::Type::Bool);
         QCOMPARE(loadedValue.as.boolean, expectedResult);
     }
+
+    void Jump()
+    {
+        ByteCode code;
+        code.writeLoadInt32(0, 10);
+        code.writeJump(17); //Skip 7 byte for LoadInt32, 3 for Jump, 7 for LoadInt32 = Target is 17
+        code.writeLoadInt32(0, 20);
+        code.writeHalt();
+        VM vm;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        vm.run(code);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
+
+        auto loadedValue = vm.getValue(0);
+        QCOMPARE(loadedValue.type, Value::Type::I32);
+        QCOMPARE(loadedValue.as.numI32, 10);
+    }
 };
 
 QTEST_MAIN(VirtualMachineTests)
