@@ -1,5 +1,12 @@
 #include "ByteCode.h"
 
+void ByteCode::writeLoadBool(Register reg, bool value)
+{
+    writeUInt8(Op::LoadBool);
+    writeUInt16(reg.index);
+    writeUInt8(value);
+}
+
 void ByteCode::writeLoadInt32(Register reg, i32 value)
 {
     writeUInt8(Op::LoadInt32);

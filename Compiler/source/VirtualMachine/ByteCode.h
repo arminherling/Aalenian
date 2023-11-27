@@ -8,6 +8,7 @@
 
 enum Op : u8
 {
+    LoadBool,
     LoadInt32,
     AddInt32,
     SubtractInt32,
@@ -22,6 +23,7 @@ class COMPILER_API ByteCode
 public:
     ByteCode() = default;
     
+    void writeLoadBool(Register reg, bool value);
     void writeLoadInt32(Register reg, i32 value);
     void writeAddInt32(Register target, Register rhs, Register lhs);
     void writeSubtractInt32(Register target, Register rhs, Register lhs);

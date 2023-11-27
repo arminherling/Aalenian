@@ -22,6 +22,15 @@ i32 VM::run(ByteCode& code)
         auto op = static_cast<Op>(code.readUInt8());
         switch (op)
         {
+            case Op::LoadBool:
+            {
+                auto reg = code.readUInt16();
+                auto value = (bool)code.readUInt8();
+
+                setValue(reg, value);
+
+                break;
+            }
             case Op::LoadInt32:
             {
                 auto reg = code.readUInt16();

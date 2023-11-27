@@ -9,6 +9,35 @@ class VirtualMachineTests : public QObject
     Q_OBJECT
 
 private slots:
+    void LoadBool_data()
+    {
+        QTest::addColumn<bool>("value");
+
+        QTest::newRow("true") << true;
+        QTest::newRow("false") << false;
+    }
+
+    void LoadBool()
+    {
+        QFETCH(bool, value);
+
+        ByteCode code;
+        code.writeLoadBool(1, value);
+        code.writeHalt();
+        VM vm;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        vm.run(code);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
+
+        auto loadedValue = vm.getValue(1);
+        QCOMPARE(loadedValue.type, Value::Type::Bool);
+        QCOMPARE(loadedValue.as.boolean, value);
+    }
+
     void LoadInt32_data()
     {
         QTest::addColumn<i32>("value");
