@@ -31,6 +31,20 @@ i32 VM::run(ByteCode& code)
 
                 break;
             }
+            case Op::EqualBool: 
+            {
+                auto result = code.readUInt16();
+                auto rhs = code.readUInt16();
+                auto lhs = code.readUInt16();
+
+                auto rhsValue = getValue(rhs);
+                auto lhsValue = getValue(lhs);
+
+                auto resultValue = Value(rhsValue.as.boolean == lhsValue.as.boolean);
+                setValue(result, resultValue);
+
+                break;
+            }
             case Op::LoadInt32:
             {
                 auto reg = code.readUInt16();
