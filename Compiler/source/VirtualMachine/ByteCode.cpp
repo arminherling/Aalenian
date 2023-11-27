@@ -130,6 +130,13 @@ void ByteCode::writeJump(u16 target)
     writeUInt16(target);
 }
 
+void ByteCode::writeJumpIfFalse(u16 target, Register value)
+{
+    writeUInt8(Op::JumpIfFalse);
+    writeUInt16(target);
+    writeUInt16(value.index);
+}
+
 void ByteCode::writeHalt()
 {
     writeUInt8(Op::Halt);

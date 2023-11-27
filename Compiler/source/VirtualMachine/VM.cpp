@@ -240,6 +240,17 @@ i32 VM::run(ByteCode& code)
 
                 break;
             }
+            case Op::JumpIfFalse:
+            {
+                auto target = code.readUInt16();
+                auto condition = code.readUInt16();
+
+                auto conditionValue = getValue(condition);
+                if(!conditionValue.as.boolean)
+                    code.setInstructionPointer(target);
+
+                break;
+            }
             case Op::Halt:
             {
                 return 0;

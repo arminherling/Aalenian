@@ -578,6 +578,40 @@ private slots:
         QCOMPARE(loadedValue.type, Value::Type::I32);
         QCOMPARE(loadedValue.as.numI32, 10);
     }
+
+    void JumpIfFalse_data()
+    {
+        QTest::addColumn<bool>("condition");
+        QTest::addColumn<i32>("expectedResult");
+
+        QTest::newRow("false -> 10") << false << 10;
+        QTest::newRow("true -> 20") << true << 20;
+    }
+
+    void JumpIfFalse()
+    {
+        QFETCH(bool, condition);
+        QFETCH(i32, expectedResult);
+
+        ByteCode code;
+        code.writeLoadBool(0, condition);
+        code.writeLoadInt32(1, 10);
+        code.writeJumpIfFalse(23, 0); //Skip 4 bytes for LoadBool, 7 byte for LoadInt32, 5 for Jump, 7 for LoadInt32 = Target is 23
+        code.writeLoadInt32(1, 20);
+        code.writeHalt();
+        VM vm;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        vm.run(code);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
+
+        auto loadedValue = vm.getValue(1);
+        QCOMPARE(loadedValue.type, Value::Type::I32);
+        QCOMPARE(loadedValue.as.numI32, expectedResult);
+    }
 };
 
 QTEST_MAIN(VirtualMachineTests)
