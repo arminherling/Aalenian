@@ -15,6 +15,14 @@ void ByteCode::writeEqualBool(Register target, Register rhs, Register lhs)
     writeUInt16(lhs.index);
 }
 
+void ByteCode::writeNotEqualBool(Register target, Register rhs, Register lhs)
+{
+    writeUInt8(Op::NotEqualBool);
+    writeUInt16(target.index);
+    writeUInt16(rhs.index);
+    writeUInt16(lhs.index);
+}
+
 void ByteCode::writeLoadInt32(Register reg, i32 value)
 {
     writeUInt8(Op::LoadInt32);

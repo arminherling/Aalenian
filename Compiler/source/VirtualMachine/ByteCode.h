@@ -10,6 +10,7 @@ enum Op : u8
 {
     LoadBool,
     EqualBool,
+    NotEqualBool,
     LoadInt32,
     AddInt32,
     SubtractInt32,
@@ -26,6 +27,7 @@ public:
     
     void writeLoadBool(Register reg, bool value);
     void writeEqualBool(Register target, Register rhs, Register lhs);
+    void writeNotEqualBool(Register target, Register rhs, Register lhs);
     void writeLoadInt32(Register reg, i32 value);
     void writeAddInt32(Register target, Register rhs, Register lhs);
     void writeSubtractInt32(Register target, Register rhs, Register lhs);
