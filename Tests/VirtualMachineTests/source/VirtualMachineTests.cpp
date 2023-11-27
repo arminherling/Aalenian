@@ -3,7 +3,7 @@
 #include <VirtualMachine/ByteCode.h>
 #include <VirtualMachine/Register.h>
 #include <VirtualMachine/VM.h>
-
+#include <QProcess>
 class VirtualMachineTests : public QObject
 {
     Q_OBJECT
@@ -611,6 +611,32 @@ private slots:
         auto loadedValue = vm.getValue(1);
         QCOMPARE(loadedValue.type, Value::Type::I32);
         QCOMPARE(loadedValue.as.numI32, expectedResult);
+    }
+
+    void PrintBool_data()
+    {
+        QTest::addColumn<bool>("value");
+
+        QTest::newRow("true") << true;
+        QTest::newRow("false") << false;
+    }
+
+    void PrintBool()
+    {
+        QFETCH(bool, value);
+
+        ByteCode code;
+        code.writeLoadBool(0, value);
+        code.writePrintBool(0);
+        code.writeHalt();
+        VM vm;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        vm.run(code);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
     }
 };
 

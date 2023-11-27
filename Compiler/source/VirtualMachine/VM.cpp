@@ -1,5 +1,7 @@
 #include "VM.h"
 
+#include <iostream>
+
 VM::VM()
 {
     m_registers.resize(2048);
@@ -248,6 +250,15 @@ i32 VM::run(ByteCode& code)
                 auto conditionValue = getValue(condition);
                 if(!conditionValue.as.boolean)
                     code.setInstructionPointer(target);
+
+                break;
+            }
+            case Op::PrintBool:
+            {
+                auto reg = code.readUInt16();
+                auto value = getValue(reg);
+
+                std::cout << std::boolalpha << value.as.boolean << std::endl;
 
                 break;
             }

@@ -26,6 +26,7 @@ enum Op : u8
     LessOrEqualInt32,
     Jump,
     JumpIfFalse,
+    PrintBool,
     Halt
 };
 
@@ -52,6 +53,7 @@ public:
     void writeLessOrEqualInt32(Register target, Register rhs, Register lhs);
     void writeJump(u16 target);
     void writeJumpIfFalse(u16 target, Register value);
+    void writePrintBool(Register reg);
     void writeHalt();
 
     u8 readUInt8();
