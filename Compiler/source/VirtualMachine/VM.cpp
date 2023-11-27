@@ -136,6 +136,18 @@ i32 VM::run(ByteCode& code)
 
                 break;
             }
+            case Op::NegateInt32:
+            {
+                auto result = code.readUInt16();
+                auto value = code.readUInt16();
+
+                auto valueValue = getValue(value);
+
+                auto resultValue = Value(-valueValue.as.numI32);
+                setValue(result, resultValue);
+
+                break;
+            }
             case Op::EqualInt32:
             {
                 auto result = code.readUInt16();

@@ -69,6 +69,13 @@ void ByteCode::writeDivideInt32(Register target, Register rhs, Register lhs)
     writeUInt16(lhs.index);
 }
 
+void ByteCode::writeNegateInt32(Register target, Register value)
+{
+    writeUInt8(Op::NegateInt32);
+    writeUInt16(target.index);
+    writeUInt16(value.index);
+}
+
 void ByteCode::writeEqualInt32(Register target, Register rhs, Register lhs)
 {
     writeUInt8(Op::EqualInt32);

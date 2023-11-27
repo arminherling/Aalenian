@@ -17,6 +17,7 @@ enum Op : u8
     SubtractInt32,
     MultiplyInt32,
     DivideInt32,
+    NegateInt32,
     EqualInt32,
     NotEqualInt32,
     GreaterInt32,
@@ -40,6 +41,7 @@ public:
     void writeSubtractInt32(Register target, Register rhs, Register lhs);
     void writeMultiplyInt32(Register target, Register rhs, Register lhs);
     void writeDivideInt32(Register target, Register rhs, Register lhs);
+    void writeNegateInt32(Register target, Register value);
     void writeEqualInt32(Register target, Register rhs, Register lhs);
     void writeNotEqualInt32(Register target, Register rhs, Register lhs);
     void writeGreaterInt32(Register target, Register rhs, Register lhs);

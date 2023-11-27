@@ -311,6 +311,39 @@ private slots:
         QCOMPARE(loadedValue.as.numI32, expectedResult);
     }
 
+    void NegateIn32_data()
+    {
+        QTest::addColumn<i32>("value");
+        QTest::addColumn<i32>("expectedResult");
+
+        QTest::newRow("-(10) = -10") << 10 << -10;
+        QTest::newRow("-(-100) = 100") << -100 << 100;
+        QTest::newRow("-(0) = 0") << 0 << 0;
+    }
+
+    void NegateIn32()
+    {
+        QFETCH(i32, value);
+        QFETCH(i32, expectedResult);
+
+        ByteCode code;
+        code.writeLoadInt32(1, value);
+        code.writeNegateInt32(0, 1);
+        code.writeHalt();
+        VM vm;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        vm.run(code);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
+
+        auto loadedValue = vm.getValue(0);
+        QCOMPARE(loadedValue.type, Value::Type::I32);
+        QCOMPARE(loadedValue.as.numI32, expectedResult);
+    }
+
     void EqualInt32_data()
     {
         QTest::addColumn<i32>("lhs");
