@@ -19,6 +19,7 @@ enum Op : u8
     EqualInt32,
     NotEqualInt32,
     GreaterInt32,
+    GreaterOrEqualInt32,
     Halt
 };
 
@@ -38,6 +39,7 @@ public:
     void writeEqualInt32(Register target, Register rhs, Register lhs);
     void writeNotEqualInt32(Register target, Register rhs, Register lhs);
     void writeGreaterInt32(Register target, Register rhs, Register lhs);
+    void writeGreaterOrEqualInt32(Register target, Register rhs, Register lhs);
     void writeHalt();
 
     u8 readUInt8();
