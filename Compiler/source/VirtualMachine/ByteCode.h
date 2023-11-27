@@ -27,6 +27,8 @@ enum Op : u8
     Jump,
     JumpIfFalse,
     PrintBool,
+    PrintInt32,
+    PrintNewLine,
     Halt
 };
 
@@ -54,6 +56,8 @@ public:
     void writeJump(u16 target);
     void writeJumpIfFalse(u16 target, Register value);
     void writePrintBool(Register reg);
+    void writePrintInt32(Register reg);
+    void writePrintNewLine();
     void writeHalt();
 
     u8 readUInt8();

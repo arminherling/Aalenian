@@ -143,6 +143,17 @@ void ByteCode::writePrintBool(Register reg)
     writeUInt16(reg.index);
 }
 
+void ByteCode::writePrintInt32(Register reg)
+{
+    writeUInt8(Op::PrintInt32);
+    writeUInt16(reg.index);
+}
+
+void ByteCode::writePrintNewLine()
+{
+    writeUInt8(Op::PrintNewLine);
+}
+
 void ByteCode::writeHalt()
 {
     writeUInt8(Op::Halt);

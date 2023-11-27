@@ -258,7 +258,22 @@ i32 VM::run(ByteCode& code)
                 auto reg = code.readUInt16();
                 auto value = getValue(reg);
 
-                std::cout << std::boolalpha << value.as.boolean << std::endl;
+                std::cout << std::boolalpha << value.as.boolean;
+
+                break;
+            }
+            case Op::PrintInt32:
+            {
+                auto reg = code.readUInt16();
+                auto value = getValue(reg);
+
+                std::cout << value.as.numI32;
+
+                break;
+            }
+            case Op::PrintNewLine:
+            {
+                std::cout << '\n';
 
                 break;
             }

@@ -628,6 +628,49 @@ private slots:
         ByteCode code;
         code.writeLoadBool(0, value);
         code.writePrintBool(0);
+        code.writePrintNewLine();
+        code.writeHalt();
+        VM vm;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        vm.run(code);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
+    }
+
+    void PrintInt32_data()
+    {
+        QTest::addColumn<i32>("value");
+
+        QTest::newRow("0") << 0;
+        QTest::newRow("12345") << 12345;
+    }
+
+    void PrintInt32()
+    {
+        QFETCH(i32, value);
+
+        ByteCode code;
+        code.writeLoadInt32(0, value);
+        code.writePrintInt32(0);
+        code.writePrintNewLine();
+        code.writeHalt();
+        VM vm;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        vm.run(code);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
+    }
+
+    void PrintNewLine()
+    {
+        ByteCode code;
+        code.writePrintNewLine();
         code.writeHalt();
         VM vm;
 
