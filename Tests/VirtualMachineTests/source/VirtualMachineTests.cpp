@@ -313,6 +313,41 @@ private slots:
         QCOMPARE(loadedValue.type, Value::Type::Bool);
         QCOMPARE(loadedValue.as.boolean, expectedResult);
     }
+
+    void NotEqualInt32_data()
+    {
+        QTest::addColumn<i32>("lhs");
+        QTest::addColumn<i32>("rhs");
+        QTest::addColumn<bool>("expectedResult");
+
+        QTest::newRow("100 != 10 = true") << 100 << 10 << true;
+        QTest::newRow("5 != 5 = false") << 5 << 5 << false;
+    }
+
+    void NotEqualInt32()
+    {
+        QFETCH(i32, lhs);
+        QFETCH(i32, rhs);
+        QFETCH(bool, expectedResult);
+
+        ByteCode code;
+        code.writeLoadInt32(1, lhs);
+        code.writeLoadInt32(2, rhs);
+        code.writeNotEqualInt32(0, 1, 2);
+        code.writeHalt();
+        VM vm;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        vm.run(code);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
+
+        auto loadedValue = vm.getValue(0);
+        QCOMPARE(loadedValue.type, Value::Type::Bool);
+        QCOMPARE(loadedValue.as.boolean, expectedResult);
+    }
 };
 
 QTEST_MAIN(VirtualMachineTests)
