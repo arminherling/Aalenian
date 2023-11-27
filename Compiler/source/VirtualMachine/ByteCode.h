@@ -21,6 +21,7 @@ enum Op : u8
     GreaterInt32,
     GreaterOrEqualInt32,
     LessInt32,
+    LessOrEqualInt32,
     Halt
 };
 
@@ -42,6 +43,7 @@ public:
     void writeGreaterInt32(Register target, Register rhs, Register lhs);
     void writeGreaterOrEqualInt32(Register target, Register rhs, Register lhs);
     void writeLessInt32(Register target, Register rhs, Register lhs);
+    void writeLessOrEqualInt32(Register target, Register rhs, Register lhs);
     void writeHalt();
 
     u8 readUInt8();
