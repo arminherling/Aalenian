@@ -94,6 +94,14 @@ void ByteCode::writeGreaterOrEqualInt32(Register target, Register rhs, Register 
     writeUInt16(lhs.index);
 }
 
+void ByteCode::writeLessInt32(Register target, Register rhs, Register lhs)
+{
+    writeUInt8(Op::LessInt32);
+    writeUInt16(target.index);
+    writeUInt16(rhs.index);
+    writeUInt16(lhs.index);
+}
+
 void ByteCode::writeHalt()
 {
     writeUInt8(Op::Halt);
