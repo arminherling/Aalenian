@@ -681,6 +681,37 @@ private slots:
         auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
         qDebug() << "Time: " << elapsed_time_ms << "ns";
     }
+
+    void LoweredWhileLoop()
+    {
+        // int i = 0;
+        // while (i < 10)
+        // {
+        //     i = i + 1;
+        // }
+
+        ByteCode code;
+        code.writeLoadInt32(0, 0);      // 7 byte, int i = 0
+        code.writeLoadInt32(1, 10);     // 7 byte, int literal 10
+        code.writeLessInt32(2, 0, 1);   // 7 byte, i < 10
+        code.writeJumpIfFalse(43, 2);   // 5 byte, goto end
+        code.writeLoadInt32(3, 1);      // 7 byte, int literal 1
+        code.writeAddInt32(0, 0, 3);    // 7 byte, i = i + 1
+        code.writeJump(14);             // 3 byte, goto start of the loop before the check
+        code.writeHalt();
+        VM vm;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        vm.run(code);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "s";
+
+        auto loadedValue = vm.getValue(0);
+        QCOMPARE(loadedValue.type, Value::Type::I32);
+        QCOMPARE(loadedValue.as.numI32, 10);
+    }
 };
 
 QTEST_MAIN(VirtualMachineTests)
