@@ -38,6 +38,38 @@ private slots:
         QCOMPARE(loadedValue.as.boolean, value);
     }
 
+    void NotBool_data()
+    {
+        QTest::addColumn<bool>("value");
+        QTest::addColumn<bool>("expectedResult");
+
+        QTest::newRow("!true = false") << true << false;
+        QTest::newRow("!false = true") << false << true;
+    }
+
+    void NotBool()
+    {
+        QFETCH(bool, value);
+        QFETCH(bool, expectedResult);
+
+        ByteCode code;
+        code.writeLoadBool(1, value);
+        code.writeNotBool(0, 1);
+        code.writeHalt();
+        VM vm;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        vm.run(code);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
+
+        auto loadedValue = vm.getValue(0);
+        QCOMPARE(loadedValue.type, Value::Type::Bool);
+        QCOMPARE(loadedValue.as.boolean, expectedResult);
+    }
+
     void EqualBool_data()
     {
         QTest::addColumn<bool>("lhs");

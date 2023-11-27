@@ -7,6 +7,13 @@ void ByteCode::writeLoadBool(Register reg, bool value)
     writeUInt8(value);
 }
 
+void ByteCode::writeNotBool(Register target, Register value)
+{
+    writeUInt8(Op::NotBool);
+    writeUInt16(target.index);
+    writeUInt16(value.index);
+}
+
 void ByteCode::writeEqualBool(Register target, Register rhs, Register lhs)
 {
     writeUInt8(Op::EqualBool);

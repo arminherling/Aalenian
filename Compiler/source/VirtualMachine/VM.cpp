@@ -31,6 +31,18 @@ i32 VM::run(ByteCode& code)
 
                 break;
             }
+            case Op::NotBool:
+            {
+                auto result = code.readUInt16();
+                auto value = code.readUInt16();
+
+                auto valueValue = getValue(value);
+
+                auto resultValue = Value(!valueValue.as.boolean);
+                setValue(result, resultValue);
+
+                break;
+            }
             case Op::EqualBool: 
             {
                 auto result = code.readUInt16();

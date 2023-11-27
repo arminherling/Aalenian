@@ -9,6 +9,7 @@
 enum Op : u8
 {
     LoadBool,
+    NotBool,
     EqualBool,
     NotEqualBool,
     LoadInt32,
@@ -31,6 +32,7 @@ public:
     ByteCode() = default;
     
     void writeLoadBool(Register reg, bool value);
+    void writeNotBool(Register target, Register value);
     void writeEqualBool(Register target, Register rhs, Register lhs);
     void writeNotEqualBool(Register target, Register rhs, Register lhs);
     void writeLoadInt32(Register reg, i32 value);
