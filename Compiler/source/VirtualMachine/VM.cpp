@@ -19,15 +19,17 @@ Value VM::getValue(Register reg)
 
 i32 VM::run(ByteCode& code)
 {
+    u16 ip = 0;
+
     while (true)
     {
-        auto op = static_cast<Op>(code.readUInt8());
+        auto op = static_cast<Op>(code.readUInt8(ip));
         switch (op)
         {
             case Op::LoadBool:
             {
-                auto reg = code.readUInt16();
-                auto value = (bool)code.readUInt8();
+                auto reg = code.readUInt16(ip);
+                auto value = (bool)code.readUInt8(ip);
 
                 setValue(reg, value);
 
@@ -35,8 +37,8 @@ i32 VM::run(ByteCode& code)
             }
             case Op::NotBool:
             {
-                auto result = code.readUInt16();
-                auto value = code.readUInt16();
+                auto result = code.readUInt16(ip);
+                auto value = code.readUInt16(ip);
 
                 auto valueValue = getValue(value);
 
@@ -47,9 +49,9 @@ i32 VM::run(ByteCode& code)
             }
             case Op::EqualBool: 
             {
-                auto result = code.readUInt16();
-                auto rhs = code.readUInt16();
-                auto lhs = code.readUInt16();
+                auto result = code.readUInt16(ip);
+                auto rhs = code.readUInt16(ip);
+                auto lhs = code.readUInt16(ip);
 
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
@@ -61,9 +63,9 @@ i32 VM::run(ByteCode& code)
             }
             case Op::NotEqualBool:
             {
-                auto result = code.readUInt16();
-                auto rhs = code.readUInt16();
-                auto lhs = code.readUInt16();
+                auto result = code.readUInt16(ip);
+                auto rhs = code.readUInt16(ip);
+                auto lhs = code.readUInt16(ip);
 
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
@@ -75,8 +77,8 @@ i32 VM::run(ByteCode& code)
             }
             case Op::LoadInt32:
             {
-                auto reg = code.readUInt16();
-                auto value = code.readInt32();
+                auto reg = code.readUInt16(ip);
+                auto value = code.readInt32(ip);
 
                 setValue(reg, value);
 
@@ -84,9 +86,9 @@ i32 VM::run(ByteCode& code)
             }
             case Op::AddInt32:
             {
-                auto result = code.readUInt16();
-                auto rhs = code.readUInt16();
-                auto lhs = code.readUInt16();
+                auto result = code.readUInt16(ip);
+                auto rhs = code.readUInt16(ip);
+                auto lhs = code.readUInt16(ip);
 
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
@@ -98,9 +100,9 @@ i32 VM::run(ByteCode& code)
             }
             case Op::SubtractInt32: 
             {
-                auto result = code.readUInt16();
-                auto rhs = code.readUInt16();
-                auto lhs = code.readUInt16();
+                auto result = code.readUInt16(ip);
+                auto rhs = code.readUInt16(ip);
+                auto lhs = code.readUInt16(ip);
 
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
@@ -112,9 +114,9 @@ i32 VM::run(ByteCode& code)
             }
             case Op::MultiplyInt32:
             {
-                auto result = code.readUInt16();
-                auto rhs = code.readUInt16();
-                auto lhs = code.readUInt16();
+                auto result = code.readUInt16(ip);
+                auto rhs = code.readUInt16(ip);
+                auto lhs = code.readUInt16(ip);
 
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
@@ -126,9 +128,9 @@ i32 VM::run(ByteCode& code)
             }
             case Op::DivideInt32:
             {
-                auto result = code.readUInt16();
-                auto rhs = code.readUInt16();
-                auto lhs = code.readUInt16();
+                auto result = code.readUInt16(ip);
+                auto rhs = code.readUInt16(ip);
+                auto lhs = code.readUInt16(ip);
 
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
@@ -140,8 +142,8 @@ i32 VM::run(ByteCode& code)
             }
             case Op::NegateInt32:
             {
-                auto result = code.readUInt16();
-                auto value = code.readUInt16();
+                auto result = code.readUInt16(ip);
+                auto value = code.readUInt16(ip);
 
                 auto valueValue = getValue(value);
 
@@ -152,9 +154,9 @@ i32 VM::run(ByteCode& code)
             }
             case Op::EqualInt32:
             {
-                auto result = code.readUInt16();
-                auto rhs = code.readUInt16();
-                auto lhs = code.readUInt16();
+                auto result = code.readUInt16(ip);
+                auto rhs = code.readUInt16(ip);
+                auto lhs = code.readUInt16(ip);
 
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
@@ -166,9 +168,9 @@ i32 VM::run(ByteCode& code)
             }
             case Op::NotEqualInt32:
             {
-                auto result = code.readUInt16();
-                auto rhs = code.readUInt16();
-                auto lhs = code.readUInt16();
+                auto result = code.readUInt16(ip);
+                auto rhs = code.readUInt16(ip);
+                auto lhs = code.readUInt16(ip);
 
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
@@ -180,9 +182,9 @@ i32 VM::run(ByteCode& code)
             }
             case Op::GreaterInt32:
             {
-                auto result = code.readUInt16();
-                auto rhs = code.readUInt16();
-                auto lhs = code.readUInt16();
+                auto result = code.readUInt16(ip);
+                auto rhs = code.readUInt16(ip);
+                auto lhs = code.readUInt16(ip);
 
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
@@ -194,9 +196,9 @@ i32 VM::run(ByteCode& code)
             }
             case Op::GreaterOrEqualInt32:
             {
-                auto result = code.readUInt16();
-                auto rhs = code.readUInt16();
-                auto lhs = code.readUInt16();
+                auto result = code.readUInt16(ip);
+                auto rhs = code.readUInt16(ip);
+                auto lhs = code.readUInt16(ip);
 
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
@@ -208,9 +210,9 @@ i32 VM::run(ByteCode& code)
             }
             case Op::LessInt32:
             {
-                auto result = code.readUInt16();
-                auto rhs = code.readUInt16();
-                auto lhs = code.readUInt16();
+                auto result = code.readUInt16(ip);
+                auto rhs = code.readUInt16(ip);
+                auto lhs = code.readUInt16(ip);
 
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
@@ -222,9 +224,9 @@ i32 VM::run(ByteCode& code)
             }
             case Op::LessOrEqualInt32:
             {
-                auto result = code.readUInt16();
-                auto rhs = code.readUInt16();
-                auto lhs = code.readUInt16();
+                auto result = code.readUInt16(ip);
+                auto rhs = code.readUInt16(ip);
+                auto lhs = code.readUInt16(ip);
 
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
@@ -236,26 +238,26 @@ i32 VM::run(ByteCode& code)
             }
             case Op::Jump: 
             {
-                auto target = code.readUInt16();
+                auto target = code.readUInt16(ip);
 
-                code.setInstructionPointer(target);
+                ip = target;
 
                 break;
             }
             case Op::JumpIfFalse:
             {
-                auto target = code.readUInt16();
-                auto condition = code.readUInt16();
+                auto target = code.readUInt16(ip);
+                auto condition = code.readUInt16(ip);
 
                 auto conditionValue = getValue(condition);
                 if(!conditionValue.as.boolean)
-                    code.setInstructionPointer(target);
+                    ip = target;
 
                 break;
             }
             case Op::PrintBool:
             {
-                auto reg = code.readUInt16();
+                auto reg = code.readUInt16(ip);
                 auto value = getValue(reg);
 
                 std::cout << std::boolalpha << value.as.boolean;
@@ -264,7 +266,7 @@ i32 VM::run(ByteCode& code)
             }
             case Op::PrintInt32:
             {
-                auto reg = code.readUInt16();
+                auto reg = code.readUInt16(ip);
                 auto value = getValue(reg);
 
                 std::cout << value.as.numI32;

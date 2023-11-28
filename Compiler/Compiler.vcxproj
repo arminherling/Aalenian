@@ -101,7 +101,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\VirtualMachine\BytecodeGenerator.cpp" />
+    <ClCompile Include="source\VirtualMachine\ByteCodeAssembler.cpp" />
+    <ClCompile Include="source\VirtualMachine\ByteCodeGenerator.cpp" />
     <ClCompile Include="source\VirtualMachine\ByteCode.cpp" />
     <ClCompile Include="source\Compiler\File.cpp" />
     <ClCompile Include="source\Debug\ParseTreePrinter.cpp" />
@@ -115,7 +116,8 @@
     <ClCompile Include="source\Syntax\TokenKind.cpp" />
     <ClCompile Include="source\VirtualMachine\VM.cpp" />
     <ClCompile Include="source\VirtualMachine\Value.cpp" />
-    <ClInclude Include="source\VirtualMachine\BytecodeGenerator.h" />
+    <ClInclude Include="source\VirtualMachine\ByteCodeAssembler.h" />
+    <ClInclude Include="source\VirtualMachine\ByteCodeGenerator.h" />
     <ClInclude Include="source\VirtualMachine\ByteCode.h" />
     <ClInclude Include="source\VirtualMachine\Register.h" />
     <ClInclude Include="source\Compiler\File.h" />

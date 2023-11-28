@@ -1,9 +1,10 @@
 #include <QTest>
 
 #include <VirtualMachine/ByteCode.h>
+#include <VirtualMachine/ByteCodeAssembler.h>
 #include <VirtualMachine/Register.h>
 #include <VirtualMachine/VM.h>
-#include <QProcess>
+
 class VirtualMachineTests : public QObject
 {
     Q_OBJECT
@@ -22,8 +23,9 @@ private slots:
         QFETCH(bool, value);
 
         ByteCode code;
-        code.writeLoadBool(1, value);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadBool(1, value);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -53,9 +55,10 @@ private slots:
         QFETCH(bool, expectedResult);
 
         ByteCode code;
-        code.writeLoadBool(1, value);
-        code.writeNotBool(0, 1);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadBool(1, value);
+        assembler.writeNotBool(0, 1);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -88,10 +91,11 @@ private slots:
         QFETCH(bool, expectedResult);
 
         ByteCode code;
-        code.writeLoadBool(1, lhs);
-        code.writeLoadBool(2, rhs);
-        code.writeEqualBool(0, 1, 2);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadBool(1, lhs);
+        assembler.writeLoadBool(2, rhs);
+        assembler.writeEqualBool(0, 1, 2);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -124,10 +128,11 @@ private slots:
         QFETCH(bool, expectedResult);
 
         ByteCode code;
-        code.writeLoadBool(1, lhs);
-        code.writeLoadBool(2, rhs);
-        code.writeNotEqualBool(0, 1, 2);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadBool(1, lhs);
+        assembler.writeLoadBool(2, rhs);
+        assembler.writeNotEqualBool(0, 1, 2);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -155,8 +160,9 @@ private slots:
         QFETCH(i32, value);
 
         ByteCode code;
-        code.writeLoadInt32(1, value);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadInt32(1, value);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -188,10 +194,11 @@ private slots:
         QFETCH(i32, expectedResult);
 
         ByteCode code;
-        code.writeLoadInt32(1, lhs);
-        code.writeLoadInt32(2, rhs);
-        code.writeAddInt32(0, 1, 2);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadInt32(1, lhs);
+        assembler.writeLoadInt32(2, rhs);
+        assembler.writeAddInt32(0, 1, 2);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -223,10 +230,11 @@ private slots:
         QFETCH(i32, expectedResult);
 
         ByteCode code;
-        code.writeLoadInt32(1, lhs);
-        code.writeLoadInt32(2, rhs);
-        code.writeSubtractInt32(0, 1, 2);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadInt32(1, lhs);
+        assembler.writeLoadInt32(2, rhs);
+        assembler.writeSubtractInt32(0, 1, 2);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -258,10 +266,11 @@ private slots:
         QFETCH(i32, expectedResult);
 
         ByteCode code;
-        code.writeLoadInt32(1, lhs);
-        code.writeLoadInt32(2, rhs);
-        code.writeMultiplyInt32(0, 1, 2);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadInt32(1, lhs);
+        assembler.writeLoadInt32(2, rhs);
+        assembler.writeMultiplyInt32(0, 1, 2);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -293,10 +302,11 @@ private slots:
         QFETCH(i32, expectedResult);
 
         ByteCode code;
-        code.writeLoadInt32(1, lhs);
-        code.writeLoadInt32(2, rhs);
-        code.writeDivideInt32(0, 1, 2);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadInt32(1, lhs);
+        assembler.writeLoadInt32(2, rhs);
+        assembler.writeDivideInt32(0, 1, 2);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -327,9 +337,10 @@ private slots:
         QFETCH(i32, expectedResult);
 
         ByteCode code;
-        code.writeLoadInt32(1, value);
-        code.writeNegateInt32(0, 1);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadInt32(1, value);
+        assembler.writeNegateInt32(0, 1);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -361,10 +372,11 @@ private slots:
         QFETCH(bool, expectedResult);
 
         ByteCode code;
-        code.writeLoadInt32(1, lhs);
-        code.writeLoadInt32(2, rhs);
-        code.writeEqualInt32(0, 1, 2);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadInt32(1, lhs);
+        assembler.writeLoadInt32(2, rhs);
+        assembler.writeEqualInt32(0, 1, 2);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -396,10 +408,11 @@ private slots:
         QFETCH(bool, expectedResult);
 
         ByteCode code;
-        code.writeLoadInt32(1, lhs);
-        code.writeLoadInt32(2, rhs);
-        code.writeNotEqualInt32(0, 1, 2);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadInt32(1, lhs);
+        assembler.writeLoadInt32(2, rhs);
+        assembler.writeNotEqualInt32(0, 1, 2);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -432,10 +445,11 @@ private slots:
         QFETCH(bool, expectedResult);
 
         ByteCode code;
-        code.writeLoadInt32(1, lhs);
-        code.writeLoadInt32(2, rhs);
-        code.writeGreaterInt32(0, 1, 2);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadInt32(1, lhs);
+        assembler.writeLoadInt32(2, rhs);
+        assembler.writeGreaterInt32(0, 1, 2);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -468,10 +482,11 @@ private slots:
         QFETCH(bool, expectedResult);
 
         ByteCode code;
-        code.writeLoadInt32(1, lhs);
-        code.writeLoadInt32(2, rhs);
-        code.writeGreaterOrEqualInt32(0, 1, 2);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadInt32(1, lhs);
+        assembler.writeLoadInt32(2, rhs);
+        assembler.writeGreaterOrEqualInt32(0, 1, 2);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -504,10 +519,11 @@ private slots:
         QFETCH(bool, expectedResult);
 
         ByteCode code;
-        code.writeLoadInt32(1, lhs);
-        code.writeLoadInt32(2, rhs);
-        code.writeLessInt32(0, 1, 2);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadInt32(1, lhs);
+        assembler.writeLoadInt32(2, rhs);
+        assembler.writeLessInt32(0, 1, 2);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -540,10 +556,11 @@ private slots:
         QFETCH(bool, expectedResult);
 
         ByteCode code;
-        code.writeLoadInt32(1, lhs);
-        code.writeLoadInt32(2, rhs);
-        code.writeLessOrEqualInt32(0, 1, 2);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadInt32(1, lhs);
+        assembler.writeLoadInt32(2, rhs);
+        assembler.writeLessOrEqualInt32(0, 1, 2);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -561,10 +578,11 @@ private slots:
     void Jump()
     {
         ByteCode code;
-        code.writeLoadInt32(0, 10);
-        code.writeJump(17); //Skip 7 byte for LoadInt32, 3 for Jump, 7 for LoadInt32 = Target is 17
-        code.writeLoadInt32(0, 20);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadInt32(0, 10);
+        assembler.writeJump(17); //Skip 7 byte for LoadInt32, 3 for Jump, 7 for LoadInt32 = Target is 17
+        assembler.writeLoadInt32(0, 20);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -594,11 +612,12 @@ private slots:
         QFETCH(i32, expectedResult);
 
         ByteCode code;
-        code.writeLoadBool(0, condition);
-        code.writeLoadInt32(1, 10);
-        code.writeJumpIfFalse(23, 0); //Skip 4 bytes for LoadBool, 7 byte for LoadInt32, 5 for Jump, 7 for LoadInt32 = Target is 23
-        code.writeLoadInt32(1, 20);
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadBool(0, condition);
+        assembler.writeLoadInt32(1, 10);
+        assembler.writeJumpIfFalse(23, 0); //Skip 4 bytes for LoadBool, 7 byte for LoadInt32, 5 for Jump, 7 for LoadInt32 = Target is 23
+        assembler.writeLoadInt32(1, 20);
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -626,10 +645,11 @@ private slots:
         QFETCH(bool, value);
 
         ByteCode code;
-        code.writeLoadBool(0, value);
-        code.writePrintBool(0);
-        code.writePrintNewLine();
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadBool(0, value);
+        assembler.writePrintBool(0);
+        assembler.writePrintNewLine();
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -653,10 +673,11 @@ private slots:
         QFETCH(i32, value);
 
         ByteCode code;
-        code.writeLoadInt32(0, value);
-        code.writePrintInt32(0);
-        code.writePrintNewLine();
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadInt32(0, value);
+        assembler.writePrintInt32(0);
+        assembler.writePrintNewLine();
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -670,8 +691,9 @@ private slots:
     void PrintNewLine()
     {
         ByteCode code;
-        code.writePrintNewLine();
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writePrintNewLine();
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -691,22 +713,23 @@ private slots:
         // }
 
         ByteCode code;
-        code.writeLoadInt32(0, 0);      // 7 byte, int i = 0
-        code.writeLoadInt32(1, 10);     // 7 byte, int literal 10
-        code.writeLessInt32(2, 0, 1);   // 7 byte, i < 10
-        code.writeJumpIfFalse(43, 2);   // 5 byte, goto end
-        code.writeLoadInt32(3, 1);      // 7 byte, int literal 1
-        code.writeAddInt32(0, 0, 3);    // 7 byte, i = i + 1
-        code.writeJump(14);             // 3 byte, goto start of the loop before the check
-        code.writeHalt();
+        ByteCodeAssembler assembler{ code };
+        assembler.writeLoadInt32(0, 0);      // 7 byte, int i = 0
+        assembler.writeLoadInt32(1, 10);     // 7 byte, int literal 10
+        assembler.writeLessInt32(2, 0, 1);   // 7 byte, i < 10
+        assembler.writeJumpIfFalse(43, 2);   // 5 byte, goto end
+        assembler.writeLoadInt32(3, 1);      // 7 byte, int literal 1
+        assembler.writeAddInt32(0, 0, 3);    // 7 byte, i = i + 1
+        assembler.writeJump(14);             // 3 byte, goto start of the loop before the check
+        assembler.writeHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
         auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "s";
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
         QCOMPARE(loadedValue.type, Value::Type::I32);

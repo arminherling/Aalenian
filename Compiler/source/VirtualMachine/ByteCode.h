@@ -2,7 +2,6 @@
 
 #include <API.h>
 #include <TypeDefs.h>
-#include <VirtualMachine/Register.h>
 
 #include <vector>
 
@@ -32,43 +31,13 @@ enum Op : u8
     Halt
 };
 
-class COMPILER_API ByteCode
+struct COMPILER_API ByteCode
 {
-public:
-    ByteCode() = default;
-    
-    void writeLoadBool(Register reg, bool value);
-    void writeNotBool(Register target, Register value);
-    void writeEqualBool(Register target, Register rhs, Register lhs);
-    void writeNotEqualBool(Register target, Register rhs, Register lhs);
-    void writeLoadInt32(Register reg, i32 value);
-    void writeAddInt32(Register target, Register rhs, Register lhs);
-    void writeSubtractInt32(Register target, Register rhs, Register lhs);
-    void writeMultiplyInt32(Register target, Register rhs, Register lhs);
-    void writeDivideInt32(Register target, Register rhs, Register lhs);
-    void writeNegateInt32(Register target, Register value);
-    void writeEqualInt32(Register target, Register rhs, Register lhs);
-    void writeNotEqualInt32(Register target, Register rhs, Register lhs);
-    void writeGreaterInt32(Register target, Register rhs, Register lhs);
-    void writeGreaterOrEqualInt32(Register target, Register rhs, Register lhs);
-    void writeLessInt32(Register target, Register rhs, Register lhs);
-    void writeLessOrEqualInt32(Register target, Register rhs, Register lhs);
-    void writeJump(u16 target);
-    void writeJumpIfFalse(u16 target, Register value);
-    void writePrintBool(Register reg);
-    void writePrintInt32(Register reg);
-    void writePrintNewLine();
-    void writeHalt();
+    std::vector<u8> data;
 
-    u8 readUInt8();
-    u16 readUInt16();
-    i32 readInt32();
-
-    void setInstructionPointer(u16 value);
-
-private:
-    i32 m_ip = 0;
-    std::vector<u8> m_byteCode;
+    inline u8 readUInt8(u16& ip);
+    inline u16 readUInt16(u16& ip);
+    inline i32 readInt32(u16& ip);
 
     inline void writeUInt8(u8 value);
     inline void writeUInt16(u16 value);

@@ -3,6 +3,7 @@
 #include <API.h>
 #include <TypeDefs.h>
 #include <VirtualMachine/ByteCode.h>
+#include <VirtualMachine/Register.h>
 #include <VirtualMachine/Value.h>
 
 #include <vector>

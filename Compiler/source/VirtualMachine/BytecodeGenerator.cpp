@@ -1,9 +1,9 @@
-#include "BytecodeGenerator.h"
+#include "ByteCodeGenerator.h"
 
-BytecodeGenerator::BytecodeGenerator()
-    : m_stackPointer{ 0 }
-{
-}
+//ByteCodeGenerator::ByteCodeGenerator()
+//    : m_stackPointer{ 0 }
+//{
+//}
 
 //Register BytecodeGenerator::generateRegister()
 //{
