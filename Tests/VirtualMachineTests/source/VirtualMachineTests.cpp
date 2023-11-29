@@ -24,8 +24,8 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadBool(1, value);
-        assembler.writeHalt();
+        assembler.emitLoadBool(1, value);
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -56,9 +56,9 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadBool(1, value);
-        assembler.writeNotBool(0, 1);
-        assembler.writeHalt();
+        assembler.emitLoadBool(1, value);
+        assembler.emitNotBool(0, 1);
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -92,10 +92,10 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadBool(1, lhs);
-        assembler.writeLoadBool(2, rhs);
-        assembler.writeEqualBool(0, 1, 2);
-        assembler.writeHalt();
+        assembler.emitLoadBool(1, lhs);
+        assembler.emitLoadBool(2, rhs);
+        assembler.emitEqualBool(0, 1, 2);
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -129,10 +129,10 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadBool(1, lhs);
-        assembler.writeLoadBool(2, rhs);
-        assembler.writeNotEqualBool(0, 1, 2);
-        assembler.writeHalt();
+        assembler.emitLoadBool(1, lhs);
+        assembler.emitLoadBool(2, rhs);
+        assembler.emitNotEqualBool(0, 1, 2);
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -161,8 +161,8 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadInt32(1, value);
-        assembler.writeHalt();
+        assembler.emitLoadInt32(1, value);
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -195,10 +195,10 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadInt32(1, lhs);
-        assembler.writeLoadInt32(2, rhs);
-        assembler.writeAddInt32(0, 1, 2);
-        assembler.writeHalt();
+        assembler.emitLoadInt32(1, lhs);
+        assembler.emitLoadInt32(2, rhs);
+        assembler.emitAddInt32(0, 1, 2);
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -231,10 +231,10 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadInt32(1, lhs);
-        assembler.writeLoadInt32(2, rhs);
-        assembler.writeSubtractInt32(0, 1, 2);
-        assembler.writeHalt();
+        assembler.emitLoadInt32(1, lhs);
+        assembler.emitLoadInt32(2, rhs);
+        assembler.emitSubtractInt32(0, 1, 2);
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -267,10 +267,10 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadInt32(1, lhs);
-        assembler.writeLoadInt32(2, rhs);
-        assembler.writeMultiplyInt32(0, 1, 2);
-        assembler.writeHalt();
+        assembler.emitLoadInt32(1, lhs);
+        assembler.emitLoadInt32(2, rhs);
+        assembler.emitMultiplyInt32(0, 1, 2);
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -303,10 +303,10 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadInt32(1, lhs);
-        assembler.writeLoadInt32(2, rhs);
-        assembler.writeDivideInt32(0, 1, 2);
-        assembler.writeHalt();
+        assembler.emitLoadInt32(1, lhs);
+        assembler.emitLoadInt32(2, rhs);
+        assembler.emitDivideInt32(0, 1, 2);
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -338,9 +338,9 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadInt32(1, value);
-        assembler.writeNegateInt32(0, 1);
-        assembler.writeHalt();
+        assembler.emitLoadInt32(1, value);
+        assembler.emitNegateInt32(0, 1);
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -373,10 +373,10 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadInt32(1, lhs);
-        assembler.writeLoadInt32(2, rhs);
-        assembler.writeEqualInt32(0, 1, 2);
-        assembler.writeHalt();
+        assembler.emitLoadInt32(1, lhs);
+        assembler.emitLoadInt32(2, rhs);
+        assembler.emitEqualInt32(0, 1, 2);
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -409,10 +409,10 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadInt32(1, lhs);
-        assembler.writeLoadInt32(2, rhs);
-        assembler.writeNotEqualInt32(0, 1, 2);
-        assembler.writeHalt();
+        assembler.emitLoadInt32(1, lhs);
+        assembler.emitLoadInt32(2, rhs);
+        assembler.emitNotEqualInt32(0, 1, 2);
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -446,10 +446,10 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadInt32(1, lhs);
-        assembler.writeLoadInt32(2, rhs);
-        assembler.writeGreaterInt32(0, 1, 2);
-        assembler.writeHalt();
+        assembler.emitLoadInt32(1, lhs);
+        assembler.emitLoadInt32(2, rhs);
+        assembler.emitGreaterInt32(0, 1, 2);
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -483,10 +483,10 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadInt32(1, lhs);
-        assembler.writeLoadInt32(2, rhs);
-        assembler.writeGreaterOrEqualInt32(0, 1, 2);
-        assembler.writeHalt();
+        assembler.emitLoadInt32(1, lhs);
+        assembler.emitLoadInt32(2, rhs);
+        assembler.emitGreaterOrEqualInt32(0, 1, 2);
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -520,10 +520,10 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadInt32(1, lhs);
-        assembler.writeLoadInt32(2, rhs);
-        assembler.writeLessInt32(0, 1, 2);
-        assembler.writeHalt();
+        assembler.emitLoadInt32(1, lhs);
+        assembler.emitLoadInt32(2, rhs);
+        assembler.emitLessInt32(0, 1, 2);
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -557,10 +557,10 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadInt32(1, lhs);
-        assembler.writeLoadInt32(2, rhs);
-        assembler.writeLessOrEqualInt32(0, 1, 2);
-        assembler.writeHalt();
+        assembler.emitLoadInt32(1, lhs);
+        assembler.emitLoadInt32(2, rhs);
+        assembler.emitLessOrEqualInt32(0, 1, 2);
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -579,12 +579,12 @@ private slots:
     {
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadInt32(0, 10);
-        auto jumpIndex = assembler.writeJump();
-        assembler.writeLoadInt32(0, 20);
-        auto endLabel = assembler.writeLabel();
+        assembler.emitLoadInt32(0, 10);
+        auto jumpIndex = assembler.emitJump();
+        assembler.emitLoadInt32(0, 20);
+        auto endLabel = assembler.createLabel();
         assembler.patchJumpTarget(jumpIndex, endLabel);
-        assembler.writeHalt();
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -615,13 +615,13 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadBool(0, condition);
-        assembler.writeLoadInt32(1, 10);
-        auto jumpIndex = assembler.writeJumpIfFalse(0);
-        assembler.writeLoadInt32(1, 20);
-        auto endLabel = assembler.writeLabel();
+        assembler.emitLoadBool(0, condition);
+        assembler.emitLoadInt32(1, 10);
+        auto jumpIndex = assembler.emitJumpIfFalse(0);
+        assembler.emitLoadInt32(1, 20);
+        auto endLabel = assembler.createLabel();
         assembler.patchJumpTarget(jumpIndex, endLabel);
-        assembler.writeHalt();
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -650,10 +650,10 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadBool(0, value);
-        assembler.writePrintBool(0);
-        assembler.writePrintNewLine();
-        assembler.writeHalt();
+        assembler.emitLoadBool(0, value);
+        assembler.emitPrintBool(0);
+        assembler.emitPrintNewLine();
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -678,10 +678,10 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadInt32(0, value);
-        assembler.writePrintInt32(0);
-        assembler.writePrintNewLine();
-        assembler.writeHalt();
+        assembler.emitLoadInt32(0, value);
+        assembler.emitPrintInt32(0);
+        assembler.emitPrintNewLine();
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -696,8 +696,8 @@ private slots:
     {
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writePrintNewLine();
-        assembler.writeHalt();
+        assembler.emitPrintNewLine();
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -718,17 +718,17 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadInt32(0, 0);                     //  int i = 0
-        assembler.writeLoadInt32(1, 10);                    //  int literal 10
-        auto beginLabel = assembler.writeLabel();           // begin:
-        assembler.writeLessInt32(2, 0, 1);                  //  i < 10
-        auto endJumpIndex = assembler.writeJumpIfFalse(2);  //  goto end if false
-        assembler.writeLoadInt32(3, 1);                     //  int literal 1
-        assembler.writeAddInt32(0, 0, 3);                   //  i = i + 1
-        assembler.writeJump(beginLabel);                    //  goto begin
-        auto endLabel = assembler.writeLabel();             // end:
+        assembler.emitLoadInt32(0, 0);                     //  int i = 0
+        assembler.emitLoadInt32(1, 10);                    //  int literal 10
+        auto beginLabel = assembler.createLabel();           // begin:
+        assembler.emitLessInt32(2, 0, 1);                  //  i < 10
+        auto endJumpIndex = assembler.emitJumpIfFalse(2);  //  goto end if false
+        assembler.emitLoadInt32(3, 1);                     //  int literal 1
+        assembler.emitAddInt32(0, 0, 3);                   //  i = i + 1
+        assembler.emitJump(beginLabel);                    //  goto begin
+        auto endLabel = assembler.createLabel();             // end:
         assembler.patchJumpTarget(endJumpIndex, endLabel);
-        assembler.writeHalt();
+        assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();

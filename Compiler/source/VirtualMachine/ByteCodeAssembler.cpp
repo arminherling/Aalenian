@@ -5,21 +5,21 @@ ByteCodeAssembler::ByteCodeAssembler(ByteCode& byteCode)
 {
 }
 
-void ByteCodeAssembler::writeLoadBool(Register reg, bool value)
+void ByteCodeAssembler::emitLoadBool(Register reg, bool value)
 {
     m_byteCode.writeUInt8(Op::LoadBool);
     m_byteCode.writeUInt16(reg.index);
     m_byteCode.writeUInt8(value);
 }
 
-void ByteCodeAssembler::writeNotBool(Register target, Register value)
+void ByteCodeAssembler::emitNotBool(Register target, Register value)
 {
     m_byteCode.writeUInt8(Op::NotBool);
     m_byteCode.writeUInt16(target.index);
     m_byteCode.writeUInt16(value.index);
 }
 
-void ByteCodeAssembler::writeEqualBool(Register target, Register rhs, Register lhs)
+void ByteCodeAssembler::emitEqualBool(Register target, Register rhs, Register lhs)
 {
     m_byteCode.writeUInt8(Op::EqualBool);
     m_byteCode.writeUInt16(target.index);
@@ -27,7 +27,7 @@ void ByteCodeAssembler::writeEqualBool(Register target, Register rhs, Register l
     m_byteCode.writeUInt16(lhs.index);
 }
 
-void ByteCodeAssembler::writeNotEqualBool(Register target, Register rhs, Register lhs)
+void ByteCodeAssembler::emitNotEqualBool(Register target, Register rhs, Register lhs)
 {
     m_byteCode.writeUInt8(Op::NotEqualBool);
     m_byteCode.writeUInt16(target.index);
@@ -35,14 +35,14 @@ void ByteCodeAssembler::writeNotEqualBool(Register target, Register rhs, Registe
     m_byteCode.writeUInt16(lhs.index);
 }
 
-void ByteCodeAssembler::writeLoadInt32(Register reg, i32 value)
+void ByteCodeAssembler::emitLoadInt32(Register reg, i32 value)
 {
     m_byteCode.writeUInt8(Op::LoadInt32);
     m_byteCode.writeUInt16(reg.index);
     m_byteCode.writeInt32(value);
 }
 
-void ByteCodeAssembler::writeAddInt32(Register target, Register rhs, Register lhs)
+void ByteCodeAssembler::emitAddInt32(Register target, Register rhs, Register lhs)
 {
     m_byteCode.writeUInt8(Op::AddInt32);
     m_byteCode.writeUInt16(target.index);
@@ -50,7 +50,7 @@ void ByteCodeAssembler::writeAddInt32(Register target, Register rhs, Register lh
     m_byteCode.writeUInt16(lhs.index);
 }
 
-void ByteCodeAssembler::writeSubtractInt32(Register target, Register rhs, Register lhs)
+void ByteCodeAssembler::emitSubtractInt32(Register target, Register rhs, Register lhs)
 {
     m_byteCode.writeUInt8(Op::SubtractInt32);
     m_byteCode.writeUInt16(target.index);
@@ -58,7 +58,7 @@ void ByteCodeAssembler::writeSubtractInt32(Register target, Register rhs, Regist
     m_byteCode.writeUInt16(lhs.index);
 }
 
-void ByteCodeAssembler::writeMultiplyInt32(Register target, Register rhs, Register lhs)
+void ByteCodeAssembler::emitMultiplyInt32(Register target, Register rhs, Register lhs)
 {
     m_byteCode.writeUInt8(Op::MultiplyInt32);
     m_byteCode.writeUInt16(target.index);
@@ -66,7 +66,7 @@ void ByteCodeAssembler::writeMultiplyInt32(Register target, Register rhs, Regist
     m_byteCode.writeUInt16(lhs.index);
 }
 
-void ByteCodeAssembler::writeDivideInt32(Register target, Register rhs, Register lhs)
+void ByteCodeAssembler::emitDivideInt32(Register target, Register rhs, Register lhs)
 {
     m_byteCode.writeUInt8(Op::DivideInt32);
     m_byteCode.writeUInt16(target.index);
@@ -74,14 +74,14 @@ void ByteCodeAssembler::writeDivideInt32(Register target, Register rhs, Register
     m_byteCode.writeUInt16(lhs.index);
 }
 
-void ByteCodeAssembler::writeNegateInt32(Register target, Register value)
+void ByteCodeAssembler::emitNegateInt32(Register target, Register value)
 {
     m_byteCode.writeUInt8(Op::NegateInt32);
     m_byteCode.writeUInt16(target.index);
     m_byteCode.writeUInt16(value.index);
 }
 
-void ByteCodeAssembler::writeEqualInt32(Register target, Register rhs, Register lhs)
+void ByteCodeAssembler::emitEqualInt32(Register target, Register rhs, Register lhs)
 {
     m_byteCode.writeUInt8(Op::EqualInt32);
     m_byteCode.writeUInt16(target.index);
@@ -89,7 +89,7 @@ void ByteCodeAssembler::writeEqualInt32(Register target, Register rhs, Register 
     m_byteCode.writeUInt16(lhs.index);
 }
 
-void ByteCodeAssembler::writeNotEqualInt32(Register target, Register rhs, Register lhs)
+void ByteCodeAssembler::emitNotEqualInt32(Register target, Register rhs, Register lhs)
 {
     m_byteCode.writeUInt8(Op::NotEqualInt32);
     m_byteCode.writeUInt16(target.index);
@@ -97,7 +97,7 @@ void ByteCodeAssembler::writeNotEqualInt32(Register target, Register rhs, Regist
     m_byteCode.writeUInt16(lhs.index);
 }
 
-void ByteCodeAssembler::writeGreaterInt32(Register target, Register rhs, Register lhs)
+void ByteCodeAssembler::emitGreaterInt32(Register target, Register rhs, Register lhs)
 {
     m_byteCode.writeUInt8(Op::GreaterInt32);
     m_byteCode.writeUInt16(target.index);
@@ -105,7 +105,7 @@ void ByteCodeAssembler::writeGreaterInt32(Register target, Register rhs, Registe
     m_byteCode.writeUInt16(lhs.index);
 }
 
-void ByteCodeAssembler::writeGreaterOrEqualInt32(Register target, Register rhs, Register lhs)
+void ByteCodeAssembler::emitGreaterOrEqualInt32(Register target, Register rhs, Register lhs)
 {
     m_byteCode.writeUInt8(Op::GreaterOrEqualInt32);
     m_byteCode.writeUInt16(target.index);
@@ -113,7 +113,7 @@ void ByteCodeAssembler::writeGreaterOrEqualInt32(Register target, Register rhs, 
     m_byteCode.writeUInt16(lhs.index);
 }
 
-void ByteCodeAssembler::writeLessInt32(Register target, Register rhs, Register lhs)
+void ByteCodeAssembler::emitLessInt32(Register target, Register rhs, Register lhs)
 {
     m_byteCode.writeUInt8(Op::LessInt32);
     m_byteCode.writeUInt16(target.index);
@@ -121,7 +121,7 @@ void ByteCodeAssembler::writeLessInt32(Register target, Register rhs, Register l
     m_byteCode.writeUInt16(lhs.index);
 }
 
-void ByteCodeAssembler::writeLessOrEqualInt32(Register target, Register rhs, Register lhs)
+void ByteCodeAssembler::emitLessOrEqualInt32(Register target, Register rhs, Register lhs)
 {
     m_byteCode.writeUInt8(Op::LessOrEqualInt32);
     m_byteCode.writeUInt16(target.index);
@@ -129,12 +129,29 @@ void ByteCodeAssembler::writeLessOrEqualInt32(Register target, Register rhs, Reg
     m_byteCode.writeUInt16(lhs.index);
 }
 
-Label ByteCodeAssembler::writeLabel()
+void ByteCodeAssembler::emitPrintBool(Register reg)
+{
+    m_byteCode.writeUInt8(Op::PrintBool);
+    m_byteCode.writeUInt16(reg.index);
+}
+
+void ByteCodeAssembler::emitPrintInt32(Register reg)
+{
+    m_byteCode.writeUInt8(Op::PrintInt32);
+    m_byteCode.writeUInt16(reg.index);
+}
+
+void ByteCodeAssembler::emitPrintNewLine()
+{
+    m_byteCode.writeUInt8(Op::PrintNewLine);
+}
+
+Label ByteCodeAssembler::createLabel()
 {
     return Label(m_byteCode.data.size());
 }
 
-u16 ByteCodeAssembler::writeJump()
+u16 ByteCodeAssembler::emitJump()
 {
     m_byteCode.writeUInt8(Op::Jump);
     auto targetIndex = m_byteCode.data.size();
@@ -142,13 +159,13 @@ u16 ByteCodeAssembler::writeJump()
     return targetIndex;
 }
 
-void ByteCodeAssembler::writeJump(Label label)
+void ByteCodeAssembler::emitJump(Label label)
 {
     m_byteCode.writeUInt8(Op::Jump);
     m_byteCode.writeUInt16(label.index);
 }
 
-u16 ByteCodeAssembler::writeJumpIfFalse(Register value)
+u16 ByteCodeAssembler::emitJumpIfFalse(Register value)
 {
     m_byteCode.writeUInt8(Op::JumpIfFalse);
     auto targetIndex = m_byteCode.data.size();
@@ -157,7 +174,7 @@ u16 ByteCodeAssembler::writeJumpIfFalse(Register value)
     return targetIndex;
 }
 
-void ByteCodeAssembler::writeJumpIfFalse(Register value, Label label)
+void ByteCodeAssembler::emitJumpIfFalse(Register value, Label label)
 {
     m_byteCode.writeUInt8(Op::JumpIfFalse);
     m_byteCode.writeUInt16(label.index);
@@ -169,24 +186,7 @@ void ByteCodeAssembler::patchJumpTarget(u16 jumpIndex, Label label)
     m_byteCode.writeUInt16(label.index, jumpIndex);
 }
 
-void ByteCodeAssembler::writePrintBool(Register reg)
-{
-    m_byteCode.writeUInt8(Op::PrintBool);
-    m_byteCode.writeUInt16(reg.index);
-}
-
-void ByteCodeAssembler::writePrintInt32(Register reg)
-{
-    m_byteCode.writeUInt8(Op::PrintInt32);
-    m_byteCode.writeUInt16(reg.index);
-}
-
-void ByteCodeAssembler::writePrintNewLine()
-{
-    m_byteCode.writeUInt8(Op::PrintNewLine);
-}
-
-void ByteCodeAssembler::writeHalt()
+void ByteCodeAssembler::emitHalt()
 {
     m_byteCode.writeUInt8(Op::Halt);
 }

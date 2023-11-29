@@ -11,32 +11,32 @@ class COMPILER_API ByteCodeAssembler
 public:
     ByteCodeAssembler(ByteCode& byteCode);
 
-    void writeLoadBool(Register reg, bool value);
-    void writeNotBool(Register target, Register value);
-    void writeEqualBool(Register target, Register rhs, Register lhs);
-    void writeNotEqualBool(Register target, Register rhs, Register lhs);
-    void writeLoadInt32(Register reg, i32 value);
-    void writeAddInt32(Register target, Register rhs, Register lhs);
-    void writeSubtractInt32(Register target, Register rhs, Register lhs);
-    void writeMultiplyInt32(Register target, Register rhs, Register lhs);
-    void writeDivideInt32(Register target, Register rhs, Register lhs);
-    void writeNegateInt32(Register target, Register value);
-    void writeEqualInt32(Register target, Register rhs, Register lhs);
-    void writeNotEqualInt32(Register target, Register rhs, Register lhs);
-    void writeGreaterInt32(Register target, Register rhs, Register lhs);
-    void writeGreaterOrEqualInt32(Register target, Register rhs, Register lhs);
-    void writeLessInt32(Register target, Register rhs, Register lhs);
-    void writeLessOrEqualInt32(Register target, Register rhs, Register lhs);
-    Label writeLabel();
-    u16 writeJump();
-    void writeJump(Label label);
-    u16 writeJumpIfFalse(Register value);
-    void writeJumpIfFalse(Register value, Label label);
+    void emitLoadBool(Register reg, bool value);
+    void emitNotBool(Register target, Register value);
+    void emitEqualBool(Register target, Register rhs, Register lhs);
+    void emitNotEqualBool(Register target, Register rhs, Register lhs);
+    void emitLoadInt32(Register reg, i32 value);
+    void emitAddInt32(Register target, Register rhs, Register lhs);
+    void emitSubtractInt32(Register target, Register rhs, Register lhs);
+    void emitMultiplyInt32(Register target, Register rhs, Register lhs);
+    void emitDivideInt32(Register target, Register rhs, Register lhs);
+    void emitNegateInt32(Register target, Register value);
+    void emitEqualInt32(Register target, Register rhs, Register lhs);
+    void emitNotEqualInt32(Register target, Register rhs, Register lhs);
+    void emitGreaterInt32(Register target, Register rhs, Register lhs);
+    void emitGreaterOrEqualInt32(Register target, Register rhs, Register lhs);
+    void emitLessInt32(Register target, Register rhs, Register lhs);
+    void emitLessOrEqualInt32(Register target, Register rhs, Register lhs);
+    void emitPrintBool(Register reg);
+    void emitPrintInt32(Register reg);
+    void emitPrintNewLine();
+    Label createLabel();
+    u16 emitJump();
+    void emitJump(Label label);
+    u16 emitJumpIfFalse(Register value);
+    void emitJumpIfFalse(Register value, Label label);
     void patchJumpTarget(u16 jumpIndex, Label label);
-    void writePrintBool(Register reg);
-    void writePrintInt32(Register reg);
-    void writePrintNewLine();
-    void writeHalt();
+    void emitHalt();
 
 private:
     ByteCode& m_byteCode;
