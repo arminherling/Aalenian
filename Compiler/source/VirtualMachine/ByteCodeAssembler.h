@@ -4,6 +4,7 @@
 #include <TypeDefs.h>
 #include <VirtualMachine/ByteCode.h>
 #include <VirtualMachine/Register.h>
+#include <VirtualMachine/Label.h>
 
 class COMPILER_API ByteCodeAssembler
 {
@@ -26,8 +27,12 @@ public:
     void writeGreaterOrEqualInt32(Register target, Register rhs, Register lhs);
     void writeLessInt32(Register target, Register rhs, Register lhs);
     void writeLessOrEqualInt32(Register target, Register rhs, Register lhs);
-    void writeJump(u16 target);
-    void writeJumpIfFalse(u16 target, Register value);
+    Label writeLabel();
+    u16 writeJump();
+    void writeJump(Label label);
+    u16 writeJumpIfFalse(Register value);
+    void writeJumpIfFalse(Register value, Label label);
+    void patchJumpTarget(u16 jumpIndex, Label label);
     void writePrintBool(Register reg);
     void writePrintInt32(Register reg);
     void writePrintNewLine();

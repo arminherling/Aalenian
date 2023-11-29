@@ -133,5 +133,8 @@
     <ClInclude Include="source\VirtualMachine\ByteCodeAssembler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\VirtualMachine\Label.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

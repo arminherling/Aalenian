@@ -129,17 +129,44 @@ void ByteCodeAssembler::writeLessOrEqualInt32(Register target, Register rhs, Reg
     m_byteCode.writeUInt16(lhs.index);
 }
 
-void ByteCodeAssembler::writeJump(u16 target)
+Label ByteCodeAssembler::writeLabel()
 {
-    m_byteCode.writeUInt8(Op::Jump);
-    m_byteCode.writeUInt16(target);
+    return Label(m_byteCode.data.size());
 }
 
-void ByteCodeAssembler::writeJumpIfFalse(u16 target, Register value)
+u16 ByteCodeAssembler::writeJump()
+{
+    m_byteCode.writeUInt8(Op::Jump);
+    auto targetIndex = m_byteCode.data.size();
+    m_byteCode.writeUInt16(0xDEAD);
+    return targetIndex;
+}
+
+void ByteCodeAssembler::writeJump(Label label)
+{
+    m_byteCode.writeUInt8(Op::Jump);
+    m_byteCode.writeUInt16(label.index);
+}
+
+u16 ByteCodeAssembler::writeJumpIfFalse(Register value)
 {
     m_byteCode.writeUInt8(Op::JumpIfFalse);
-    m_byteCode.writeUInt16(target);
+    auto targetIndex = m_byteCode.data.size();
+    m_byteCode.writeUInt16(0xDEAD);
     m_byteCode.writeUInt16(value.index);
+    return targetIndex;
+}
+
+void ByteCodeAssembler::writeJumpIfFalse(Register value, Label label)
+{
+    m_byteCode.writeUInt8(Op::JumpIfFalse);
+    m_byteCode.writeUInt16(label.index);
+    m_byteCode.writeUInt16(value.index);
+}
+
+void ByteCodeAssembler::patchJumpTarget(u16 jumpIndex, Label label)
+{
+    m_byteCode.writeUInt16(label.index, jumpIndex);
 }
 
 void ByteCodeAssembler::writePrintBool(Register reg)

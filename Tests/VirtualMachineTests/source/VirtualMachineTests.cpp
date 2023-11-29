@@ -580,8 +580,10 @@ private slots:
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.writeLoadInt32(0, 10);
-        assembler.writeJump(17); //Skip 7 byte for LoadInt32, 3 for Jump, 7 for LoadInt32 = Target is 17
+        auto jumpIndex = assembler.writeJump();
         assembler.writeLoadInt32(0, 20);
+        auto endLabel = assembler.writeLabel();
+        assembler.patchJumpTarget(jumpIndex, endLabel);
         assembler.writeHalt();
         VM vm;
 
@@ -615,8 +617,10 @@ private slots:
         ByteCodeAssembler assembler{ code };
         assembler.writeLoadBool(0, condition);
         assembler.writeLoadInt32(1, 10);
-        assembler.writeJumpIfFalse(23, 0); //Skip 4 bytes for LoadBool, 7 byte for LoadInt32, 5 for Jump, 7 for LoadInt32 = Target is 23
+        auto jumpIndex = assembler.writeJumpIfFalse(0);
         assembler.writeLoadInt32(1, 20);
+        auto endLabel = assembler.writeLabel();
+        assembler.patchJumpTarget(jumpIndex, endLabel);
         assembler.writeHalt();
         VM vm;
 
@@ -714,13 +718,16 @@ private slots:
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.writeLoadInt32(0, 0);      // 7 byte, int i = 0
-        assembler.writeLoadInt32(1, 10);     // 7 byte, int literal 10
-        assembler.writeLessInt32(2, 0, 1);   // 7 byte, i < 10
-        assembler.writeJumpIfFalse(43, 2);   // 5 byte, goto end
-        assembler.writeLoadInt32(3, 1);      // 7 byte, int literal 1
-        assembler.writeAddInt32(0, 0, 3);    // 7 byte, i = i + 1
-        assembler.writeJump(14);             // 3 byte, goto start of the loop before the check
+        assembler.writeLoadInt32(0, 0);                     //  int i = 0
+        assembler.writeLoadInt32(1, 10);                    //  int literal 10
+        auto beginLabel = assembler.writeLabel();           // begin:
+        assembler.writeLessInt32(2, 0, 1);                  //  i < 10
+        auto endJumpIndex = assembler.writeJumpIfFalse(2);  //  goto end if false
+        assembler.writeLoadInt32(3, 1);                     //  int literal 1
+        assembler.writeAddInt32(0, 0, 3);                   //  i = i + 1
+        assembler.writeJump(beginLabel);                    //  goto begin
+        auto endLabel = assembler.writeLabel();             // end:
+        assembler.patchJumpTarget(endJumpIndex, endLabel);
         assembler.writeHalt();
         VM vm;
 
