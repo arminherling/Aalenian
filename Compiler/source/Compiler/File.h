@@ -1,6 +1,6 @@
 #pragma once
 
-#include <API.h>
+#include <Defines.h>
 
 class COMPILER_API File
 {

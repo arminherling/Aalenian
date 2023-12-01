@@ -1,7 +1,6 @@
 #pragma once
 
-#include <API.h>
-#include <TypeDefs.h>
+#include <Defines.h>
 #include <Compiler/DiagnosticsBag.h>
 #include <Syntax/Token.h>
 #include <Text/SourceText.h>

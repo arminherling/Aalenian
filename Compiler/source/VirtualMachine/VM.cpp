@@ -246,8 +246,8 @@ i32 VM::run(ByteCode& code)
             }
             case Op::JumpIfFalse:
             {
-                auto target = code.readUInt16(ip);
                 auto condition = code.readUInt16(ip);
+                auto target = code.readUInt16(ip);
 
                 auto conditionValue = getValue(condition);
                 if(!conditionValue.as.boolean)
@@ -284,10 +284,7 @@ i32 VM::run(ByteCode& code)
                 return 0;
             }
             default:
-            {
-                assert(!"Operation was was not defined yet");
-                break;
-            }
+                TODO("Operation was was not defined yet");
         }
     }
 

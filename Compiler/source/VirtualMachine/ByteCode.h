@@ -1,7 +1,8 @@
 #pragma once
 
-#include <API.h>
-#include <TypeDefs.h>
+#include <Defines.h>
+
+#include <QString>
 
 #include <vector>
 
@@ -30,6 +31,8 @@ enum Op : u8
     PrintNewLine,
     Halt
 };
+
+COMPILER_API QString StringifyOp(Op op);
 
 struct COMPILER_API ByteCode
 {

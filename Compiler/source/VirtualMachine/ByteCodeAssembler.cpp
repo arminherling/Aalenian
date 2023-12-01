@@ -168,17 +168,17 @@ void ByteCodeAssembler::emitJump(Label label)
 u16 ByteCodeAssembler::emitJumpIfFalse(Register value)
 {
     m_byteCode.writeUInt8(Op::JumpIfFalse);
+    m_byteCode.writeUInt16(value.index);
     auto targetIndex = m_byteCode.data.size();
     m_byteCode.writeUInt16(0xDEAD);
-    m_byteCode.writeUInt16(value.index);
     return targetIndex;
 }
 
 void ByteCodeAssembler::emitJumpIfFalse(Register value, Label label)
 {
     m_byteCode.writeUInt8(Op::JumpIfFalse);
-    m_byteCode.writeUInt16(label.index);
     m_byteCode.writeUInt16(value.index);
+    m_byteCode.writeUInt16(label.index);
 }
 
 void ByteCodeAssembler::patchJumpTarget(u16 jumpIndex, Label label)

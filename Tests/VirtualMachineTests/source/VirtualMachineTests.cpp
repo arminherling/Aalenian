@@ -5,6 +5,8 @@
 #include <VirtualMachine/Register.h>
 #include <VirtualMachine/VM.h>
 
+#include <Debug/ByteCodeDisassembler.h>
+
 class VirtualMachineTests : public QObject
 {
     Q_OBJECT
@@ -720,16 +722,19 @@ private slots:
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadInt32(0, 0);                     //  int i = 0
         assembler.emitLoadInt32(1, 10);                    //  int literal 10
-        auto beginLabel = assembler.createLabel();           // begin:
+        auto beginLabel = assembler.createLabel();         // begin:
         assembler.emitLessInt32(2, 0, 1);                  //  i < 10
         auto endJumpIndex = assembler.emitJumpIfFalse(2);  //  goto end if false
         assembler.emitLoadInt32(3, 1);                     //  int literal 1
         assembler.emitAddInt32(0, 0, 3);                   //  i = i + 1
         assembler.emitJump(beginLabel);                    //  goto begin
-        auto endLabel = assembler.createLabel();             // end:
+        auto endLabel = assembler.createLabel();           // end:
         assembler.patchJumpTarget(endJumpIndex, endLabel);
         assembler.emitHalt();
         VM vm;
+        
+        ByteCodeDisassembler dis{ code };
+        qDebug().noquote().nospace()<< "\n" << dis.PrettyPrint();
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);

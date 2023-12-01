@@ -1,7 +1,5 @@
 #include <Syntax/Lexer.h>
 
-#include <TypeDefs.h>
-
 #include <unordered_map>
 
 [[nodiscard]] auto InitializeTokenSizes() noexcept

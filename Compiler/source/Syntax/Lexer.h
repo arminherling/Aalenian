@@ -1,6 +1,6 @@
 #pragma once
 
-#include <API.h>
+#include <Defines.h>
 #include <Compiler/DiagnosticsBag.h>
 #include <Syntax/TokenBuffer.h>
 #include <Text/SourceText.h>

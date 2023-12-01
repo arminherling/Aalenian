@@ -1,7 +1,6 @@
 #pragma once
 
-#include <API.h>
-#include <TypeDefs.h>
+#include <Defines.h>
 #include <Syntax/ParseTree.h>
 #include <Syntax/Node.h>
 

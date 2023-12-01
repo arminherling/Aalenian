@@ -59,8 +59,7 @@ QString StringifyNodeKind(NodeKind kind)
         case NodeKind::MemberAccess:
             return QString("MemberAccess");
         default:
-            assert(!"String for NodeKind value was not defined yet");
-            return QString();
+            TODO("String for NodeKind value was not defined yet");
     }
 }
 
@@ -71,8 +70,7 @@ COMPILER_API QString StringifyUnaryOperation(TokenKind kind)
         case TokenKind::Minus:
             return QString("Negation");
         default:
-            assert(!"String for TokenKind value was not defined yet");
-            return QString();
+            TODO("String for TokenKind value was not defined yet");
     }
 }
 
@@ -93,8 +91,7 @@ COMPILER_API QString StringifyBinaryOperation(TokenKind kind)
         case TokenKind::Slash:
             return QString("Division");
         default:
-            assert(!"String for TokenKind value was not defined yet");
-            return QString();
+            TODO("String for TokenKind value was not defined yet");
     }
 }
 

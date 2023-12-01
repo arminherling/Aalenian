@@ -39,8 +39,7 @@ QString Stringify(TokenKind kind)
 		case TokenKind::EndOfFile:
 			return QString("EndOfFile");
 		default:
-			assert(!"String for TokenKind value was not defined yet");
-			return QString();
+			TODO("String for TokenKind value was not defined yet");
 	}
 }
 

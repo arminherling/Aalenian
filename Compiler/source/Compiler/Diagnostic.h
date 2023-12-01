@@ -1,7 +1,6 @@
 #pragma once
 
-#include <API.h>
-
+#include <Defines.h>
 #include <Compiler/DiagnosticLevel.h>
 #include <Compiler/DiagnosticKind.h>
 #include <Text/SourceLocation.h>

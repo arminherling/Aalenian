@@ -1,6 +1,6 @@
 #pragma once
 
-#include <API.h>
+#include <Defines.h>
 #include <Syntax/Token.h>
 
 #include <qlist.h>
