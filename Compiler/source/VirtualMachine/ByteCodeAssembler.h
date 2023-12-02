@@ -26,15 +26,16 @@ public:
     void emitGreaterOrEqualInt32(Register target, Register rhs, Register lhs);
     void emitLessInt32(Register target, Register rhs, Register lhs);
     void emitLessOrEqualInt32(Register target, Register rhs, Register lhs);
-    void emitPrintBool(Register reg);
-    void emitPrintInt32(Register reg);
-    void emitPrintNewLine();
+    void emitMove(Register target, Register value);
     Label createLabel();
     u16 emitJump();
     void emitJump(Label label);
     u16 emitJumpIfFalse(Register value);
     void emitJumpIfFalse(Register value, Label label);
     void patchJumpTarget(u16 jumpIndex, Label label);
+    void emitPrintBool(Register reg);
+    void emitPrintInt32(Register reg);
+    void emitPrintNewLine();
     void emitHalt();
 
 private:

@@ -637,6 +637,61 @@ private slots:
         QCOMPARE(loadedValue.type, Value::Type::Int32);
         QCOMPARE(loadedValue.as.int32, expectedResult);
     }
+
+    void Move_data()
+    {
+        QTest::addColumn<QVariant>("value");
+        QTest::addColumn<Value::Type>("type");
+
+        QTest::newRow("true") << QVariant::fromValue(true) << Value::Type::Bool;
+        QTest::newRow("false") << QVariant::fromValue(false) << Value::Type::Bool;
+        QTest::newRow("0") << QVariant::fromValue(0) << Value::Type::Int32;
+        QTest::newRow("100") << QVariant::fromValue(100) << Value::Type::Int32;
+        QTest::newRow("-99") << QVariant::fromValue(-99) << Value::Type::Int32;
+    }
+
+    void Move()
+    {
+        QFETCH(QVariant, value);
+        QFETCH(Value::Type, type);
+
+        ByteCode code;
+        ByteCodeAssembler assembler{ code };
+        switch (type)
+        {
+            case Value::Type::Bool:
+                assembler.emitLoadBool(1, value.toBool());
+                break;
+            case Value::Type::Int32:
+                assembler.emitLoadInt32(1, value.toInt());
+                break;
+            default:
+                TODO();
+        }
+        assembler.emitMove(0, 1);
+        assembler.emitHalt();
+        VM vm;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        vm.run(code);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
+
+        auto loadedValue = vm.getValue(0);
+        QCOMPARE(loadedValue.type, type);
+        switch (type)
+        {
+            case Value::Type::Bool:
+                QCOMPARE(loadedValue.as.boolean, value);
+                break;
+            case Value::Type::Int32:
+                QCOMPARE(loadedValue.as.int32, value);
+                break;
+            default:
+                TODO();
+        }
     }
 
     void PrintBool_data()

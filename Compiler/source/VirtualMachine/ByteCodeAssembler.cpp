@@ -129,21 +129,11 @@ void ByteCodeAssembler::emitLessOrEqualInt32(Register target, Register rhs, Regi
     m_byteCode.writeUInt16(lhs.index);
 }
 
-void ByteCodeAssembler::emitPrintBool(Register reg)
+void ByteCodeAssembler::emitMove(Register target, Register value)
 {
-    m_byteCode.writeUInt8(Op::PrintBool);
-    m_byteCode.writeUInt16(reg.index);
-}
-
-void ByteCodeAssembler::emitPrintInt32(Register reg)
-{
-    m_byteCode.writeUInt8(Op::PrintInt32);
-    m_byteCode.writeUInt16(reg.index);
-}
-
-void ByteCodeAssembler::emitPrintNewLine()
-{
-    m_byteCode.writeUInt8(Op::PrintNewLine);
+    m_byteCode.writeUInt8(Op::Move);
+    m_byteCode.writeUInt16(target.index);
+    m_byteCode.writeUInt16(value.index);
 }
 
 Label ByteCodeAssembler::createLabel()
@@ -184,6 +174,23 @@ void ByteCodeAssembler::emitJumpIfFalse(Register value, Label label)
 void ByteCodeAssembler::patchJumpTarget(u16 jumpIndex, Label label)
 {
     m_byteCode.writeUInt16(label.index, jumpIndex);
+}
+
+void ByteCodeAssembler::emitPrintBool(Register reg)
+{
+    m_byteCode.writeUInt8(Op::PrintBool);
+    m_byteCode.writeUInt16(reg.index);
+}
+
+void ByteCodeAssembler::emitPrintInt32(Register reg)
+{
+    m_byteCode.writeUInt8(Op::PrintInt32);
+    m_byteCode.writeUInt16(reg.index);
+}
+
+void ByteCodeAssembler::emitPrintNewLine()
+{
+    m_byteCode.writeUInt8(Op::PrintNewLine);
 }
 
 void ByteCodeAssembler::emitHalt()

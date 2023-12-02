@@ -255,6 +255,16 @@ i32 VM::run(ByteCode& code)
 
                 break;
             }
+            case Op::Move:
+            {
+                auto target = code.readUInt16(ip);
+                auto source = code.readUInt16(ip);
+
+                auto value = getValue(source);
+                setValue(target, value);
+
+                break;
+            }
             case Op::PrintBool:
             {
                 auto reg = code.readUInt16(ip);

@@ -26,6 +26,7 @@ enum Op : u8
     LessOrEqualInt32,
     Jump,
     JumpIfFalse,
+    Move,
     PrintBool,
     PrintInt32,
     PrintNewLine,
