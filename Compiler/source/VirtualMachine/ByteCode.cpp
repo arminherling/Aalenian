@@ -80,6 +80,8 @@ COMPILER_API QString StringifyOp(Op op)
             return QString("Jump");
         case Op::JumpIfFalse:
             return QString("JumpIfFalse");
+        case Op::Move:
+            return QString("Move");
         case Op::PrintBool:
             return QString("PrintBool");
         case Op::PrintInt32:
