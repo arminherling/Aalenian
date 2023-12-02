@@ -8,7 +8,7 @@ struct COMPILER_API Value
     {
         Invalid,
         Bool,
-        I32
+        Int32
     };
 
     Value();
@@ -19,6 +19,6 @@ struct COMPILER_API Value
     union
     {
         bool boolean;
-        i32 numI32;
+        i32 int32;
     } as;
 };

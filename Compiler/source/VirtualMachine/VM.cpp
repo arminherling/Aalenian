@@ -93,7 +93,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.numI32 + lhsValue.as.numI32);
+                auto resultValue = Value(rhsValue.as.int32 + lhsValue.as.int32);
                 setValue(result, resultValue);
 
                 break;
@@ -107,7 +107,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.numI32 - lhsValue.as.numI32);
+                auto resultValue = Value(rhsValue.as.int32 - lhsValue.as.int32);
                 setValue(result, resultValue);
 
                 break;
@@ -121,7 +121,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.numI32 * lhsValue.as.numI32);
+                auto resultValue = Value(rhsValue.as.int32 * lhsValue.as.int32);
                 setValue(result, resultValue);
 
                 break;
@@ -135,7 +135,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.numI32 / lhsValue.as.numI32);
+                auto resultValue = Value(rhsValue.as.int32 / lhsValue.as.int32);
                 setValue(result, resultValue);
 
                 break;
@@ -147,7 +147,7 @@ i32 VM::run(ByteCode& code)
 
                 auto valueValue = getValue(value);
 
-                auto resultValue = Value(-valueValue.as.numI32);
+                auto resultValue = Value(-valueValue.as.int32);
                 setValue(result, resultValue);
 
                 break;
@@ -161,7 +161,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.numI32 == lhsValue.as.numI32);
+                auto resultValue = Value(rhsValue.as.int32 == lhsValue.as.int32);
                 setValue(result, resultValue);
 
                 break;
@@ -175,7 +175,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.numI32 != lhsValue.as.numI32);
+                auto resultValue = Value(rhsValue.as.int32 != lhsValue.as.int32);
                 setValue(result, resultValue);
 
                 break;
@@ -189,7 +189,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.numI32 > lhsValue.as.numI32);
+                auto resultValue = Value(rhsValue.as.int32 > lhsValue.as.int32);
                 setValue(result, resultValue);
 
                 break;
@@ -203,7 +203,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.numI32 >= lhsValue.as.numI32);
+                auto resultValue = Value(rhsValue.as.int32 >= lhsValue.as.int32);
                 setValue(result, resultValue);
 
                 break;
@@ -217,7 +217,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.numI32 < lhsValue.as.numI32);
+                auto resultValue = Value(rhsValue.as.int32 < lhsValue.as.int32);
                 setValue(result, resultValue);
 
                 break;
@@ -231,7 +231,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.numI32 <= lhsValue.as.numI32);
+                auto resultValue = Value(rhsValue.as.int32 <= lhsValue.as.int32);
                 setValue(result, resultValue);
 
                 break;
@@ -269,7 +269,7 @@ i32 VM::run(ByteCode& code)
                 auto reg = code.readUInt16(ip);
                 auto value = getValue(reg);
 
-                std::cout << value.as.numI32;
+                std::cout << value.as.int32;
 
                 break;
             }

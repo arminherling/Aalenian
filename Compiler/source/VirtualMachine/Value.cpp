@@ -13,7 +13,7 @@ Value::Value(bool value)
 }
 
 Value::Value(i32 value)
-    : type(Type::I32)
-    , as{ .numI32{value} }
+    : type(Type::Int32)
+    , as{ .int32{value} }
 {
 }

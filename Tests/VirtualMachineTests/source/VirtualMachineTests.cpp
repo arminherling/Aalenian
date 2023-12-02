@@ -175,8 +175,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(1);
-        QCOMPARE(loadedValue.type, Value::Type::I32);
-        QCOMPARE(loadedValue.as.numI32, value);
+        QCOMPARE(loadedValue.type, Value::Type::Int32);
+        QCOMPARE(loadedValue.as.int32, value);
     }
     
     void AddInt32_data()
@@ -211,8 +211,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::I32);
-        QCOMPARE(loadedValue.as.numI32, expectedResult);
+        QCOMPARE(loadedValue.type, Value::Type::Int32);
+        QCOMPARE(loadedValue.as.int32, expectedResult);
     }
 
     void SubtractInt32_data()
@@ -247,8 +247,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::I32);
-        QCOMPARE(loadedValue.as.numI32, expectedResult);
+        QCOMPARE(loadedValue.type, Value::Type::Int32);
+        QCOMPARE(loadedValue.as.int32, expectedResult);
     }
 
     void MultiplyInt32_data()
@@ -283,8 +283,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::I32);
-        QCOMPARE(loadedValue.as.numI32, expectedResult);
+        QCOMPARE(loadedValue.type, Value::Type::Int32);
+        QCOMPARE(loadedValue.as.int32, expectedResult);
     }
 
     void DivideInt32_data()
@@ -319,8 +319,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::I32);
-        QCOMPARE(loadedValue.as.numI32, expectedResult);
+        QCOMPARE(loadedValue.type, Value::Type::Int32);
+        QCOMPARE(loadedValue.as.int32, expectedResult);
     }
 
     void NegateIn32_data()
@@ -353,8 +353,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::I32);
-        QCOMPARE(loadedValue.as.numI32, expectedResult);
+        QCOMPARE(loadedValue.type, Value::Type::Int32);
+        QCOMPARE(loadedValue.as.int32, expectedResult);
     }
 
     void EqualInt32_data()
@@ -597,8 +597,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::I32);
-        QCOMPARE(loadedValue.as.numI32, 10);
+        QCOMPARE(loadedValue.type, Value::Type::Int32);
+        QCOMPARE(loadedValue.as.int32, 10);
     }
 
     void JumpIfFalse_data()
@@ -634,8 +634,9 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(1);
-        QCOMPARE(loadedValue.type, Value::Type::I32);
-        QCOMPARE(loadedValue.as.numI32, expectedResult);
+        QCOMPARE(loadedValue.type, Value::Type::Int32);
+        QCOMPARE(loadedValue.as.int32, expectedResult);
+    }
     }
 
     void PrintBool_data()
@@ -744,8 +745,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::I32);
-        QCOMPARE(loadedValue.as.numI32, 10);
+        QCOMPARE(loadedValue.type, Value::Type::Int32);
+        QCOMPARE(loadedValue.as.int32, 10);
     }
 };
 
