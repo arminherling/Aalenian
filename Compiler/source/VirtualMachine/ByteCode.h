@@ -5,6 +5,7 @@
 #include <QString>
 
 #include <vector>
+#include <unordered_map>
 
 enum Op : u8
 {
@@ -35,9 +36,20 @@ enum Op : u8
 
 COMPILER_API QString StringifyOp(Op op);
 
+#include <VirtualMachine/Label.h>
+struct COMPILER_API FunctionDeclaration
+{
+    QString name;
+    Label entryPoint;
+    i32 returnValues; 
+    i32 parameterValues;
+};
+#include <QHash>
+
 struct COMPILER_API ByteCode
 {
     std::vector<u8> data;
+    std::unordered_map<QString, FunctionDeclaration> functions;
 
     inline u8 readUInt8(u16& ip) const;
     inline u16 readUInt16(u16& ip) const;
@@ -47,4 +59,7 @@ struct COMPILER_API ByteCode
     inline void writeUInt16(u16 value);
     inline void writeUInt16(u16 value, u16 address);
     inline void writeInt32(i32 value);
+
+    void setFunctionDeclaration(const FunctionDeclaration& declaration);
+    std::optional<FunctionDeclaration> getFunctionDeclaration(const QString& name);
 };

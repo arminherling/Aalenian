@@ -141,6 +141,13 @@ Label ByteCodeAssembler::createLabel()
     return Label(m_byteCode.data.size());
 }
 
+void ByteCodeAssembler::declareFunction(const QString& name, i32 returnValues, i32 parameterValues)
+{
+    auto label = createLabel();
+
+    m_byteCode.setFunctionDeclaration({ .name = name, .entryPoint = label, .returnValues = returnValues, .parameterValues = parameterValues });
+}
+
 u16 ByteCodeAssembler::emitJump()
 {
     m_byteCode.writeUInt8(Op::Jump);

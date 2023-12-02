@@ -40,6 +40,19 @@ inline void ByteCode::writeInt32(i32 value)
     data.emplace_back((value >> 24) & 0xFF);
 }
 
+void ByteCode::setFunctionDeclaration(const FunctionDeclaration& declaration)
+{
+    functions.insert({ declaration.name, declaration });
+}
+
+std::optional<FunctionDeclaration> ByteCode::getFunctionDeclaration(const QString& name)
+{
+    if (auto search = functions.find(name); search != functions.end())
+        return search->second;
+    else
+        return std::nullopt;
+}
+
 COMPILER_API QString StringifyOp(Op op)
 {
     switch (op)

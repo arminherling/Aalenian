@@ -788,9 +788,6 @@ private slots:
         assembler.patchJumpTarget(endJumpIndex, endLabel);
         assembler.emitHalt();
         VM vm;
-        
-        ByteCodeDisassembler dis{ code };
-        qDebug().noquote().nospace()<< "\n" << dis.PrettyPrint();
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
@@ -802,6 +799,24 @@ private slots:
         auto loadedValue = vm.getValue(0);
         QCOMPARE(loadedValue.type, Value::Type::Int32);
         QCOMPARE(loadedValue.as.int32, 10);
+    }
+
+    void FunctionDeclaration()
+    {
+        auto functionName = QString("function");
+        auto returnValues = 1;
+        auto parameterValues = 2;
+
+        ByteCode code;
+        ByteCodeAssembler assembler{ code };
+        assembler.declareFunction(functionName, returnValues, parameterValues);
+
+        auto optDeclaration = code.getFunctionDeclaration(functionName);
+        QVERIFY(optDeclaration.has_value());
+        auto declaration = optDeclaration.value();
+        QCOMPARE(declaration.name, functionName);
+        QCOMPARE(declaration.returnValues, returnValues);
+        QCOMPARE(declaration.parameterValues, parameterValues);
     }
 };
 
