@@ -38,8 +38,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(1);
-        QCOMPARE(loadedValue.type, Value::Type::Bool);
-        QCOMPARE(loadedValue.as.boolean, value);
+        QVERIFY(loadedValue.isBool());
+        QCOMPARE(loadedValue.asBool(), value);
     }
 
     void NotBool_data()
@@ -71,8 +71,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::Bool);
-        QCOMPARE(loadedValue.as.boolean, expectedResult);
+        QVERIFY(loadedValue.isBool());
+        QCOMPARE(loadedValue.asBool(), expectedResult);
     }
 
     void EqualBool_data()
@@ -108,8 +108,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::Bool);
-        QCOMPARE(loadedValue.as.boolean, expectedResult);
+        QVERIFY(loadedValue.isBool());
+        QCOMPARE(loadedValue.asBool(), expectedResult);
     }
 
     void NotEqualBool_data()
@@ -145,8 +145,38 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::Bool);
-        QCOMPARE(loadedValue.as.boolean, expectedResult);
+        QVERIFY(loadedValue.isBool());
+        QCOMPARE(loadedValue.asBool(), expectedResult);
+    }
+
+    void MoveBool_data()
+    {
+        QTest::addColumn<QVariant>("value");
+
+        QTest::newRow("true") << QVariant::fromValue(true);
+        QTest::newRow("false") << QVariant::fromValue(false);
+    }
+
+    void MoveBool()
+    {
+        QFETCH(QVariant, value);
+
+        ByteCode code;
+        ByteCodeAssembler assembler{ code };
+        assembler.emitLoadBool(1, value.toBool());
+        assembler.emitMove(0, 1);
+        assembler.emitHalt();
+        VM vm;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        vm.run(code);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
+
+        auto loadedValue = vm.getValue(0);
+        QCOMPARE(loadedValue.asBool(), value);
     }
 
     void LoadInt32_data()
@@ -175,8 +205,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(1);
-        QCOMPARE(loadedValue.type, Value::Type::Int32);
-        QCOMPARE(loadedValue.as.int32, value);
+        QVERIFY(loadedValue.isInt32());
+        QCOMPARE(loadedValue.asInt32(), value);
     }
     
     void AddInt32_data()
@@ -211,8 +241,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::Int32);
-        QCOMPARE(loadedValue.as.int32, expectedResult);
+        QVERIFY(loadedValue.isInt32());
+        QCOMPARE(loadedValue.asInt32(), expectedResult);
     }
 
     void SubtractInt32_data()
@@ -247,8 +277,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::Int32);
-        QCOMPARE(loadedValue.as.int32, expectedResult);
+        QVERIFY(loadedValue.isInt32());
+        QCOMPARE(loadedValue.asInt32(), expectedResult);
     }
 
     void MultiplyInt32_data()
@@ -283,8 +313,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::Int32);
-        QCOMPARE(loadedValue.as.int32, expectedResult);
+        QVERIFY(loadedValue.isInt32());
+        QCOMPARE(loadedValue.asInt32(), expectedResult);
     }
 
     void DivideInt32_data()
@@ -319,8 +349,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::Int32);
-        QCOMPARE(loadedValue.as.int32, expectedResult);
+        QVERIFY(loadedValue.isInt32());
+        QCOMPARE(loadedValue.asInt32(), expectedResult);
     }
 
     void NegateIn32_data()
@@ -353,8 +383,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::Int32);
-        QCOMPARE(loadedValue.as.int32, expectedResult);
+        QVERIFY(loadedValue.isInt32());
+        QCOMPARE(loadedValue.asInt32(), expectedResult);
     }
 
     void EqualInt32_data()
@@ -389,8 +419,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::Bool);
-        QCOMPARE(loadedValue.as.boolean, expectedResult);
+        QVERIFY(loadedValue.isBool());
+        QCOMPARE(loadedValue.asBool(), expectedResult);
     }
 
     void NotEqualInt32_data()
@@ -425,8 +455,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::Bool);
-        QCOMPARE(loadedValue.as.boolean, expectedResult);
+        QVERIFY(loadedValue.isBool());
+        QCOMPARE(loadedValue.asBool(), expectedResult);
     }
 
     void GreaterInt32_data()
@@ -462,8 +492,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::Bool);
-        QCOMPARE(loadedValue.as.boolean, expectedResult);
+        QVERIFY(loadedValue.isBool());
+        QCOMPARE(loadedValue.asBool(), expectedResult);
     }
 
     void GreaterOrEqualInt32_data()
@@ -499,8 +529,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::Bool);
-        QCOMPARE(loadedValue.as.boolean, expectedResult);
+        QVERIFY(loadedValue.isBool());
+        QCOMPARE(loadedValue.asBool(), expectedResult);
     }
 
     void LessInt32_data()
@@ -536,8 +566,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::Bool);
-        QCOMPARE(loadedValue.as.boolean, expectedResult);
+        QVERIFY(loadedValue.isBool());
+        QCOMPARE(loadedValue.asBool(), expectedResult);
     }
 
     void LessOrEqualInt32_data()
@@ -573,8 +603,39 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::Bool);
-        QCOMPARE(loadedValue.as.boolean, expectedResult);
+        QVERIFY(loadedValue.isBool());
+        QCOMPARE(loadedValue.asBool(), expectedResult);
+    }
+
+    void MoveInt32_data()
+    {
+        QTest::addColumn<QVariant>("value");
+
+        QTest::newRow("0") << QVariant::fromValue(0);
+        QTest::newRow("100") << QVariant::fromValue(100);
+        QTest::newRow("-99") << QVariant::fromValue(-99);
+    }
+
+    void MoveInt32()
+    {
+        QFETCH(QVariant, value);
+
+        ByteCode code;
+        ByteCodeAssembler assembler{ code };
+        assembler.emitLoadInt32(1, value.toInt());
+        assembler.emitMove(0, 1);
+        assembler.emitHalt();
+        VM vm;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        vm.run(code);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
+
+        auto loadedValue = vm.getValue(0);
+        QCOMPARE(loadedValue.asInt32(), value);
     }
 
     void Jump()
@@ -597,8 +658,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::Int32);
-        QCOMPARE(loadedValue.as.int32, 10);
+        QVERIFY(loadedValue.isInt32());
+        QCOMPARE(loadedValue.asInt32(), 10);
     }
 
     void JumpIfFalse_data()
@@ -634,64 +695,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(1);
-        QCOMPARE(loadedValue.type, Value::Type::Int32);
-        QCOMPARE(loadedValue.as.int32, expectedResult);
-    }
-
-    void Move_data()
-    {
-        QTest::addColumn<QVariant>("value");
-        QTest::addColumn<Value::Type>("type");
-
-        QTest::newRow("true") << QVariant::fromValue(true) << Value::Type::Bool;
-        QTest::newRow("false") << QVariant::fromValue(false) << Value::Type::Bool;
-        QTest::newRow("0") << QVariant::fromValue(0) << Value::Type::Int32;
-        QTest::newRow("100") << QVariant::fromValue(100) << Value::Type::Int32;
-        QTest::newRow("-99") << QVariant::fromValue(-99) << Value::Type::Int32;
-    }
-
-    void Move()
-    {
-        QFETCH(QVariant, value);
-        QFETCH(Value::Type, type);
-
-        ByteCode code;
-        ByteCodeAssembler assembler{ code };
-        switch (type)
-        {
-            case Value::Type::Bool:
-                assembler.emitLoadBool(1, value.toBool());
-                break;
-            case Value::Type::Int32:
-                assembler.emitLoadInt32(1, value.toInt());
-                break;
-            default:
-                TODO();
-        }
-        assembler.emitMove(0, 1);
-        assembler.emitHalt();
-        VM vm;
-
-        auto startTime = std::chrono::high_resolution_clock::now();
-        vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
-
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
-
-        auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, type);
-        switch (type)
-        {
-            case Value::Type::Bool:
-                QCOMPARE(loadedValue.as.boolean, value);
-                break;
-            case Value::Type::Int32:
-                QCOMPARE(loadedValue.as.int32, value);
-                break;
-            default:
-                TODO();
-        }
+        QVERIFY(loadedValue.isInt32());
+        QCOMPARE(loadedValue.asInt32(), expectedResult);
     }
 
     void PrintBool_data()
@@ -797,8 +802,8 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.type, Value::Type::Int32);
-        QCOMPARE(loadedValue.as.int32, 10);
+        QVERIFY(loadedValue.isInt32());
+        QCOMPARE(loadedValue.asInt32(), 10);
     }
 
     void FunctionDeclaration()

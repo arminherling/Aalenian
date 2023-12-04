@@ -42,7 +42,7 @@ i32 VM::run(ByteCode& code)
 
                 auto valueValue = getValue(value);
 
-                auto resultValue = Value(!valueValue.as.boolean);
+                auto resultValue = Value(!valueValue.asBool());
                 setValue(result, resultValue);
 
                 break;
@@ -56,7 +56,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.boolean == lhsValue.as.boolean);
+                auto resultValue = Value(rhsValue.asBool() == lhsValue.asBool());
                 setValue(result, resultValue);
 
                 break;
@@ -70,7 +70,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.boolean != lhsValue.as.boolean);
+                auto resultValue = Value(rhsValue.asBool() != lhsValue.asBool());
                 setValue(result, resultValue);
 
                 break;
@@ -93,7 +93,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.int32 + lhsValue.as.int32);
+                auto resultValue = Value(rhsValue.asInt32() + lhsValue.asInt32());
                 setValue(result, resultValue);
 
                 break;
@@ -107,7 +107,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.int32 - lhsValue.as.int32);
+                auto resultValue = Value(rhsValue.asInt32() - lhsValue.asInt32());
                 setValue(result, resultValue);
 
                 break;
@@ -121,7 +121,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.int32 * lhsValue.as.int32);
+                auto resultValue = Value(rhsValue.asInt32() * lhsValue.asInt32());
                 setValue(result, resultValue);
 
                 break;
@@ -135,7 +135,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.int32 / lhsValue.as.int32);
+                auto resultValue = Value(rhsValue.asInt32() / lhsValue.asInt32());
                 setValue(result, resultValue);
 
                 break;
@@ -147,7 +147,7 @@ i32 VM::run(ByteCode& code)
 
                 auto valueValue = getValue(value);
 
-                auto resultValue = Value(-valueValue.as.int32);
+                auto resultValue = Value(-valueValue.asInt32());
                 setValue(result, resultValue);
 
                 break;
@@ -161,7 +161,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.int32 == lhsValue.as.int32);
+                auto resultValue = Value(rhsValue.asInt32() == lhsValue.asInt32());
                 setValue(result, resultValue);
 
                 break;
@@ -175,7 +175,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.int32 != lhsValue.as.int32);
+                auto resultValue = Value(rhsValue.asInt32() != lhsValue.asInt32());
                 setValue(result, resultValue);
 
                 break;
@@ -189,7 +189,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.int32 > lhsValue.as.int32);
+                auto resultValue = Value(rhsValue.asInt32() > lhsValue.asInt32());
                 setValue(result, resultValue);
 
                 break;
@@ -203,7 +203,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.int32 >= lhsValue.as.int32);
+                auto resultValue = Value(rhsValue.asInt32() >= lhsValue.asInt32());
                 setValue(result, resultValue);
 
                 break;
@@ -217,7 +217,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.int32 < lhsValue.as.int32);
+                auto resultValue = Value(rhsValue.asInt32() < lhsValue.asInt32());
                 setValue(result, resultValue);
 
                 break;
@@ -231,7 +231,7 @@ i32 VM::run(ByteCode& code)
                 auto rhsValue = getValue(rhs);
                 auto lhsValue = getValue(lhs);
 
-                auto resultValue = Value(rhsValue.as.int32 <= lhsValue.as.int32);
+                auto resultValue = Value(rhsValue.asInt32() <= lhsValue.asInt32());
                 setValue(result, resultValue);
 
                 break;
@@ -250,7 +250,7 @@ i32 VM::run(ByteCode& code)
                 auto target = code.readUInt16(ip);
 
                 auto conditionValue = getValue(condition);
-                if(!conditionValue.as.boolean)
+                if(!conditionValue.asBool())
                     ip = target;
 
                 break;
@@ -270,7 +270,7 @@ i32 VM::run(ByteCode& code)
                 auto reg = code.readUInt16(ip);
                 auto value = getValue(reg);
 
-                std::cout << std::boolalpha << value.as.boolean;
+                std::cout << std::boolalpha << value.asBool();
 
                 break;
             }
@@ -279,7 +279,7 @@ i32 VM::run(ByteCode& code)
                 auto reg = code.readUInt16(ip);
                 auto value = getValue(reg);
 
-                std::cout << value.as.int32;
+                std::cout << value.asInt32();
 
                 break;
             }
