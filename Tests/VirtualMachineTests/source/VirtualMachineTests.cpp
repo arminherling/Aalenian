@@ -7,6 +7,12 @@
 
 #include <Debug/ByteCodeDisassembler.h>
 
+enum MoveType : u8
+{
+    Bool,
+    Int32
+};
+
 class VirtualMachineTests : public QObject
 {
     Q_OBJECT
@@ -147,36 +153,6 @@ private slots:
         auto loadedValue = vm.getValue(0);
         QVERIFY(loadedValue.isBool());
         QCOMPARE(loadedValue.asBool(), expectedResult);
-    }
-
-    void MoveBool_data()
-    {
-        QTest::addColumn<QVariant>("value");
-
-        QTest::newRow("true") << QVariant::fromValue(true);
-        QTest::newRow("false") << QVariant::fromValue(false);
-    }
-
-    void MoveBool()
-    {
-        QFETCH(QVariant, value);
-
-        ByteCode code;
-        ByteCodeAssembler assembler{ code };
-        assembler.emitLoadBool(1, value.toBool());
-        assembler.emitMove(0, 1);
-        assembler.emitHalt();
-        VM vm;
-
-        auto startTime = std::chrono::high_resolution_clock::now();
-        vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
-
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
-
-        auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.asBool(), value);
     }
 
     void LoadInt32_data()
@@ -607,22 +583,38 @@ private slots:
         QCOMPARE(loadedValue.asBool(), expectedResult);
     }
 
-    void MoveInt32_data()
+    void Move_data()
     {
         QTest::addColumn<QVariant>("value");
+        QTest::addColumn<MoveType>("type");
 
-        QTest::newRow("0") << QVariant::fromValue(0);
-        QTest::newRow("100") << QVariant::fromValue(100);
-        QTest::newRow("-99") << QVariant::fromValue(-99);
+        QTest::newRow("true") << QVariant::fromValue(true) << MoveType::Bool;
+        QTest::newRow("false") << QVariant::fromValue(false) << MoveType::Bool;
+
+        QTest::newRow("0") << QVariant::fromValue(0) << MoveType::Int32;
+        QTest::newRow("100") << QVariant::fromValue(100) << MoveType::Int32;
+        QTest::newRow("-99") << QVariant::fromValue(-99) << MoveType::Int32;
     }
 
-    void MoveInt32()
+    void Move()
     {
         QFETCH(QVariant, value);
+        QFETCH(MoveType, type);
 
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        assembler.emitLoadInt32(1, value.toInt());
+        switch (type)
+        {
+            case Bool:
+                assembler.emitLoadBool(1, value.toBool());
+                break;
+            case Int32:
+                assembler.emitLoadInt32(1, value.toInt());
+                break;
+            default:
+                TODO();
+                break;
+        }
         assembler.emitMove(0, 1);
         assembler.emitHalt();
         VM vm;
@@ -635,7 +627,18 @@ private slots:
         qDebug() << "Time: " << elapsed_time_ms << "ns";
 
         auto loadedValue = vm.getValue(0);
-        QCOMPARE(loadedValue.asInt32(), value);
+        switch (type)
+        {
+            case Bool:        
+                QCOMPARE(loadedValue.asBool(), value);
+                break;
+            case Int32:        
+                QCOMPARE(loadedValue.asInt32(), value);
+                break;
+            default:
+                TODO();
+                break;
+        }
     }
 
     void Jump()
