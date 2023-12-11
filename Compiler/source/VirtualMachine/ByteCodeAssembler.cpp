@@ -141,17 +141,27 @@ Label ByteCodeAssembler::createLabel()
     return Label(m_byteCode.data.size());
 }
 
-void ByteCodeAssembler::declareFunction(const QString& name, i32 returnValues, i32 parameterValues)
+FunctionDeclaration ByteCodeAssembler::declareFunction(const QString& name, u8 returnValues, u8 parameterValues)
 {
     auto label = createLabel();
+    auto declaration = FunctionDeclaration{ .name = name, .entryPoint = label, .returnValues = returnValues, .parameterValues = parameterValues };
+    m_byteCode.setFunctionDeclaration(declaration);
+    return declaration;
+}
 
-    m_byteCode.setFunctionDeclaration({ .name = name, .entryPoint = label, .returnValues = returnValues, .parameterValues = parameterValues });
+FunctionCallLocation ByteCodeAssembler::emitFunctionCall(const QString& name, Register resultTarget)
+{
+    m_byteCode.writeUInt8(Op::FunctionCall);
+    auto entryPointIndex = (u16)m_byteCode.data.size();
+    m_byteCode.writeUInt16(0xDEAD);
+    m_byteCode.writeUInt16(resultTarget.index);
+    return FunctionCallLocation{ name, entryPointIndex };
 }
 
 u16 ByteCodeAssembler::emitJump()
 {
     m_byteCode.writeUInt8(Op::Jump);
-    auto targetIndex = m_byteCode.data.size();
+    auto targetIndex = (u16)m_byteCode.data.size();
     m_byteCode.writeUInt16(0xDEAD);
     return targetIndex;
 }

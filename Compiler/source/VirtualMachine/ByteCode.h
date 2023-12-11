@@ -25,6 +25,7 @@ enum Op : u8
     GreaterOrEqualInt32,
     LessInt32,
     LessOrEqualInt32,
+    FunctionCall,
     Jump,
     JumpIfFalse,
     Move,
@@ -41,9 +42,22 @@ struct COMPILER_API FunctionDeclaration
 {
     QString name;
     Label entryPoint;
-    i32 returnValues; 
-    i32 parameterValues;
+    u8 returnValues;
+    u8 parameterValues;
 };
+
+struct COMPILER_API FunctionCallLocation
+{
+    FunctionCallLocation(const QString& name, u16 targetIndex)
+        : name{ name }
+        , targetIndex{ targetIndex }
+    {
+    }
+
+    QString name;
+    u16 targetIndex;
+};
+
 #include <QHash>
 
 struct COMPILER_API ByteCode

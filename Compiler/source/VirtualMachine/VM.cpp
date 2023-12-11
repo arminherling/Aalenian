@@ -5,6 +5,7 @@
 VM::VM()
 {
     m_registers.resize(2048);
+    m_callFrames.push({ .returnAddress = 0, .baseRegister = 0 });
 }
 
 void VM::setValue(Register reg, const Value& value)
@@ -12,9 +13,23 @@ void VM::setValue(Register reg, const Value& value)
     m_registers[reg.index] = value;
 }
 
+void VM::setRelativeValue(Register reg, const Value& value)
+{
+    auto currentFrame = m_callFrames.top();
+
+    m_registers[currentFrame.baseRegister + reg.index] = value;
+}
+
 Value VM::getValue(Register reg)
 {
     return m_registers[reg.index];
+}
+
+Value VM::getRelativeValue(Register reg)
+{
+    auto currentFrame = m_callFrames.top();
+
+    return m_registers[currentFrame.baseRegister + reg.index];
 }
 
 i32 VM::run(ByteCode& code)
@@ -31,7 +46,7 @@ i32 VM::run(ByteCode& code)
                 auto reg = code.readUInt16(ip);
                 auto value = (bool)code.readUInt8(ip);
 
-                setValue(reg, value);
+                setRelativeValue(reg, value);
 
                 break;
             }
@@ -40,10 +55,10 @@ i32 VM::run(ByteCode& code)
                 auto result = code.readUInt16(ip);
                 auto value = code.readUInt16(ip);
 
-                auto valueValue = getValue(value);
+                auto valueValue = getRelativeValue(value);
 
                 auto resultValue = Value(!valueValue.asBool());
-                setValue(result, resultValue);
+                setRelativeValue(result, resultValue);
 
                 break;
             }
@@ -53,11 +68,11 @@ i32 VM::run(ByteCode& code)
                 auto rhs = code.readUInt16(ip);
                 auto lhs = code.readUInt16(ip);
 
-                auto rhsValue = getValue(rhs);
-                auto lhsValue = getValue(lhs);
+                auto rhsValue = getRelativeValue(rhs);
+                auto lhsValue = getRelativeValue(lhs);
 
                 auto resultValue = Value(rhsValue.asBool() == lhsValue.asBool());
-                setValue(result, resultValue);
+                setRelativeValue(result, resultValue);
 
                 break;
             }
@@ -67,11 +82,11 @@ i32 VM::run(ByteCode& code)
                 auto rhs = code.readUInt16(ip);
                 auto lhs = code.readUInt16(ip);
 
-                auto rhsValue = getValue(rhs);
-                auto lhsValue = getValue(lhs);
+                auto rhsValue = getRelativeValue(rhs);
+                auto lhsValue = getRelativeValue(lhs);
 
                 auto resultValue = Value(rhsValue.asBool() != lhsValue.asBool());
-                setValue(result, resultValue);
+                setRelativeValue(result, resultValue);
 
                 break;
             }
@@ -80,7 +95,7 @@ i32 VM::run(ByteCode& code)
                 auto reg = code.readUInt16(ip);
                 auto value = code.readInt32(ip);
 
-                setValue(reg, value);
+                setRelativeValue(reg, value);
 
                 break;
             }
@@ -90,11 +105,11 @@ i32 VM::run(ByteCode& code)
                 auto rhs = code.readUInt16(ip);
                 auto lhs = code.readUInt16(ip);
 
-                auto rhsValue = getValue(rhs);
-                auto lhsValue = getValue(lhs);
+                auto rhsValue = getRelativeValue(rhs);
+                auto lhsValue = getRelativeValue(lhs);
 
                 auto resultValue = Value(rhsValue.asInt32() + lhsValue.asInt32());
-                setValue(result, resultValue);
+                setRelativeValue(result, resultValue);
 
                 break;
             }
@@ -104,11 +119,11 @@ i32 VM::run(ByteCode& code)
                 auto rhs = code.readUInt16(ip);
                 auto lhs = code.readUInt16(ip);
 
-                auto rhsValue = getValue(rhs);
-                auto lhsValue = getValue(lhs);
+                auto rhsValue = getRelativeValue(rhs);
+                auto lhsValue = getRelativeValue(lhs);
 
                 auto resultValue = Value(rhsValue.asInt32() - lhsValue.asInt32());
-                setValue(result, resultValue);
+                setRelativeValue(result, resultValue);
 
                 break;
             }
@@ -118,11 +133,11 @@ i32 VM::run(ByteCode& code)
                 auto rhs = code.readUInt16(ip);
                 auto lhs = code.readUInt16(ip);
 
-                auto rhsValue = getValue(rhs);
-                auto lhsValue = getValue(lhs);
+                auto rhsValue = getRelativeValue(rhs);
+                auto lhsValue = getRelativeValue(lhs);
 
                 auto resultValue = Value(rhsValue.asInt32() * lhsValue.asInt32());
-                setValue(result, resultValue);
+                setRelativeValue(result, resultValue);
 
                 break;
             }
@@ -132,11 +147,11 @@ i32 VM::run(ByteCode& code)
                 auto rhs = code.readUInt16(ip);
                 auto lhs = code.readUInt16(ip);
 
-                auto rhsValue = getValue(rhs);
-                auto lhsValue = getValue(lhs);
+                auto rhsValue = getRelativeValue(rhs);
+                auto lhsValue = getRelativeValue(lhs);
 
                 auto resultValue = Value(rhsValue.asInt32() / lhsValue.asInt32());
-                setValue(result, resultValue);
+                setRelativeValue(result, resultValue);
 
                 break;
             }
@@ -145,10 +160,10 @@ i32 VM::run(ByteCode& code)
                 auto result = code.readUInt16(ip);
                 auto value = code.readUInt16(ip);
 
-                auto valueValue = getValue(value);
+                auto valueValue = getRelativeValue(value);
 
                 auto resultValue = Value(-valueValue.asInt32());
-                setValue(result, resultValue);
+                setRelativeValue(result, resultValue);
 
                 break;
             }
@@ -158,11 +173,11 @@ i32 VM::run(ByteCode& code)
                 auto rhs = code.readUInt16(ip);
                 auto lhs = code.readUInt16(ip);
 
-                auto rhsValue = getValue(rhs);
-                auto lhsValue = getValue(lhs);
+                auto rhsValue = getRelativeValue(rhs);
+                auto lhsValue = getRelativeValue(lhs);
 
                 auto resultValue = Value(rhsValue.asInt32() == lhsValue.asInt32());
-                setValue(result, resultValue);
+                setRelativeValue(result, resultValue);
 
                 break;
             }
@@ -172,11 +187,11 @@ i32 VM::run(ByteCode& code)
                 auto rhs = code.readUInt16(ip);
                 auto lhs = code.readUInt16(ip);
 
-                auto rhsValue = getValue(rhs);
-                auto lhsValue = getValue(lhs);
+                auto rhsValue = getRelativeValue(rhs);
+                auto lhsValue = getRelativeValue(lhs);
 
                 auto resultValue = Value(rhsValue.asInt32() != lhsValue.asInt32());
-                setValue(result, resultValue);
+                setRelativeValue(result, resultValue);
 
                 break;
             }
@@ -186,11 +201,11 @@ i32 VM::run(ByteCode& code)
                 auto rhs = code.readUInt16(ip);
                 auto lhs = code.readUInt16(ip);
 
-                auto rhsValue = getValue(rhs);
-                auto lhsValue = getValue(lhs);
+                auto rhsValue = getRelativeValue(rhs);
+                auto lhsValue = getRelativeValue(lhs);
 
                 auto resultValue = Value(rhsValue.asInt32() > lhsValue.asInt32());
-                setValue(result, resultValue);
+                setRelativeValue(result, resultValue);
 
                 break;
             }
@@ -200,11 +215,11 @@ i32 VM::run(ByteCode& code)
                 auto rhs = code.readUInt16(ip);
                 auto lhs = code.readUInt16(ip);
 
-                auto rhsValue = getValue(rhs);
-                auto lhsValue = getValue(lhs);
+                auto rhsValue = getRelativeValue(rhs);
+                auto lhsValue = getRelativeValue(lhs);
 
                 auto resultValue = Value(rhsValue.asInt32() >= lhsValue.asInt32());
-                setValue(result, resultValue);
+                setRelativeValue(result, resultValue);
 
                 break;
             }
@@ -214,11 +229,11 @@ i32 VM::run(ByteCode& code)
                 auto rhs = code.readUInt16(ip);
                 auto lhs = code.readUInt16(ip);
 
-                auto rhsValue = getValue(rhs);
-                auto lhsValue = getValue(lhs);
+                auto rhsValue = getRelativeValue(rhs);
+                auto lhsValue = getRelativeValue(lhs);
 
                 auto resultValue = Value(rhsValue.asInt32() < lhsValue.asInt32());
-                setValue(result, resultValue);
+                setRelativeValue(result, resultValue);
 
                 break;
             }
@@ -228,11 +243,21 @@ i32 VM::run(ByteCode& code)
                 auto rhs = code.readUInt16(ip);
                 auto lhs = code.readUInt16(ip);
 
-                auto rhsValue = getValue(rhs);
-                auto lhsValue = getValue(lhs);
+                auto rhsValue = getRelativeValue(rhs);
+                auto lhsValue = getRelativeValue(lhs);
 
                 auto resultValue = Value(rhsValue.asInt32() <= lhsValue.asInt32());
-                setValue(result, resultValue);
+                setRelativeValue(result, resultValue);
+
+                break;
+            }
+            case Op::FunctionCall: 
+            {
+                auto functionEntryPoint = code.readUInt16(ip);
+                auto targetRegister = code.readUInt16(ip);
+
+                m_callFrames.push({ .returnAddress = ip, .baseRegister = targetRegister });
+                ip = functionEntryPoint;
 
                 break;
             }
@@ -249,7 +274,7 @@ i32 VM::run(ByteCode& code)
                 auto condition = code.readUInt16(ip);
                 auto target = code.readUInt16(ip);
 
-                auto conditionValue = getValue(condition);
+                auto conditionValue = getRelativeValue(condition);
                 if(!conditionValue.asBool())
                     ip = target;
 
@@ -260,15 +285,15 @@ i32 VM::run(ByteCode& code)
                 auto target = code.readUInt16(ip);
                 auto source = code.readUInt16(ip);
 
-                auto value = getValue(source);
-                setValue(target, value);
+                auto value = getRelativeValue(source);
+                setRelativeValue(target, value);
 
                 break;
             }
             case Op::PrintBool:
             {
                 auto reg = code.readUInt16(ip);
-                auto value = getValue(reg);
+                auto value = getRelativeValue(reg);
 
                 std::cout << std::boolalpha << value.asBool();
 
@@ -277,7 +302,7 @@ i32 VM::run(ByteCode& code)
             case Op::PrintInt32:
             {
                 auto reg = code.readUInt16(ip);
-                auto value = getValue(reg);
+                auto value = getRelativeValue(reg);
 
                 std::cout << value.asInt32();
 
@@ -291,7 +316,15 @@ i32 VM::run(ByteCode& code)
             }
             case Op::Halt:
             {
-                return 0;
+                auto currentFrame = m_callFrames.top();
+                ip = currentFrame.returnAddress;
+
+                m_callFrames.pop();
+
+                if (m_callFrames.empty())
+                    return 0;
+
+                break;
             }
             default:
                 TODO("Operation was was not defined yet");

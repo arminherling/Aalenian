@@ -826,6 +826,36 @@ private slots:
         QCOMPARE(declaration.returnValues, returnValues);
         QCOMPARE(declaration.parameterValues, parameterValues);
     }
+
+    void FunctionCall()
+    {
+        auto addFunctionName = QString("add");
+
+        ByteCode code;
+        ByteCodeAssembler assembler{ code };
+        assembler.emitLoadInt32(0, 10);
+        assembler.emitLoadInt32(1, 100);
+        // register 2 is return value of add function
+        assembler.emitLoadInt32(3, 25);
+        assembler.emitLoadInt32(4, 50);
+        auto functionCallLocation = assembler.emitFunctionCall(addFunctionName, 2);
+        assembler.emitPrintInt32(2);
+        assembler.emitPrintNewLine();
+        assembler.emitHalt();
+
+        auto addFunctionDeclaration = assembler.declareFunction(addFunctionName, 1, 2);
+        assembler.emitAddInt32(0, 1, 2);
+        assembler.emitHalt();
+        assembler.patchJumpTarget(functionCallLocation.targetIndex, addFunctionDeclaration.entryPoint);
+        VM vm;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        vm.run(code);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
+    }
 };
 
 QTEST_MAIN(VirtualMachineTests)

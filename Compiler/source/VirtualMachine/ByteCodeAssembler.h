@@ -28,7 +28,8 @@ public:
     void emitLessOrEqualInt32(Register target, Register rhs, Register lhs);
     void emitMove(Register target, Register value);
     Label createLabel();
-    void declareFunction(const QString& name, i32 returnValues, i32 parameterValues);
+    FunctionDeclaration declareFunction(const QString& name, u8 returnValues, u8 parameterValues);
+    FunctionCallLocation emitFunctionCall(const QString& name, Register resultTarget);
     u16 emitJump();
     void emitJump(Label label);
     u16 emitJumpIfFalse(Register value);
