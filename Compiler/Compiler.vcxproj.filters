@@ -74,6 +74,9 @@
     <ClCompile Include="source\VirtualMachine\Label.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\VirtualMachine\JumpTarget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Compiler\DiagnosticsBag.h">
@@ -161,6 +164,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\VirtualMachine\CallFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\VirtualMachine\JumpTarget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

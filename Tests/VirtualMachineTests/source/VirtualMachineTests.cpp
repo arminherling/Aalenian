@@ -649,7 +649,7 @@ private slots:
         auto jumpIndex = assembler.emitJump();
         assembler.emitLoadInt32(0, 20);
         auto endLabel = assembler.createLabel();
-        assembler.patchJumpTarget(jumpIndex, endLabel);
+        assembler.patchJumpTarget(jumpIndex.index, endLabel);
         assembler.emitHalt();
         VM vm;
 
@@ -686,7 +686,7 @@ private slots:
         auto jumpIndex = assembler.emitJumpIfFalse(0);
         assembler.emitLoadInt32(1, 20);
         auto endLabel = assembler.createLabel();
-        assembler.patchJumpTarget(jumpIndex, endLabel);
+        assembler.patchJumpTarget(jumpIndex.index, endLabel);
         assembler.emitHalt();
         VM vm;
 
@@ -793,7 +793,7 @@ private slots:
         assembler.emitAddInt32(0, 0, 3);                   //  i = i + 1
         assembler.emitJump(beginLabel);                    //  goto begin
         auto endLabel = assembler.createLabel();           // end:
-        assembler.patchJumpTarget(endJumpIndex, endLabel);
+        assembler.patchJumpTarget(endJumpIndex.index, endLabel);
         assembler.emitHalt();
         VM vm;
 

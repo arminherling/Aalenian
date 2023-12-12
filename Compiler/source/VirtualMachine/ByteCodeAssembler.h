@@ -5,6 +5,7 @@
 #include <VirtualMachine/FunctionCallLocation.h>
 #include <VirtualMachine/Register.h>
 #include <VirtualMachine/Label.h>
+#include <VirtualMachine/JumpTarget.h>
 
 class COMPILER_API ByteCodeAssembler
 {
@@ -31,9 +32,9 @@ public:
     Label createLabel();
     FunctionDeclaration declareFunction(const QString& name, u8 returnValues, u8 parameterValues);
     FunctionCallLocation emitFunctionCall(const QString& name, Register resultTarget);
-    u16 emitJump();
+    JumpTarget emitJump();
     void emitJump(Label label);
-    u16 emitJumpIfFalse(Register value);
+    JumpTarget emitJumpIfFalse(Register value);
     void emitJumpIfFalse(Register value, Label label);
     void patchJumpTarget(u16 jumpIndex, Label label);
     void emitPrintBool(Register reg);

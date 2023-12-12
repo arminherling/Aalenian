@@ -140,7 +140,7 @@ void ByteCodeAssembler::emitMove(Register target, Register value)
 
 Label ByteCodeAssembler::createLabel()
 {
-    return Label(m_byteCode.data.size());
+    return Label{ (u16)m_byteCode.data.size() };
 }
 
 FunctionDeclaration ByteCodeAssembler::declareFunction(const QString& name, u8 returnValues, u8 parameterValues)
@@ -160,12 +160,12 @@ FunctionCallLocation ByteCodeAssembler::emitFunctionCall(const QString& name, Re
     return FunctionCallLocation{ name, entryPointIndex };
 }
 
-u16 ByteCodeAssembler::emitJump()
+JumpTarget ByteCodeAssembler::emitJump()
 {
     m_byteCode.writeUInt8(Op::Jump);
     auto targetIndex = (u16)m_byteCode.data.size();
     m_byteCode.writeUInt16(0xDEAD);
-    return targetIndex;
+    return JumpTarget{ targetIndex };
 }
 
 void ByteCodeAssembler::emitJump(Label label)
@@ -174,13 +174,13 @@ void ByteCodeAssembler::emitJump(Label label)
     m_byteCode.writeUInt16(label.index);
 }
 
-u16 ByteCodeAssembler::emitJumpIfFalse(Register value)
+JumpTarget ByteCodeAssembler::emitJumpIfFalse(Register value)
 {
     m_byteCode.writeUInt8(Op::JumpIfFalse);
     m_byteCode.writeUInt16(value.index);
-    auto targetIndex = m_byteCode.data.size();
+    auto targetIndex = (u16)m_byteCode.data.size();
     m_byteCode.writeUInt16(0xDEAD);
-    return targetIndex;
+    return JumpTarget{ targetIndex };
 }
 
 void ByteCodeAssembler::emitJumpIfFalse(Register value, Label label)
