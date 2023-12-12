@@ -74,7 +74,7 @@
     <ClCompile Include="source\VirtualMachine\Label.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\VirtualMachine\JumpTarget.cpp">
+    <ClCompile Include="source\VirtualMachine\JumpIndex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -166,7 +166,7 @@
     <ClInclude Include="source\VirtualMachine\CallFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\VirtualMachine\JumpTarget.h">
+    <ClInclude Include="source\VirtualMachine\JumpIndex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

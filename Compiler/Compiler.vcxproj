@@ -101,7 +101,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\VirtualMachine\JumpTarget.cpp" />
+    <ClCompile Include="source\VirtualMachine\JumpIndex.cpp" />
     <ClCompile Include="source\VirtualMachine\FunctionCallLocation.cpp" />
     <ClCompile Include="source\Debug\ByteCodeDisassembler.cpp" />
     <ClCompile Include="source\VirtualMachine\ByteCodeAssembler.cpp" />
@@ -122,7 +122,7 @@
     <ClCompile Include="source\VirtualMachine\Register.cpp" />
     <ClCompile Include="source\VirtualMachine\VM.cpp" />
     <ClCompile Include="source\VirtualMachine\Value.cpp" />
-    <ClInclude Include="source\VirtualMachine\JumpTarget.h" />
+    <ClInclude Include="source\VirtualMachine\JumpIndex.h" />
     <ClInclude Include="source\VirtualMachine\CallFrame.h" />
     <ClInclude Include="source\VirtualMachine\FunctionCallLocation.h" />
     <ClInclude Include="source\Debug\ByteCodeDisassembler.h" />

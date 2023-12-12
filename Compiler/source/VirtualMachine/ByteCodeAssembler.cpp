@@ -160,6 +160,7 @@ FunctionCallLocation ByteCodeAssembler::emitFunctionCall(const QString& name, Re
 }
 
 JumpTarget ByteCodeAssembler::emitJump()
+JumpIndex ByteCodeAssembler::emitJump()
 {
     m_byteCode.writeUInt8(Op::Jump);
     auto jumpTarget = writeJumpTarget();
@@ -173,6 +174,7 @@ void ByteCodeAssembler::emitJump(Label label)
 }
 
 JumpTarget ByteCodeAssembler::emitJumpIfFalse(Register value)
+JumpIndex ByteCodeAssembler::emitJumpIfFalse(Register value)
 {
     m_byteCode.writeUInt8(Op::JumpIfFalse);
     m_byteCode.writeUInt16(value.index);
@@ -188,6 +190,7 @@ void ByteCodeAssembler::emitJumpIfFalse(Register value, Label label)
 }
 
 void ByteCodeAssembler::patchJump(JumpTarget jump, Label label)
+void ByteCodeAssembler::patchJump(JumpIndex jump, Label label)
 {
     m_byteCode.writeUInt16(label.index, jump.index);
 }
@@ -215,8 +218,11 @@ void ByteCodeAssembler::emitHalt()
 }
 
 JumpTarget ByteCodeAssembler::writeJumpTarget()
+
+JumpIndex ByteCodeAssembler::writeJumpTarget()
 {
     auto targetIndex = (u16)m_byteCode.data.size();
     m_byteCode.writeUInt16(0xDEAD);
     return JumpTarget{ targetIndex };
+    return JumpIndex{ targetIndex };
 }
