@@ -847,6 +847,7 @@ private slots:
         assembler.emitAddInt32(0, 1, 2);
         assembler.emitHalt();
         assembler.patchJump(functionCallLocation.target, addFunctionDeclaration.entryPoint);
+        assembler.patchFunctionCalls();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();

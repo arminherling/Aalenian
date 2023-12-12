@@ -42,8 +42,11 @@ public:
     void emitPrintNewLine();
     void emitHalt();
 
+    void patchFunctionCalls();
+
 private:
     ByteCode& m_byteCode;
+    std::vector<FunctionCallLocation> functionCalls;
 
     JumpIndex writeJumpTarget();
 };
