@@ -36,6 +36,8 @@ QString StringifyOp(Op op)
             return QString("LessInt32");
         case Op::LessOrEqualInt32:
             return QString("LessOrEqualInt32");
+        case Op::FunctionCall:
+            return QString("FunctionCall");
         case Op::Jump:
             return QString("Jump");
         case Op::JumpIfFalse:

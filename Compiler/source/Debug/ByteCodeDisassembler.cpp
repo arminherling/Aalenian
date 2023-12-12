@@ -132,6 +132,11 @@ void ByteCodeDisassembler::PrettyPrintOp()
             PrettyPrintLessOrEqualInt32();
             break;
         }
+        case Op::FunctionCall:
+        {
+            PrettyPrintFunctionCall();
+            break;
+        }
         case Op::Jump:
         {
             PrettyPrintJump();
@@ -310,6 +315,14 @@ void ByteCodeDisassembler::PrettyPrintLessOrEqualInt32()
     auto lhs = m_byteCode.readUInt16(m_ip);
 
     stream() << StringifyAndPadOp(Op::LessOrEqualInt32) << ' ' << StringifyRegister(result) << ' ' << StringifyRegister(rhs) << ' ' << StringifyRegister(lhs) << NewLine();
+}
+
+void ByteCodeDisassembler::PrettyPrintFunctionCall()
+{
+    auto functionEntryPoint = m_byteCode.readUInt16(m_ip);
+    auto returnRegister = m_byteCode.readUInt16(m_ip);
+
+    stream() << StringifyAndPadOp(Op::FunctionCall) << ' ' << StringifyAddress(functionEntryPoint) << ' ' << StringifyRegister(returnRegister) << NewLine();
 }
 
 void ByteCodeDisassembler::PrettyPrintJump()
