@@ -63,7 +63,7 @@ QString StringifyNodeKind(NodeKind kind)
     }
 }
 
-COMPILER_API QString StringifyUnaryOperation(TokenKind kind)
+QString StringifyUnaryOperation(TokenKind kind)
 {
     switch (kind)
     {
@@ -74,7 +74,7 @@ COMPILER_API QString StringifyUnaryOperation(TokenKind kind)
     }
 }
 
-COMPILER_API QString StringifyBinaryOperation(TokenKind kind)
+QString StringifyBinaryOperation(TokenKind kind)
 {
     switch (kind)
     {

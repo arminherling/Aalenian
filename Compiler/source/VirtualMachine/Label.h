@@ -4,10 +4,7 @@
 
 struct COMPILER_API Label
 {
-    Label(u16 value)
-        : index{ value }
-    {
-    }
+    Label(u16 value);
 
     u16 index;
 };

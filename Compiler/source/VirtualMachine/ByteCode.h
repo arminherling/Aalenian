@@ -1,64 +1,13 @@
 #pragma once
 
 #include <Defines.h>
+#include <VirtualMachine/FunctionDeclaration.h>
 
+#include <QHash>
 #include <QString>
 
 #include <vector>
 #include <unordered_map>
-
-enum Op : u8
-{
-    LoadBool,
-    NotBool,
-    EqualBool,
-    NotEqualBool,
-    LoadInt32,
-    AddInt32,
-    SubtractInt32,
-    MultiplyInt32,
-    DivideInt32,
-    NegateInt32,
-    EqualInt32,
-    NotEqualInt32,
-    GreaterInt32,
-    GreaterOrEqualInt32,
-    LessInt32,
-    LessOrEqualInt32,
-    FunctionCall,
-    Jump,
-    JumpIfFalse,
-    Move,
-    PrintBool,
-    PrintInt32,
-    PrintNewLine,
-    Halt
-};
-
-COMPILER_API QString StringifyOp(Op op);
-
-#include <VirtualMachine/Label.h>
-struct COMPILER_API FunctionDeclaration
-{
-    QString name;
-    Label entryPoint;
-    u8 returnValues;
-    u8 parameterValues;
-};
-
-struct COMPILER_API FunctionCallLocation
-{
-    FunctionCallLocation(const QString& name, u16 targetIndex)
-        : name{ name }
-        , targetIndex{ targetIndex }
-    {
-    }
-
-    QString name;
-    u16 targetIndex;
-};
-
-#include <QHash>
 
 struct COMPILER_API ByteCode
 {

@@ -62,6 +62,18 @@
     <ClCompile Include="source\Debug\ByteCodeDisassembler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\VirtualMachine\FunctionCallLocation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\VirtualMachine\Register.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\VirtualMachine\Op.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\VirtualMachine\Label.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Compiler\DiagnosticsBag.h">
@@ -137,6 +149,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Debug\ByteCodeDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\VirtualMachine\FunctionDeclaration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\VirtualMachine\FunctionCallLocation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\VirtualMachine\Op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\VirtualMachine\CallFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

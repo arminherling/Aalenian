@@ -1,5 +1,7 @@
 #include "VM.h"
 
+#include <VirtualMachine/Op.h>
+
 #include <iostream>
 
 VM::VM()

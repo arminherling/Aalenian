@@ -1,5 +1,7 @@
 #include "ByteCodeDisassembler.h"
 
+#include <VirtualMachine/Op.h>
+
 namespace
 {
     const auto LongestOpNameSize = StringifyOp(Op::GreaterOrEqualInt32).size();

@@ -1,0 +1,35 @@
+#pragma once
+
+#include <Defines.h>
+
+#include <QString>
+
+enum Op : u8
+{
+    LoadBool,
+    NotBool,
+    EqualBool,
+    NotEqualBool,
+    LoadInt32,
+    AddInt32,
+    SubtractInt32,
+    MultiplyInt32,
+    DivideInt32,
+    NegateInt32,
+    EqualInt32,
+    NotEqualInt32,
+    GreaterInt32,
+    GreaterOrEqualInt32,
+    LessInt32,
+    LessOrEqualInt32,
+    FunctionCall,
+    Jump,
+    JumpIfFalse,
+    Move,
+    PrintBool,
+    PrintInt32,
+    PrintNewLine,
+    Halt
+};
+
+COMPILER_API QString StringifyOp(Op op);

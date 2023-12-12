@@ -2,17 +2,12 @@
 
 #include <Defines.h>
 #include <VirtualMachine/ByteCode.h>
+#include <VirtualMachine/CallFrame.h>
 #include <VirtualMachine/Register.h>
 #include <VirtualMachine/Value.h>
 
 #include <vector>
 #include <stack>
-
-struct CallFrame
-{
-    u16 returnAddress;
-    u16 baseRegister;
-};
 
 class COMPILER_API VM
 {

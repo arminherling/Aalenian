@@ -4,9 +4,7 @@
 
 struct COMPILER_API Register
 {
-    Register(u16 value) 
-        : index{ value } 
-    {}
+    Register(u16 value);
 
     u16 index;
 };

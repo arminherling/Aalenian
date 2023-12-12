@@ -101,6 +101,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\VirtualMachine\FunctionCallLocation.cpp" />
     <ClCompile Include="source\Debug\ByteCodeDisassembler.cpp" />
     <ClCompile Include="source\VirtualMachine\ByteCodeAssembler.cpp" />
     <ClCompile Include="source\VirtualMachine\ByteCodeGenerator.cpp" />
@@ -115,13 +116,20 @@
     <ClCompile Include="source\Text\SourceText.cpp" />
     <ClCompile Include="source\Syntax\Lexer.cpp" />
     <ClCompile Include="source\Syntax\TokenKind.cpp" />
+    <ClCompile Include="source\VirtualMachine\Label.cpp" />
+    <ClCompile Include="source\VirtualMachine\Op.cpp" />
+    <ClCompile Include="source\VirtualMachine\Register.cpp" />
     <ClCompile Include="source\VirtualMachine\VM.cpp" />
     <ClCompile Include="source\VirtualMachine\Value.cpp" />
+    <ClInclude Include="source\VirtualMachine\CallFrame.h" />
+    <ClInclude Include="source\VirtualMachine\FunctionCallLocation.h" />
     <ClInclude Include="source\Debug\ByteCodeDisassembler.h" />
     <ClInclude Include="source\VirtualMachine\ByteCodeAssembler.h" />
     <ClInclude Include="source\VirtualMachine\ByteCodeGenerator.h" />
     <ClInclude Include="source\VirtualMachine\ByteCode.h" />
+    <ClInclude Include="source\VirtualMachine\FunctionDeclaration.h" />
     <ClInclude Include="source\VirtualMachine\Label.h" />
+    <ClInclude Include="source\VirtualMachine\Op.h" />
     <ClInclude Include="source\VirtualMachine\Register.h" />
     <ClInclude Include="source\Compiler\File.h" />
     <ClInclude Include="source\Compiler\DiagnosticsBag.h" />

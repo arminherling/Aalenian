@@ -43,7 +43,7 @@ QString Stringify(TokenKind kind)
 	}
 }
 
-i32 COMPILER_API UnaryOperatorPrecedence(TokenKind kind)
+i32 UnaryOperatorPrecedence(TokenKind kind)
 {
 	if (kind == TokenKind::Minus)
 		return 4;
@@ -51,7 +51,7 @@ i32 COMPILER_API UnaryOperatorPrecedence(TokenKind kind)
 	return 0;
 }
 
-i32 COMPILER_API BinaryOperatorPrecedence(TokenKind kind)
+i32 BinaryOperatorPrecedence(TokenKind kind)
 {
 	switch (kind)
 	{

@@ -2,6 +2,7 @@
 
 #include <Defines.h>
 #include <VirtualMachine/ByteCode.h>
+#include <VirtualMachine/FunctionCallLocation.h>
 #include <VirtualMachine/Register.h>
 #include <VirtualMachine/Label.h>
 
@@ -43,4 +44,3 @@ public:
 private:
     ByteCode& m_byteCode;
 };
-

@@ -1,5 +1,7 @@
 #include "ByteCodeAssembler.h"
 
+#include <VirtualMachine/Op.h>
+
 ByteCodeAssembler::ByteCodeAssembler(ByteCode& byteCode)
     : m_byteCode{ byteCode }
 {
