@@ -154,18 +154,16 @@ FunctionDeclaration ByteCodeAssembler::declareFunction(const QString& name, u8 r
 FunctionCallLocation ByteCodeAssembler::emitFunctionCall(const QString& name, Register resultTarget)
 {
     m_byteCode.writeUInt8(Op::FunctionCall);
-    auto entryPointIndex = (u16)m_byteCode.data.size();
-    m_byteCode.writeUInt16(0xDEAD);
+    auto jumpTarget = writeJumpTarget();
     m_byteCode.writeUInt16(resultTarget.index);
-    return FunctionCallLocation{ name, entryPointIndex };
+    return FunctionCallLocation{ name, jumpTarget };
 }
 
 JumpTarget ByteCodeAssembler::emitJump()
 {
     m_byteCode.writeUInt8(Op::Jump);
-    auto targetIndex = (u16)m_byteCode.data.size();
-    m_byteCode.writeUInt16(0xDEAD);
-    return JumpTarget{ targetIndex };
+    auto jumpTarget = writeJumpTarget();
+    return jumpTarget;
 }
 
 void ByteCodeAssembler::emitJump(Label label)
@@ -178,9 +176,8 @@ JumpTarget ByteCodeAssembler::emitJumpIfFalse(Register value)
 {
     m_byteCode.writeUInt8(Op::JumpIfFalse);
     m_byteCode.writeUInt16(value.index);
-    auto targetIndex = (u16)m_byteCode.data.size();
-    m_byteCode.writeUInt16(0xDEAD);
-    return JumpTarget{ targetIndex };
+    auto jumpTarget = writeJumpTarget();
+    return jumpTarget;
 }
 
 void ByteCodeAssembler::emitJumpIfFalse(Register value, Label label)
@@ -190,9 +187,9 @@ void ByteCodeAssembler::emitJumpIfFalse(Register value, Label label)
     m_byteCode.writeUInt16(label.index);
 }
 
-void ByteCodeAssembler::patchJumpTarget(u16 jumpIndex, Label label)
+void ByteCodeAssembler::patchJump(JumpTarget jump, Label label)
 {
-    m_byteCode.writeUInt16(label.index, jumpIndex);
+    m_byteCode.writeUInt16(label.index, jump.index);
 }
 
 void ByteCodeAssembler::emitPrintBool(Register reg)
@@ -215,4 +212,11 @@ void ByteCodeAssembler::emitPrintNewLine()
 void ByteCodeAssembler::emitHalt()
 {
     m_byteCode.writeUInt8(Op::Halt);
+}
+
+JumpTarget ByteCodeAssembler::writeJumpTarget()
+{
+    auto targetIndex = (u16)m_byteCode.data.size();
+    m_byteCode.writeUInt16(0xDEAD);
+    return JumpTarget{ targetIndex };
 }

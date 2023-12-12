@@ -2,8 +2,8 @@
 
 FunctionCallLocation::FunctionCallLocation(
     const QString& name,
-    u16 targetIndex)
+    JumpTarget target)
     : name{ name }
-    , targetIndex{ targetIndex }
+    , target{ target }
 {
 }

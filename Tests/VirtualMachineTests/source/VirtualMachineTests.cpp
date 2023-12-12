@@ -649,7 +649,7 @@ private slots:
         auto jumpIndex = assembler.emitJump();
         assembler.emitLoadInt32(0, 20);
         auto endLabel = assembler.createLabel();
-        assembler.patchJumpTarget(jumpIndex.index, endLabel);
+        assembler.patchJump(jumpIndex, endLabel);
         assembler.emitHalt();
         VM vm;
 
@@ -686,7 +686,7 @@ private slots:
         auto jumpIndex = assembler.emitJumpIfFalse(0);
         assembler.emitLoadInt32(1, 20);
         auto endLabel = assembler.createLabel();
-        assembler.patchJumpTarget(jumpIndex.index, endLabel);
+        assembler.patchJump(jumpIndex, endLabel);
         assembler.emitHalt();
         VM vm;
 
@@ -793,7 +793,7 @@ private slots:
         assembler.emitAddInt32(0, 0, 3);                   //  i = i + 1
         assembler.emitJump(beginLabel);                    //  goto begin
         auto endLabel = assembler.createLabel();           // end:
-        assembler.patchJumpTarget(endJumpIndex.index, endLabel);
+        assembler.patchJump(endJumpIndex, endLabel);
         assembler.emitHalt();
         VM vm;
 
@@ -846,7 +846,7 @@ private slots:
         auto addFunctionDeclaration = assembler.declareFunction(addFunctionName, 1, 2);
         assembler.emitAddInt32(0, 1, 2);
         assembler.emitHalt();
-        assembler.patchJumpTarget(functionCallLocation.targetIndex, addFunctionDeclaration.entryPoint);
+        assembler.patchJump(functionCallLocation.target, addFunctionDeclaration.entryPoint);
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();

@@ -36,7 +36,7 @@ public:
     void emitJump(Label label);
     JumpTarget emitJumpIfFalse(Register value);
     void emitJumpIfFalse(Register value, Label label);
-    void patchJumpTarget(u16 jumpIndex, Label label);
+    void patchJump(JumpTarget jump, Label label);
     void emitPrintBool(Register reg);
     void emitPrintInt32(Register reg);
     void emitPrintNewLine();
@@ -44,4 +44,6 @@ public:
 
 private:
     ByteCode& m_byteCode;
+
+    JumpTarget writeJumpTarget();
 };
