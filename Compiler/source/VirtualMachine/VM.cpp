@@ -258,7 +258,10 @@ i32 VM::run(ByteCode& code)
                 auto functionEntryPoint = code.readUInt16(ip);
                 auto targetRegister = code.readUInt16(ip);
 
-                m_callFrames.push({ .returnAddress = ip, .baseRegister = targetRegister });
+                auto currentFrame = m_callFrames.top();
+                auto functionBaseRegister = u16(currentFrame.baseRegister + targetRegister);
+
+                m_callFrames.push({ .returnAddress = ip, .baseRegister = functionBaseRegister });
                 ip = functionEntryPoint;
 
                 break;
