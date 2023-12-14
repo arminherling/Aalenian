@@ -861,7 +861,7 @@ private slots:
     {
         //int fib(int x)
         //{
-        //    if ((x == 1) || (x == 0))
+        //    if (x < 2)
         //    {
         //        return x;
         //    }
@@ -883,36 +883,28 @@ private slots:
         assembler.emitHalt();
 
         assembler.declareFunction(fibFunctionName, 1, 1);
-        assembler.emitLoadInt32(2, 0);  // 0 literal
-        assembler.emitLoadInt32(3, 1);  // 1 literal
-        assembler.emitLoadInt32(4, 2);  // 2 literal
+        assembler.emitLoadInt32(2, 1);  // 1 literal
+        assembler.emitLoadInt32(3, 2);  // 2 literal
 
-        assembler.emitEqualInt32(5, 1, 2); // x == 0
-        assembler.emitNotBool(5, 5);       // invert because we dont have jump on true yet
-        auto ifJumpIndex1 = assembler.emitJumpIfFalse(5);
-        assembler.emitEqualInt32(6, 1, 3); // x == 1
-        assembler.emitNotBool(6, 6);       // invert because we dont have jump on true yet 
-        auto ifJumpIndex2 = assembler.emitJumpIfFalse(6);
-
-        // else branch
-        // 7 return for fib(x-1)
-        assembler.emitSubtractInt32(8, 1, 3); // x-1
-        assembler.emitFunctionCall(fibFunctionName, 7);
-
-        // 9 return for fib(x-2)
-        assembler.emitSubtractInt32(10, 1, 4); // x-2
-        assembler.emitFunctionCall(fibFunctionName, 9);
-
-        assembler.emitAddInt32(0, 7, 9);    // add both results
-        assembler.emitHalt();
-
-        // if branch
-        auto ifBranchLabel = assembler.createLabel();
+        assembler.emitLessInt32(4, 1, 3); // x == 0
+        auto elseJumpIndex = assembler.emitJumpIfFalse(4);
         assembler.emitMove(0, 1);   // move x to the return value
         assembler.emitHalt();
 
-        assembler.patchJump(ifJumpIndex1, ifBranchLabel);
-        assembler.patchJump(ifJumpIndex2, ifBranchLabel);
+        auto elseBranchLabel = assembler.createLabel();
+        // else branch
+        // 5 return for fib(x-1)
+        assembler.emitSubtractInt32(6, 1, 2); // x-1
+        assembler.emitFunctionCall(fibFunctionName, 5);
+
+        // 7 return for fib(x-2)
+        assembler.emitSubtractInt32(8, 1, 3); // x-2
+        assembler.emitFunctionCall(fibFunctionName, 7);
+
+        assembler.emitAddInt32(0, 5, 7);    // add both results
+        assembler.emitHalt();
+
+        assembler.patchJump(elseJumpIndex, elseBranchLabel);
         assembler.patchFunctionCalls();
         VM vm;
 
