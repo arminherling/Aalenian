@@ -24,6 +24,7 @@ enum Op : u8
     LessOrEqualInt32,
     FunctionCall,
     Jump,
+    JumpIfTrue,
     JumpIfFalse,
     Move,
     PrintBool,

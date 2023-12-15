@@ -33,6 +33,7 @@ private:
     void PrettyPrintLessOrEqualInt32();
     void PrettyPrintFunctionCall();
     void PrettyPrintJump();
+    void PrettyPrintJumpIfTrue();
     void PrettyPrintJumpIfFalse();
     void PrettyPrintMove();
     void PrettyPrintPrintBool();

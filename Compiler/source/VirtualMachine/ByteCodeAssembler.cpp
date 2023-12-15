@@ -174,6 +174,21 @@ void ByteCodeAssembler::emitJump(Label label)
     m_byteCode.writeUInt16(label.index);
 }
 
+JumpIndex ByteCodeAssembler::emitJumpIfTrue(Register value)
+{
+    m_byteCode.writeUInt8(Op::JumpIfTrue);
+    m_byteCode.writeUInt16(value.index);
+    auto jumpTarget = writeJumpTarget();
+    return jumpTarget;
+}
+
+void ByteCodeAssembler::emitJumpIfTrue(Register value, Label label)
+{
+    m_byteCode.writeUInt8(Op::JumpIfTrue);
+    m_byteCode.writeUInt16(value.index);
+    m_byteCode.writeUInt16(label.index);
+}
+
 JumpIndex ByteCodeAssembler::emitJumpIfFalse(Register value)
 {
     m_byteCode.writeUInt8(Op::JumpIfFalse);

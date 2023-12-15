@@ -142,6 +142,11 @@ void ByteCodeDisassembler::PrettyPrintOp()
             PrettyPrintJump();
             break;
         }
+        case Op::JumpIfTrue:
+        {
+            PrettyPrintJumpIfTrue();
+            break;
+        }
         case Op::JumpIfFalse:
         {
             PrettyPrintJumpIfFalse();
@@ -330,6 +335,14 @@ void ByteCodeDisassembler::PrettyPrintJump()
     auto target = m_byteCode.readUInt16(m_ip);
 
     stream() << StringifyAndPadOp(Op::Jump) << ' ' << StringifyAddress(target) << NewLine();
+}
+
+void ByteCodeDisassembler::PrettyPrintJumpIfTrue()
+{
+    auto condition = m_byteCode.readUInt16(m_ip);
+    auto target = m_byteCode.readUInt16(m_ip);
+
+    stream() << StringifyAndPadOp(Op::JumpIfTrue) << ' ' << StringifyRegister(condition) << ' ' << StringifyAddress(target) << NewLine();
 }
 
 void ByteCodeDisassembler::PrettyPrintJumpIfFalse()

@@ -274,6 +274,17 @@ i32 VM::run(ByteCode& code)
 
                 break;
             }
+            case Op::JumpIfTrue:
+            {
+                auto condition = code.readUInt16(ip);
+                auto target = code.readUInt16(ip);
+
+                auto conditionValue = getRelativeValue(condition);
+                if (conditionValue.asBool())
+                    ip = target;
+
+                break;
+            }
             case Op::JumpIfFalse:
             {
                 auto condition = code.readUInt16(ip);

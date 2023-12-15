@@ -40,6 +40,8 @@ QString StringifyOp(Op op)
             return QString("FunctionCall");
         case Op::Jump:
             return QString("Jump");
+        case Op::JumpIfTrue:
+            return QString("JumpIfTrue");
         case Op::JumpIfFalse:
             return QString("JumpIfFalse");
         case Op::Move:

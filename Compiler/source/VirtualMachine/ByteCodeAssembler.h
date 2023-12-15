@@ -34,6 +34,8 @@ public:
     FunctionCallLocation emitFunctionCall(const QString& name, Register resultTarget);
     JumpIndex emitJump();
     void emitJump(Label label);
+    JumpIndex emitJumpIfTrue(Register value);
+    void emitJumpIfTrue(Register value, Label label);
     JumpIndex emitJumpIfFalse(Register value);
     void emitJumpIfFalse(Register value, Label label);
     void patchJump(JumpIndex jump, Label label);

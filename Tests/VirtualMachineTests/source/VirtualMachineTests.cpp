@@ -665,6 +665,43 @@ private slots:
         QCOMPARE(loadedValue.asInt32(), 10);
     }
 
+    void JumpIfTrue_data()
+    {
+        QTest::addColumn<bool>("condition");
+        QTest::addColumn<i32>("expectedResult");
+
+        QTest::newRow("false -> 20") << false << 20;
+        QTest::newRow("true -> 10") << true << 10;
+    }
+
+    void JumpIfTrue()
+    {
+        QFETCH(bool, condition);
+        QFETCH(i32, expectedResult);
+
+        ByteCode code;
+        ByteCodeAssembler assembler{ code };
+        assembler.emitLoadBool(0, condition);
+        assembler.emitLoadInt32(1, 10);
+        auto jumpIndex = assembler.emitJumpIfTrue(0);
+        assembler.emitLoadInt32(1, 20);
+        auto endLabel = assembler.createLabel();
+        assembler.patchJump(jumpIndex, endLabel);
+        assembler.emitHalt();
+        VM vm;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        vm.run(code);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+        qDebug() << "Time: " << elapsed_time_ms << "ns";
+
+        auto loadedValue = vm.getValue(1);
+        QVERIFY(loadedValue.isInt32());
+        QCOMPARE(loadedValue.asInt32(), expectedResult);
+    }
+
     void JumpIfFalse_data()
     {
         QTest::addColumn<bool>("condition");
