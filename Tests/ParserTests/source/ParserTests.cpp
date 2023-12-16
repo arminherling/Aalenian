@@ -19,7 +19,7 @@ private slots:
         QTest::addColumn<QString>("errorFilePath");
 
         auto appDir = QDir(QCoreApplication::applicationDirPath());
-        auto testDataDir = QDir(appDir.filePath(QString("../../Tests/ParserTests/data")));
+        auto testDataDir = QDir(appDir.filePath(QString("../../Tests/Data")));
         auto absolutePath = testDataDir.absolutePath();
 
         QDirIterator it(absolutePath, QStringList() << QString("*.in"), QDir::Filter::Files, QDirIterator::IteratorFlag::Subdirectories);
@@ -66,9 +66,6 @@ private slots:
         auto output = printer.PrettyPrint();
 
         auto expectedOutput = File::ReadAllText(outputFilePath);
-
-        if (output != expectedOutput)
-            i32 i = 0;
 
         QCOMPARE(output, expectedOutput);
         if (!QFile::exists(errorFilePath))

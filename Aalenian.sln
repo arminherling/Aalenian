@@ -17,6 +17,141 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParserTests", "Tests\Parser
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VirtualMachineTests", "Tests\VirtualMachineTests\VirtualMachineTests.vcxproj", "{EE6F3ABB-3A06-4580-AC3B-CAEB330D293A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{6D1393A8-B1B8-496D-B5BE-429E711DE756}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Enum", "Enum", "{4557A6C9-434F-459C-8D4E-878C07A52A62}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\Data\Enum\baseType1.in = Tests\Data\Enum\baseType1.in
+		Tests\Data\Enum\baseType1.out = Tests\Data\Enum\baseType1.out
+		Tests\Data\Enum\customValues1.in = Tests\Data\Enum\customValues1.in
+		Tests\Data\Enum\customValues1.out = Tests\Data\Enum\customValues1.out
+		Tests\Data\Enum\defaultValues1.in = Tests\Data\Enum\defaultValues1.in
+		Tests\Data\Enum\defaultValues1.out = Tests\Data\Enum\defaultValues1.out
+		Tests\Data\Enum\empty1.in = Tests\Data\Enum\empty1.in
+		Tests\Data\Enum\empty1.out = Tests\Data\Enum\empty1.out
+		Tests\Data\Enum\valueAccess1.in = Tests\Data\Enum\valueAccess1.in
+		Tests\Data\Enum\valueAccess1.out = Tests\Data\Enum\valueAccess1.out
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Expressions", "Expressions", "{ED3682DF-D106-4B20-9CFD-59D88EF2D14B}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\Data\Expressions\addition1.in = Tests\Data\Expressions\addition1.in
+		Tests\Data\Expressions\addition1.out = Tests\Data\Expressions\addition1.out
+		Tests\Data\Expressions\addition2.in = Tests\Data\Expressions\addition2.in
+		Tests\Data\Expressions\addition2.out = Tests\Data\Expressions\addition2.out
+		Tests\Data\Expressions\chaining1.in = Tests\Data\Expressions\chaining1.in
+		Tests\Data\Expressions\chaining1.out = Tests\Data\Expressions\chaining1.out
+		Tests\Data\Expressions\chaining2.in = Tests\Data\Expressions\chaining2.in
+		Tests\Data\Expressions\chaining2.out = Tests\Data\Expressions\chaining2.out
+		Tests\Data\Expressions\chaining3.in = Tests\Data\Expressions\chaining3.in
+		Tests\Data\Expressions\chaining3.out = Tests\Data\Expressions\chaining3.out
+		Tests\Data\Expressions\division1.in = Tests\Data\Expressions\division1.in
+		Tests\Data\Expressions\division1.out = Tests\Data\Expressions\division1.out
+		Tests\Data\Expressions\division2.in = Tests\Data\Expressions\division2.in
+		Tests\Data\Expressions\division2.out = Tests\Data\Expressions\division2.out
+		Tests\Data\Expressions\grouping1.in = Tests\Data\Expressions\grouping1.in
+		Tests\Data\Expressions\grouping1.out = Tests\Data\Expressions\grouping1.out
+		Tests\Data\Expressions\grouping2.in = Tests\Data\Expressions\grouping2.in
+		Tests\Data\Expressions\grouping2.out = Tests\Data\Expressions\grouping2.out
+		Tests\Data\Expressions\grouping3.in = Tests\Data\Expressions\grouping3.in
+		Tests\Data\Expressions\grouping3.out = Tests\Data\Expressions\grouping3.out
+		Tests\Data\Expressions\mixed1.in = Tests\Data\Expressions\mixed1.in
+		Tests\Data\Expressions\mixed1.out = Tests\Data\Expressions\mixed1.out
+		Tests\Data\Expressions\mixed2.in = Tests\Data\Expressions\mixed2.in
+		Tests\Data\Expressions\mixed2.out = Tests\Data\Expressions\mixed2.out
+		Tests\Data\Expressions\mixed3.in = Tests\Data\Expressions\mixed3.in
+		Tests\Data\Expressions\mixed3.out = Tests\Data\Expressions\mixed3.out
+		Tests\Data\Expressions\mixed4.in = Tests\Data\Expressions\mixed4.in
+		Tests\Data\Expressions\mixed4.out = Tests\Data\Expressions\mixed4.out
+		Tests\Data\Expressions\multiplication1.in = Tests\Data\Expressions\multiplication1.in
+		Tests\Data\Expressions\multiplication1.out = Tests\Data\Expressions\multiplication1.out
+		Tests\Data\Expressions\multiplication2.in = Tests\Data\Expressions\multiplication2.in
+		Tests\Data\Expressions\multiplication2.out = Tests\Data\Expressions\multiplication2.out
+		Tests\Data\Expressions\negation1.in = Tests\Data\Expressions\negation1.in
+		Tests\Data\Expressions\negation1.out = Tests\Data\Expressions\negation1.out
+		Tests\Data\Expressions\negation2.in = Tests\Data\Expressions\negation2.in
+		Tests\Data\Expressions\negation2.out = Tests\Data\Expressions\negation2.out
+		Tests\Data\Expressions\negation3.in = Tests\Data\Expressions\negation3.in
+		Tests\Data\Expressions\negation3.out = Tests\Data\Expressions\negation3.out
+		Tests\Data\Expressions\subtraction1.in = Tests\Data\Expressions\subtraction1.in
+		Tests\Data\Expressions\subtraction1.out = Tests\Data\Expressions\subtraction1.out
+		Tests\Data\Expressions\subtraction2.in = Tests\Data\Expressions\subtraction2.in
+		Tests\Data\Expressions\subtraction2.out = Tests\Data\Expressions\subtraction2.out
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FlowControl", "FlowControl", "{92551715-8977-47FF-A0B2-291D461479C5}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\Data\FlowControl\if1.in = Tests\Data\FlowControl\if1.in
+		Tests\Data\FlowControl\if1.out = Tests\Data\FlowControl\if1.out
+		Tests\Data\FlowControl\return1.in = Tests\Data\FlowControl\return1.in
+		Tests\Data\FlowControl\return1.out = Tests\Data\FlowControl\return1.out
+		Tests\Data\FlowControl\return2.in = Tests\Data\FlowControl\return2.in
+		Tests\Data\FlowControl\return2.out = Tests\Data\FlowControl\return2.out
+		Tests\Data\FlowControl\return3.in = Tests\Data\FlowControl\return3.in
+		Tests\Data\FlowControl\return3.out = Tests\Data\FlowControl\return3.out
+		Tests\Data\FlowControl\while1.in = Tests\Data\FlowControl\while1.in
+		Tests\Data\FlowControl\while1.out = Tests\Data\FlowControl\while1.out
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global", "Global", "{170649E9-BBB5-4D3A-881D-0701F74920A6}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\Data\Global\assignment1.in = Tests\Data\Global\assignment1.in
+		Tests\Data\Global\assignment1.out = Tests\Data\Global\assignment1.out
+		Tests\Data\Global\assignment2.in = Tests\Data\Global\assignment2.in
+		Tests\Data\Global\assignment2.out = Tests\Data\Global\assignment2.out
+		Tests\Data\Global\assignment3.in = Tests\Data\Global\assignment3.in
+		Tests\Data\Global\assignment3.out = Tests\Data\Global\assignment3.out
+		Tests\Data\Global\assignment4.in = Tests\Data\Global\assignment4.in
+		Tests\Data\Global\assignment4.out = Tests\Data\Global\assignment4.out
+		Tests\Data\Global\assignments5.in = Tests\Data\Global\assignments5.in
+		Tests\Data\Global\assignments5.out = Tests\Data\Global\assignments5.out
+		Tests\Data\Global\functionCall1.in = Tests\Data\Global\functionCall1.in
+		Tests\Data\Global\functionCall1.out = Tests\Data\Global\functionCall1.out
+		Tests\Data\Global\functionCall2.in = Tests\Data\Global\functionCall2.in
+		Tests\Data\Global\functionCall2.out = Tests\Data\Global\functionCall2.out
+		Tests\Data\Global\functionCall3.in = Tests\Data\Global\functionCall3.in
+		Tests\Data\Global\functionCall3.out = Tests\Data\Global\functionCall3.out
+		Tests\Data\Global\functionCall4.in = Tests\Data\Global\functionCall4.in
+		Tests\Data\Global\functionCall4.out = Tests\Data\Global\functionCall4.out
+		Tests\Data\Global\functionCall5.in = Tests\Data\Global\functionCall5.in
+		Tests\Data\Global\functionCall5.out = Tests\Data\Global\functionCall5.out
+		Tests\Data\Global\functionCall6.in = Tests\Data\Global\functionCall6.in
+		Tests\Data\Global\functionCall6.out = Tests\Data\Global\functionCall6.out
+		Tests\Data\Global\functionCall7.in = Tests\Data\Global\functionCall7.in
+		Tests\Data\Global\functionCall7.out = Tests\Data\Global\functionCall7.out
+		Tests\Data\Global\functionCall8.in = Tests\Data\Global\functionCall8.in
+		Tests\Data\Global\functionCall8.out = Tests\Data\Global\functionCall8.out
+		Tests\Data\Global\functionDefinition1.in = Tests\Data\Global\functionDefinition1.in
+		Tests\Data\Global\functionDefinition1.out = Tests\Data\Global\functionDefinition1.out
+		Tests\Data\Global\functionDefinition2.in = Tests\Data\Global\functionDefinition2.in
+		Tests\Data\Global\functionDefinition2.out = Tests\Data\Global\functionDefinition2.out
+		Tests\Data\Global\functionDefinition3.in = Tests\Data\Global\functionDefinition3.in
+		Tests\Data\Global\functionDefinition3.out = Tests\Data\Global\functionDefinition3.out
+		Tests\Data\Global\functionDefinition4.in = Tests\Data\Global\functionDefinition4.in
+		Tests\Data\Global\functionDefinition4.out = Tests\Data\Global\functionDefinition4.out
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Type", "Type", "{0E8FF76D-706A-4B6B-931D-583A0525AFC6}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\Data\Type\empty1.in = Tests\Data\Type\empty1.in
+		Tests\Data\Type\empty1.out = Tests\Data\Type\empty1.out
+		Tests\Data\Type\fields1.in = Tests\Data\Type\fields1.in
+		Tests\Data\Type\fields1.out = Tests\Data\Type\fields1.out
+		Tests\Data\Type\fields2.in = Tests\Data\Type\fields2.in
+		Tests\Data\Type\fields2.out = Tests\Data\Type\fields2.out
+		Tests\Data\Type\method1.in = Tests\Data\Type\method1.in
+		Tests\Data\Type\method1.out = Tests\Data\Type\method1.out
+		Tests\Data\Type\method2.in = Tests\Data\Type\method2.in
+		Tests\Data\Type\method2.out = Tests\Data\Type\method2.out
+		Tests\Data\Type\method3.in = Tests\Data\Type\method3.in
+		Tests\Data\Type\method3.out = Tests\Data\Type\method3.out
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Variant", "Variant", "{04F82E58-B1F6-403B-BDBA-EFA646AE65AF}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\Data\Variant\variant1.in = Tests\Data\Variant\variant1.in
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -82,6 +217,13 @@ Global
 		{3F7ACACD-B81B-4CD2-A4C5-0FAD195EA617} = {6974978B-75AB-4D24-BC54-1D5CEFAC0B43}
 		{144F645F-38BA-4DD2-B37A-DBE6A6877C4A} = {6974978B-75AB-4D24-BC54-1D5CEFAC0B43}
 		{EE6F3ABB-3A06-4580-AC3B-CAEB330D293A} = {6974978B-75AB-4D24-BC54-1D5CEFAC0B43}
+		{6D1393A8-B1B8-496D-B5BE-429E711DE756} = {6974978B-75AB-4D24-BC54-1D5CEFAC0B43}
+		{4557A6C9-434F-459C-8D4E-878C07A52A62} = {6D1393A8-B1B8-496D-B5BE-429E711DE756}
+		{ED3682DF-D106-4B20-9CFD-59D88EF2D14B} = {6D1393A8-B1B8-496D-B5BE-429E711DE756}
+		{92551715-8977-47FF-A0B2-291D461479C5} = {6D1393A8-B1B8-496D-B5BE-429E711DE756}
+		{170649E9-BBB5-4D3A-881D-0701F74920A6} = {6D1393A8-B1B8-496D-B5BE-429E711DE756}
+		{0E8FF76D-706A-4B6B-931D-583A0525AFC6} = {6D1393A8-B1B8-496D-B5BE-429E711DE756}
+		{04F82E58-B1F6-403B-BDBA-EFA646AE65AF} = {6D1393A8-B1B8-496D-B5BE-429E711DE756}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E593283B-C065-428C-9D9B-9D66363C3215}
