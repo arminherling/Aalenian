@@ -30,8 +30,8 @@ private slots:
             auto fullFilePathWithoutExtension = directory.filePath(file.baseName());
 
             auto inPath = QDir::cleanPath(fullFilePathWithoutExtension + QString(".in"));
-            auto outPath = QDir::cleanPath(fullFilePathWithoutExtension + QString(".out"));
-            auto errorPath = QDir::cleanPath(fullFilePathWithoutExtension + QString(".error"));
+            auto outPath = QDir::cleanPath(fullFilePathWithoutExtension + QString(".out_parse"));
+            auto errorPath = QDir::cleanPath(fullFilePathWithoutExtension + QString(".error_parse"));
 
             auto testName = directory.dirName() + '/' + file.completeBaseName();
             QTest::newRow(testName.toStdString().c_str()) << inPath << outPath << errorPath;
