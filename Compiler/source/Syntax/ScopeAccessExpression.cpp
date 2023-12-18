@@ -1,6 +1,6 @@
-#include "ScopeAccess.h"
+#include "ScopeAccessExpression.h"
 
-ScopeAccess::ScopeAccess(
+ScopeAccessExpression::ScopeAccessExpression(
     const Token& doubleColon,
     Expression* expression)
     : Expression(NodeKind::ScopeAccess)

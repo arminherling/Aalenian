@@ -13,7 +13,7 @@
 #include <Syntax/BinaryExpression.h>
 #include <Syntax/DiscardLiteral.h>
 #include <Syntax/MemberAccessExpression.h>
-#include <Syntax/ScopeAccess.h>
+#include <Syntax/ScopeAccessExpression.h>
 #include <Syntax/Error.h>
 #include <Syntax/FunctionCallExpression.h>
 
@@ -423,7 +423,7 @@ Expression* Parser::ParsePrimaryExpression()
         {
             AdvanceCurrentIndex();
             auto expression = ParseFunctionCallOrNameExpression();
-            return new ScopeAccess(currentToken, expression);
+            return new ScopeAccessExpression(currentToken, expression);
         }
         default:
         {

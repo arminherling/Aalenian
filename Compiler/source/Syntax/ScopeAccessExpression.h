@@ -4,10 +4,10 @@
 #include <Syntax/Expression.h>
 #include <Syntax/Token.h>
 
-class COMPILER_API ScopeAccess : public Expression
+class COMPILER_API ScopeAccessExpression : public Expression
 {
 public:
-    ScopeAccess(
+    ScopeAccessExpression(
         const Token& doubleColon, 
         Expression* expression);
 

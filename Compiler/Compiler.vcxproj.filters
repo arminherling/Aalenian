@@ -131,7 +131,7 @@
     <ClCompile Include="source\Syntax\MemberAccessExpression.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Syntax\ScopeAccess.cpp">
+    <ClCompile Include="source\Syntax\ScopeAccessExpression.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Syntax\ParametersNode.cpp">
@@ -316,7 +316,7 @@
     <ClInclude Include="source\Syntax\MemberAccessExpression.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Syntax\ScopeAccess.h">
+    <ClInclude Include="source\Syntax\ScopeAccessExpression.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Syntax\ParametersNode.h">

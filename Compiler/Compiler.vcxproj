@@ -126,7 +126,7 @@
     <ClCompile Include="source\Syntax\ParameterNode.cpp" />
     <ClCompile Include="source\Syntax\ParametersNode.cpp" />
     <ClCompile Include="source\Syntax\ReturnStatement.cpp" />
-    <ClCompile Include="source\Syntax\ScopeAccess.cpp" />
+    <ClCompile Include="source\Syntax\ScopeAccessExpression.cpp" />
     <ClCompile Include="source\Syntax\Statement.cpp" />
     <ClCompile Include="source\Syntax\Type.cpp" />
     <ClCompile Include="source\Syntax\TypeDefinitionStatement.cpp" />
@@ -178,7 +178,7 @@
     <ClInclude Include="source\Syntax\ParameterNode.h" />
     <ClInclude Include="source\Syntax\ParametersNode.h" />
     <ClInclude Include="source\Syntax\ReturnStatement.h" />
-    <ClInclude Include="source\Syntax\ScopeAccess.h" />
+    <ClInclude Include="source\Syntax\ScopeAccessExpression.h" />
     <ClInclude Include="source\Syntax\Statement.h" />
     <ClInclude Include="source\Syntax\Type.h" />
     <ClInclude Include="source\Syntax\TypeDefinitionStatement.h" />
