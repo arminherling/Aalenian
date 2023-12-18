@@ -4,7 +4,7 @@ EnumDefinitionStatement::EnumDefinitionStatement(
     const Token& keyword,
     const Token& name,
     const std::optional<Type>& baseType,
-    Block* body)
+    BlockNode* body)
     : Statement(NodeKind::EnumDefinitionStatement)
     , m_keyword{ keyword }
     , m_name{ name }

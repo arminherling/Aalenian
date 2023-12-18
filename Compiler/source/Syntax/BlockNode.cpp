@@ -1,6 +1,6 @@
-#include "Block.h"
+#include "BlockNode.h"
 
-Block::Block(
+BlockNode::BlockNode(
     const Token& openBracket,
     const QList<Statement*>& statements,
     const Token& closeBracket)

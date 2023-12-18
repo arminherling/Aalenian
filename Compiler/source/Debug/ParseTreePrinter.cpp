@@ -184,7 +184,7 @@ void ParseTreePrinter::PrettyPrintFunctionDefinitionStatement(FunctionDefinition
     PushIndentation();
     stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
     PrettyPrintParameters(statement->parameters());
-    PrettyPrintBlock(statement->body());
+    PrettyPrintBlockNode(statement->body());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 }
@@ -201,7 +201,7 @@ void ParseTreePrinter::PrettyPrintEnumDefinitionStatement(EnumDefinitionStatemen
     if (statement->baseType().has_value())
         PrettyPrintType(statement->baseType().value());
 
-    PrettyPrintBlock(statement->body());
+    PrettyPrintBlockNode(statement->body());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 }
@@ -232,7 +232,7 @@ void ParseTreePrinter::PrettyPrintTypeDefinitionStatement(TypeDefinitionStatemen
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
     stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
-    PrettyPrintBlock(statement->body());
+    PrettyPrintBlockNode(statement->body());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 }
@@ -273,7 +273,7 @@ void ParseTreePrinter::PrettyPrintMethodDefinitionStatement(MethodDefinitionStat
     PushIndentation();
     stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
     PrettyPrintParameters(statement->parameters());
-    PrettyPrintBlock(statement->body());
+    PrettyPrintBlockNode(statement->body());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 }
@@ -289,7 +289,7 @@ void ParseTreePrinter::PrettyPrintIfStatement(IfStatement* statement)
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 
-    PrettyPrintBlock(statement->body());
+    PrettyPrintBlockNode(statement->body());
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
@@ -306,7 +306,7 @@ void ParseTreePrinter::PrettyPrintWhileStatement(WhileStatement* statement)
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 
-    PrettyPrintBlock(statement->body());
+    PrettyPrintBlockNode(statement->body());
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
@@ -376,7 +376,7 @@ void ParseTreePrinter::PrettyPrintParameters(Parameters* node)
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-void ParseTreePrinter::PrettyPrintBlock(Block* block)
+void ParseTreePrinter::PrettyPrintBlockNode(BlockNode* block)
 {
     const auto& statements = block->statements();
     stream() << Indentation() << StringifyNodeKind(block->kind()) << QString("(%1): {").arg(statements.size()) << NewLine();

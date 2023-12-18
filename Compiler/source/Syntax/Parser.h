@@ -6,7 +6,7 @@
 #include <Syntax/ArgumentNode.h>
 #include <Syntax/ArgumentsNode.h>
 #include <Syntax/Bool.h>
-#include <Syntax/Block.h>
+#include <Syntax/BlockNode.h>
 #include <Syntax/EnumMember.h>
 #include <Syntax/Expression.h>
 #include <Syntax/Grouping.h>
@@ -52,11 +52,11 @@ private:
     Expression* ParseFunctionCall();
     Parameters* ParseParameters();
     ArgumentsNode* ParseArgumentsNode();
-    Block* ParseFunctionBody();
-    Block* ParseEnumBody();
-    Block* ParseTypeBody();
-    Block* ParseMethodBody();
-    Block* ParseBlock(StatementScope scope);
+    BlockNode* ParseFunctionBody();
+    BlockNode* ParseEnumBody();
+    BlockNode* ParseTypeBody();
+    BlockNode* ParseMethodBody();
+    BlockNode* ParseBlockNode(StatementScope scope);
     Parameter* ParseParameter();
     ArgumentNode* ParseArgumentNode();
     Type ParseType();

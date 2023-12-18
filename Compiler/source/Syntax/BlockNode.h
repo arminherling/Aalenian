@@ -6,10 +6,10 @@
 #include <Syntax/Statement.h>
 #include <QList>
 
-class COMPILER_API Block : public Node
+class COMPILER_API BlockNode : public Node
 {
 public:
-    Block(
+    BlockNode(
         const Token& openBracket, 
         const QList<Statement*>& statements, 
         const Token& closeBracket);

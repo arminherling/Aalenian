@@ -4,7 +4,7 @@ FunctionDefinitionStatement::FunctionDefinitionStatement(
     const Token& keyword,
     const Token& name,
     Parameters* parameters,
-    Block* body)
+    BlockNode* body)
     : Statement(NodeKind::FunctionDefinitionStatement)
     , m_keyword{ keyword }
     , m_name{ name }

@@ -104,7 +104,7 @@
     <ClCompile Include="source\Syntax\ExpressionStatement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Syntax\Block.cpp">
+    <ClCompile Include="source\Syntax\BlockNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Syntax\IfStatement.cpp">
@@ -289,7 +289,7 @@
     <ClInclude Include="source\Syntax\ExpressionStatement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Syntax\Block.h">
+    <ClInclude Include="source\Syntax\BlockNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Syntax\IfStatement.h">

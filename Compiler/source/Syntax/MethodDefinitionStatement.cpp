@@ -4,7 +4,7 @@ MethodDefinitionStatement::MethodDefinitionStatement(
     const Token& keyword,
     const Token& name,
     Parameters* parameters,
-    Block* body)
+    BlockNode* body)
     : Statement(NodeKind::MethodDefinitionStatement)
     , m_keyword{ keyword }
     , m_name{ name }

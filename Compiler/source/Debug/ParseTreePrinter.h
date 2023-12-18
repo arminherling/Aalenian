@@ -23,7 +23,7 @@
 #include <Syntax/Bool.h>
 #include <Syntax/Name.h>
 #include <Syntax/Number.h>
-#include <Syntax/Bool.h>
+#include <Syntax/BlockNode.h>
 #include <Syntax/Grouping.h>
 #include <Syntax/UnaryExpression.h>
 #include <Syntax/BinaryExpression.h>
@@ -56,7 +56,7 @@ private:
     void PrettyPrintArgumentsNode(ArgumentsNode* arguments);
     void PrettyPrintParameter(Parameter* parameter);
     void PrettyPrintParameters(Parameters* parameters);
-    void PrettyPrintBlock(Block* block);
+    void PrettyPrintBlockNode(BlockNode* block);
 
     void PrettyPrintDiscard(Discard* discard);
     void PrettyPrintFunctionCall(FunctionCall* functionCall);

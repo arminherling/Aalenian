@@ -3,7 +3,7 @@
 WhileStatement::WhileStatement(
     const Token& ifKeyword,
     Expression* condition,
-    Block* body)
+    BlockNode* body)
     : Statement(NodeKind::WhileStatement)
     , m_ifKeyword{ ifKeyword }
     , m_condition{ condition }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Defines.h>
-#include <Syntax/Block.h>
+#include <Syntax/BlockNode.h>
 #include <Syntax/Expression.h>
 #include <Syntax/Statement.h>
 #include <Syntax/Token.h>
@@ -12,13 +12,13 @@ public:
     WhileStatement(
         const Token& ifKeyword, 
         Expression* condition, 
-        Block* body);
+        BlockNode* body);
 
     [[nodiscard]] Expression* condition() noexcept { return m_condition; }
-    [[nodiscard]] Block* body() noexcept { return m_body; }
+    [[nodiscard]] BlockNode* body() noexcept { return m_body; }
 
 private:
     Token m_ifKeyword;
     Expression* m_condition;
-    Block* m_body;
+    BlockNode* m_body;
 };

@@ -3,7 +3,7 @@
 IfStatement::IfStatement(
     const Token& ifKeyword,
     Expression* condition,
-    Block* body)
+    BlockNode* body)
     : Statement(NodeKind::IfStatement)
     , m_ifKeyword{ ifKeyword }
     , m_condition{ condition }

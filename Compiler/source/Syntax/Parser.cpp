@@ -292,7 +292,7 @@ Statement* Parser::ParseIfStatement(StatementScope scope)
 {
     auto keyword = AdvanceOnMatch(TokenKind::Identifier);
     auto condition = ParseExpression();
-    auto block = ParseBlock(scope);
+    auto block = ParseBlockNode(scope);
 
     return new IfStatement(keyword, condition, block);
 }
@@ -301,7 +301,7 @@ Statement* Parser::ParseWhileStatement(StatementScope scope)
 {
     auto keyword = AdvanceOnMatch(TokenKind::Identifier);
     auto condition = ParseExpression();
-    auto block = ParseBlock(scope);
+    auto block = ParseBlockNode(scope);
 
     return new WhileStatement(keyword, condition, block);
 }
@@ -532,33 +532,33 @@ EnumMember* Parser::ParseEnumMember()
     return new EnumMember(memberName);
 }
 
-Block* Parser::ParseFunctionBody()
+BlockNode* Parser::ParseFunctionBody()
 {
-    return ParseBlock(StatementScope::Function);
+    return ParseBlockNode(StatementScope::Function);
 }
 
-Block* Parser::ParseEnumBody()
+BlockNode* Parser::ParseEnumBody()
 {
-    return ParseBlock(StatementScope::Enum);
+    return ParseBlockNode(StatementScope::Enum);
 }
 
-Block* Parser::ParseTypeBody()
+BlockNode* Parser::ParseTypeBody()
 {
-    return ParseBlock(StatementScope::Type);
+    return ParseBlockNode(StatementScope::Type);
 }
 
-Block* Parser::ParseMethodBody()
+BlockNode* Parser::ParseMethodBody()
 {
-    return ParseBlock(StatementScope::Method);
+    return ParseBlockNode(StatementScope::Method);
 }
 
-Block* Parser::ParseBlock(StatementScope scope)
+BlockNode* Parser::ParseBlockNode(StatementScope scope)
 {
     auto openBracket = AdvanceOnMatch(TokenKind::OpenBracket);
     auto statements = ParseStatements(scope);
     auto closeBracket = AdvanceOnMatch(TokenKind::CloseBracket);
 
-    return new Block(openBracket, statements, closeBracket);
+    return new BlockNode(openBracket, statements, closeBracket);
 }
 
 Parameter* Parser::ParseParameter()
