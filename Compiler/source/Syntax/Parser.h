@@ -48,8 +48,8 @@ private:
     Expression* ParseExpression();
     Expression* ParseBinaryExpression(i32 parentPrecedence);
     Expression* ParsePrimaryExpression();
-    Expression* ParseFunctionCallOrName();
-    Expression* ParseFunctionCall();
+    Expression* ParseFunctionCallOrNameExpression();
+    Expression* ParseFunctionCallExpression();
     Parameters* ParseParameters();
     ArgumentsNode* ParseArgumentsNode();
     BlockNode* ParseFunctionBody();

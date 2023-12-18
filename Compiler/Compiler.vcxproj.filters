@@ -158,7 +158,7 @@
     <ClCompile Include="source\Syntax\Error.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Syntax\FunctionCall.cpp">
+    <ClCompile Include="source\Syntax\FunctionCallExpression.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Syntax\MethodDefinitionStatement.cpp">
@@ -325,7 +325,7 @@
     <ClInclude Include="source\Syntax\ArgumentsNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Syntax\FunctionCall.h">
+    <ClInclude Include="source\Syntax\FunctionCallExpression.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Syntax\FunctionDefinitionStatement.h">

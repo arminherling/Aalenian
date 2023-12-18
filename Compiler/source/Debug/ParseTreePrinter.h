@@ -18,7 +18,7 @@
 #include <Syntax/Parameter.h>
 #include <Syntax/Parameters.h>
 #include <Syntax/DiscardLiteral.h>
-#include <Syntax/FunctionCall.h>
+#include <Syntax/FunctionCallExpression.h>
 #include <Syntax/Type.h>
 #include <Syntax/BoolLiteral.h>
 #include <Syntax/Name.h>
@@ -59,7 +59,7 @@ private:
     void PrettyPrintBlockNode(BlockNode* block);
 
     void PrettyPrintDiscardLiteral(DiscardLiteral* discard);
-    void PrettyPrintFunctionCall(FunctionCall* functionCall);
+    void PrettyPrintFunctionCallExpression(FunctionCallExpression* functionCall);
     void PrettyPrintType(const Type& type);
     void PrettyPrintBoolLiteral(BoolLiteral* node);
     void PrettyPrintName(Name* name);

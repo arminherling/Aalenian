@@ -95,7 +95,7 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
         }
         case NodeKind::FunctionCall:
         {
-            PrettyPrintFunctionCall((FunctionCall*)node);
+            PrettyPrintFunctionCallExpression((FunctionCallExpression*)node);
             break;
         }
         case NodeKind::Bool:
@@ -394,7 +394,7 @@ void ParseTreePrinter::PrettyPrintDiscardLiteral(DiscardLiteral* discard)
     stream() << Indentation() << StringifyNodeKind(discard->kind()) << ": _" << NewLine();
 }
 
-void ParseTreePrinter::PrettyPrintFunctionCall(FunctionCall* functionCall)
+void ParseTreePrinter::PrettyPrintFunctionCallExpression(FunctionCallExpression* functionCall)
 {
     auto nameToken = functionCall->name();
     auto nameLexeme = m_parseTree.Tokens().GetLexeme(nameToken.kindIndex);

@@ -5,10 +5,10 @@
 #include <Syntax/Token.h>
 #include <Syntax/ArgumentsNode.h>
 
-class COMPILER_API FunctionCall : public Expression
+class COMPILER_API FunctionCallExpression : public Expression
 {
 public:
-    FunctionCall(
+    FunctionCallExpression(
         const Token& nameToken, 
         ArgumentsNode* arguments);
 

@@ -1,6 +1,6 @@
-#include "FunctionCall.h"
+#include "FunctionCallExpression.h"
 
-FunctionCall::FunctionCall(
+FunctionCallExpression::FunctionCallExpression(
     const Token& nameToken, 
     ArgumentsNode* arguments)
     : Expression(NodeKind::FunctionCall)

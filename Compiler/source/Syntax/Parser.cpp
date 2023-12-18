@@ -15,7 +15,7 @@
 #include <Syntax/MemberAccess.h>
 #include <Syntax/ScopeAccess.h>
 #include <Syntax/Error.h>
-#include <Syntax/FunctionCall.h>
+#include <Syntax/FunctionCallExpression.h>
 
 bool IsFunctionDefinitionKeyword(const QStringView& lexeme)
 {
@@ -403,7 +403,7 @@ Expression* Parser::ParsePrimaryExpression()
             if (maybeBool.has_value())
                 return maybeBool.value();
 
-            return ParseFunctionCallOrName();
+            return ParseFunctionCallOrNameExpression();
         }
         case TokenKind::Number:
         {
@@ -416,13 +416,13 @@ Expression* Parser::ParsePrimaryExpression()
         case TokenKind::Dot:
         {
             AdvanceCurrentIndex();
-            auto expression = ParseFunctionCallOrName();
+            auto expression = ParseFunctionCallOrNameExpression();
             return new MemberAccess(currentToken, expression);
         }
         case TokenKind::DoubleColon:
         {
             AdvanceCurrentIndex();
-            auto expression = ParseFunctionCallOrName();
+            auto expression = ParseFunctionCallOrNameExpression();
             return new ScopeAccess(currentToken, expression);
         }
         default:
@@ -436,13 +436,13 @@ Expression* Parser::ParsePrimaryExpression()
     }
 }
 
-Expression* Parser::ParseFunctionCallOrName()
+Expression* Parser::ParseFunctionCallOrNameExpression()
 {
     auto nextToken = NextToken();
 
     if (nextToken.kind == TokenKind::OpenParenthesis)
     {
-        return ParseFunctionCall();
+        return ParseFunctionCallExpression();
     }
     else
     {
@@ -450,11 +450,11 @@ Expression* Parser::ParseFunctionCallOrName()
     }
 }
 
-Expression* Parser::ParseFunctionCall()
+Expression* Parser::ParseFunctionCallExpression()
 {
     auto name = AdvanceOnMatch(TokenKind::Identifier);
     auto arguments = ParseArgumentsNode();
-    return new FunctionCall(name, arguments);
+    return new FunctionCallExpression(name, arguments);
 }
 
 ArgumentsNode* Parser::ParseArgumentsNode()
