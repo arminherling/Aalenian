@@ -11,7 +11,7 @@
 #include <Syntax/ReturnStatement.h>
 #include <Syntax/UnaryExpression.h>
 #include <Syntax/BinaryExpression.h>
-#include <Syntax/Discard.h>
+#include <Syntax/DiscardLiteral.h>
 #include <Syntax/MemberAccess.h>
 #include <Syntax/ScopeAccess.h>
 #include <Syntax/Error.h>
@@ -395,7 +395,7 @@ Expression* Parser::ParsePrimaryExpression()
         case TokenKind::Underscore:
         {
             AdvanceCurrentIndex();
-            return new Discard(currentToken);
+            return new DiscardLiteral(currentToken);
         }
         case TokenKind::Identifier:
         {

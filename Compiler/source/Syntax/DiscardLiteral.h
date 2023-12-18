@@ -4,8 +4,8 @@
 #include <Syntax/Expression.h>
 #include <Syntax/Token.h>
 
-class COMPILER_API Discard : public Expression
+class COMPILER_API DiscardLiteral : public Expression
 {
 public:
-    Discard(const Token& token);
+    DiscardLiteral(const Token& token);
 };

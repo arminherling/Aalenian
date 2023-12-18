@@ -90,7 +90,7 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
         }
         case NodeKind::Discard:
         {
-            PrettyPrintDiscard((Discard*)node);
+            PrettyPrintDiscardLiteral((DiscardLiteral*)node);
             break;
         }
         case NodeKind::FunctionCall:
@@ -389,7 +389,7 @@ void ParseTreePrinter::PrettyPrintBlockNode(BlockNode* block)
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-void ParseTreePrinter::PrettyPrintDiscard(Discard* discard)
+void ParseTreePrinter::PrettyPrintDiscardLiteral(DiscardLiteral* discard)
 {
     stream() << Indentation() << StringifyNodeKind(discard->kind()) << ": _" << NewLine();
 }

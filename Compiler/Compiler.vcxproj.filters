@@ -116,7 +116,7 @@
     <ClCompile Include="source\Syntax\ReturnStatement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Syntax\Discard.cpp">
+    <ClCompile Include="source\Syntax\DiscardLiteral.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Syntax\Grouping.cpp">
@@ -301,7 +301,7 @@
     <ClInclude Include="source\Syntax\ReturnStatement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Syntax\Discard.h">
+    <ClInclude Include="source\Syntax\DiscardLiteral.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Syntax\Grouping.h">
