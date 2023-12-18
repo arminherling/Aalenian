@@ -3,8 +3,8 @@
 #include <Defines.h>
 #include <Compiler/DiagnosticsBag.h>
 #include <Syntax/TokenBuffer.h>
-#include <Syntax/Argument.h>
-#include <Syntax/Arguments.h>
+#include <Syntax/ArgumentNode.h>
+#include <Syntax/ArgumentsNode.h>
 #include <Syntax/Bool.h>
 #include <Syntax/Block.h>
 #include <Syntax/EnumMember.h>
@@ -51,14 +51,14 @@ private:
     Expression* ParseFunctionCallOrName();
     Expression* ParseFunctionCall();
     Parameters* ParseParameters();
-    Arguments* ParseArguments();
+    ArgumentsNode* ParseArgumentsNode();
     Block* ParseFunctionBody();
     Block* ParseEnumBody();
     Block* ParseTypeBody();
     Block* ParseMethodBody();
     Block* ParseBlock(StatementScope scope);
     Parameter* ParseParameter();
-    Argument* ParseArgument();
+    ArgumentNode* ParseArgumentNode();
     Type ParseType();
     Name* ParseName();
     Number* ParseNumberLiteral();

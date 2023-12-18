@@ -13,8 +13,8 @@
 #include <Syntax/IfStatement.h>
 #include <Syntax/WhileStatement.h>
 #include <Syntax/ReturnStatement.h>
-#include <Syntax/Argument.h>
-#include <Syntax/Arguments.h>
+#include <Syntax/ArgumentNode.h>
+#include <Syntax/ArgumentsNode.h>
 #include <Syntax/Parameter.h>
 #include <Syntax/Parameters.h>
 #include <Syntax/Discard.h>
@@ -52,8 +52,8 @@ private:
     void PrettyPrintIfStatement(IfStatement* statement);
     void PrettyPrintWhileStatement(WhileStatement* statement);
     void PrettyPrintReturnStatement(ReturnStatement* statement);
-    void PrettyPrintArgument(Argument* argument);
-    void PrettyPrintArguments(Arguments* arguments);
+    void PrettyPrintArgumentNode(ArgumentNode* argument);
+    void PrettyPrintArgumentsNode(ArgumentsNode* arguments);
     void PrettyPrintParameter(Parameter* parameter);
     void PrettyPrintParameters(Parameters* parameters);
     void PrettyPrintBlock(Block* block);

@@ -1,8 +1,8 @@
-#include "Arguments.h"
+#include "ArgumentsNode.h"
 
-Arguments::Arguments(
+ArgumentsNode::ArgumentsNode(
     const Token& openParenthesis,
-    const QList<Argument*>& arguments,
+    const QList<ArgumentNode*>& arguments,
     const Token& closeParenthesis)
     : Node(NodeKind::Arguments)
     , m_openParenthesis{ openParenthesis }

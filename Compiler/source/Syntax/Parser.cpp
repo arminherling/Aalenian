@@ -453,19 +453,19 @@ Expression* Parser::ParseFunctionCallOrName()
 Expression* Parser::ParseFunctionCall()
 {
     auto name = AdvanceOnMatch(TokenKind::Identifier);
-    auto arguments = ParseArguments();
+    auto arguments = ParseArgumentsNode();
     return new FunctionCall(name, arguments);
 }
 
-Arguments* Parser::ParseArguments()
+ArgumentsNode* Parser::ParseArgumentsNode()
 {
     auto openParenthesis = AdvanceOnMatch(TokenKind::OpenParenthesis);
     auto currentToken = CurrentToken();
 
-    QList<Argument*> arguments;
+    QList<ArgumentNode*> arguments;
     while (currentToken.kind != TokenKind::CloseParenthesis)
     {
-        arguments.append(ParseArgument());
+        arguments.append(ParseArgumentNode());
         if (CurrentToken().kind == TokenKind::Comma)
         {
             AdvanceCurrentIndex();
@@ -477,7 +477,7 @@ Arguments* Parser::ParseArguments()
     }
 
     auto closeParenthesis = AdvanceOnMatch(TokenKind::CloseParenthesis);
-    return new Arguments(openParenthesis, arguments, closeParenthesis);
+    return new ArgumentsNode(openParenthesis, arguments, closeParenthesis);
 }
 
 Type Parser::ParseType()
@@ -570,12 +570,12 @@ Parameter* Parser::ParseParameter()
     return new Parameter(name, colon, type);
 }
 
-Argument* Parser::ParseArgument()
+ArgumentNode* Parser::ParseArgumentNode()
 {
     auto ref = TryMatchKeyword(QString("ref"));
     auto expression = ParseExpression();
 
-    return new Argument(ref, expression);
+    return new ArgumentNode(ref, expression);
 }
 
 Token Parser::AdvanceOnMatch(TokenKind kind)

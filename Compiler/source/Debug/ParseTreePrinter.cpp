@@ -80,7 +80,7 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
         }
         case NodeKind::Argument:
         {
-            PrettyPrintArgument((Argument*)node);
+            PrettyPrintArgumentNode((ArgumentNode*)node);
             break;
         }
         case NodeKind::Parameter:
@@ -324,7 +324,7 @@ void ParseTreePrinter::PrettyPrintReturnStatement(ReturnStatement* statement)
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-void ParseTreePrinter::PrettyPrintArgument(Argument* argument)
+void ParseTreePrinter::PrettyPrintArgumentNode(ArgumentNode* argument)
 {
     stream() << Indentation() << StringifyNodeKind(argument->kind()) << QString(": {") << NewLine();
     PushIndentation();
@@ -338,7 +338,7 @@ void ParseTreePrinter::PrettyPrintArgument(Argument* argument)
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-void ParseTreePrinter::PrettyPrintArguments(Arguments* node)
+void ParseTreePrinter::PrettyPrintArgumentsNode(ArgumentsNode* node)
 {
     const auto& arguments = node->arguments();
     stream() << Indentation() << StringifyNodeKind(node->kind()) << QString("(%1): {").arg(arguments.size()) << NewLine();
@@ -402,7 +402,7 @@ void ParseTreePrinter::PrettyPrintFunctionCall(FunctionCall* functionCall)
 
     PushIndentation();
     stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
-    PrettyPrintArguments(functionCall->arguments());
+    PrettyPrintArgumentsNode(functionCall->arguments());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 }

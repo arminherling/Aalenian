@@ -1,6 +1,6 @@
-#include "Argument.h"
+#include "ArgumentNode.h"
 
-Argument::Argument(
+ArgumentNode::ArgumentNode(
     const std::optional<Token>& ref,
     Expression* expression)
     : Node(NodeKind::Argument)

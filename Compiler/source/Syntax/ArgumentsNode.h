@@ -3,23 +3,23 @@
 #include <Defines.h>
 #include <Syntax/Node.h>
 #include <Syntax/Token.h>
-#include <Syntax/Argument.h>
+#include <Syntax/ArgumentNode.h>
 #include <QList>
 
-class COMPILER_API Arguments : public Node
+class COMPILER_API ArgumentsNode : public Node
 {
 public:
-    Arguments(
+    ArgumentsNode(
         const Token& openParenthesis,
-        const QList<Argument*>& arguments,
+        const QList<ArgumentNode*>& arguments,
         const Token& closeParenthesis);
 
     [[nodiscard]] const Token& openParenthesis() noexcept { return m_openParenthesis; }
-    [[nodiscard]] const QList<Argument*>& arguments() noexcept { return m_arguments; }
+    [[nodiscard]] const QList<ArgumentNode*>& arguments() noexcept { return m_arguments; }
     [[nodiscard]] const Token& closeParenthesis() noexcept { return m_closeParenthesis; }
 
 private:
     Token m_openParenthesis;
-    QList<Argument*> m_arguments;
+    QList<ArgumentNode*> m_arguments;
     Token m_closeParenthesis;
 };

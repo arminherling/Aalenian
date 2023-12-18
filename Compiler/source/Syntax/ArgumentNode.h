@@ -5,10 +5,10 @@
 #include <Syntax/Node.h>
 #include <Syntax/Token.h>
 
-class COMPILER_API Argument : public Node
+class COMPILER_API ArgumentNode : public Node
 {
 public:
-    Argument(
+    ArgumentNode(
         const std::optional<Token>& ref, 
         Expression* expression);
 

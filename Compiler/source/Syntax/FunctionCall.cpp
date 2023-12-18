@@ -2,7 +2,7 @@
 
 FunctionCall::FunctionCall(
     const Token& nameToken, 
-    Arguments* arguments)
+    ArgumentsNode* arguments)
     : Expression(NodeKind::FunctionCall)
     , m_nameToken{ nameToken }
     , m_arguments{ arguments }
