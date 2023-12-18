@@ -1,20 +1,20 @@
 FunctionDefinitionStatement: {
-    Name: square
-    Parameters(1): {
-        Parameter: {
-            Name: x
-            Type: i32
+    NameExpression: square
+    ParametersNode(1): {
+        ParameterNode: {
+            NameExpression: x
+            TypeNode: i32
         }
     }
-    Block(1): {
+    BlockNode(1): {
         ReturnStatement: {
             BinaryExpression: {
                 Left: {
-                    Name: x
+                    NameExpression: x
                 }
                 Operation: Multiplication
                 Right: {
-                    Name: x
+                    NameExpression: x
                 }
             }
         }

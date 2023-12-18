@@ -1,14 +1,14 @@
 EnumDefinitionStatement: {
-    Name: Values
-    Block(3): {
-        EnumMember: {
-            Name: First
+    NameExpression: Values
+    BlockNode(3): {
+        EnumMemberDefinitionStatement: {
+            NameExpression: First
         }
-        EnumMember: {
-            Name: Second
+        EnumMemberDefinitionStatement: {
+            NameExpression: Second
         }
-        EnumMember: {
-            Name: Third
+        EnumMemberDefinitionStatement: {
+            NameExpression: Third
         }
     }
 }

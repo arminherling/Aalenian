@@ -1,9 +1,9 @@
 EnumDefinitionStatement: {
-    Name: Values
-    Type: i32
-    Block(1): {
-        EnumMember: {
-            Name: Value
+    NameExpression: Values
+    TypeNode: i32
+    BlockNode(1): {
+        EnumMemberDefinitionStatement: {
+            NameExpression: Value
         }
     }
 }

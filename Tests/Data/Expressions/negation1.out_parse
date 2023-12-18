@@ -1,12 +1,12 @@
 AssignmentStatement: {
     Left: {
-        Discard: _
+        DiscardLiteral: _
     }
     Right: {
         UnaryExpression: {
             Operation: Negation
             Expression: {
-                Number: 1
+                NumberLiteral: 1
             }
         }
     }

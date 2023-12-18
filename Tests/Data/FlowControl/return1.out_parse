@@ -1,8 +1,8 @@
 FunctionDefinitionStatement: {
-    Name: func
-    Parameters(0): {
+    NameExpression: func
+    ParametersNode(0): {
     }
-    Block(1): {
+    BlockNode(1): {
         ReturnStatement: {
         }
     }

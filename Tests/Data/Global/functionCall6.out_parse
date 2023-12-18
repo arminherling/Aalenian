@@ -1,31 +1,31 @@
 FunctionDefinitionStatement: {
-    Name: inner
-    Parameters(1): {
-        Parameter: {
-            Name: x
-            Type: i32
+    NameExpression: inner
+    ParametersNode(1): {
+        ParameterNode: {
+            NameExpression: x
+            TypeNode: i32
         }
     }
-    Block(0): {
+    BlockNode(0): {
     }
 }
 FunctionDefinitionStatement: {
-    Name: outer
-    Parameters(0): {
+    NameExpression: outer
+    ParametersNode(0): {
     }
-    Block(1): {
+    BlockNode(1): {
         ExpressionStatement: {
-            FunctionCall: {
-                Name: inner
-                Arguments(1): {
-                    Argument: {
+            FunctionCallExpression: {
+                NameExpression: inner
+                ArgumentsNode(1): {
+                    ArgumentNode: {
                         BinaryExpression: {
                             Left: {
-                                Number: 5
+                                NumberLiteral: 5
                             }
                             Operation: Addition
                             Right: {
-                                Number: 5
+                                NumberLiteral: 5
                             }
                         }
                     }

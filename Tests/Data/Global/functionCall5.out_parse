@@ -1,38 +1,38 @@
 FunctionDefinitionStatement: {
-    Name: one
-    Parameters(0): {
+    NameExpression: one
+    ParametersNode(0): {
     }
-    Block(1): {
+    BlockNode(1): {
         ReturnStatement: {
-            Number: 1
-            Type: i32
+            NumberLiteral: 1
+            TypeNode: i32
         }
     }
 }
 FunctionDefinitionStatement: {
-    Name: inner
-    Parameters(1): {
-        Parameter: {
-            Name: x
-            Type: i32
+    NameExpression: inner
+    ParametersNode(1): {
+        ParameterNode: {
+            NameExpression: x
+            TypeNode: i32
         }
     }
-    Block(0): {
+    BlockNode(0): {
     }
 }
 FunctionDefinitionStatement: {
-    Name: outer
-    Parameters(0): {
+    NameExpression: outer
+    ParametersNode(0): {
     }
-    Block(1): {
+    BlockNode(1): {
         ExpressionStatement: {
-            FunctionCall: {
-                Name: inner
-                Arguments(1): {
-                    Argument: {
-                        FunctionCall: {
-                            Name: one
-                            Arguments(0): {
+            FunctionCallExpression: {
+                NameExpression: inner
+                ArgumentsNode(1): {
+                    ArgumentNode: {
+                        FunctionCallExpression: {
+                            NameExpression: one
+                            ArgumentsNode(0): {
                             }
                         }
                     }

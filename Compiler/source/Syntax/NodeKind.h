@@ -33,10 +33,10 @@ enum class COMPILER_API NodeKind
     NumberLiteral,
 
     TypeNode,
-    ParameterNode,
-    ParametersNode,
     ArgumentNode,
     ArgumentsNode,
+    ParameterNode,
+    ParametersNode,
     BlockNode
 };
 

@@ -1,8 +1,8 @@
 AssignmentStatement: {
     Left: {
-        Name: a
+        NameExpression: a
     }
     Right: {
-        Number: 1
+        NumberLiteral: 1
     }
 }

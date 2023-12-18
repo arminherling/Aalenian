@@ -1,21 +1,21 @@
 TypeDefinitionStatement: {
-    Name: Zero
-    Block(1): {
+    NameExpression: Zero
+    BlockNode(1): {
         MethodDefinitionStatement: {
-            Name: value
-            Parameters(0): {
+            NameExpression: value
+            ParametersNode(0): {
             }
-            Block(2): {
+            BlockNode(2): {
                 AssignmentStatement: {
                     Left: {
-                        Name: zero
+                        NameExpression: zero
                     }
                     Right: {
-                        Number: 0
+                        NumberLiteral: 0
                     }
                 }
                 ReturnStatement: {
-                    Name: zero
+                    NameExpression: zero
                 }
             }
         }

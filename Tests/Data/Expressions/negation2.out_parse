@@ -1,6 +1,6 @@
 AssignmentStatement: {
     Left: {
-        Discard: _
+        DiscardLiteral: _
     }
     Right: {
         UnaryExpression: {
@@ -9,7 +9,7 @@ AssignmentStatement: {
                 UnaryExpression: {
                     Operation: Negation
                     Expression: {
-                        Number: 1
+                        NumberLiteral: 1
                     }
                 }
             }

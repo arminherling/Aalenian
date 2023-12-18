@@ -1,40 +1,40 @@
 FunctionDefinitionStatement: {
-    Name: swap
-    Parameters(2): {
-        Parameter: {
-            Name: a
+    NameExpression: swap
+    ParametersNode(2): {
+        ParameterNode: {
+            NameExpression: a
             Ref: true
-            Type: i32
+            TypeNode: i32
         }
-        Parameter: {
-            Name: b
+        ParameterNode: {
+            NameExpression: b
             Ref: true
-            Type: i32
+            TypeNode: i32
         }
     }
-    Block(3): {
+    BlockNode(3): {
         AssignmentStatement: {
             Left: {
-                Name: temp
+                NameExpression: temp
             }
             Right: {
-                Name: a
+                NameExpression: a
             }
         }
         AssignmentStatement: {
             Left: {
-                Name: a
+                NameExpression: a
             }
             Right: {
-                Name: b
+                NameExpression: b
             }
         }
         AssignmentStatement: {
             Left: {
-                Name: b
+                NameExpression: b
             }
             Right: {
-                Name: temp
+                NameExpression: temp
             }
         }
     }

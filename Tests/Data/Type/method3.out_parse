@@ -1,36 +1,36 @@
 TypeDefinitionStatement: {
-    Name: Two
-    Block(3): {
+    NameExpression: Two
+    BlockNode(3): {
         FieldDeclarationStatement: {
             Field: {
-                Name: one
+                NameExpression: one
             }
             Value: {
-                Number: 1
+                NumberLiteral: 1
             }
         }
         MethodDefinitionStatement: {
-            Name: value
-            Parameters(0): {
+            NameExpression: value
+            ParametersNode(0): {
             }
-            Block(1): {
+            BlockNode(1): {
                 ReturnStatement: {
                     BinaryExpression: {
                         Left: {
-                            MemberAccess: {
-                                FunctionCall: {
-                                    Name: one
-                                    Arguments(0): {
+                            MemberAccessExpression: {
+                                FunctionCallExpression: {
+                                    NameExpression: one
+                                    ArgumentsNode(0): {
                                     }
                                 }
                             }
                         }
                         Operation: Addition
                         Right: {
-                            MemberAccess: {
-                                FunctionCall: {
-                                    Name: one
-                                    Arguments(0): {
+                            MemberAccessExpression: {
+                                FunctionCallExpression: {
+                                    NameExpression: one
+                                    ArgumentsNode(0): {
                                     }
                                 }
                             }
@@ -40,13 +40,13 @@ TypeDefinitionStatement: {
             }
         }
         MethodDefinitionStatement: {
-            Name: one
-            Parameters(0): {
+            NameExpression: one
+            ParametersNode(0): {
             }
-            Block(1): {
+            BlockNode(1): {
                 ReturnStatement: {
-                    MemberAccess: {
-                        Name: one
+                    MemberAccessExpression: {
+                        NameExpression: one
                     }
                 }
             }

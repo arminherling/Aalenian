@@ -1,16 +1,16 @@
 AssignmentStatement: {
     Left: {
-        Discard: _
+        DiscardLiteral: _
     }
     Right: {
-        Grouping: {
+        GroupingExpression: {
             BinaryExpression: {
                 Left: {
-                    Number: 1
+                    NumberLiteral: 1
                 }
                 Operation: Addition
                 Right: {
-                    Number: 2
+                    NumberLiteral: 2
                 }
             }
         }

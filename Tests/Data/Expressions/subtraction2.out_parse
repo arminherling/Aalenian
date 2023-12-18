@@ -1,23 +1,23 @@
 AssignmentStatement: {
     Left: {
-        Discard: _
+        DiscardLiteral: _
     }
     Right: {
         BinaryExpression: {
             Left: {
                 BinaryExpression: {
                     Left: {
-                        Number: 1
+                        NumberLiteral: 1
                     }
                     Operation: Subtraction
                     Right: {
-                        Number: 2
+                        NumberLiteral: 2
                     }
                 }
             }
             Operation: Subtraction
             Right: {
-                Number: 3
+                NumberLiteral: 3
             }
         }
     }

@@ -182,7 +182,7 @@ void ParseTreePrinter::PrettyPrintFunctionDefinitionStatement(FunctionDefinition
 
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
-    stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
+    stream() << Indentation() << StringifyNodeKind(NodeKind::NameExpression) << QString(": %1").arg(nameLexeme) << NewLine();
     PrettyPrintParametersNode(statement->parameters());
     PrettyPrintBlockNode(statement->body());
     PopIndentation();
@@ -196,7 +196,7 @@ void ParseTreePrinter::PrettyPrintEnumDefinitionStatement(EnumDefinitionStatemen
 
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
-    stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
+    stream() << Indentation() << StringifyNodeKind(NodeKind::NameExpression) << QString(": %1").arg(nameLexeme) << NewLine();
 
     if (statement->baseType().has_value())
         PrettyPrintTypeNode(statement->baseType().value());
@@ -213,7 +213,7 @@ void ParseTreePrinter::PrettyPrintEnumMemberDefinitionStatement(EnumMemberDefini
 
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
-    stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
+    stream() << Indentation() << StringifyNodeKind(NodeKind::NameExpression) << QString(": %1").arg(nameLexeme) << NewLine();
 
     if (statement->value().has_value())
     {
@@ -231,7 +231,7 @@ void ParseTreePrinter::PrettyPrintTypeDefinitionStatement(TypeDefinitionStatemen
 
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
-    stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
+    stream() << Indentation() << StringifyNodeKind(NodeKind::NameExpression) << QString(": %1").arg(nameLexeme) << NewLine();
     PrettyPrintBlockNode(statement->body());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
@@ -271,7 +271,7 @@ void ParseTreePrinter::PrettyPrintMethodDefinitionStatement(MethodDefinitionStat
 
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
-    stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
+    stream() << Indentation() << StringifyNodeKind(NodeKind::NameExpression) << QString(": %1").arg(nameLexeme) << NewLine();
     PrettyPrintParametersNode(statement->parameters());
     PrettyPrintBlockNode(statement->body());
     PopIndentation();
@@ -401,7 +401,7 @@ void ParseTreePrinter::PrettyPrintFunctionCallExpression(FunctionCallExpression*
     stream() << Indentation() << StringifyNodeKind(functionCall->kind()) << QString(": {") << NewLine();
 
     PushIndentation();
-    stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
+    stream() << Indentation() << StringifyNodeKind(NodeKind::NameExpression) << QString(": %1").arg(nameLexeme) << NewLine();
     PrettyPrintArgumentsNode(functionCall->arguments());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
@@ -414,13 +414,13 @@ void ParseTreePrinter::PrettyPrintTypeNode(const TypeNode& type)
     if (type.isReference())
         stream() << Indentation() << QString("Ref: true") << NewLine();
 
-    stream() << Indentation() << QString("Type: ") << lexeme << NewLine();
+    stream() << Indentation() << StringifyNodeKind(NodeKind::TypeNode) << QString(": ") << lexeme << NewLine();
 }
 
 void ParseTreePrinter::PrettyPrintBoolLiteral(BoolLiteral* node)
 {
     auto value = node->value() ? QString("true") : QString("false");
-    stream() << Indentation() << QString("Bool: ") << value << NewLine();
+    stream() << Indentation() << StringifyNodeKind(NodeKind::BoolLiteral) << QString(": ") << value << NewLine();
 }
 
 void ParseTreePrinter::PrettyPrintNameExpression(NameExpression* name)

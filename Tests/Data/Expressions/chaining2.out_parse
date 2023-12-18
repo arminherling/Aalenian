@@ -1,19 +1,19 @@
 AssignmentStatement: {
     Left: {
-        Discard: _
+        DiscardLiteral: _
     }
     Right: {
         BinaryExpression: {
             Left: {
                 BinaryExpression: {
                     Left: {
-                        Name: object
+                        NameExpression: object
                     }
                     Operation: Member Access
                     Right: {
-                        FunctionCall: {
-                            Name: func
-                            Arguments(0): {
+                        FunctionCallExpression: {
+                            NameExpression: func
+                            ArgumentsNode(0): {
                             }
                         }
                     }
@@ -21,9 +21,9 @@ AssignmentStatement: {
             }
             Operation: Member Access
             Right: {
-                FunctionCall: {
-                    Name: func
-                    Arguments(0): {
+                FunctionCallExpression: {
+                    NameExpression: func
+                    ArgumentsNode(0): {
                     }
                 }
             }

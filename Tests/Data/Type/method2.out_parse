@@ -1,22 +1,22 @@
 TypeDefinitionStatement: {
-    Name: One
-    Block(2): {
+    NameExpression: One
+    BlockNode(2): {
         FieldDeclarationStatement: {
             Field: {
-                Name: one
+                NameExpression: one
             }
             Value: {
-                Number: 1
+                NumberLiteral: 1
             }
         }
         MethodDefinitionStatement: {
-            Name: value
-            Parameters(0): {
+            NameExpression: value
+            ParametersNode(0): {
             }
-            Block(1): {
+            BlockNode(1): {
                 ReturnStatement: {
-                    MemberAccess: {
-                        Name: one
+                    MemberAccessExpression: {
+                        NameExpression: one
                     }
                 }
             }

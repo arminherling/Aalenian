@@ -1,15 +1,15 @@
 AssignmentStatement: {
     Left: {
-        Discard: _
+        DiscardLiteral: _
     }
     Right: {
         BinaryExpression: {
             Left: {
-                Number: 1
+                NumberLiteral: 1
             }
             Operation: Division
             Right: {
-                Number: 2
+                NumberLiteral: 2
             }
         }
     }

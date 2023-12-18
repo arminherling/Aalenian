@@ -1,16 +1,16 @@
 AssignmentStatement: {
     Left: {
-        Name: a
+        NameExpression: a
     }
     Right: {
-        Number: 1
+        NumberLiteral: 1
     }
 }
 AssignmentStatement: {
     Left: {
-        Name: b
+        NameExpression: b
     }
     Right: {
-        Name: a
+        NameExpression: a
     }
 }

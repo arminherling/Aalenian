@@ -1,28 +1,28 @@
 TypeDefinitionStatement: {
-    Name: Vector3D
-    Block(3): {
+    NameExpression: Vector3D
+    BlockNode(3): {
         FieldDeclarationStatement: {
             Field: {
-                Name: x
+                NameExpression: x
             }
             Value: {
-                Number: 0
+                NumberLiteral: 0
             }
         }
         FieldDeclarationStatement: {
             Field: {
-                Name: y
+                NameExpression: y
             }
             Value: {
-                Number: 0
+                NumberLiteral: 0
             }
         }
         FieldDeclarationStatement: {
             Field: {
-                Name: z
+                NameExpression: z
             }
             Value: {
-                Number: 0
+                NumberLiteral: 0
             }
         }
     }

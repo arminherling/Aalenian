@@ -1,42 +1,42 @@
 EnumDefinitionStatement: {
-    Name: Values
-    Block(2): {
-        EnumMember: {
-            Name: First
+    NameExpression: Values
+    BlockNode(2): {
+        EnumMemberDefinitionStatement: {
+            NameExpression: First
         }
-        EnumMember: {
-            Name: Second
+        EnumMemberDefinitionStatement: {
+            NameExpression: Second
         }
     }
 }
 FunctionDefinitionStatement: {
-    Name: inner
-    Parameters(1): {
-        Parameter: {
-            Name: x
-            Type: Values
+    NameExpression: inner
+    ParametersNode(1): {
+        ParameterNode: {
+            NameExpression: x
+            TypeNode: Values
         }
     }
-    Block(0): {
+    BlockNode(0): {
     }
 }
 FunctionDefinitionStatement: {
-    Name: outer
-    Parameters(0): {
+    NameExpression: outer
+    ParametersNode(0): {
     }
-    Block(1): {
+    BlockNode(1): {
         ExpressionStatement: {
-            FunctionCall: {
-                Name: inner
-                Arguments(1): {
-                    Argument: {
+            FunctionCallExpression: {
+                NameExpression: inner
+                ArgumentsNode(1): {
+                    ArgumentNode: {
                         BinaryExpression: {
                             Left: {
-                                Name: Values
+                                NameExpression: Values
                             }
                             Operation: Scope Access
                             Right: {
-                                Name: First
+                                NameExpression: First
                             }
                         }
                     }

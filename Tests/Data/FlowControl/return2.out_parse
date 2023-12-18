@@ -1,16 +1,16 @@
 FunctionDefinitionStatement: {
-    Name: func
-    Parameters(0): {
+    NameExpression: func
+    ParametersNode(0): {
     }
-    Block(1): {
+    BlockNode(1): {
         ReturnStatement: {
             BinaryExpression: {
                 Left: {
-                    Number: 1
+                    NumberLiteral: 1
                 }
                 Operation: Addition
                 Right: {
-                    Number: 1
+                    NumberLiteral: 1
                 }
             }
         }

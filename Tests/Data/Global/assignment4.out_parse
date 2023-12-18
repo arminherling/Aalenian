@@ -1,9 +1,9 @@
 AssignmentStatement: {
     Left: {
-        Name: a
+        NameExpression: a
     }
     Right: {
-        Number: 0
-        Type: i32
+        NumberLiteral: 0
+        TypeNode: i32
     }
 }

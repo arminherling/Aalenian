@@ -1,18 +1,18 @@
 FunctionDefinitionStatement: {
-    Name: func
-    Parameters(0): {
+    NameExpression: func
+    ParametersNode(0): {
     }
-    Block(2): {
+    BlockNode(2): {
         AssignmentStatement: {
             Left: {
-                Name: a
+                NameExpression: a
             }
             Right: {
-                Number: 0
+                NumberLiteral: 0
             }
         }
         ReturnStatement: {
-            Name: a
+            NameExpression: a
         }
     }
 }

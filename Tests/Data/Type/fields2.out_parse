@@ -1,20 +1,20 @@
 TypeDefinitionStatement: {
-    Name: Vector2D
-    Block(2): {
+    NameExpression: Vector2D
+    BlockNode(2): {
         FieldDeclarationStatement: {
             Field: {
-                Name: x
+                NameExpression: x
             }
-            Type: i32
+            TypeNode: i32
             Value: {
-                Number: 0
+                NumberLiteral: 0
             }
         }
         FieldDeclarationStatement: {
             Field: {
-                Name: y
+                NameExpression: y
             }
-            Type: i32
+            TypeNode: i32
         }
     }
 }

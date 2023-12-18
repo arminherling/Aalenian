@@ -1,10 +1,10 @@
 AssignmentStatement: {
     Left: {
-        Discard: _
+        DiscardLiteral: _
     }
     Right: {
-        Grouping: {
-            Number: 1
+        GroupingExpression: {
+            NumberLiteral: 1
         }
     }
 }

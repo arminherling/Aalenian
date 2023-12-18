@@ -1,11 +1,11 @@
 AssignmentStatement: {
     Left: {
-        Name: a
+        NameExpression: a
     }
     Right: {
-        FunctionCall: {
-            Name: func
-            Arguments(0): {
+        FunctionCallExpression: {
+            NameExpression: func
+            ArgumentsNode(0): {
             }
         }
     }
