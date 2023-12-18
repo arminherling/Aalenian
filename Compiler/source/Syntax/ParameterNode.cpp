@@ -4,7 +4,7 @@ ParameterNode::ParameterNode(
     NameExpression* name,
     const Token& colon,
     const TypeNode& type)
-    : Node(NodeKind::Parameter)
+    : Node(NodeKind::ParameterNode)
     , m_name{ name }
     , m_colon{ colon }
     , m_type{ type }

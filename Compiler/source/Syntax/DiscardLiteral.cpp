@@ -1,6 +1,6 @@
 #include "DiscardLiteral.h"
 
 DiscardLiteral::DiscardLiteral(const Token& token)
-    : Expression(NodeKind::Discard)
+    : Expression(NodeKind::DiscardLiteral)
 {
 }

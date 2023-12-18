@@ -12,6 +12,7 @@ enum class COMPILER_API NodeKind
     ExpressionStatement,
     FunctionDefinitionStatement,
     EnumDefinitionStatement,
+    EnumMemberDefinitionStatement,
     TypeDefinitionStatement,
     FieldDeclarationStatement,
     MethodDefinitionStatement,
@@ -21,22 +22,22 @@ enum class COMPILER_API NodeKind
 
     UnaryExpression,
     BinaryExpression,
-    Type,
-    Parameter,
-    Parameters,
-    Argument,
-    Arguments,
-    Block,
-    EnumMember,
+    FunctionCallExpression,
+    NameExpression,
+    GroupingExpression,
+    ScopeAccessExpression,
+    MemberAccessExpression,
 
-    Discard,
-    FunctionCall,
-    Name,
-    Bool,
-    Number,
-    Grouping,
-    ScopeAccess,
-    MemberAccess
+    DiscardLiteral,
+    BoolLiteral,
+    NumberLiteral,
+
+    TypeNode,
+    ParameterNode,
+    ParametersNode,
+    ArgumentNode,
+    ArgumentsNode,
+    BlockNode
 };
 
 COMPILER_API QString StringifyNodeKind(NodeKind kind);

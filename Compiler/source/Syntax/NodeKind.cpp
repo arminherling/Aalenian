@@ -18,7 +18,7 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("TypeDefinitionStatement");
         case NodeKind::EnumDefinitionStatement:
             return QString("EnumDefinitionStatement");
-        case NodeKind::EnumMember:
+        case NodeKind::EnumMemberDefinitionStatement:
             return QString("EnumMember");
         case NodeKind::FieldDeclarationStatement:
             return QString("FieldDeclarationStatement");
@@ -30,33 +30,33 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("WhileStatement");
         case NodeKind::ReturnStatement:
             return QString("ReturnStatement");
-        case NodeKind::Discard:
+        case NodeKind::DiscardLiteral:
             return QString("Discard");
-        case NodeKind::Argument:
+        case NodeKind::ArgumentNode:
             return QString("Argument");
-        case NodeKind::Arguments:
+        case NodeKind::ArgumentsNode:
             return QString("Arguments");
-        case NodeKind::Parameter:
+        case NodeKind::ParameterNode:
             return QString("Parameter");
-        case NodeKind::Parameters:
+        case NodeKind::ParametersNode:
             return QString("Parameters");
-        case NodeKind::Block:
+        case NodeKind::BlockNode:
             return QString("Block");
-        case NodeKind::FunctionCall:
+        case NodeKind::FunctionCallExpression:
             return QString("FunctionCall");
-        case NodeKind::Bool:
+        case NodeKind::BoolLiteral:
             return QString("Bool");
-        case NodeKind::Name:
+        case NodeKind::NameExpression:
             return QString("Name");
-        case NodeKind::Number:
+        case NodeKind::NumberLiteral:
             return QString("Number");
-        case NodeKind::Grouping:
+        case NodeKind::GroupingExpression:
             return QString("Grouping");
         case NodeKind::UnaryExpression:
             return QString("UnaryExpression");
         case NodeKind::BinaryExpression:
             return QString("BinaryExpression");
-        case NodeKind::MemberAccess:
+        case NodeKind::MemberAccessExpression:
             return QString("MemberAccess");
         default:
             TODO("String for NodeKind value was not defined yet");

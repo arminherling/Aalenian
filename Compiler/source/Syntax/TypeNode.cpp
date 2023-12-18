@@ -3,7 +3,7 @@
 TypeNode::TypeNode(
     const std::optional<Token>& ref,
     NameExpression* name)
-    : Node(NodeKind::Type)
+    : Node(NodeKind::TypeNode)
     , m_ref{ ref }
     , m_name{ name }
 {

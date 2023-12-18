@@ -3,7 +3,7 @@
 MemberAccessExpression::MemberAccessExpression(
     const Token& dot,
     Expression* expression)
-    : Expression(NodeKind::MemberAccess)
+    : Expression(NodeKind::MemberAccessExpression)
     , m_dot{ dot }
     , m_expression{ expression }
 {

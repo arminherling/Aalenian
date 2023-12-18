@@ -1,7 +1,7 @@
 #include "NameExpression.h"
 
 NameExpression::NameExpression(const Token& token)
-    : Expression(NodeKind::Name)
+    : Expression(NodeKind::NameExpression)
     , m_token{ token }
 {
 }

@@ -1,7 +1,7 @@
 #include "BoolLiteral.h"
 
 BoolLiteral::BoolLiteral(bool value)
-    : Expression(NodeKind::Bool)
+    : Expression(NodeKind::BoolLiteral)
     , m_value{ value }
 {
 }

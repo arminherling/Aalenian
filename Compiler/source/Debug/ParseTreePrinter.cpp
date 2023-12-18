@@ -43,7 +43,7 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
             PrettyPrintEnumDefinitionStatement((EnumDefinitionStatement*)node);
             break;
         }
-        case NodeKind::EnumMember:
+        case NodeKind::EnumMemberDefinitionStatement:
         {
             PrettyPrintEnumMemberDefinitionStatement((EnumMemberDefinitionStatement*)node);
             break;
@@ -78,42 +78,42 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
             PrettyPrintReturnStatement((ReturnStatement*)node);
             break;
         }
-        case NodeKind::Argument:
+        case NodeKind::ArgumentNode:
         {
             PrettyPrintArgumentNode((ArgumentNode*)node);
             break;
         }
-        case NodeKind::Parameter:
+        case NodeKind::ParameterNode:
         {
             PrettyPrintParameterNode((ParameterNode*)node);
             break;
         }
-        case NodeKind::Discard:
+        case NodeKind::DiscardLiteral:
         {
             PrettyPrintDiscardLiteral((DiscardLiteral*)node);
             break;
         }
-        case NodeKind::FunctionCall:
+        case NodeKind::FunctionCallExpression:
         {
             PrettyPrintFunctionCallExpression((FunctionCallExpression*)node);
             break;
         }
-        case NodeKind::Bool:
+        case NodeKind::BoolLiteral:
         {
             PrettyPrintBoolLiteral((BoolLiteral*)node);
             break;
         }
-        case NodeKind::Name:
+        case NodeKind::NameExpression:
         {
             PrettyPrintNameExpression((NameExpression*)node);
             break;
         }
-        case NodeKind::Number:
+        case NodeKind::NumberLiteral:
         {
             PrettyPrintNumberLiteral((NumberLiteral*)node);
             break;
         }
-        case NodeKind::Grouping:
+        case NodeKind::GroupingExpression:
         {
             PrettyPrintGroupingExpression((GroupingExpression*)node);
             break;
@@ -128,7 +128,7 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
             PrettyPrintBinaryExpression((BinaryExpression*)node);
             break;
         }
-        case NodeKind::MemberAccess:
+        case NodeKind::MemberAccessExpression:
         {
             PrettyPrintMemberAccessExpression((MemberAccessExpression*)node);
             break;
