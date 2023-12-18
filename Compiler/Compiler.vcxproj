@@ -117,7 +117,7 @@
     <ClCompile Include="source\Syntax\FieldDeclarationStatement.cpp" />
     <ClCompile Include="source\Syntax\FunctionCallExpression.cpp" />
     <ClCompile Include="source\Syntax\FunctionDefinitionStatement.cpp" />
-    <ClCompile Include="source\Syntax\Grouping.cpp" />
+    <ClCompile Include="source\Syntax\GroupingExpression.cpp" />
     <ClCompile Include="source\Syntax\IfStatement.cpp" />
     <ClCompile Include="source\Syntax\MemberAccess.cpp" />
     <ClCompile Include="source\Syntax\MethodDefinitionStatement.cpp" />
@@ -169,7 +169,7 @@
     <ClInclude Include="source\Syntax\FieldDeclarationStatement.h" />
     <ClInclude Include="source\Syntax\FunctionCallExpression.h" />
     <ClInclude Include="source\Syntax\FunctionDefinitionStatement.h" />
-    <ClInclude Include="source\Syntax\Grouping.h" />
+    <ClInclude Include="source\Syntax\GroupingExpression.h" />
     <ClInclude Include="source\Syntax\IfStatement.h" />
     <ClInclude Include="source\Syntax\MemberAccess.h" />
     <ClInclude Include="source\Syntax\MethodDefinitionStatement.h" />

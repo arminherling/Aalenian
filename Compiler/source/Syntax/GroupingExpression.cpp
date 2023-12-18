@@ -1,6 +1,6 @@
-#include "Grouping.h"
+#include "GroupingExpression.h"
 
-Grouping::Grouping(
+GroupingExpression::GroupingExpression(
     const Token& openParenthesis,
     Expression* expression,
     const Token& closeParenthesis)

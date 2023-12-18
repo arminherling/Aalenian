@@ -4,10 +4,10 @@
 #include <Syntax/Expression.h>
 #include <Syntax/Token.h>
 
-class COMPILER_API Grouping : public Expression
+class COMPILER_API GroupingExpression : public Expression
 {
 public:
-    Grouping(
+    GroupingExpression(
         const Token& openParenthesis, 
         Expression* expression, 
         const Token& closeParenthesis);

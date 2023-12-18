@@ -9,7 +9,7 @@
 #include <Syntax/BlockNode.h>
 #include <Syntax/EnumMember.h>
 #include <Syntax/Expression.h>
-#include <Syntax/Grouping.h>
+#include <Syntax/GroupingExpression.h>
 #include <Syntax/Statement.h>
 #include <Syntax/Number.h>
 #include <Syntax/Parameter.h>
@@ -62,7 +62,7 @@ private:
     Type ParseType();
     Name* ParseName();
     Number* ParseNumberLiteral();
-    Grouping* ParseGrouping();
+    GroupingExpression* ParseGroupingExpression();
     EnumMember* ParseEnumMember();
 
     Token AdvanceOnMatch(TokenKind kind);

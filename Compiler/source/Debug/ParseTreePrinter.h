@@ -24,7 +24,7 @@
 #include <Syntax/Name.h>
 #include <Syntax/Number.h>
 #include <Syntax/BlockNode.h>
-#include <Syntax/Grouping.h>
+#include <Syntax/GroupingExpression.h>
 #include <Syntax/UnaryExpression.h>
 #include <Syntax/BinaryExpression.h>
 #include <Syntax/MemberAccess.h>
@@ -64,7 +64,7 @@ private:
     void PrettyPrintBoolLiteral(BoolLiteral* node);
     void PrettyPrintName(Name* name);
     void PrettyPrintNumber(Number* number);
-    void PrettyPrintGrouping(Grouping* grouping);
+    void PrettyPrintGroupingExpression(GroupingExpression* grouping);
     void PrettyPrintUnaryExpression(UnaryExpression* unaryExpression);
     void PrettyPrintBinaryExpression(BinaryExpression* binaryExpression);
     void PrettyPrintMemberAccess(MemberAccess* memberAccess);

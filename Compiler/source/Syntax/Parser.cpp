@@ -411,7 +411,7 @@ Expression* Parser::ParsePrimaryExpression()
         }
         case TokenKind::OpenParenthesis:
         {
-            return ParseGrouping();
+            return ParseGroupingExpression();
         }
         case TokenKind::Dot:
         {
@@ -508,13 +508,13 @@ Number* Parser::ParseNumberLiteral()
     return new Number(number);
 }
 
-Grouping* Parser::ParseGrouping()
+GroupingExpression* Parser::ParseGroupingExpression()
 {
     auto openParenthesis = AdvanceOnMatch(TokenKind::OpenParenthesis);
     auto expression = ParseExpression();
     auto closeParenthesis = AdvanceOnMatch(TokenKind::CloseParenthesis);
 
-    return new Grouping(openParenthesis, expression, closeParenthesis);
+    return new GroupingExpression(openParenthesis, expression, closeParenthesis);
 }
 
 EnumMember* Parser::ParseEnumMember()

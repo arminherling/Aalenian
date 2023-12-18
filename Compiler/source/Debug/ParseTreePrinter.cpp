@@ -115,7 +115,7 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
         }
         case NodeKind::Grouping:
         {
-            PrettyPrintGrouping((Grouping*)node);
+            PrettyPrintGroupingExpression((GroupingExpression*)node);
             break;
         }
         case NodeKind::UnaryExpression:
@@ -443,7 +443,7 @@ void ParseTreePrinter::PrettyPrintNumber(Number* number)
     PrettyPrintType(optionalType.value());
 }
 
-void ParseTreePrinter::PrettyPrintGrouping(Grouping* grouping)
+void ParseTreePrinter::PrettyPrintGroupingExpression(GroupingExpression* grouping)
 {
     stream() << Indentation() << StringifyNodeKind(grouping->kind()) << QString(": {") << NewLine();
     PushIndentation();
