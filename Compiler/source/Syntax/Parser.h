@@ -60,7 +60,7 @@ private:
     Parameter* ParseParameter();
     ArgumentNode* ParseArgumentNode();
     Type ParseType();
-    Name* ParseName();
+    NameExpression* ParseNameExpression();
     Number* ParseNumberLiteral();
     GroupingExpression* ParseGroupingExpression();
     EnumMemberDefinitionStatement* ParseEnumMemberDefinitionStatement();

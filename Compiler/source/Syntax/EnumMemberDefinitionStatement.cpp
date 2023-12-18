@@ -1,13 +1,13 @@
 #include "EnumMemberDefinitionStatement.h"
 
-EnumMemberDefinitionStatement::EnumMemberDefinitionStatement(Name* name)
+EnumMemberDefinitionStatement::EnumMemberDefinitionStatement(NameExpression* name)
     : Statement(NodeKind::EnumMember)
     , m_name{ name }
 {
 }
 
 EnumMemberDefinitionStatement::EnumMemberDefinitionStatement(
-    Name* name,
+    NameExpression* name,
     const Token& equal,
     Number* value)
     : Statement(NodeKind::EnumMember)

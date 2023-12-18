@@ -1,7 +1,7 @@
 #include "FieldDeclarationStatement.h"
 
 FieldDeclarationStatement::FieldDeclarationStatement(
-    Name* name,
+    NameExpression* name,
     const std::optional<Token>& colon,
     const std::optional<Type>& type,
     const std::optional<Token>& equals,

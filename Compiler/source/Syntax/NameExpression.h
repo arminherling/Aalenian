@@ -3,10 +3,10 @@
 #include <Syntax/Token.h>
 #include <Syntax/Expression.h>
 
-class COMPILER_API Name : public Expression
+class COMPILER_API NameExpression : public Expression
 {
 public:
-    Name(const Token& token);
+    NameExpression(const Token& token);
 
     [[nodiscard]] const Token& identifier() noexcept { return m_token; }
 

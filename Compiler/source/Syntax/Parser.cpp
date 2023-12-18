@@ -254,7 +254,7 @@ Statement* Parser::ParseTypeDefinitionStatement()
 
 Statement* Parser::ParseFieldDeclarationStatement()
 {
-    auto name = ParseName();
+    auto name = ParseNameExpression();
     auto current = CurrentToken();
     std::optional<Token> colon;
     std::optional<Type> type;
@@ -446,7 +446,7 @@ Expression* Parser::ParseFunctionCallOrNameExpression()
     }
     else
     {
-        return ParseName();
+        return ParseNameExpression();
     }
 }
 
@@ -483,14 +483,14 @@ ArgumentsNode* Parser::ParseArgumentsNode()
 Type Parser::ParseType()
 {
     auto ref = TryMatchKeyword(QString("ref"));
-    auto name = ParseName();
+    auto name = ParseNameExpression();
     return Type(ref, name);
 }
 
-Name* Parser::ParseName()
+NameExpression* Parser::ParseNameExpression()
 {
     auto name = AdvanceOnMatch(TokenKind::Identifier);
-    return new Name(name);
+    return new NameExpression(name);
 }
 
 Number* Parser::ParseNumberLiteral()
@@ -519,7 +519,7 @@ GroupingExpression* Parser::ParseGroupingExpression()
 
 EnumMemberDefinitionStatement* Parser::ParseEnumMemberDefinitionStatement()
 {
-    auto memberName = ParseName();
+    auto memberName = ParseNameExpression();
 
     auto current = CurrentToken();
     if (current.kind == TokenKind::Equal)
@@ -563,7 +563,7 @@ BlockNode* Parser::ParseBlockNode(StatementScope scope)
 
 Parameter* Parser::ParseParameter()
 {
-    auto name = ParseName();
+    auto name = ParseNameExpression();
     auto colon = AdvanceOnMatch(TokenKind::Colon);
     auto type = ParseType();
 

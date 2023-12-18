@@ -21,7 +21,7 @@
 #include <Syntax/FunctionCallExpression.h>
 #include <Syntax/Type.h>
 #include <Syntax/BoolLiteral.h>
-#include <Syntax/Name.h>
+#include <Syntax/NameExpression.h>
 #include <Syntax/Number.h>
 #include <Syntax/BlockNode.h>
 #include <Syntax/GroupingExpression.h>
@@ -62,7 +62,7 @@ private:
     void PrettyPrintFunctionCallExpression(FunctionCallExpression* functionCall);
     void PrettyPrintType(const Type& type);
     void PrettyPrintBoolLiteral(BoolLiteral* node);
-    void PrettyPrintName(Name* name);
+    void PrettyPrintNameExpression(NameExpression* name);
     void PrettyPrintNumber(Number* number);
     void PrettyPrintGroupingExpression(GroupingExpression* grouping);
     void PrettyPrintUnaryExpression(UnaryExpression* unaryExpression);

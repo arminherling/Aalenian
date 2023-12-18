@@ -83,7 +83,7 @@
     <ClCompile Include="source\Syntax\Expression.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Syntax\Name.cpp">
+    <ClCompile Include="source\Syntax\NameExpression.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Syntax\Type.cpp">
@@ -268,7 +268,7 @@
     <ClInclude Include="source\Syntax\Expression.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Syntax\Name.h">
+    <ClInclude Include="source\Syntax\NameExpression.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Syntax\Type.h">

@@ -1,7 +1,7 @@
 #include "Parameter.h"
 
 Parameter::Parameter(
-    Name* name,
+    NameExpression* name,
     const Token& colon,
     const Type& type)
     : Node(NodeKind::Parameter)

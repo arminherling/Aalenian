@@ -105,7 +105,7 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
         }
         case NodeKind::Name:
         {
-            PrettyPrintName((Name*)node);
+            PrettyPrintNameExpression((NameExpression*)node);
             break;
         }
         case NodeKind::Number:
@@ -356,7 +356,7 @@ void ParseTreePrinter::PrettyPrintParameter(Parameter* parameter)
     stream() << Indentation() << StringifyNodeKind(parameter->kind()) << QString(": {") << NewLine();
     PushIndentation();
 
-    PrettyPrintName(parameter->name());
+    PrettyPrintNameExpression(parameter->name());
     PrettyPrintType(parameter->type());
 
     PopIndentation();
@@ -423,7 +423,7 @@ void ParseTreePrinter::PrettyPrintBoolLiteral(BoolLiteral* node)
     stream() << Indentation() << QString("Bool: ") << value << NewLine();
 }
 
-void ParseTreePrinter::PrettyPrintName(Name* name)
+void ParseTreePrinter::PrettyPrintNameExpression(NameExpression* name)
 {
     auto token = name->identifier();
     auto lexeme = m_parseTree.Tokens().GetLexeme(token.kindIndex);
