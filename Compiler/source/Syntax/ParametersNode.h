@@ -6,10 +6,10 @@
 #include <Syntax/Token.h>
 #include <QList>
 
-class COMPILER_API Parameters : public Node
+class COMPILER_API ParametersNode : public Node
 {
 public:
-    Parameters(
+    ParametersNode(
         const Token& openParenthesis,
         const QList<ParameterNode*>& parameters,
         const Token& closeParenthesis);

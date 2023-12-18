@@ -16,7 +16,7 @@
 #include <Syntax/ArgumentNode.h>
 #include <Syntax/ArgumentsNode.h>
 #include <Syntax/ParameterNode.h>
-#include <Syntax/Parameters.h>
+#include <Syntax/ParametersNode.h>
 #include <Syntax/DiscardLiteral.h>
 #include <Syntax/FunctionCallExpression.h>
 #include <Syntax/Type.h>
@@ -55,7 +55,7 @@ private:
     void PrettyPrintArgumentNode(ArgumentNode* argument);
     void PrettyPrintArgumentsNode(ArgumentsNode* arguments);
     void PrettyPrintParameterNode(ParameterNode* parameter);
-    void PrettyPrintParameters(Parameters* parameters);
+    void PrettyPrintParametersNode(ParametersNode* parameters);
     void PrettyPrintBlockNode(BlockNode* block);
 
     void PrettyPrintDiscardLiteral(DiscardLiteral* discard);

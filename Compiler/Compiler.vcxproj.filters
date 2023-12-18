@@ -134,7 +134,7 @@
     <ClCompile Include="source\Syntax\ScopeAccess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Syntax\Parameters.cpp">
+    <ClCompile Include="source\Syntax\ParametersNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Syntax\ArgumentsNode.cpp">
@@ -319,7 +319,7 @@
     <ClInclude Include="source\Syntax\ScopeAccess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Syntax\Parameters.h">
+    <ClInclude Include="source\Syntax\ParametersNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Syntax\ArgumentsNode.h">

@@ -13,7 +13,7 @@
 #include <Syntax/Statement.h>
 #include <Syntax/Number.h>
 #include <Syntax/ParameterNode.h>
-#include <Syntax/Parameters.h>
+#include <Syntax/ParametersNode.h>
 #include <Syntax/ParseTree.h>
 
 class COMPILER_API Parser
@@ -50,7 +50,7 @@ private:
     Expression* ParsePrimaryExpression();
     Expression* ParseFunctionCallOrNameExpression();
     Expression* ParseFunctionCallExpression();
-    Parameters* ParseParameters();
+    ParametersNode* ParseParametersNode();
     ArgumentsNode* ParseArgumentsNode();
     BlockNode* ParseFunctionBody();
     BlockNode* ParseEnumBody();

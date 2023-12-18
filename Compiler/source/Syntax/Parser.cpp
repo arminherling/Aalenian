@@ -218,7 +218,7 @@ Statement* Parser::ParseFunctionDefinitionStatement()
 {
     auto keyword = AdvanceOnMatch(TokenKind::Identifier);
     auto name = AdvanceOnMatch(TokenKind::Identifier);
-    auto signature = ParseParameters();
+    auto signature = ParseParametersNode();
     auto body = ParseFunctionBody();
 
     return new FunctionDefinitionStatement(keyword, name, signature, body);
@@ -282,7 +282,7 @@ Statement* Parser::ParseMethodDefinitionStatement()
 {
     auto keyword = AdvanceOnMatch(TokenKind::Identifier);
     auto name = AdvanceOnMatch(TokenKind::Identifier);
-    auto signature = ParseParameters();
+    auto signature = ParseParametersNode();
     auto body = ParseMethodBody();
 
     return new MethodDefinitionStatement(keyword, name, signature, body);
@@ -319,7 +319,7 @@ Statement* Parser::ParseReturnStatement()
     return new ReturnStatement(keyword, expression);
 }
 
-Parameters* Parser::ParseParameters()
+ParametersNode* Parser::ParseParametersNode()
 {
     auto openParenthesis = AdvanceOnMatch(TokenKind::OpenParenthesis);
     auto currentToken = CurrentToken();
@@ -339,7 +339,7 @@ Parameters* Parser::ParseParameters()
     }
 
     auto closeParenthesis = AdvanceOnMatch(TokenKind::CloseParenthesis);
-    return new Parameters(openParenthesis, parameters, closeParenthesis);
+    return new ParametersNode(openParenthesis, parameters, closeParenthesis);
 }
 
 Expression* Parser::ParseExpression()

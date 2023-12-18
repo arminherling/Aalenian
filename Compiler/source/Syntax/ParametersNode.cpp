@@ -1,6 +1,6 @@
-#include "Parameters.h"
+#include "ParametersNode.h"
 
-Parameters::Parameters(
+ParametersNode::ParametersNode(
     const Token& openParenthesis,
     const QList<ParameterNode*>& parameters,
     const Token& closeParenthesis)

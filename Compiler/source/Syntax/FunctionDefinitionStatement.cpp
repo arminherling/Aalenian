@@ -3,7 +3,7 @@
 FunctionDefinitionStatement::FunctionDefinitionStatement(
     const Token& keyword,
     const Token& name,
-    Parameters* parameters,
+    ParametersNode* parameters,
     BlockNode* body)
     : Statement(NodeKind::FunctionDefinitionStatement)
     , m_keyword{ keyword }
