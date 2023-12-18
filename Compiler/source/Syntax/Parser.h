@@ -11,7 +11,7 @@
 #include <Syntax/Expression.h>
 #include <Syntax/GroupingExpression.h>
 #include <Syntax/Statement.h>
-#include <Syntax/Number.h>
+#include <Syntax/NumberLiteral.h>
 #include <Syntax/ParameterNode.h>
 #include <Syntax/ParametersNode.h>
 #include <Syntax/ParseTree.h>
@@ -61,7 +61,7 @@ private:
     ArgumentNode* ParseArgumentNode();
     TypeNode ParseTypeNode();
     NameExpression* ParseNameExpression();
-    Number* ParseNumberLiteral();
+    NumberLiteral* ParseNumberLiteral();
     GroupingExpression* ParseGroupingExpression();
     EnumMemberDefinitionStatement* ParseEnumMemberDefinitionStatement();
 

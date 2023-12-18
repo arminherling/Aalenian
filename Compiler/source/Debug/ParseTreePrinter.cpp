@@ -110,7 +110,7 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
         }
         case NodeKind::Number:
         {
-            PrettyPrintNumber((Number*)node);
+            PrettyPrintNumberLiteral((NumberLiteral*)node);
             break;
         }
         case NodeKind::Grouping:
@@ -430,7 +430,7 @@ void ParseTreePrinter::PrettyPrintNameExpression(NameExpression* name)
     stream() << Indentation() << StringifyNodeKind(name->kind()) << QString(": %1").arg(lexeme) << NewLine();
 }
 
-void ParseTreePrinter::PrettyPrintNumber(Number* number)
+void ParseTreePrinter::PrettyPrintNumberLiteral(NumberLiteral* number)
 {
     auto token = number->token();
     auto lexeme = m_parseTree.Tokens().GetLexeme(token.kindIndex);

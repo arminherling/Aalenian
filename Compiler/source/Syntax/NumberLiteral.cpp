@@ -1,12 +1,12 @@
-#include "Number.h"
+#include "NumberLiteral.h"
 
-Number::Number(const Token& token)
+NumberLiteral::NumberLiteral(const Token& token)
     : Expression(NodeKind::Number)
     , m_token{ token }
 {
 }
 
-Number::Number(
+NumberLiteral::NumberLiteral(
     const Token& token,
     const Token& colon,
     const TypeNode& type)

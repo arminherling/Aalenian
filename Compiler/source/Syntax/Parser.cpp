@@ -493,7 +493,7 @@ NameExpression* Parser::ParseNameExpression()
     return new NameExpression(name);
 }
 
-Number* Parser::ParseNumberLiteral()
+NumberLiteral* Parser::ParseNumberLiteral()
 {
     auto number = AdvanceOnMatch(TokenKind::Number);
 
@@ -502,10 +502,10 @@ Number* Parser::ParseNumberLiteral()
     {
         AdvanceCurrentIndex();
         auto type = ParseTypeNode();
-        return new Number(number, current, type);
+        return new NumberLiteral(number, current, type);
     }
 
-    return new Number(number);
+    return new NumberLiteral(number);
 }
 
 GroupingExpression* Parser::ParseGroupingExpression()

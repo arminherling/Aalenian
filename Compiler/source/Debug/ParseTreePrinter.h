@@ -22,7 +22,7 @@
 #include <Syntax/TypeNode.h>
 #include <Syntax/BoolLiteral.h>
 #include <Syntax/NameExpression.h>
-#include <Syntax/Number.h>
+#include <Syntax/NumberLiteral.h>
 #include <Syntax/BlockNode.h>
 #include <Syntax/GroupingExpression.h>
 #include <Syntax/UnaryExpression.h>
@@ -63,7 +63,7 @@ private:
     void PrettyPrintTypeNode(const TypeNode& type);
     void PrettyPrintBoolLiteral(BoolLiteral* node);
     void PrettyPrintNameExpression(NameExpression* name);
-    void PrettyPrintNumber(Number* number);
+    void PrettyPrintNumberLiteral(NumberLiteral* number);
     void PrettyPrintGroupingExpression(GroupingExpression* grouping);
     void PrettyPrintUnaryExpression(UnaryExpression* unaryExpression);
     void PrettyPrintBinaryExpression(BinaryExpression* binaryExpression);

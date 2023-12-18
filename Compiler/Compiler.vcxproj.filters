@@ -149,7 +149,7 @@
     <ClCompile Include="source\Syntax\BoolLiteral.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Syntax\Number.cpp">
+    <ClCompile Include="source\Syntax\NumberLiteral.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Syntax\EnumMemberDefinitionStatement.cpp">
@@ -343,7 +343,7 @@
     <ClInclude Include="source\Syntax\BoolLiteral.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Syntax\Number.h">
+    <ClInclude Include="source\Syntax\NumberLiteral.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Syntax\EnumMemberDefinitionStatement.h">

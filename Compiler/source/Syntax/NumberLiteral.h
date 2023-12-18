@@ -5,11 +5,11 @@
 #include <Syntax/Token.h>
 #include <Syntax/TypeNode.h>
 
-class COMPILER_API Number : public Expression
+class COMPILER_API NumberLiteral : public Expression
 {
 public:
-    Number(const Token& token);
-    Number(
+    NumberLiteral(const Token& token);
+    NumberLiteral(
         const Token& token, 
         const Token& colon, 
         const TypeNode& type);

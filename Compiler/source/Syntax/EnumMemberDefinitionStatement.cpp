@@ -9,7 +9,7 @@ EnumMemberDefinitionStatement::EnumMemberDefinitionStatement(NameExpression* nam
 EnumMemberDefinitionStatement::EnumMemberDefinitionStatement(
     NameExpression* name,
     const Token& equal,
-    Number* value)
+    NumberLiteral* value)
     : Statement(NodeKind::EnumMember)
     , m_name{ name }
     , m_equal{ equal }
