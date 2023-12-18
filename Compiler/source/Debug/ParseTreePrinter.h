@@ -20,7 +20,7 @@
 #include <Syntax/Discard.h>
 #include <Syntax/FunctionCall.h>
 #include <Syntax/Type.h>
-#include <Syntax/Bool.h>
+#include <Syntax/BoolExpression.h>
 #include <Syntax/Name.h>
 #include <Syntax/Number.h>
 #include <Syntax/BlockNode.h>
@@ -61,7 +61,7 @@ private:
     void PrettyPrintDiscard(Discard* discard);
     void PrettyPrintFunctionCall(FunctionCall* functionCall);
     void PrettyPrintType(const Type& type);
-    void PrettyPrintBool(Bool* node);
+    void PrettyPrintBoolExpression(BoolExpression* node);
     void PrettyPrintName(Name* name);
     void PrettyPrintNumber(Number* number);
     void PrettyPrintGrouping(Grouping* grouping);

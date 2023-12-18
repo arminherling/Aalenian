@@ -146,7 +146,7 @@
     <ClCompile Include="source\Syntax\EnumDefinitionStatement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Syntax\Bool.cpp">
+    <ClCompile Include="source\Syntax\BoolExpression.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Syntax\Number.cpp">
@@ -340,7 +340,7 @@
     <ClInclude Include="source\Syntax\TypeDefinitionStatement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Syntax\Bool.h">
+    <ClInclude Include="source\Syntax\BoolExpression.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Syntax\Number.h">

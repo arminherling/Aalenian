@@ -107,7 +107,7 @@
     <ClCompile Include="source\Syntax\AssignmentStatement.cpp" />
     <ClCompile Include="source\Syntax\BinaryExpression.cpp" />
     <ClCompile Include="source\Syntax\BlockNode.cpp" />
-    <ClCompile Include="source\Syntax\Bool.cpp" />
+    <ClCompile Include="source\Syntax\BoolExpression.cpp" />
     <ClCompile Include="source\Syntax\Discard.cpp" />
     <ClCompile Include="source\Syntax\EnumDefinitionStatement.cpp" />
     <ClCompile Include="source\Syntax\EnumMember.cpp" />
@@ -159,7 +159,7 @@
     <ClInclude Include="source\Syntax\AssignmentStatement.h" />
     <ClInclude Include="source\Syntax\BinaryExpression.h" />
     <ClInclude Include="source\Syntax\BlockNode.h" />
-    <ClInclude Include="source\Syntax\Bool.h" />
+    <ClInclude Include="source\Syntax\BoolExpression.h" />
     <ClInclude Include="source\Syntax\Discard.h" />
     <ClInclude Include="source\Syntax\EnumDefinitionStatement.h" />
     <ClInclude Include="source\Syntax\EnumMember.h" />

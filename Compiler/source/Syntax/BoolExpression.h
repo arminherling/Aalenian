@@ -3,10 +3,10 @@
 #include <Defines.h>
 #include <Syntax/Expression.h>
 
-class COMPILER_API Bool : public Expression
+class COMPILER_API BoolExpression : public Expression
 {
 public:
-    Bool(bool value);
+    BoolExpression(bool value);
 
     [[nodiscard]] bool value() noexcept { return m_value; }
 
