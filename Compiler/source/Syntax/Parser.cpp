@@ -1,4 +1,21 @@
 #include <Syntax/Parser.h>
+#include <Syntax/AssignmentStatement.h>
+#include <Syntax/ExpressionStatement.h>
+#include <Syntax/FunctionDefinitionStatement.h>
+#include <Syntax/EnumDefinitionStatement.h>
+#include <Syntax/TypeDefinitionStatement.h>
+#include <Syntax/FieldDeclarationStatement.h>
+#include <Syntax/MethodDefinitionStatement.h>
+#include <Syntax/IfStatement.h>
+#include <Syntax/WhileStatement.h>
+#include <Syntax/ReturnStatement.h>
+#include <Syntax/UnaryExpression.h>
+#include <Syntax/BinaryExpression.h>
+#include <Syntax/Discard.h>
+#include <Syntax/MemberAccess.h>
+#include <Syntax/ScopeAccess.h>
+#include <Syntax/Error.h>
+#include <Syntax/FunctionCall.h>
 
 bool IsFunctionDefinitionKeyword(const QStringView& lexeme)
 {

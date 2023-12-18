@@ -1,0 +1,20 @@
+#pragma once
+
+#include <Defines.h>
+#include <Syntax/Expression.h>
+#include <Syntax/Token.h>
+
+class COMPILER_API MemberAccess : public Expression
+{
+public:
+    MemberAccess(
+        const Token& dot, 
+        Expression* expression);
+
+    [[nodiscard]] const Token& dot() noexcept { return m_dot; }
+    [[nodiscard]] Expression* expression() noexcept { return m_expression; }
+
+private:
+    Token m_dot;
+    Expression* m_expression;
+};

@@ -1,10 +1,9 @@
 #pragma once
 
 #include <Defines.h>
-
 #include <QString>
 
-enum class TokenKind
+enum class COMPILER_API TokenKind
 {
     Unknown,
     Error,
@@ -31,6 +30,8 @@ enum class TokenKind
     EndOfFile
 };
 
-QString COMPILER_API Stringify(TokenKind kind);
-i32 COMPILER_API UnaryOperatorPrecedence(TokenKind kind);
-i32 COMPILER_API BinaryOperatorPrecedence(TokenKind kind);
+COMPILER_API QString Stringify(TokenKind kind);
+COMPILER_API QString StringifyUnaryOperation(TokenKind kind);
+COMPILER_API QString StringifyBinaryOperation(TokenKind kind);
+COMPILER_API i32 UnaryOperatorPrecedence(TokenKind kind);
+COMPILER_API i32 BinaryOperatorPrecedence(TokenKind kind);

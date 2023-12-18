@@ -43,6 +43,38 @@ QString Stringify(TokenKind kind)
 	}
 }
 
+QString StringifyUnaryOperation(TokenKind kind)
+{
+	switch (kind)
+	{
+		case TokenKind::Minus:
+			return QString("Negation");
+		default:
+			TODO("String for TokenKind value was not defined yet");
+	}
+}
+
+QString StringifyBinaryOperation(TokenKind kind)
+{
+	switch (kind)
+	{
+		case TokenKind::DoubleColon:
+			return QString("Scope Access");
+		case TokenKind::Dot:
+			return QString("Member Access");
+		case TokenKind::Plus:
+			return QString("Addition");
+		case TokenKind::Minus:
+			return QString("Subtraction");
+		case TokenKind::Star:
+			return QString("Multiplication");
+		case TokenKind::Slash:
+			return QString("Division");
+		default:
+			TODO("String for TokenKind value was not defined yet");
+	}
+}
+
 i32 UnaryOperatorPrecedence(TokenKind kind)
 {
 	if (kind == TokenKind::Minus)

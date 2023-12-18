@@ -2,7 +2,33 @@
 
 #include <Defines.h>
 #include <Syntax/ParseTree.h>
-#include <Syntax/Node.h>
+#include <Syntax/AssignmentStatement.h>
+#include <Syntax/ExpressionStatement.h>
+#include <Syntax/FunctionDefinitionStatement.h>
+#include <Syntax/EnumDefinitionStatement.h>
+#include <Syntax/EnumMember.h>
+#include <Syntax/TypeDefinitionStatement.h>
+#include <Syntax/FieldDeclarationStatement.h>
+#include <Syntax/MethodDefinitionStatement.h>
+#include <Syntax/IfStatement.h>
+#include <Syntax/WhileStatement.h>
+#include <Syntax/ReturnStatement.h>
+#include <Syntax/Argument.h>
+#include <Syntax/Arguments.h>
+#include <Syntax/Parameter.h>
+#include <Syntax/Parameters.h>
+#include <Syntax/Discard.h>
+#include <Syntax/FunctionCall.h>
+#include <Syntax/Type.h>
+#include <Syntax/Bool.h>
+#include <Syntax/Name.h>
+#include <Syntax/Number.h>
+#include <Syntax/Bool.h>
+#include <Syntax/Grouping.h>
+#include <Syntax/UnaryExpression.h>
+#include <Syntax/BinaryExpression.h>
+#include <Syntax/MemberAccess.h>
+#include <Syntax/Error.h>
 
 #include <qtextstream.h>
 

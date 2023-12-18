@@ -3,8 +3,18 @@
 #include <Defines.h>
 #include <Compiler/DiagnosticsBag.h>
 #include <Syntax/TokenBuffer.h>
+#include <Syntax/Argument.h>
+#include <Syntax/Arguments.h>
+#include <Syntax/Bool.h>
+#include <Syntax/Block.h>
+#include <Syntax/EnumMember.h>
+#include <Syntax/Expression.h>
+#include <Syntax/Grouping.h>
+#include <Syntax/Statement.h>
+#include <Syntax/Number.h>
+#include <Syntax/Parameter.h>
+#include <Syntax/Parameters.h>
 #include <Syntax/ParseTree.h>
-#include <Syntax/Node.h>
 
 class COMPILER_API Parser
 {
