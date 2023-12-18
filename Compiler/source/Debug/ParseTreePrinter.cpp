@@ -199,7 +199,7 @@ void ParseTreePrinter::PrettyPrintEnumDefinitionStatement(EnumDefinitionStatemen
     stream() << Indentation() << QString("Name: %1").arg(nameLexeme) << NewLine();
 
     if (statement->baseType().has_value())
-        PrettyPrintType(statement->baseType().value());
+        PrettyPrintTypeNode(statement->baseType().value());
 
     PrettyPrintBlockNode(statement->body());
     PopIndentation();
@@ -249,7 +249,7 @@ void ParseTreePrinter::PrettyPrintFieldDeclarationStatement(FieldDeclarationStat
     stream() << Indentation() << QString("}") << NewLine();
 
     if (statement->type().has_value())
-        PrettyPrintType(statement->type().value());
+        PrettyPrintTypeNode(statement->type().value());
 
     if (statement->expression().has_value())
     {
@@ -357,7 +357,7 @@ void ParseTreePrinter::PrettyPrintParameterNode(ParameterNode* parameter)
     PushIndentation();
 
     PrettyPrintNameExpression(parameter->name());
-    PrettyPrintType(parameter->type());
+    PrettyPrintTypeNode(parameter->type());
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
@@ -407,7 +407,7 @@ void ParseTreePrinter::PrettyPrintFunctionCallExpression(FunctionCallExpression*
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-void ParseTreePrinter::PrettyPrintType(const Type& type)
+void ParseTreePrinter::PrettyPrintTypeNode(const TypeNode& type)
 {
     auto token = type.name()->identifier();
     auto lexeme = m_parseTree.Tokens().GetLexeme(token.kindIndex);
@@ -440,7 +440,7 @@ void ParseTreePrinter::PrettyPrintNumber(Number* number)
     if (!optionalType.has_value())
         return;
 
-    PrettyPrintType(optionalType.value());
+    PrettyPrintTypeNode(optionalType.value());
 }
 
 void ParseTreePrinter::PrettyPrintGroupingExpression(GroupingExpression* grouping)

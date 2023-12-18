@@ -3,7 +3,7 @@
 EnumDefinitionStatement::EnumDefinitionStatement(
     const Token& keyword,
     const Token& name,
-    const std::optional<Type>& baseType,
+    const std::optional<TypeNode>& baseType,
     BlockNode* body)
     : Statement(NodeKind::EnumDefinitionStatement)
     , m_keyword{ keyword }

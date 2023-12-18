@@ -59,7 +59,7 @@ private:
     BlockNode* ParseBlockNode(StatementScope scope);
     ParameterNode* ParseParameterNode();
     ArgumentNode* ParseArgumentNode();
-    Type ParseType();
+    TypeNode ParseTypeNode();
     NameExpression* ParseNameExpression();
     Number* ParseNumberLiteral();
     GroupingExpression* ParseGroupingExpression();

@@ -19,7 +19,7 @@
 #include <Syntax/ParametersNode.h>
 #include <Syntax/DiscardLiteral.h>
 #include <Syntax/FunctionCallExpression.h>
-#include <Syntax/Type.h>
+#include <Syntax/TypeNode.h>
 #include <Syntax/BoolLiteral.h>
 #include <Syntax/NameExpression.h>
 #include <Syntax/Number.h>
@@ -60,7 +60,7 @@ private:
 
     void PrettyPrintDiscardLiteral(DiscardLiteral* discard);
     void PrettyPrintFunctionCallExpression(FunctionCallExpression* functionCall);
-    void PrettyPrintType(const Type& type);
+    void PrettyPrintTypeNode(const TypeNode& type);
     void PrettyPrintBoolLiteral(BoolLiteral* node);
     void PrettyPrintNameExpression(NameExpression* name);
     void PrettyPrintNumber(Number* number);

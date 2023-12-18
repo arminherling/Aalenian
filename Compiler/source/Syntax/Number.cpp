@@ -9,7 +9,7 @@ Number::Number(const Token& token)
 Number::Number(
     const Token& token,
     const Token& colon,
-    const Type& type)
+    const TypeNode& type)
     : Expression(NodeKind::Number)
     , m_token{ token }
     , m_colon{ colon }

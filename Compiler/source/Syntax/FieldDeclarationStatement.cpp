@@ -3,7 +3,7 @@
 FieldDeclarationStatement::FieldDeclarationStatement(
     NameExpression* name,
     const std::optional<Token>& colon,
-    const std::optional<Type>& type,
+    const std::optional<TypeNode>& type,
     const std::optional<Token>& equals,
     const std::optional<Expression*>& expression)
     : Statement(NodeKind::FieldDeclarationStatement)

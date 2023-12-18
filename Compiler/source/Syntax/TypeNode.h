@@ -4,10 +4,10 @@
 #include <Syntax/Node.h>
 #include <Syntax/NameExpression.h>
 
-class COMPILER_API Type : public Node
+class COMPILER_API TypeNode : public Node
 {
 public:
-    Type(
+    TypeNode(
         const std::optional<Token>& ref, 
         NameExpression* name);
 

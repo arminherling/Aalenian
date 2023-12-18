@@ -1,6 +1,6 @@
-#include "Type.h"
+#include "TypeNode.h"
 
-Type::Type(
+TypeNode::TypeNode(
     const std::optional<Token>& ref,
     NameExpression* name)
     : Node(NodeKind::Type)
