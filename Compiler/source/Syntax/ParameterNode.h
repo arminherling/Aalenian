@@ -4,10 +4,10 @@
 #include <Syntax/Node.h>
 #include <Syntax/Type.h>
 
-class COMPILER_API Parameter : public Node
+class COMPILER_API ParameterNode : public Node
 {
 public:
-    Parameter(
+    ParameterNode(
         NameExpression* name,
         const Token& colon, 
         const Type& type);

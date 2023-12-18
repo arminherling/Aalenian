@@ -98,7 +98,7 @@
     <ClCompile Include="source\Syntax\AssignmentStatement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Syntax\Parameter.cpp">
+    <ClCompile Include="source\Syntax\ParameterNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Syntax\ExpressionStatement.cpp">
@@ -274,7 +274,7 @@
     <ClInclude Include="source\Syntax\Type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Syntax\Parameter.h">
+    <ClInclude Include="source\Syntax\ParameterNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Syntax\ArgumentNode.h">

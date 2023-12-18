@@ -324,10 +324,10 @@ Parameters* Parser::ParseParameters()
     auto openParenthesis = AdvanceOnMatch(TokenKind::OpenParenthesis);
     auto currentToken = CurrentToken();
 
-    QList<Parameter*> parameters;
+    QList<ParameterNode*> parameters;
     while (currentToken.kind != TokenKind::CloseParenthesis)
     {
-        parameters.append(ParseParameter());
+        parameters.append(ParseParameterNode());
         if (CurrentToken().kind == TokenKind::Comma)
         {
             AdvanceCurrentIndex();
@@ -561,13 +561,13 @@ BlockNode* Parser::ParseBlockNode(StatementScope scope)
     return new BlockNode(openBracket, statements, closeBracket);
 }
 
-Parameter* Parser::ParseParameter()
+ParameterNode* Parser::ParseParameterNode()
 {
     auto name = ParseNameExpression();
     auto colon = AdvanceOnMatch(TokenKind::Colon);
     auto type = ParseType();
 
-    return new Parameter(name, colon, type);
+    return new ParameterNode(name, colon, type);
 }
 
 ArgumentNode* Parser::ParseArgumentNode()

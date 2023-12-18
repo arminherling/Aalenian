@@ -1,6 +1,6 @@
-#include "Parameter.h"
+#include "ParameterNode.h"
 
-Parameter::Parameter(
+ParameterNode::ParameterNode(
     NameExpression* name,
     const Token& colon,
     const Type& type)

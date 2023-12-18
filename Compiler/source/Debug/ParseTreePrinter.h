@@ -15,7 +15,7 @@
 #include <Syntax/ReturnStatement.h>
 #include <Syntax/ArgumentNode.h>
 #include <Syntax/ArgumentsNode.h>
-#include <Syntax/Parameter.h>
+#include <Syntax/ParameterNode.h>
 #include <Syntax/Parameters.h>
 #include <Syntax/DiscardLiteral.h>
 #include <Syntax/FunctionCallExpression.h>
@@ -54,7 +54,7 @@ private:
     void PrettyPrintReturnStatement(ReturnStatement* statement);
     void PrettyPrintArgumentNode(ArgumentNode* argument);
     void PrettyPrintArgumentsNode(ArgumentsNode* arguments);
-    void PrettyPrintParameter(Parameter* parameter);
+    void PrettyPrintParameterNode(ParameterNode* parameter);
     void PrettyPrintParameters(Parameters* parameters);
     void PrettyPrintBlockNode(BlockNode* block);
 

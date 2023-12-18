@@ -12,7 +12,7 @@
 #include <Syntax/GroupingExpression.h>
 #include <Syntax/Statement.h>
 #include <Syntax/Number.h>
-#include <Syntax/Parameter.h>
+#include <Syntax/ParameterNode.h>
 #include <Syntax/Parameters.h>
 #include <Syntax/ParseTree.h>
 
@@ -57,7 +57,7 @@ private:
     BlockNode* ParseTypeBody();
     BlockNode* ParseMethodBody();
     BlockNode* ParseBlockNode(StatementScope scope);
-    Parameter* ParseParameter();
+    ParameterNode* ParseParameterNode();
     ArgumentNode* ParseArgumentNode();
     Type ParseType();
     NameExpression* ParseNameExpression();

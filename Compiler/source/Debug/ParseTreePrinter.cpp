@@ -85,7 +85,7 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
         }
         case NodeKind::Parameter:
         {
-            PrettyPrintParameter((Parameter*)node);
+            PrettyPrintParameterNode((ParameterNode*)node);
             break;
         }
         case NodeKind::Discard:
@@ -351,7 +351,7 @@ void ParseTreePrinter::PrettyPrintArgumentsNode(ArgumentsNode* node)
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-void ParseTreePrinter::PrettyPrintParameter(Parameter* parameter)
+void ParseTreePrinter::PrettyPrintParameterNode(ParameterNode* parameter)
 {
     stream() << Indentation() << StringifyNodeKind(parameter->kind()) << QString(": {") << NewLine();
     PushIndentation();
