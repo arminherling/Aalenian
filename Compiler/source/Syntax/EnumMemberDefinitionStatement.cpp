@@ -1,12 +1,12 @@
-#include "EnumMember.h"
+#include "EnumMemberDefinitionStatement.h"
 
-EnumMember::EnumMember(Name* name)
+EnumMemberDefinitionStatement::EnumMemberDefinitionStatement(Name* name)
     : Statement(NodeKind::EnumMember)
     , m_name{ name }
 {
 }
 
-EnumMember::EnumMember(
+EnumMemberDefinitionStatement::EnumMemberDefinitionStatement(
     Name* name,
     const Token& equal,
     Number* value)

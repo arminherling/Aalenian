@@ -6,7 +6,7 @@
 #include <Syntax/ExpressionStatement.h>
 #include <Syntax/FunctionDefinitionStatement.h>
 #include <Syntax/EnumDefinitionStatement.h>
-#include <Syntax/EnumMember.h>
+#include <Syntax/EnumMemberDefinitionStatement.h>
 #include <Syntax/TypeDefinitionStatement.h>
 #include <Syntax/FieldDeclarationStatement.h>
 #include <Syntax/MethodDefinitionStatement.h>
@@ -45,7 +45,7 @@ private:
     void PrettyPrintExpressionStatement(ExpressionStatement* statement);
     void PrettyPrintFunctionDefinitionStatement(FunctionDefinitionStatement* statement);
     void PrettyPrintEnumDefinitionStatement(EnumDefinitionStatement* statement);
-    void PrettyPrintEnumMember(EnumMember* statement);
+    void PrettyPrintEnumMemberDefinitionStatement(EnumMemberDefinitionStatement* statement);
     void PrettyPrintTypeDefinitionStatement(TypeDefinitionStatement* statement);
     void PrettyPrintFieldDeclarationStatement(FieldDeclarationStatement* statement);
     void PrettyPrintMethodDefinitionStatement(MethodDefinitionStatement* statement);

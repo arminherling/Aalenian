@@ -148,7 +148,7 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                 }
                 else if (scope == StatementScope::Enum)
                 {
-                    statements.append(ParseEnumMember());
+                    statements.append(ParseEnumMemberDefinitionStatement());
                     break;
                 }
 
@@ -517,7 +517,7 @@ GroupingExpression* Parser::ParseGroupingExpression()
     return new GroupingExpression(openParenthesis, expression, closeParenthesis);
 }
 
-EnumMember* Parser::ParseEnumMember()
+EnumMemberDefinitionStatement* Parser::ParseEnumMemberDefinitionStatement()
 {
     auto memberName = ParseName();
 
@@ -526,10 +526,10 @@ EnumMember* Parser::ParseEnumMember()
     {
         AdvanceCurrentIndex();
         auto value = ParseNumberLiteral();
-        return new EnumMember(memberName, current, value);
+        return new EnumMemberDefinitionStatement(memberName, current, value);
     }
 
-    return new EnumMember(memberName);
+    return new EnumMemberDefinitionStatement(memberName);
 }
 
 BlockNode* Parser::ParseFunctionBody()

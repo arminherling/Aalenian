@@ -45,7 +45,7 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
         }
         case NodeKind::EnumMember:
         {
-            PrettyPrintEnumMember((EnumMember*)node);
+            PrettyPrintEnumMemberDefinitionStatement((EnumMemberDefinitionStatement*)node);
             break;
         }
         case NodeKind::TypeDefinitionStatement:
@@ -206,7 +206,7 @@ void ParseTreePrinter::PrettyPrintEnumDefinitionStatement(EnumDefinitionStatemen
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-void ParseTreePrinter::PrettyPrintEnumMember(EnumMember* statement)
+void ParseTreePrinter::PrettyPrintEnumMemberDefinitionStatement(EnumMemberDefinitionStatement* statement)
 {
     auto nameToken = statement->name()->identifier();
     auto nameLexeme = m_parseTree.Tokens().GetLexeme(nameToken.kindIndex);
