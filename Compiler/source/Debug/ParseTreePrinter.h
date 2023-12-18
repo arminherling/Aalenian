@@ -27,7 +27,7 @@
 #include <Syntax/GroupingExpression.h>
 #include <Syntax/UnaryExpression.h>
 #include <Syntax/BinaryExpression.h>
-#include <Syntax/MemberAccess.h>
+#include <Syntax/MemberAccessExpression.h>
 #include <Syntax/Error.h>
 
 #include <qtextstream.h>
@@ -67,7 +67,7 @@ private:
     void PrettyPrintGroupingExpression(GroupingExpression* grouping);
     void PrettyPrintUnaryExpression(UnaryExpression* unaryExpression);
     void PrettyPrintBinaryExpression(BinaryExpression* binaryExpression);
-    void PrettyPrintMemberAccess(MemberAccess* memberAccess);
+    void PrettyPrintMemberAccessExpression(MemberAccessExpression* memberAccess);
     void PrettyPrintError(Error* error);
 
     void PushIndentation() { m_indentationLevel++; }

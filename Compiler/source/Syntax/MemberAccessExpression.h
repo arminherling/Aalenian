@@ -4,10 +4,10 @@
 #include <Syntax/Expression.h>
 #include <Syntax/Token.h>
 
-class COMPILER_API MemberAccess : public Expression
+class COMPILER_API MemberAccessExpression : public Expression
 {
 public:
-    MemberAccess(
+    MemberAccessExpression(
         const Token& dot, 
         Expression* expression);
 

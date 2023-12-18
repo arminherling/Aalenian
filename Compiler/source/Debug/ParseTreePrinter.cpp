@@ -130,7 +130,7 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
         }
         case NodeKind::MemberAccess:
         {
-            PrettyPrintMemberAccess((MemberAccess*)node);
+            PrettyPrintMemberAccessExpression((MemberAccessExpression*)node);
             break;
         }
         case NodeKind::Error:
@@ -494,7 +494,7 @@ void ParseTreePrinter::PrettyPrintBinaryExpression(BinaryExpression* binaryExpre
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-void ParseTreePrinter::PrettyPrintMemberAccess(MemberAccess* memberAccess)
+void ParseTreePrinter::PrettyPrintMemberAccessExpression(MemberAccessExpression* memberAccess)
 {
     stream() << Indentation() << StringifyNodeKind(memberAccess->kind()) << QString(": {") << NewLine();
     PushIndentation();

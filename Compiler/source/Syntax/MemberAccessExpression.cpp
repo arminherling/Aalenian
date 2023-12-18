@@ -1,6 +1,6 @@
-#include "MemberAccess.h"
+#include "MemberAccessExpression.h"
 
-MemberAccess::MemberAccess(
+MemberAccessExpression::MemberAccessExpression(
     const Token& dot,
     Expression* expression)
     : Expression(NodeKind::MemberAccess)

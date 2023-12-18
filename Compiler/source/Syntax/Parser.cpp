@@ -12,7 +12,7 @@
 #include <Syntax/UnaryExpression.h>
 #include <Syntax/BinaryExpression.h>
 #include <Syntax/DiscardLiteral.h>
-#include <Syntax/MemberAccess.h>
+#include <Syntax/MemberAccessExpression.h>
 #include <Syntax/ScopeAccess.h>
 #include <Syntax/Error.h>
 #include <Syntax/FunctionCallExpression.h>
@@ -417,7 +417,7 @@ Expression* Parser::ParsePrimaryExpression()
         {
             AdvanceCurrentIndex();
             auto expression = ParseFunctionCallOrNameExpression();
-            return new MemberAccess(currentToken, expression);
+            return new MemberAccessExpression(currentToken, expression);
         }
         case TokenKind::DoubleColon:
         {

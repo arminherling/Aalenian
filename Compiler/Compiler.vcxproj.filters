@@ -128,7 +128,7 @@
     <ClCompile Include="source\Syntax\BinaryExpression.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Syntax\MemberAccess.cpp">
+    <ClCompile Include="source\Syntax\MemberAccessExpression.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Syntax\ScopeAccess.cpp">
@@ -313,7 +313,7 @@
     <ClInclude Include="source\Syntax\BinaryExpression.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Syntax\MemberAccess.h">
+    <ClInclude Include="source\Syntax\MemberAccessExpression.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Syntax\ScopeAccess.h">

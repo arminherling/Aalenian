@@ -119,7 +119,7 @@
     <ClCompile Include="source\Syntax\FunctionDefinitionStatement.cpp" />
     <ClCompile Include="source\Syntax\GroupingExpression.cpp" />
     <ClCompile Include="source\Syntax\IfStatement.cpp" />
-    <ClCompile Include="source\Syntax\MemberAccess.cpp" />
+    <ClCompile Include="source\Syntax\MemberAccessExpression.cpp" />
     <ClCompile Include="source\Syntax\MethodDefinitionStatement.cpp" />
     <ClCompile Include="source\Syntax\Name.cpp" />
     <ClCompile Include="source\Syntax\Number.cpp" />
@@ -171,7 +171,7 @@
     <ClInclude Include="source\Syntax\FunctionDefinitionStatement.h" />
     <ClInclude Include="source\Syntax\GroupingExpression.h" />
     <ClInclude Include="source\Syntax\IfStatement.h" />
-    <ClInclude Include="source\Syntax\MemberAccess.h" />
+    <ClInclude Include="source\Syntax\MemberAccessExpression.h" />
     <ClInclude Include="source\Syntax\MethodDefinitionStatement.h" />
     <ClInclude Include="source\Syntax\Name.h" />
     <ClInclude Include="source\Syntax\Number.h" />
