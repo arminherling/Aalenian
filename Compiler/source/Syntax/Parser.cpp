@@ -399,7 +399,7 @@ Expression* Parser::ParsePrimaryExpression()
         }
         case TokenKind::Identifier:
         {
-            auto maybeBool = TryParseBoolExpression();
+            auto maybeBool = TryParseBoolLiteral();
             if (maybeBool.has_value())
                 return maybeBool.value();
 
@@ -594,19 +594,19 @@ Token Parser::AdvanceOnMatch(TokenKind kind)
     }
 }
 
-std::optional<BoolExpression*> Parser::TryParseBoolExpression()
+std::optional<BoolLiteral*> Parser::TryParseBoolLiteral()
 {
     auto currentToken = CurrentToken();
     auto lexeme = m_tokens.GetLexeme(currentToken.kindIndex);
     if (IsTrueKeyword(lexeme))
     {
         AdvanceCurrentIndex();
-        return new BoolExpression(true);
+        return new BoolLiteral(true);
     }
     else if (IsFalseKeyword(lexeme))
     {
         AdvanceCurrentIndex();
-        return new BoolExpression(false);
+        return new BoolLiteral(false);
     }
     return {};
 }

@@ -5,7 +5,7 @@
 #include <Syntax/TokenBuffer.h>
 #include <Syntax/ArgumentNode.h>
 #include <Syntax/ArgumentsNode.h>
-#include <Syntax/BoolExpression.h>
+#include <Syntax/BoolLiteral.h>
 #include <Syntax/BlockNode.h>
 #include <Syntax/EnumMember.h>
 #include <Syntax/Expression.h>
@@ -66,7 +66,7 @@ private:
     EnumMember* ParseEnumMember();
 
     Token AdvanceOnMatch(TokenKind kind);
-    std::optional<BoolExpression*> TryParseBoolExpression();
+    std::optional<BoolLiteral*> TryParseBoolLiteral();
     std::optional<Token> TryMatchKeyword(const QStringView& keyword);
     void SkipUntil(TokenKind kind);
 

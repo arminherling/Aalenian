@@ -100,7 +100,7 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
         }
         case NodeKind::Bool:
         {
-            PrettyPrintBoolExpression((BoolExpression*)node);
+            PrettyPrintBoolLiteral((BoolLiteral*)node);
             break;
         }
         case NodeKind::Name:
@@ -417,7 +417,7 @@ void ParseTreePrinter::PrettyPrintType(const Type& type)
     stream() << Indentation() << QString("Type: ") << lexeme << NewLine();
 }
 
-void ParseTreePrinter::PrettyPrintBoolExpression(BoolExpression* node)
+void ParseTreePrinter::PrettyPrintBoolLiteral(BoolLiteral* node)
 {
     auto value = node->value() ? QString("true") : QString("false");
     stream() << Indentation() << QString("Bool: ") << value << NewLine();
