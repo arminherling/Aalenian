@@ -9,6 +9,8 @@
 
 #include <chrono>
 
+#include <TestFramework.h>
+
 class SourceLocationTests : public QObject
 {
     Q_OBJECT
@@ -50,6 +52,8 @@ private slots:
 
     void SingleSourceLocation()
     {
+        qDebug() << test();
+
         QFETCH(SourceTextSharedPtr, input);
         QFETCH(SourceLocation, expectedLocation);
 
