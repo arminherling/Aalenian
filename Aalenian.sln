@@ -155,7 +155,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Variant", "Variant", "{04F8
 		Tests\Data\Variant\variant1.in = Tests\Data\Variant\variant1.in
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestFramework", "TestFramework\TestFramework.vcxproj", "{2BFDA352-3351-4C17-91ED-DAAF1841E043}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AalTest", "AalTest\AalTest.vcxproj", "{2BFDA352-3351-4C17-91ED-DAAF1841E043}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
