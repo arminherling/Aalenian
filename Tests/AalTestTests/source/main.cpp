@@ -14,6 +14,7 @@ void RunExecutesTest()
 void TestCanPass()
 {
     int expectedPasses = 1;
+    int expectedFails = 0;
     TestSuite suite{};
     suite.add([]() 
         {
@@ -22,11 +23,13 @@ void TestCanPass()
     suite.run();
 
     assert(expectedPasses == suite.passedTests());
+    assert(expectedFails == suite.failedTests());
 }
 
 void TestCanFail()
 {
     int expectedPasses = 0;
+    int expectedFails = 1;
     TestSuite suite{};
     suite.add([]()
         {
@@ -35,6 +38,7 @@ void TestCanFail()
     suite.run();
 
     assert(expectedPasses == suite.passedTests());
+    assert(expectedFails == suite.failedTests());
 }
 
 int main()

@@ -58,16 +58,23 @@ public:
             }
             catch (FailException& e)
             {
+                m_failedTests++;
             }
         }
     }
 
-    int passedTests()
+    int passedTests() const
     {
         return m_passedTests;
+    }
+
+    int failedTests() const
+    {
+        return m_failedTests;
     }
 
 private:
     std::vector<std::shared_ptr<TestBase>> m_tests;
     int m_passedTests;
+    int m_failedTests;
 };
