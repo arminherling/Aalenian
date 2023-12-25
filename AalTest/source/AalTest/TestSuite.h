@@ -1,6 +1,7 @@
 #pragma once
 
 #include <AalTest/API.h>
+#include <AalTest/Exceptions.h>
 
 #include <memory>
 #include <functional>
@@ -50,8 +51,14 @@ public:
     {
         for (const auto& test : m_tests)
         {
-            test->run();
-            m_passedTests++;
+            try
+            {
+                test->run();
+                m_passedTests++;
+            }
+            catch (FailException& e)
+            {
+            }
         }
     }
 

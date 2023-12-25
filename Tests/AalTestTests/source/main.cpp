@@ -24,10 +24,24 @@ void TestCanPass()
     assert(expectedPasses == suite.passedTests());
 }
 
+void TestCanFail()
+{
+    int expectedPasses = 0;
+    TestSuite suite{};
+    suite.add([]()
+        {
+            AalFail();
+        });
+    suite.run();
+
+    assert(expectedPasses == suite.passedTests());
+}
+
 int main()
 {
     RunExecutesTest();
     TestCanPass();
+    TestCanFail();
 
     return 0;
 }

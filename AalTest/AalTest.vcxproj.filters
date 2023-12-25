@@ -20,12 +20,27 @@
     <ClInclude Include="source\AalTest\TestSuite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\AalTest\API.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AalTest\Asserts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AalTest\Exceptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\AalTest\TestRunner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\AalTest\TestSuite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AalTest\Asserts.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AalTest\Exceptions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
