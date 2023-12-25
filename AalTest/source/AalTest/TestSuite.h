@@ -2,23 +2,25 @@
 
 #include <AalTest/API.h>
 #include <AalTest/Exceptions.h>
-
-#include <memory>
 #include <functional>
+#include <memory>
+#include <QString>
 #include <vector>
 
 class TestBase
 {
 public:
     virtual void run() = 0;
+    virtual const QString& functionName() = 0;
 };
 
 template<typename TFunction>
 class Test : public TestBase
 {
 public:
-    Test(TFunction&& function)
+    Test(TFunction&& function, const QString& functionName)
         : m_function{ function }
+        , m_functionName{ functionName }
     {
     }
 
@@ -27,8 +29,14 @@ public:
         m_function();
     }
 
+    const QString& functionName() override 
+    { 
+        return m_functionName;
+    }
+
 private:
     TFunction m_function;
+    QString m_functionName;
 };
 
 class AALTEST_API TestSuite
@@ -37,12 +45,13 @@ public:
     TestSuite();
 
     template<typename T>
-    void add(T&& testFunction)
+    void add(T&& testFunction, const QString& callingFunctionName = __builtin_FUNCTION())
     {
         auto test = std::make_shared<
             Test<
             decltype(std::function(std::forward<T>(testFunction)))>>(
-                std::function(std::forward<T>(testFunction)));
+                std::function(std::forward<T>(testFunction)),
+                callingFunctionName);
 
         m_tests.push_back(test);
     }
