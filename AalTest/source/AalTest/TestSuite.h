@@ -11,7 +11,7 @@ class TestBase
 {
 public:
     virtual void run() = 0;
-    virtual const QString& functionName() = 0;
+    virtual const QString& functionName() const = 0;
 };
 
 template<typename TFunction>
@@ -29,7 +29,7 @@ public:
         m_function();
     }
 
-    const QString& functionName() override 
+    const QString& functionName() const override 
     { 
         return m_functionName;
     }
@@ -90,6 +90,8 @@ public:
     {
         return m_skippedTests;
     }
+
+    const std::vector<std::shared_ptr<TestBase>>& tests() const { return m_tests; }
 
 private:
     std::vector<std::shared_ptr<TestBase>> m_tests;

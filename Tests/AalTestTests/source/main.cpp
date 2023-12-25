@@ -65,12 +65,29 @@ void TestCanBeSkipped()
     assert(expectedSkips == suite.skippedTests());
 }
 
+void TestSuitesReturnsAddedTests()
+{
+    int expectedTestCount = 2;
+    TestSuite suite{};
+    suite.add([]()
+        {
+            AalSkip();
+        });
+    suite.add([]()
+        {
+            AalFail();
+        });
+
+    assert(expectedTestCount == suite.tests().size());
+}
+
 int main()
 {
     RunExecutesTest();
     TestCanPass();
     TestCanFail();
     TestCanBeSkipped();
+    TestSuitesReturnsAddedTests();
 
     return 0;
 }
