@@ -15,7 +15,9 @@ void TestCanPass()
 {
     int expectedPasses = 1;
     int expectedFails = 0;
+    int expectedSkips = 0;
     TestSuite suite{};
+
     suite.add([]() 
         {
         // do nothing
@@ -24,13 +26,16 @@ void TestCanPass()
 
     assert(expectedPasses == suite.passedTests());
     assert(expectedFails == suite.failedTests());
+    assert(expectedSkips == suite.skippedTests());
 }
 
 void TestCanFail()
 {
     int expectedPasses = 0;
     int expectedFails = 1;
+    int expectedSkips = 0;
     TestSuite suite{};
+
     suite.add([]()
         {
             AalFail();
@@ -39,6 +44,25 @@ void TestCanFail()
 
     assert(expectedPasses == suite.passedTests());
     assert(expectedFails == suite.failedTests());
+    assert(expectedSkips == suite.skippedTests());
+}
+
+void TestCanBeSkipped()
+{
+    int expectedPasses = 0;
+    int expectedFails = 0;
+    int expectedSkips = 1;
+    TestSuite suite{};
+
+    suite.add([]()
+        {
+            AalSkip();
+        });
+    suite.run();
+
+    assert(expectedPasses == suite.passedTests());
+    assert(expectedFails == suite.failedTests());
+    assert(expectedSkips == suite.skippedTests());
 }
 
 int main()
@@ -46,6 +70,7 @@ int main()
     RunExecutesTest();
     TestCanPass();
     TestCanFail();
+    TestCanBeSkipped();
 
     return 0;
 }

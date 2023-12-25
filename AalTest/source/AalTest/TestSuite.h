@@ -56,9 +56,13 @@ public:
                 test->run();
                 m_passedTests++;
             }
-            catch (FailException& e)
+            catch (FailTestException& e)
             {
                 m_failedTests++;
+            }
+            catch (SkipTestException& e)
+            {
+                m_skippedTests++;
             }
         }
     }
@@ -73,8 +77,14 @@ public:
         return m_failedTests;
     }
 
+    int skippedTests() const
+    {
+        return m_skippedTests;
+    }
+
 private:
     std::vector<std::shared_ptr<TestBase>> m_tests;
     int m_passedTests;
     int m_failedTests;
+    int m_skippedTests;
 };

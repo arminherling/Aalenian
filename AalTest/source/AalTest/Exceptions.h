@@ -2,8 +2,14 @@
 
 #include <exception>
 
-class FailException : public std::exception
+class FailTestException : public std::exception
 {
 public:
-    FailException() = default;
+    FailTestException() = default;
+};
+
+class SkipTestException : public std::exception
+{
+public:
+    SkipTestException() = default;
 };

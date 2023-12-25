@@ -3,5 +3,10 @@
 
 void AalFail()
 {
-    throw FailException();
+    throw FailTestException();
+}
+
+void AalSkip()
+{
+    throw SkipTestException();
 }
