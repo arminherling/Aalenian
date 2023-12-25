@@ -11,9 +11,23 @@ void RunExecutesTest()
     assert(i == 1);
 }
 
+void TestCanPass()
+{
+    int expectedPasses = 1;
+    TestSuite suite{};
+    suite.add([]() 
+        {
+        // do nothing
+        });
+    suite.run();
+
+    assert(expectedPasses == suite.passedTests());
+}
+
 int main()
 {
     RunExecutesTest();
+    TestCanPass();
 
     return 0;
 }

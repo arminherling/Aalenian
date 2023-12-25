@@ -33,7 +33,7 @@ private:
 class AALTEST_API TestSuite
 {
 public:
-    TestSuite() = default;
+    TestSuite();
 
     template<typename T>
     void add(T&& testFunction)
@@ -55,6 +55,12 @@ public:
         }
     }
 
+    int passedTests()
+    {
+        return m_passedTests;
+    }
+
 private:
     std::vector<std::shared_ptr<TestBase>> m_tests;
+    int m_passedTests;
 };
