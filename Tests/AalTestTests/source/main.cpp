@@ -81,6 +81,20 @@ void TestSuitesReturnsAddedTests()
     assert(expectedTestCount == suite.tests().size());
 }
 
+void TestContainsCallingFunctionName()
+{
+    QString expectedName = QString("TestContainsCallingFunctionName");
+    TestSuite suite{};
+    suite.add([]()
+        {
+            AalSkip();
+        });
+
+    auto test = suite.tests().at(0);
+
+    assert(expectedName == test->functionName());
+}
+
 int main()
 {
     RunExecutesTest();
@@ -88,6 +102,7 @@ int main()
     TestCanFail();
     TestCanBeSkipped();
     TestSuitesReturnsAddedTests();
+    TestContainsCallingFunctionName();
 
     return 0;
 }
