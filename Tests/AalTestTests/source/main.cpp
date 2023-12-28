@@ -171,6 +171,66 @@ void TestIsFalseWhenTrue()
     assert(expectedSkips == suite.skippedTests());
 }
 
+void TestAreEqualWhenTrueAndTrue()
+{
+    int expectedPasses = 1;
+    int expectedFails = 0;
+    int expectedSkips = 0;
+    TestSuite suite{};
+
+    suite.add([]()
+        {
+            auto expectedValue = true;
+            auto actualValue = true;
+            AalTest::AreEqual(expectedValue, actualValue);
+        });
+    suite.run();
+
+    assert(expectedPasses == suite.passedTests());
+    assert(expectedFails == suite.failedTests());
+    assert(expectedSkips == suite.skippedTests());
+}
+
+void TestAreEqualWhenFalseAndFalse()
+{
+    int expectedPasses = 1;
+    int expectedFails = 0;
+    int expectedSkips = 0;
+    TestSuite suite{};
+
+    suite.add([]()
+        {
+            auto expectedValue = false;
+            auto actualValue = false;
+            AalTest::AreEqual(expectedValue, actualValue);
+        });
+    suite.run();
+
+    assert(expectedPasses == suite.passedTests());
+    assert(expectedFails == suite.failedTests());
+    assert(expectedSkips == suite.skippedTests());
+}
+
+void TestAreEqualWhenTrueAndFalse()
+{
+    int expectedPasses = 0;
+    int expectedFails = 1;
+    int expectedSkips = 0;
+    TestSuite suite{};
+
+    suite.add([]()
+        {
+            auto expectedValue = true;
+            auto actualValue = false;
+            AalTest::AreEqual(expectedValue, actualValue);
+        });
+    suite.run();
+
+    assert(expectedPasses == suite.passedTests());
+    assert(expectedFails == suite.failedTests());
+    assert(expectedSkips == suite.skippedTests());
+}
+
 // test equal values
 
 // all tests with parameterized data
@@ -187,6 +247,9 @@ int main()
     TestIsTrueWhenFalse();
     TestIsFalseWhenFalse();
     TestIsFalseWhenTrue();
+    TestAreEqualWhenTrueAndTrue();
+    TestAreEqualWhenFalseAndFalse();
+    TestAreEqualWhenTrueAndFalse();
 
     return 0;
 }

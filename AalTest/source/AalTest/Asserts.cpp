@@ -21,3 +21,9 @@ void AalTest::IsFalse(bool value)
 {
     IsTrue(!value);
 }
+
+void AalTest::AreEqual(bool expectedValue, bool actualValue)
+{
+    if (expectedValue != actualValue)
+        throw ValueMismatchTestException();
+}
