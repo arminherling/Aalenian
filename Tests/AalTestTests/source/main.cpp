@@ -95,7 +95,7 @@ void TestContainsCallingFunctionName()
     assert(expectedName == test->functionName());
 }
 
-void TestPassesOnIsTrueWhenTrue()
+void TestIsTrueWhenTrue()
 {
     int expectedPasses = 1;
     int expectedFails = 0;
@@ -114,7 +114,7 @@ void TestPassesOnIsTrueWhenTrue()
     assert(expectedSkips == suite.skippedTests());
 }
 
-void TestFailsOnIsTrueWhenFalse()
+void TestIsTrueWhenFalse()
 {
     int expectedPasses = 0;
     int expectedFails = 1;
@@ -133,7 +133,7 @@ void TestFailsOnIsTrueWhenFalse()
     assert(expectedSkips == suite.skippedTests());
 }
 
-void TestPassesOnIsFalseWhenFalse()
+void TestIsFalseWhenFalse()
 {
     int expectedPasses = 1;
     int expectedFails = 0;
@@ -152,7 +152,7 @@ void TestPassesOnIsFalseWhenFalse()
     assert(expectedSkips == suite.skippedTests());
 }
 
-void TestFailsOnIsFalseWhenTrue()
+void TestIsFalseWhenTrue()
 {
     int expectedPasses = 0;
     int expectedFails = 1;
@@ -183,10 +183,10 @@ int main()
     TestCanBeSkipped();
     TestSuitesReturnsAddedTests();
     TestContainsCallingFunctionName();
-    TestPassesOnIsTrueWhenTrue();
-    TestFailsOnIsTrueWhenFalse();
-    TestPassesOnIsFalseWhenFalse();
-    TestFailsOnIsFalseWhenTrue();
+    TestIsTrueWhenTrue();
+    TestIsTrueWhenFalse();
+    TestIsFalseWhenFalse();
+    TestIsFalseWhenTrue();
 
     return 0;
 }
