@@ -13,3 +13,9 @@ class SkipTestException : public std::exception
 public:
     SkipTestException() = default;
 };
+
+class ValueMismatchTestException : public std::exception
+{
+public:
+    ValueMismatchTestException() = default;
+};

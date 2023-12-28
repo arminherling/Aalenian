@@ -65,13 +65,17 @@ public:
                 test->run();
                 m_passedTests++;
             }
-            catch (FailTestException& e)
-            {
-                m_failedTests++;
-            }
             catch (SkipTestException& e)
             {
                 m_skippedTests++;
+            }
+            catch (ValueMismatchTestException& e)
+            {
+                m_failedTests++;
+            }
+            catch (FailTestException& e)
+            {
+                m_failedTests++;
             }
         }
     }

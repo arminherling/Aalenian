@@ -38,7 +38,7 @@ void TestCanFail()
 
     suite.add([]()
         {
-            AalFail();
+            AalTest::Fail();
         });
     suite.run();
 
@@ -56,7 +56,7 @@ void TestCanBeSkipped()
 
     suite.add([]()
         {
-            AalSkip();
+            AalTest::Skip();
         });
     suite.run();
 
@@ -71,11 +71,11 @@ void TestSuitesReturnsAddedTests()
     TestSuite suite{};
     suite.add([]()
         {
-            AalSkip();
+            AalTest::Skip();
         });
     suite.add([]()
         {
-            AalFail();
+            AalTest::Fail();
         });
 
     assert(expectedTestCount == suite.tests().size());
@@ -87,13 +87,93 @@ void TestContainsCallingFunctionName()
     TestSuite suite{};
     suite.add([]()
         {
-            AalSkip();
+            AalTest::Skip();
         });
 
     auto test = suite.tests().at(0);
 
     assert(expectedName == test->functionName());
 }
+
+void TestPassesOnIsTrueWhenTrue()
+{
+    int expectedPasses = 1;
+    int expectedFails = 0;
+    int expectedSkips = 0;
+    TestSuite suite{};
+
+    suite.add([]()
+        {
+            auto value = true;
+            AalTest::IsTrue(value);
+        });
+    suite.run();
+
+    assert(expectedPasses == suite.passedTests());
+    assert(expectedFails == suite.failedTests());
+    assert(expectedSkips == suite.skippedTests());
+}
+
+void TestFailsOnIsTrueWhenFalse()
+{
+    int expectedPasses = 0;
+    int expectedFails = 1;
+    int expectedSkips = 0;
+    TestSuite suite{};
+
+    suite.add([]()
+        {
+            auto value = false;
+            AalTest::IsTrue(value);
+        });
+    suite.run();
+
+    assert(expectedPasses == suite.passedTests());
+    assert(expectedFails == suite.failedTests());
+    assert(expectedSkips == suite.skippedTests());
+}
+
+void TestPassesOnIsFalseWhenFalse()
+{
+    int expectedPasses = 1;
+    int expectedFails = 0;
+    int expectedSkips = 0;
+    TestSuite suite{};
+
+    suite.add([]()
+        {
+            auto value = false;
+            AalTest::IsFalse(value);
+        });
+    suite.run();
+
+    assert(expectedPasses == suite.passedTests());
+    assert(expectedFails == suite.failedTests());
+    assert(expectedSkips == suite.skippedTests());
+}
+
+void TestFailsOnIsFalseWhenTrue()
+{
+    int expectedPasses = 0;
+    int expectedFails = 1;
+    int expectedSkips = 0;
+    TestSuite suite{};
+
+    suite.add([]()
+        {
+            auto value = true;
+            AalTest::IsFalse(value);
+        });
+    suite.run();
+
+    assert(expectedPasses == suite.passedTests());
+    assert(expectedFails == suite.failedTests());
+    assert(expectedSkips == suite.skippedTests());
+}
+
+// test equal values
+
+// all tests with parameterized data
 
 int main()
 {
@@ -103,6 +183,10 @@ int main()
     TestCanBeSkipped();
     TestSuitesReturnsAddedTests();
     TestContainsCallingFunctionName();
+    TestPassesOnIsTrueWhenTrue();
+    TestFailsOnIsTrueWhenFalse();
+    TestPassesOnIsFalseWhenFalse();
+    TestFailsOnIsFalseWhenTrue();
 
     return 0;
 }
