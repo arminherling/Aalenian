@@ -231,7 +231,125 @@ void TestAreEqualWhenTrueAndFalse()
     assert(expectedSkips == suite.skippedTests());
 }
 
-// test equal values
+void TestAreEqualWhenZeroAndZero()
+{
+    int expectedPasses = 1;
+    int expectedFails = 0;
+    int expectedSkips = 0;
+    TestSuite suite{};
+
+    suite.add([]()
+        {
+            auto expectedValue = 0;
+            auto actualValue = 0;
+            AalTest::AreEqual(expectedValue, actualValue);
+        });
+    suite.run();
+
+    assert(expectedPasses == suite.passedTests());
+    assert(expectedFails == suite.failedTests());
+    assert(expectedSkips == suite.skippedTests());
+}
+
+void TestAreEqualWhenOneAndOne()
+{
+    int expectedPasses = 1;
+    int expectedFails = 0;
+    int expectedSkips = 0;
+    TestSuite suite{};
+
+    suite.add([]()
+        {
+            auto expectedValue = 1;
+            auto actualValue = 1;
+            AalTest::AreEqual(expectedValue, actualValue);
+        });
+    suite.run();
+
+    assert(expectedPasses == suite.passedTests());
+    assert(expectedFails == suite.failedTests());
+    assert(expectedSkips == suite.skippedTests());
+}
+
+void TestAreEqualWhenOneAndZero()
+{
+    int expectedPasses = 0;
+    int expectedFails = 1;
+    int expectedSkips = 0;
+    TestSuite suite{};
+
+    suite.add([]()
+        {
+            auto expectedValue = 1;
+            auto actualValue = 0;
+            AalTest::AreEqual(expectedValue, actualValue);
+        });
+    suite.run();
+
+    assert(expectedPasses == suite.passedTests());
+    assert(expectedFails == suite.failedTests());
+    assert(expectedSkips == suite.skippedTests());
+}
+
+void TestAreEqualWhenEmptyStringAndEmptyString()
+{
+    int expectedPasses = 1;
+    int expectedFails = 0;
+    int expectedSkips = 0;
+    TestSuite suite{};
+
+    suite.add([]()
+        {
+            auto expectedValue = QString();
+            auto actualValue = QString();
+            AalTest::AreEqual(expectedValue, actualValue);
+        });
+    suite.run();
+
+    assert(expectedPasses == suite.passedTests());
+    assert(expectedFails == suite.failedTests());
+    assert(expectedSkips == suite.skippedTests());
+}
+
+void TestAreEqualWhenStringAndSameString()
+{
+    int expectedPasses = 1;
+    int expectedFails = 0;
+    int expectedSkips = 0;
+    TestSuite suite{};
+
+    suite.add([]()
+        {
+            auto expectedValue = QString("string");
+            auto actualValue = QString("string");
+            AalTest::AreEqual(expectedValue, actualValue);
+        });
+    suite.run();
+
+    assert(expectedPasses == suite.passedTests());
+    assert(expectedFails == suite.failedTests());
+    assert(expectedSkips == suite.skippedTests());
+}
+
+void TestAreEqualWhenStringAndDifferentString()
+{
+    int expectedPasses = 0;
+    int expectedFails = 1;
+    int expectedSkips = 0;
+    TestSuite suite{};
+
+    suite.add([]()
+        {
+            auto expectedValue = QString("string");
+            auto actualValue = QString("other");
+            AalTest::AreEqual(expectedValue, actualValue);
+        });
+    suite.run();
+
+    assert(expectedPasses == suite.passedTests());
+    assert(expectedFails == suite.failedTests());
+    assert(expectedSkips == suite.skippedTests());
+}
 
 // all tests with parameterized data
 
@@ -250,6 +368,12 @@ int main()
     TestAreEqualWhenTrueAndTrue();
     TestAreEqualWhenFalseAndFalse();
     TestAreEqualWhenTrueAndFalse();
+    TestAreEqualWhenZeroAndZero();
+    TestAreEqualWhenOneAndOne();
+    TestAreEqualWhenOneAndZero();
+    TestAreEqualWhenEmptyStringAndEmptyString();
+    TestAreEqualWhenStringAndSameString();
+    TestAreEqualWhenStringAndDifferentString();
 
     return 0;
 }
