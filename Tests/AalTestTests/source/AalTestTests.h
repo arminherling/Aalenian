@@ -2,4 +2,4 @@
 
 #include <AalTest/TestSuite.h>
 
-TestSuite createAalTestTestsSuite();
+TestSuite AalTestTestsSuite();

@@ -1,9 +1,7 @@
 #include "TestSuite.h"
 
-TestSuite::TestSuite()
-    : m_tests{}
-    , m_passedTests{ 0 }
-    , m_failedTests{ 0 }
-    , m_skippedTests{ 0 }
+TestSuite::TestSuite(const QString& name)
+    : m_name{ name }
+    , m_tests{}
 {
 }

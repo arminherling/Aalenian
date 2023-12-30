@@ -7,20 +7,33 @@
 #include <QString>
 #include <vector>
 
+enum class TestResult
+{
+    Invalid,
+    Skipped,
+    Failed,
+    Passed
+};
+
 class TestBase
 {
 public:
     virtual void run() = 0;
-    virtual const QString& functionName() const = 0;
+    virtual const QString& testName() const = 0;
+    TestResult result() { return m_result; }
+    void setResult(TestResult result) { m_result = result; }
+
+private:
+    TestResult m_result = TestResult::Invalid;
 };
 
 template<typename TFunction>
 class Test : public TestBase
 {
 public:
-    Test(TFunction&& function, const QString& functionName)
+    Test(TFunction&& function, const QString& testName)
         : m_function{ function }
-        , m_functionName{ functionName }
+        , m_testName{ testName }
     {
     }
 
@@ -29,77 +42,52 @@ public:
         m_function();
     }
 
-    const QString& functionName() const override 
-    { 
-        return m_functionName;
+    const QString& testName() const override
+    {
+        return m_testName;
     }
 
 private:
     TFunction m_function;
-    QString m_functionName;
+    QString m_testName;
 };
 
 class AALTEST_API TestSuite
 {
 public:
-    TestSuite();
+    TestSuite(const QString& name = __builtin_FUNCTION());
 
     template<typename T>
-    void add(T&& testFunction, const QString& callingFunctionName = __builtin_FUNCTION())
+    void add(const QString& testName, T&& testFunction)
     {
         auto test = std::make_shared<
             Test<
             decltype(std::function(std::forward<T>(testFunction)))>>(
                 std::function(std::forward<T>(testFunction)),
-                callingFunctionName);
+                testName);
 
         m_tests.push_back(test);
     }
 
-    void run()
-    {
-        for (const auto& test : m_tests)
-        {
-            try
-            {
-                test->run();
-                m_passedTests++;
-            }
-            catch (SkipTestException& e)
-            {
-                m_skippedTests++;
-            }
-            catch (ValueMismatchTestException& e)
-            {
-                m_failedTests++;
-            }
-            catch (FailTestException& e)
-            {
-                m_failedTests++;
-            }
-        }
-    }
+    const QString& name() const { return m_name; }
+    const std::vector<std::shared_ptr<TestBase>>& tests() const { return m_tests; }
 
     int passedTests() const
     {
-        return m_passedTests;
+        return std::count_if(begin(m_tests), end(m_tests), [](auto test) { return test->result() == TestResult::Passed; });
     }
 
     int failedTests() const
     {
-        return m_failedTests;
+        return std::count_if(begin(m_tests), end(m_tests), [](auto test) { return test->result() == TestResult::Failed; });
     }
 
     int skippedTests() const
     {
-        return m_skippedTests;
+        return std::count_if(begin(m_tests), end(m_tests), [](auto test) { return test->result() == TestResult::Skipped; });
     }
 
-    const std::vector<std::shared_ptr<TestBase>>& tests() const { return m_tests; }
-
 private:
+    QString m_name;
     std::vector<std::shared_ptr<TestBase>> m_tests;
-    int m_passedTests;
-    int m_failedTests;
-    int m_skippedTests;
 };
