@@ -64,7 +64,7 @@ void TestRunner::run(const TestSuite& suite)
     {
         auto output = qDebug().noquote();
         if (m_output)
-            output << TestNumber(n, totalCount) << test->testName();
+            output << TestNumber(n, totalCount) << test->testName().leftJustified(50, ' ');
 
         try
         {

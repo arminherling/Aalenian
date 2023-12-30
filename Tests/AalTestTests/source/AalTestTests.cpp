@@ -12,7 +12,7 @@ namespace
 
         runner.run(suite);
 
-        assert(i == 1);
+        AalTest::AreEqual(i, 1);
     }
 
     void TestCanPass()
@@ -29,9 +29,9 @@ namespace
             });
         runner.run(suite);
 
-        assert(expectedPasses == suite.passedTests());
-        assert(expectedFails == suite.failedTests());
-        assert(expectedSkips == suite.skippedTests());
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
     void TestCanFail()
@@ -48,9 +48,9 @@ namespace
             });
         runner.run(suite);
 
-        assert(expectedPasses == suite.passedTests());
-        assert(expectedFails == suite.failedTests());
-        assert(expectedSkips == suite.skippedTests());
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
     void TestCanBeSkipped()
@@ -67,14 +67,14 @@ namespace
             });
         runner.run(suite);
 
-        assert(expectedPasses == suite.passedTests());
-        assert(expectedFails == suite.failedTests());
-        assert(expectedSkips == suite.skippedTests());
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
     void TestSuitesReturnsAddedTests()
     {
-        int expectedTestCount = 2;
+        auto expectedTestCount = 2;
         TestSuite suite{};
         suite.add(QString(), []()
             {
@@ -85,7 +85,7 @@ namespace
                 AalTest::Fail();
             });
 
-        assert(expectedTestCount == suite.tests().size());
+        AalTest::AreEqual(expectedTestCount, (int)suite.tests().size());
     }
 
     void TestContainsCallingTestName()
@@ -100,7 +100,7 @@ namespace
 
         auto test = suite.tests().at(0);
 
-        assert(expectedName == test->testName());
+        AalTest::AreEqual(expectedName, test->testName());
     }
 
     void TestIsTrueWhenTrue()
@@ -118,9 +118,9 @@ namespace
             });
         runner.run(suite);
 
-        assert(expectedPasses == suite.passedTests());
-        assert(expectedFails == suite.failedTests());
-        assert(expectedSkips == suite.skippedTests());
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
     void TestIsTrueWhenFalse()
@@ -138,9 +138,9 @@ namespace
             });
         runner.run(suite);
 
-        assert(expectedPasses == suite.passedTests());
-        assert(expectedFails == suite.failedTests());
-        assert(expectedSkips == suite.skippedTests());
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
     void TestIsFalseWhenFalse()
@@ -158,9 +158,9 @@ namespace
             });
         runner.run(suite);
 
-        assert(expectedPasses == suite.passedTests());
-        assert(expectedFails == suite.failedTests());
-        assert(expectedSkips == suite.skippedTests());
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
     void TestIsFalseWhenTrue()
@@ -178,9 +178,9 @@ namespace
             });
         runner.run(suite);
 
-        assert(expectedPasses == suite.passedTests());
-        assert(expectedFails == suite.failedTests());
-        assert(expectedSkips == suite.skippedTests());
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
     void TestAreEqualWhenTrueAndTrue()
@@ -199,9 +199,9 @@ namespace
             });
         runner.run(suite);
 
-        assert(expectedPasses == suite.passedTests());
-        assert(expectedFails == suite.failedTests());
-        assert(expectedSkips == suite.skippedTests());
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
     void TestAreEqualWhenFalseAndFalse()
@@ -220,9 +220,9 @@ namespace
             });
         runner.run(suite);
 
-        assert(expectedPasses == suite.passedTests());
-        assert(expectedFails == suite.failedTests());
-        assert(expectedSkips == suite.skippedTests());
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
     void TestAreEqualWhenTrueAndFalse()
@@ -241,9 +241,9 @@ namespace
             });
         runner.run(suite);
 
-        assert(expectedPasses == suite.passedTests());
-        assert(expectedFails == suite.failedTests());
-        assert(expectedSkips == suite.skippedTests());
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
     void TestAreEqualWhenZeroAndZero()
@@ -262,9 +262,9 @@ namespace
             });
         runner.run(suite);
 
-        assert(expectedPasses == suite.passedTests());
-        assert(expectedFails == suite.failedTests());
-        assert(expectedSkips == suite.skippedTests());
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
     void TestAreEqualWhenOneAndOne()
@@ -283,9 +283,9 @@ namespace
             });
         runner.run(suite);
 
-        assert(expectedPasses == suite.passedTests());
-        assert(expectedFails == suite.failedTests());
-        assert(expectedSkips == suite.skippedTests());
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
     void TestAreEqualWhenOneAndZero()
@@ -304,9 +304,9 @@ namespace
             });
         runner.run(suite);
 
-        assert(expectedPasses == suite.passedTests());
-        assert(expectedFails == suite.failedTests());
-        assert(expectedSkips == suite.skippedTests());
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
     void TestAreEqualWhenEmptyStringAndEmptyString()
@@ -325,9 +325,9 @@ namespace
             });
         runner.run(suite);
 
-        assert(expectedPasses == suite.passedTests());
-        assert(expectedFails == suite.failedTests());
-        assert(expectedSkips == suite.skippedTests());
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
     void TestAreEqualWhenStringAndSameString()
@@ -346,9 +346,9 @@ namespace
             });
         runner.run(suite);
 
-        assert(expectedPasses == suite.passedTests());
-        assert(expectedFails == suite.failedTests());
-        assert(expectedSkips == suite.skippedTests());
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
     void TestAreEqualWhenStringAndDifferentString()
@@ -367,13 +367,16 @@ namespace
             });
         runner.run(suite);
 
-        assert(expectedPasses == suite.passedTests());
-        assert(expectedFails == suite.failedTests());
-        assert(expectedSkips == suite.skippedTests());
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
     void TestRunnerExecutesTests()
     {
+        int expectedPasses = 1;
+        int expectedFails = 1;
+        int expectedSkips = 1;
         TestRunner runner{ false };
         TestSuite suite{};
         suite.add(QString(), []()
@@ -387,7 +390,12 @@ namespace
             {
                 AalTest::Fail();
             });
+
         runner.run(suite);
+
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
     // all tests with parameterized data
