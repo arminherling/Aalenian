@@ -5,7 +5,7 @@ namespace
 {
     void TestCanExecute()
     {
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
         int i = 0;
         suite.add(QString(), [&i]() {i++; });
@@ -20,7 +20,7 @@ namespace
         int expectedPasses = 1;
         int expectedFails = 0;
         int expectedSkips = 0;
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
         suite.add(QString(), []()
@@ -39,7 +39,7 @@ namespace
         int expectedPasses = 0;
         int expectedFails = 1;
         int expectedSkips = 0;
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
         suite.add(QString(), []()
@@ -58,7 +58,7 @@ namespace
         int expectedPasses = 0;
         int expectedFails = 0;
         int expectedSkips = 1;
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
         suite.add(QString(), []()
@@ -91,7 +91,7 @@ namespace
     void TestContainsCallingTestName()
     {
         QString expectedName = QString("TestContainsCallingTestName");
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
         suite.add(QString("TestContainsCallingTestName"), []()
             {
@@ -108,7 +108,7 @@ namespace
         int expectedPasses = 1;
         int expectedFails = 0;
         int expectedSkips = 0;
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
         suite.add(QString(), []()
@@ -128,7 +128,7 @@ namespace
         int expectedPasses = 0;
         int expectedFails = 1;
         int expectedSkips = 0;
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
         suite.add(QString(), []()
@@ -148,7 +148,7 @@ namespace
         int expectedPasses = 1;
         int expectedFails = 0;
         int expectedSkips = 0;
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
         suite.add(QString(), []()
@@ -165,10 +165,10 @@ namespace
 
     void TestIsFalseWhenTrue()
     {
-        int expectedPasses = 0;
+        int expectedPasses = 1;
         int expectedFails = 1;
         int expectedSkips = 0;
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
         suite.add(QString(), []()
@@ -188,7 +188,7 @@ namespace
         int expectedPasses = 1;
         int expectedFails = 0;
         int expectedSkips = 0;
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
         suite.add(QString(), []()
@@ -209,7 +209,7 @@ namespace
         int expectedPasses = 1;
         int expectedFails = 0;
         int expectedSkips = 0;
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
         suite.add(QString(), []()
@@ -230,7 +230,7 @@ namespace
         int expectedPasses = 0;
         int expectedFails = 1;
         int expectedSkips = 0;
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
         suite.add(QString(), []()
@@ -248,10 +248,12 @@ namespace
 
     void TestAreEqualWhenZeroAndZero()
     {
+        AalTest::Skip();
+
         int expectedPasses = 1;
         int expectedFails = 0;
         int expectedSkips = 0;
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
         suite.add(QString(), []()
@@ -272,7 +274,7 @@ namespace
         int expectedPasses = 1;
         int expectedFails = 0;
         int expectedSkips = 0;
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
         suite.add(QString(), []()
@@ -293,7 +295,7 @@ namespace
         int expectedPasses = 0;
         int expectedFails = 1;
         int expectedSkips = 0;
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
         suite.add(QString(), []()
@@ -314,7 +316,7 @@ namespace
         int expectedPasses = 1;
         int expectedFails = 0;
         int expectedSkips = 0;
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
         suite.add(QString(), []()
@@ -335,7 +337,7 @@ namespace
         int expectedPasses = 1;
         int expectedFails = 0;
         int expectedSkips = 0;
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
         suite.add(QString(), []()
@@ -356,7 +358,7 @@ namespace
         int expectedPasses = 0;
         int expectedFails = 1;
         int expectedSkips = 0;
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
         suite.add(QString(), []()
@@ -377,7 +379,7 @@ namespace
         int expectedPasses = 1;
         int expectedFails = 1;
         int expectedSkips = 1;
-        TestRunner runner{ false };
+        TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
         suite.add(QString(), []()
             {

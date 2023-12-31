@@ -42,10 +42,18 @@ namespace
             }
         }
     }
+
+    void WriteTestResult(int n, const QString& totalCountString, const std::shared_ptr<TestBase>& test)
+    {
+        qDebug().noquote()
+            << TestNumber(n, totalCountString)
+            << test->testName().leftJustified(50, ' ')
+            << StringifyTestResult(test->result(), true);
+    }
 }
 
-TestRunner::TestRunner(bool output)
-    : m_output{ output }
+TestRunner::TestRunner(OutputMode output)
+    : m_output{ output  == OutputMode::Console }
 {
 }
 
@@ -62,31 +70,38 @@ void TestRunner::run(const TestSuite& suite)
 
     for (const auto& test : tests)
     {
-        auto output = qDebug().noquote();
-        if (m_output)
-            output << TestNumber(n, totalCount) << test->testName().leftJustified(50, ' ');
-
         try
         {
             test->run();
             test->setResult(TestResult::Passed);
+
+            if (m_output)
+                WriteTestResult(n, totalCount, test);
         }
         catch (SkipTestException& e)
         {
             test->setResult(TestResult::Skipped);
-        }
-        catch (ValueMismatchTestException& e)
-        {
-            test->setResult(TestResult::Failed);
+            if (m_output)
+                WriteTestResult(n, totalCount, test);
         }
         catch (FailTestException& e)
         {
             test->setResult(TestResult::Failed);
+            if (m_output)
+                WriteTestResult(n, totalCount, test);
+        }
+        catch (ValueMismatchTestException& e)
+        {
+            test->setResult(TestResult::Failed);
+            if (m_output)
+            {
+                WriteTestResult(n, totalCount, test);
+
+                qDebug() << "   Expected:" << true;
+                qDebug() << "   But got: " << false;
+            }
         }
 
-        if (m_output)
-            output << StringifyTestResult(test->result(), true);
-        
         n++;
     }
     if (m_output)

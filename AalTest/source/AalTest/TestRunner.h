@@ -6,7 +6,13 @@
 class AALTEST_API TestRunner
 {
 public:
-    TestRunner(bool output = true);
+    enum class OutputMode
+    {
+        None,
+        Console
+    };
+
+    TestRunner(OutputMode output = OutputMode::Console);
 
     void run(const TestSuite& suite);
 private:
