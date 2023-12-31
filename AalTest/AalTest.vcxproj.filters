@@ -29,6 +29,15 @@
     <ClInclude Include="source\AalTest\Exceptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\AalTest\TestRunnerOutputBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AalTest\TestRunnerNullOutput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AalTest\TestRunnerWindowsConsoleOutput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\AalTest\TestRunner.cpp">
@@ -41,6 +50,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\AalTest\Exceptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AalTest\TestRunnerWindowsConsoleOutput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

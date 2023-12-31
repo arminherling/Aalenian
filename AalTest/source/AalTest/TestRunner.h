@@ -2,6 +2,7 @@
 
 #include <AalTest/API.h>
 #include <AalTest/TestSuite.h>
+#include <AalTest/TestRunnerOutputBase.h>
 
 class AALTEST_API TestRunner
 {
@@ -15,6 +16,7 @@ public:
     TestRunner(OutputMode output = OutputMode::Console);
 
     void run(const TestSuite& suite);
+
 private:
-    bool m_output;
+    std::unique_ptr<TestRunnerOutputBase> m_output;
 };

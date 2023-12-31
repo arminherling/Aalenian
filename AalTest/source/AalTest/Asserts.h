@@ -1,7 +1,7 @@
 #pragma once
 
 #include <AalTest/API.h>
-#include "Exceptions.h"
+#include <AalTest/Exceptions.h>
 
 namespace AalTest 
 {
