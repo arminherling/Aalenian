@@ -111,6 +111,8 @@ void TestRunnerWindowsConsoleOutput::writeTestFailedMessage(FailTestException& e
 
 void TestRunnerWindowsConsoleOutput::writeTestValueMismatchMessage(ValueMismatchTestException& e)
 {
+    std::cout << " " << e.location.file_name() << " Line:" << e.location.line() << std::endl;
+
     std::cout << "   Expected: " << e.expectedValue.toStdString() << std::endl;
     std::cout << "   But got:  " << e.actualValue.toStdString() << std::endl;
 }

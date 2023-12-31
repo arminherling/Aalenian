@@ -1,23 +1,49 @@
 #include "Asserts.h"
 
-void AalTest::Fail()
+namespace 
 {
-    throw FailTestException();
+    QString stringify(bool value)
+    {
+        return value ? QString("true") : QString("false");
+    }
 }
 
-void AalTest::Skip()
+void AalTest::Fail(const std::source_location& location)
 {
-    throw SkipTestException();
+    throw FailTestException(location);
 }
 
-void AalTest::IsTrue(bool value)
+void AalTest::Skip(const std::source_location& location)
+{
+    throw SkipTestException(location);
+}
+
+void AalTest::IsTrue(bool value, const std::source_location& location)
 {
     if (!value)
-        throw ValueMismatchTestException(QString("true"), QString("value"));
+        throw ValueMismatchTestException(stringify(true), stringify(value), location);
 }
 
-void AalTest::IsFalse(bool value)
+void AalTest::IsFalse(bool value, const std::source_location& location)
 {
     if (value)
-        throw ValueMismatchTestException(QString("false"), QString("value"));
+        throw ValueMismatchTestException(stringify(false), stringify(value), location);
+}
+
+void AalTest::AreEqual(bool expectedValue, bool actualValue, const std::source_location& location)
+{
+    if (expectedValue != actualValue)
+        throw ValueMismatchTestException(stringify(expectedValue), stringify(actualValue), location);
+}
+
+void AalTest::AreEqual(int expectedValue, int actualValue, const std::source_location& location)
+{
+    if (expectedValue != actualValue)
+        throw ValueMismatchTestException(QString::number(expectedValue), QString::number(actualValue), location);
+}
+
+void AalTest::AreEqual(const QString& expectedValue, const QString& actualValue, const std::source_location& location)
+{
+    if (expectedValue != actualValue)
+        throw ValueMismatchTestException(expectedValue, actualValue, location);
 }

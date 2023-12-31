@@ -165,7 +165,7 @@ namespace
 
     void TestIsFalseWhenTrue()
     {
-        int expectedPasses = 1;
+        int expectedPasses = 0;
         int expectedFails = 1;
         int expectedSkips = 0;
         TestRunner runner{ TestRunner::OutputMode::None };
@@ -248,8 +248,6 @@ namespace
 
     void TestAreEqualWhenZeroAndZero()
     {
-        AalTest::Skip();
-
         int expectedPasses = 1;
         int expectedFails = 0;
         int expectedSkips = 0;
