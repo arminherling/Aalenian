@@ -14,6 +14,6 @@ namespace AalTest
     void AreEqual(T expectedValue, T actualValue)
     {
         if (expectedValue != actualValue)
-            throw ValueMismatchTestException();
+            throw ValueMismatchTestException(QString("expectedValue"), QString("actualValue"));
     };
 }

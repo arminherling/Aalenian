@@ -8,7 +8,8 @@ public:
     TestRunnerNullOutput() = default;
 
     void writeSuiteName(const QString& name) override {};
-    void writeTestResult(int currentTest, int totalTests, const QString& testName, TestResult result) override {};
+    QPoint writeTestHeader(int currentTest, int totalTests, const QString& testName) override { return QPoint(); };
+    void updateTestResult(const QPoint& position, TestResult result) override {};
     void writeTestPassedMessage() override {};
     void writeTestSkippedMessage(SkipTestException& e) override {};
     void writeTestFailedMessage(FailTestException& e) override {};

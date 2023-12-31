@@ -13,10 +13,11 @@ void AalTest::Skip()
 void AalTest::IsTrue(bool value)
 {
     if (!value)
-        throw ValueMismatchTestException();
+        throw ValueMismatchTestException(QString("true"), QString("value"));
 }
 
 void AalTest::IsFalse(bool value)
 {
-    IsTrue(!value);
+    if (value)
+        throw ValueMismatchTestException(QString("false"), QString("value"));
 }

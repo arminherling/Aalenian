@@ -1,6 +1,8 @@
 #pragma once
 
+#include <AalTest/API.h>
 #include <exception>
+#include <QString>
 
 class FailTestException : public std::exception
 {
@@ -14,8 +16,11 @@ public:
     SkipTestException() = default;
 };
 
-class ValueMismatchTestException : public std::exception
+class AALTEST_API ValueMismatchTestException : public std::exception
 {
 public:
-    ValueMismatchTestException() = default;
+    ValueMismatchTestException(const QString& expected, const QString& actual);
+
+    QString expectedValue;
+    QString actualValue;
 };

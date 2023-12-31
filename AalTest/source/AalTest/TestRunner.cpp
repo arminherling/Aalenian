@@ -33,33 +33,37 @@ void TestRunner::run(const TestSuite& suite)
 
     for (const auto& test : tests)
     {
+        QPoint resultPosition;
+
         try
         {
+            resultPosition = m_output->writeTestHeader(currentTest, totalTestCount, test->testName());
+
             test->run();
             test->setResult(TestResult::Passed);
 
-            m_output->writeTestResult(currentTest, totalTestCount, test->testName(), test->result());
+            m_output->updateTestResult(resultPosition, test->result());
             m_output->writeTestPassedMessage();
         }
         catch (SkipTestException& e)
         {
             test->setResult(TestResult::Skipped);
 
-            m_output->writeTestResult(currentTest, totalTestCount, test->testName(), test->result());
+            m_output->updateTestResult(resultPosition, test->result());
             m_output->writeTestSkippedMessage(e);
         }
         catch (FailTestException& e)
         {
             test->setResult(TestResult::Failed);
 
-            m_output->writeTestResult(currentTest, totalTestCount, test->testName(), test->result());
+            m_output->updateTestResult(resultPosition, test->result());
             m_output->writeTestFailedMessage(e);
         }
         catch (ValueMismatchTestException& e)
         {
             test->setResult(TestResult::Failed);
 
-            m_output->writeTestResult(currentTest, totalTestCount, test->testName(), test->result());
+            m_output->updateTestResult(resultPosition, test->result());
             m_output->writeTestValueMismatchMessage(e);
         }
 
