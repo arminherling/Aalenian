@@ -402,7 +402,7 @@ namespace
 
 }
 
-TestSuite AalTestTestsSuite()
+TestSuite AalTestTestsSuiteSimple()
 {
     TestSuite suite{};
     suite.add(QString("TestCanExecute"), TestCanExecute);
@@ -427,4 +427,18 @@ TestSuite AalTestTestsSuite()
     suite.add(QString("TestRunnerExecutesTests"), TestRunnerExecutesTests);
 
     return suite;
+}
+
+TestSuite AalTestTestsSuiteParameterized()
+{
+    TestSuite suite{};
+
+
+
+    return suite;
+}
+
+QList<TestSuite> AalTestTestsSuite()
+{
+    return QList<TestSuite>() << AalTestTestsSuiteSimple() << AalTestTestsSuiteParameterized();
 }

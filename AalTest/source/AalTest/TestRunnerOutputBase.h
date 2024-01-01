@@ -2,6 +2,8 @@
 
 #include <AalTest/Asserts.h>
 #include <AalTest/TestSuite.h>
+#include <AalTest/TestSuiteResult.h>
+#include <QList>
 #include <QPoint>
 
 class TestRunnerOutputBase
@@ -14,5 +16,7 @@ public:
     virtual void writeTestSkippedMessage(SkipTestException& e) = 0;
     virtual void writeTestFailedMessage(FailTestException& e) = 0;
     virtual void writeTestValueMismatchMessage(ValueMismatchTestException& e) = 0;
-    virtual void writeTestRunnerResult(int passedTests, int skippedTests, int failedTests, int totalTestCount) = 0;
+    virtual void writeTestRunnerResult(const TestSuiteResult& result) = 0;
+    virtual void writeTestRunnerTotalResult(const QList<TestSuiteResult>& results) = 0;
+    virtual void writeEmptyLine() = 0;
 };

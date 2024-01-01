@@ -24,12 +24,33 @@ TestRunner::TestRunner(OutputMode output)
 
 void TestRunner::run(const TestSuite& suite)
 {
-    auto suiteName = suite.name();
+    auto result = runInternal(suite);
+
+    m_output->writeTestRunnerResult(result);
+}
+
+void TestRunner::run(const QList<TestSuite>& suites)
+{
+    QList<TestSuiteResult> results;
+    for (const auto& suite : suites)
+    {
+        auto result = runInternal(suite);
+        results << result;
+
+        m_output->writeTestRunnerResult(result);
+        m_output->writeEmptyLine();
+    }
+
+    m_output->writeTestRunnerTotalResult(results);
+}
+
+TestSuiteResult TestRunner::runInternal(const TestSuite& suite)
+{
     auto tests = suite.tests();
-    auto totalTestCount = tests.size();
+    auto totalTestCount = (int)tests.size();
     auto currentTest = 1;
 
-    m_output->writeSuiteName(suiteName);
+    m_output->writeSuiteName(suite.name());
 
     for (const auto& test : tests)
     {
@@ -70,5 +91,5 @@ void TestRunner::run(const TestSuite& suite)
         currentTest++;
     }
 
-    m_output->writeTestRunnerResult(suite.passedTests(), suite.skippedTests(), suite.failedTests(), totalTestCount);
+    return { suite.passedTests(), suite.skippedTests(), suite.failedTests(), totalTestCount };
 }

@@ -111,6 +111,7 @@
     <ClInclude Include="source\AalTest\API.h" />
     <ClInclude Include="source\AalTest\TestRunnerNullOutput.h" />
     <ClInclude Include="source\AalTest\TestRunnerWindowsConsoleOutput.h" />
+    <ClInclude Include="source\AalTest\TestSuiteResult.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\AalTest\Exceptions.cpp" />

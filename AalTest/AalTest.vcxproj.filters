@@ -38,6 +38,9 @@
     <ClInclude Include="source\AalTest\TestRunnerWindowsConsoleOutput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\AalTest\TestSuiteResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\AalTest\TestRunner.cpp">

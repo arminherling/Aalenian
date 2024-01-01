@@ -60,7 +60,7 @@ void TestRunnerWindowsConsoleOutput::writeSuiteName(const QString& name)
     if (name.isEmpty())
         return;
 
-    std::cout << "         --== " << name.toStdString() << " == --" << std::endl;
+    std::cout << "         --== " << name.toStdString() << " ==--" << std::endl;
 }
 
 QPoint TestRunnerWindowsConsoleOutput::writeTestHeader(int currentTest, int totalTests, const QString& testName)
@@ -73,7 +73,8 @@ QPoint TestRunnerWindowsConsoleOutput::writeTestHeader(int currentTest, int tota
     int y = screenBuffer.dwCursorPosition.Y;
 
     std::cout << "...." << std::endl;
-    return QPoint(x, y);
+
+    return { x, y };
 }
 
 void TestRunnerWindowsConsoleOutput::updateTestResult(const QPoint& position, TestResult result)
@@ -117,9 +118,33 @@ void TestRunnerWindowsConsoleOutput::writeTestValueMismatchMessage(ValueMismatch
     std::cout << "   But got:  " << e.actualValue.toStdString() << std::endl;
 }
 
-void TestRunnerWindowsConsoleOutput::writeTestRunnerResult(int passedTests, int skippedTests, int failedTests, int totalTestCount)
+void TestRunnerWindowsConsoleOutput::writeTestRunnerResult(const TestSuiteResult& result)
 {
-    std::cout << " " << StringifyTestResult(TestResult::Passed, true).toStdString() << " " << TestNumber(passedTests, totalTestCount);
-    std::cout << " " << StringifyTestResult(TestResult::Skipped, true).toStdString() << " " << TestNumber(skippedTests, totalTestCount);
-    std::cout << " " << StringifyTestResult(TestResult::Failed, true).toStdString() << " " << TestNumber(failedTests, totalTestCount) << std::endl;
+    std::cout 
+        << " " << StringifyTestResult(TestResult::Passed, true).toStdString() 
+        << " " << TestNumber(result.passedTestCount, result.totalTestCount)
+        << " " << StringifyTestResult(TestResult::Skipped, true).toStdString() 
+        << " " << TestNumber(result.skippedTestCount, result.totalTestCount)
+        << " " << StringifyTestResult(TestResult::Failed, true).toStdString() 
+        << " " << TestNumber(result.failedTestCount, result.totalTestCount) << std::endl;
+}
+
+void TestRunnerWindowsConsoleOutput::writeTestRunnerTotalResult(const QList<TestSuiteResult>& results)
+{
+    TestSuiteResult totalResult{};
+    for (const auto& result : results)
+    {
+        totalResult.passedTestCount += result.passedTestCount;
+        totalResult.skippedTestCount += result.skippedTestCount;
+        totalResult.failedTestCount += result.failedTestCount;
+        totalResult.totalTestCount += result.totalTestCount;
+    }
+
+    std::cout << "         ==== Total Result ==== " << std::endl;
+    writeTestRunnerResult(totalResult);
+}
+
+void TestRunnerWindowsConsoleOutput::writeEmptyLine()
+{
+    std::cout << std::endl;
 }

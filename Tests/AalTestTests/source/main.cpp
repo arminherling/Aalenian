@@ -4,9 +4,9 @@
 int main()
 {
     TestRunner runner{};
-    auto aalTestTestsSuite = AalTestTestsSuite();
+    auto testSuites = AalTestTestsSuite();
 
-    runner.run(aalTestTestsSuite);
+    runner.run(testSuites);
 
     return 0;
 }
