@@ -26,7 +26,7 @@
     <ClInclude Include="source\AalTest\Asserts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\AalTest\Exceptions.h">
+    <ClInclude Include="source\AalTest\ValueMismatchTestException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\AalTest\TestRunnerOutputBase.h">
@@ -44,6 +44,21 @@
     <ClInclude Include="source\AalTest\TestResult.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\AalTest\TestBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AalTest\SimpleTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AalTest\ParameterizedTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AalTest\FailedTestException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AalTest\SkipTestException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\AalTest\TestRunner.cpp">
@@ -55,10 +70,16 @@
     <ClCompile Include="source\AalTest\Asserts.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\AalTest\Exceptions.cpp">
+    <ClCompile Include="source\AalTest\ValueMismatchTestException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\AalTest\TestRunnerWindowsConsoleOutput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AalTest\FailedTestException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AalTest\SkipTestException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

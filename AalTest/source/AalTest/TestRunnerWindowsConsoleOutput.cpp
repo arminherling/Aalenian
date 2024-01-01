@@ -136,7 +136,7 @@ void TestRunnerWindowsConsoleOutput::writeTestSkippedMessage(SkipTestException& 
 {
 }
 
-void TestRunnerWindowsConsoleOutput::writeTestFailedMessage(FailTestException& e)
+void TestRunnerWindowsConsoleOutput::writeTestFailedMessage(FailedTestException& e)
 {
 }
 

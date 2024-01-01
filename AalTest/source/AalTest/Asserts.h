@@ -1,8 +1,8 @@
 #pragma once
 
 #include <AalTest/API.h>
-#include <AalTest/Exceptions.h>
 #include <source_location>
+#include <QString>
 
 namespace AalTest 
 {

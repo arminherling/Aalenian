@@ -1,5 +1,9 @@
 #include "Asserts.h"
 
+#include <AalTest/FailedTestException.h>
+#include <AalTest/SkipTestException.h>
+#include <AalTest/ValueMismatchTestException.h>
+
 namespace 
 {
     QString stringify(bool value)
@@ -10,7 +14,7 @@ namespace
 
 void AalTest::Fail(const std::source_location& location)
 {
-    throw FailTestException(location);
+    throw FailedTestException(location);
 }
 
 void AalTest::Skip(const std::source_location& location)

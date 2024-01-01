@@ -1,8 +1,10 @@
 #pragma once
 
-#include <AalTest/Asserts.h>
+#include <AalTest/FailedTestException.h>
+#include <AalTest/SkipTestException.h>
 #include <AalTest/TestResult.h>
 #include <AalTest/TestSuiteResult.h>
+#include <AalTest/ValueMismatchTestException.h>
 #include <QList>
 #include <QPoint>
 
@@ -15,7 +17,7 @@ public:
     virtual void updateTestResult(const QPoint& position, TestResult result) = 0;
     virtual void writeTestPassedMessage() = 0;
     virtual void writeTestSkippedMessage(SkipTestException& e) = 0;
-    virtual void writeTestFailedMessage(FailTestException& e) = 0;
+    virtual void writeTestFailedMessage(FailedTestException& e) = 0;
     virtual void writeTestValueMismatchMessage(ValueMismatchTestException& e) = 0;
     virtual void writeTestRunnerResult(const TestSuiteResult& result) = 0;
     virtual void writeTestRunnerTotalResult(const QList<TestSuiteResult>& results) = 0;
