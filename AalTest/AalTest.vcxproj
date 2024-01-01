@@ -105,6 +105,7 @@
     <ClInclude Include="source\AalTest\Exceptions.h" />
     <ClInclude Include="source\AalTest\Asserts.h" />
     <ClInclude Include="source\AalTest.h" />
+    <ClInclude Include="source\AalTest\TestResult.h" />
     <ClInclude Include="source\AalTest\TestRunner.h" />
     <ClInclude Include="source\AalTest\TestRunnerOutputBase.h" />
     <ClInclude Include="source\AalTest\TestSuite.h" />

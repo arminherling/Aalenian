@@ -2,23 +2,17 @@
 
 #include <AalTest/API.h>
 #include <AalTest/Exceptions.h>
+#include <AalTest/TestResult.h>
+#include <AalTest/TestRunnerOutputBase.h>
 #include <functional>
 #include <memory>
 #include <QString>
 #include <vector>
 
-enum class TestResult
-{
-    Invalid,
-    Skipped,
-    Failed,
-    Passed
-};
-
 class TestBase
 {
 public:
-    virtual void run() = 0;
+    virtual TestResult run(const std::unique_ptr<TestRunnerOutputBase>& output, int headerIndentation) = 0;
     virtual const QString& testName() const = 0;
     TestResult result() { return m_result; }
     void setResult(TestResult result) { m_result = result; }
@@ -28,18 +22,41 @@ private:
 };
 
 template<typename TFunction>
-class Test : public TestBase
+class SimpleTest : public TestBase
 {
 public:
-    Test(TFunction&& function, const QString& testName)
+    SimpleTest(TFunction&& function, const QString& testName)
         : m_function{ function }
         , m_testName{ testName }
     {
     }
 
-    void run() override
+    TestResult run(const std::unique_ptr<TestRunnerOutputBase>& output, int headerIndentation) override
     {
-        m_function();
+        try
+        {
+            m_function();
+
+            setResult(TestResult::Passed);
+            output->writeTestPassedMessage();
+        }
+        catch (SkipTestException& e)
+        {
+            setResult(TestResult::Skipped);
+            output->writeTestSkippedMessage(e);
+        }
+        catch (FailTestException& e)
+        {
+            setResult(TestResult::Failed);
+            output->writeTestFailedMessage(e);
+        }
+        catch (ValueMismatchTestException& e)
+        {
+            setResult(TestResult::Failed);
+            output->writeTestValueMismatchMessage(e);
+        }
+
+        return result();
     }
 
     const QString& testName() const override
@@ -52,18 +69,95 @@ private:
     QString m_testName;
 };
 
+template<typename TFunction, typename TData>
+class ParameterizedTest : public TestBase
+{
+public:
+    ParameterizedTest(TFunction&& function, TData&& data, const QString& testName)
+        : m_function{ function }
+        , m_testName{ testName }
+        , m_data{ data }
+    {
+    }
+
+    TestResult run(const std::unique_ptr<TestRunnerOutputBase>& output, int headerIndentation) override
+    {
+        auto totalSubTestCount = m_data.size();
+        auto currentTest = 1;
+        bool testPassed = true;
+
+        for (const auto& tuple : m_data)
+        {
+            QPoint resultPosition;
+            try
+            {
+                resultPosition = output->writeSubTestHeader(headerIndentation, currentTest, totalSubTestCount);
+
+                std::apply(m_function, tuple);
+
+                output->updateTestResult(resultPosition, TestResult::Passed);
+                output->writeTestPassedMessage();
+            }
+            catch (SkipTestException& e)
+            {
+                output->updateTestResult(resultPosition, TestResult::Skipped);
+                output->writeTestSkippedMessage(e);
+            }
+            catch (FailTestException& e)
+            {
+                output->updateTestResult(resultPosition, TestResult::Failed);
+                output->writeTestFailedMessage(e);
+                testPassed = false;
+            }
+            catch (ValueMismatchTestException& e)
+            {
+                output->updateTestResult(resultPosition, TestResult::Failed);
+                output->writeTestValueMismatchMessage(e);
+                testPassed = false;
+            }
+        }
+
+        return (testPassed ? TestResult::Passed : TestResult::Failed);
+    }
+
+    const QString& testName() const override
+    {
+        return m_testName;
+    }
+
+private:
+    TFunction m_function;
+    TData m_data;
+    QString m_testName;
+};
+
+
 class AALTEST_API TestSuite
 {
 public:
     TestSuite(const QString& name = __builtin_FUNCTION());
 
-    template<typename T>
-    void add(const QString& testName, T&& testFunction)
+    template<typename TFunction>
+    void add(const QString& testName, TFunction&& testFunction)
     {
         auto test = std::make_shared<
-            Test<
-            decltype(std::function(std::forward<T>(testFunction)))>>(
-                std::function(std::forward<T>(testFunction)),
+            SimpleTest <
+            decltype(std::function(std::forward<TFunction>(testFunction)))>>(
+                std::function(std::forward<TFunction>(testFunction)),
+                testName);
+
+        m_tests.push_back(test);
+    }
+
+    template<typename TFunction, typename TData>
+    void add(const QString& testName, TFunction&& function, TData&& data)
+    {
+        auto test = std::make_shared<
+            ParameterizedTest<
+            decltype(std::function(std::forward<TFunction>(function))),
+            decltype(std::function(std::forward<TData>(data)))::result_type>>(
+                std::function(std::forward<TFunction>(function)),
+                std::function(std::forward<TData>(data))(),
                 testName);
 
         m_tests.push_back(test);

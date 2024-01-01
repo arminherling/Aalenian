@@ -13,6 +13,14 @@ namespace
         return QString("%1/%2").arg(numberString.rightJustified(countCharCount, ' '), totalCountString).toStdString();
     }
 
+    std::string ResultNumber(int currentNumber, int totalCount)
+    {
+        auto totalCountString = QString::number(totalCount);
+        auto numberString = QString::number(currentNumber);
+
+        return QString("%1/%2").arg(numberString, totalCountString).toStdString();
+    }
+
     QString StringifyTestResult(TestResult result, bool colorize)
     {
         if (colorize)
@@ -51,6 +59,7 @@ namespace
 TestRunnerWindowsConsoleOutput::TestRunnerWindowsConsoleOutput()
     : m_consoleHandle{ GetStdHandle(STD_OUTPUT_HANDLE) }
     , m_oldConsoleOutputCodePage{ GetConsoleOutputCP() }
+    , m_headerSize{ 70 }
 {
     SetConsoleOutputCP(CP_UTF8);
 }
@@ -65,7 +74,28 @@ void TestRunnerWindowsConsoleOutput::writeSuiteName(const QString& name)
 
 QPoint TestRunnerWindowsConsoleOutput::writeTestHeader(int currentTest, int totalTests, const QString& testName)
 {
-    std::cout << " " << TestNumber(currentTest, totalTests) << " " << testName.leftJustified(50, '.').toStdString() << " " << std::flush;
+    std::cout << " " << TestNumber(currentTest, totalTests) << " " << testName.leftJustified(m_headerSize, '.').toStdString() << " " << std::flush;
+
+    CONSOLE_SCREEN_BUFFER_INFO screenBuffer;
+    GetConsoleScreenBufferInfo(m_consoleHandle, &screenBuffer);
+    int x = screenBuffer.dwCursorPosition.X;
+    int y = screenBuffer.dwCursorPosition.Y;
+
+    std::cout << "...." << std::endl;
+
+    return { x, y };
+}
+
+QPoint TestRunnerWindowsConsoleOutput::writeSubTestHeader(int indentation, int currentTest, int totalTests)
+{
+    auto indent = QString(" ").repeated(1 + indentation).toStdString();
+    auto testNumber = TestNumber(currentTest, totalTests);
+    auto testNumberSize = testNumber.size();
+
+    auto testAndSubTestSizeDifference = testNumberSize - indentation;
+    auto headerSize = m_headerSize - indentation - testAndSubTestSizeDifference;
+
+    std::cout << indent << testNumber << " " << QString().leftJustified(headerSize, '.').toStdString() << " " << std::flush;
 
     CONSOLE_SCREEN_BUFFER_INFO screenBuffer;
     GetConsoleScreenBufferInfo(m_consoleHandle, &screenBuffer);
@@ -90,7 +120,7 @@ void TestRunnerWindowsConsoleOutput::updateTestResult(const QPoint& position, Te
     cursorPosition.X = position.x();
     cursorPosition.Y = position.y();
     SetConsoleCursorPosition(m_consoleHandle, cursorPosition);
-    
+
     std::cout << StringifyTestResult(result, true).toStdString() << std::flush;
 
     cursorPosition.X = oldX;
@@ -120,13 +150,13 @@ void TestRunnerWindowsConsoleOutput::writeTestValueMismatchMessage(ValueMismatch
 
 void TestRunnerWindowsConsoleOutput::writeTestRunnerResult(const TestSuiteResult& result)
 {
-    std::cout 
-        << " " << StringifyTestResult(TestResult::Passed, true).toStdString() 
-        << " " << TestNumber(result.passedTestCount, result.totalTestCount)
-        << " " << StringifyTestResult(TestResult::Skipped, true).toStdString() 
-        << " " << TestNumber(result.skippedTestCount, result.totalTestCount)
-        << " " << StringifyTestResult(TestResult::Failed, true).toStdString() 
-        << " " << TestNumber(result.failedTestCount, result.totalTestCount) << std::endl;
+    std::cout
+        << " " << StringifyTestResult(TestResult::Passed, true).toStdString()
+        << " " << ResultNumber(result.passedTestCount, result.totalTestCount)
+        << " " << StringifyTestResult(TestResult::Skipped, true).toStdString()
+        << " " << ResultNumber(result.skippedTestCount, result.totalTestCount)
+        << " " << StringifyTestResult(TestResult::Failed, true).toStdString()
+        << " " << ResultNumber(result.failedTestCount, result.totalTestCount) << std::endl;
 }
 
 void TestRunnerWindowsConsoleOutput::writeTestRunnerTotalResult(const QList<TestSuiteResult>& results)

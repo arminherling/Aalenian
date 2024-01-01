@@ -1,7 +1,7 @@
 #include "AalTestTests.h"
 #include <AalTest.h>
 
-namespace
+namespace Simple
 {
     void TestCanExecute()
     {
@@ -397,13 +397,32 @@ namespace
         AalTest::AreEqual(expectedFails, suite.failedTests());
         AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
+}
 
-    // all tests with parameterized data
+namespace Parameterized
+{
+    void TestCanExecute(bool data)
+    {
+        TestRunner runner{ TestRunner::OutputMode::None };
+        TestSuite suite{};
+        int i = 0;
+        suite.add(QString(), [&i]() {i++; });
 
+        runner.run(suite);
+
+        AalTest::AreEqual(i, 1);
+    }
+
+    QList<std::tuple<bool>> TestCanExecute_Data()
+    {
+        return { std::make_tuple(true), std::make_tuple(false) };
+    }
 }
 
 TestSuite AalTestTestsSuiteSimple()
 {
+    using namespace Simple;
+
     TestSuite suite{};
     suite.add(QString("TestCanExecute"), TestCanExecute);
     suite.add(QString("TestCanPass"), TestCanPass);
@@ -431,7 +450,10 @@ TestSuite AalTestTestsSuiteSimple()
 
 TestSuite AalTestTestsSuiteParameterized()
 {
+    using namespace Parameterized;
+
     TestSuite suite{};
+    suite.add(QString("TestCanExecute"), TestCanExecute, TestCanExecute_Data);
 
 
 

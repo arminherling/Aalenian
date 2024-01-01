@@ -50,44 +50,18 @@ TestSuiteResult TestRunner::runInternal(const TestSuite& suite)
     auto totalTestCount = (int)tests.size();
     auto currentTest = 1;
 
+    auto totalCountString = QString::number(totalTestCount);
+    auto subTestIndentation = (totalCountString.length() * 2) + 1;
+
     m_output->writeSuiteName(suite.name());
 
     for (const auto& test : tests)
     {
-        QPoint resultPosition;
+        auto resultPosition = m_output->writeTestHeader(currentTest, totalTestCount, test->testName());
 
-        try
-        {
-            resultPosition = m_output->writeTestHeader(currentTest, totalTestCount, test->testName());
+        auto result = test->run(m_output, subTestIndentation);
 
-            test->run();
-            test->setResult(TestResult::Passed);
-
-            m_output->updateTestResult(resultPosition, test->result());
-            m_output->writeTestPassedMessage();
-        }
-        catch (SkipTestException& e)
-        {
-            test->setResult(TestResult::Skipped);
-
-            m_output->updateTestResult(resultPosition, test->result());
-            m_output->writeTestSkippedMessage(e);
-        }
-        catch (FailTestException& e)
-        {
-            test->setResult(TestResult::Failed);
-
-            m_output->updateTestResult(resultPosition, test->result());
-            m_output->writeTestFailedMessage(e);
-        }
-        catch (ValueMismatchTestException& e)
-        {
-            test->setResult(TestResult::Failed);
-
-            m_output->updateTestResult(resultPosition, test->result());
-            m_output->writeTestValueMismatchMessage(e);
-        }
-
+        m_output->updateTestResult(resultPosition, result);
         currentTest++;
     }
 
