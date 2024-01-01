@@ -84,7 +84,7 @@ public:
     {
         auto totalSubTestCount = m_data.size();
         auto currentTest = 1;
-        bool testPassed = true;
+        auto testResult = TestResult::Passed;
 
         for (const auto& tuple : m_data)
         {
@@ -107,17 +107,18 @@ public:
             {
                 output->updateTestResult(resultPosition, TestResult::Failed);
                 output->writeTestFailedMessage(e);
-                testPassed = false;
+                testResult = TestResult::Failed;
             }
             catch (ValueMismatchTestException& e)
             {
                 output->updateTestResult(resultPosition, TestResult::Failed);
                 output->writeTestValueMismatchMessage(e);
-                testPassed = false;
+                testResult = TestResult::Failed;
             }
         }
 
-        return (testPassed ? TestResult::Passed : TestResult::Failed);
+        setResult(testResult);
+        return testResult;
     }
 
     const QString& testName() const override
