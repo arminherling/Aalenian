@@ -42,5 +42,5 @@ void AalTest::AreEqual(int expectedValue, int actualValue, const std::source_loc
 void AalTest::AreEqual(const QString& expectedValue, const QString& actualValue, const std::source_location& location)
 {
     if (expectedValue != actualValue)
-        throw ValueMismatchTestException(expectedValue, actualValue, location);
+        throw ValueMismatchTestException(Stringify(expectedValue), Stringify(actualValue), location);
 }
