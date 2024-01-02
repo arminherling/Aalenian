@@ -1,62 +1,16 @@
-#include <QTest>
-
+#include <AalTest.h>
+#include <iostream>
 #include <Syntax/Lexer.h>
 #include <Syntax/Token.h>
-#include <Syntax/TokenKind.h>
 #include <Syntax/TokenBuffer.h>
-#include <Text/SourceText.h>
+#include <Syntax/TokenKind.h>
 #include <Text/SourceLocation.h>
+#include <Text/SourceText.h>
 
-#include <chrono>
-
-#include <TestFramework.h>
-
-class SourceLocationTests : public QObject
+namespace 
 {
-    Q_OBJECT
-
-private slots:
-    void SingleSourceLocation_data()
+    void SingleSourceLocation(const QString& testName, const SourceTextSharedPtr& input, const SourceLocation& expectedLocation)
     {
-        QTest::addColumn<SourceTextSharedPtr>("input");
-        QTest::addColumn<SourceLocation>("expectedLocation");
-
-        const static auto source1 = std::make_shared<SourceText>(QString("+"));
-        QTest::newRow("+") << source1 
-            << SourceLocation{.source = source1, .startIndex = 0, .endIndex = 1, .startColumn = 1, .endColumn = 2, .startLine = 1, .endLine = 1};
-
-        const static auto source2 = std::make_shared<SourceText>(QString(" bar "));
-        QTest::newRow(" bar ") << source2 
-            << SourceLocation{.source = source2, .startIndex = 1, .endIndex = 4, .startColumn = 2, .endColumn = 5, .startLine = 1, .endLine = 1};
-
-        const static auto source3 = std::make_shared<SourceText>(QString("\nreturn"));
-        QTest::newRow("\\nreturn") << source3 
-            << SourceLocation{.source = source3, .startIndex = 1, .endIndex = 7, .startColumn = 1, .endColumn = 7, .startLine = 2, .endLine = 2};
-
-        const static auto source4 = std::make_shared<SourceText>(QString("\r\nreturn"));
-        QTest::newRow("\\r\\nreturn") << source4 
-            << SourceLocation{.source = source4, .startIndex = 2, .endIndex = 8, .startColumn = 1, .endColumn = 7, .startLine = 2, .endLine = 2};
-
-        const static auto source5 = std::make_shared<SourceText>(QString("  1_234 "));
-        QTest::newRow("  1_234 ") << source5
-            << SourceLocation{.source = source5, .startIndex = 2, .endIndex = 7, .startColumn = 3, .endColumn = 8, .startLine = 1, .endLine = 1};
-
-        const static auto source6 = std::make_shared<SourceText>(QString(" \"1234567890\""));
-        QTest::newRow(" \"1234567890\"") << source6 
-            << SourceLocation{.source = source6, .startIndex = 1, .endIndex = 13, .startColumn = 2, .endColumn = 14, .startLine = 1, .endLine = 1};
-
-        const static auto source7 = std::make_shared<SourceText>(QString("$"));
-        QTest::newRow("$") << source7
-            << SourceLocation{.source = source7, .startIndex = 0, .endIndex = 1, .startColumn = 1, .endColumn = 2, .startLine = 1, .endLine = 1};
-    }
-
-    void SingleSourceLocation()
-    {
-        qDebug() << test();
-
-        QFETCH(SourceTextSharedPtr, input);
-        QFETCH(SourceLocation, expectedLocation);
-
         DiagnosticsBag diagnostics;
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -64,16 +18,57 @@ private slots:
         auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        std::cout << "   Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto& location = tokens.GetSourceLocation(token.locationIndex);
-        QCOMPARE(location.startIndex, expectedLocation.startIndex);
-        QCOMPARE(location.endIndex, expectedLocation.endIndex);
-        QCOMPARE(location.startColumn, expectedLocation.startColumn);
-        QCOMPARE(location.endColumn, expectedLocation.endColumn);
-        QCOMPARE(location.startLine, expectedLocation.startLine);
-        QCOMPARE(location.endLine, expectedLocation.endLine);
+        AalTest::AreEqual(location.startIndex, expectedLocation.startIndex);
+        AalTest::AreEqual(location.endIndex, expectedLocation.endIndex);
+        AalTest::AreEqual(location.startColumn, expectedLocation.startColumn);
+        AalTest::AreEqual(location.endColumn, expectedLocation.endColumn);
+        AalTest::AreEqual(location.startLine, expectedLocation.startLine);
+        AalTest::AreEqual(location.endLine, expectedLocation.endLine);
+    }
+
+    QList<std::tuple<QString, SourceTextSharedPtr, SourceLocation>> SingleSourceLocation_Data()
+    {
+        auto source1 = std::make_shared<SourceText>(QString("+"));
+        auto source2 = std::make_shared<SourceText>(QString(" bar "));
+        auto source3 = std::make_shared<SourceText>(QString("\nreturn"));
+        auto source4 = std::make_shared<SourceText>(QString("\r\nreturn"));
+        auto source5 = std::make_shared<SourceText>(QString("  1_234 "));
+        auto source6 = std::make_shared<SourceText>(QString(" \"1234567890\""));
+        auto source7 = std::make_shared<SourceText>(QString("$"));
+
+        return {
+            std::make_tuple(
+                QString("+"), 
+                source1,
+                SourceLocation{.source = source1, .startIndex = 0, .endIndex = 1, .startColumn = 1, .endColumn = 2, .startLine = 1, .endLine = 1}),
+            std::make_tuple(
+                QString(" bar "),
+                source2,
+                SourceLocation{.source = source2, .startIndex = 1, .endIndex = 4, .startColumn = 2, .endColumn = 5, .startLine = 1, .endLine = 1}),
+            std::make_tuple(
+                QString("\\nreturn"),
+                source3,
+                SourceLocation{.source = source3, .startIndex = 1, .endIndex = 7, .startColumn = 1, .endColumn = 7, .startLine = 2, .endLine = 2}),
+            std::make_tuple(
+                QString("\\r\\nreturn"),
+                source4,
+                SourceLocation{.source = source4, .startIndex = 2, .endIndex = 8, .startColumn = 1, .endColumn = 7, .startLine = 2, .endLine = 2}),
+            std::make_tuple(
+                QString("  1_234 "),
+                source5,
+                SourceLocation{.source = source5, .startIndex = 2, .endIndex = 7, .startColumn = 3, .endColumn = 8, .startLine = 1, .endLine = 1}),
+            std::make_tuple(
+                QString(" \"1234567890\""),
+                source6,
+                SourceLocation{.source = source6, .startIndex = 1, .endIndex = 13, .startColumn = 2, .endColumn = 14, .startLine = 1, .endLine = 1}),
+            std::make_tuple(
+                QString("$"),
+                source7,
+                SourceLocation{.source = source7, .startIndex = 0, .endIndex = 1, .startColumn = 1, .endColumn = 2, .startLine = 1, .endLine = 1})
+        };
     }
 
     void MultipleSourceLocations()
@@ -103,24 +98,30 @@ private slots:
         auto tokens = Lex(input, diagnostics);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        std::cout << "   Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
-        QCOMPARE(tokens.size(), expectedList.size());
-        for (i32 i = 0; i < tokens.size(); i++)
+        AalTest::AreEqual(tokens.size(), expectedList.size());
+        for (auto i = 0; i < tokens.size(); i++)
         {
             auto index = tokens[i].locationIndex;
             auto& location = tokens.GetSourceLocation(index);
 
-            QCOMPARE(location.startIndex, expectedList[i].startIndex);
-            QCOMPARE(location.endIndex, expectedList[i].endIndex);
-            QCOMPARE(location.startColumn, expectedList[i].startColumn);
-            QCOMPARE(location.endColumn, expectedList[i].endColumn);
-            QCOMPARE(location.startLine, expectedList[i].startLine);
-            QCOMPARE(location.endLine, expectedList[i].endLine);
+            AalTest::AreEqual(location.startIndex, expectedList[i].startIndex);
+            AalTest::AreEqual(location.endIndex, expectedList[i].endIndex);
+            AalTest::AreEqual(location.startColumn, expectedList[i].startColumn);
+            AalTest::AreEqual(location.endColumn, expectedList[i].endColumn);
+            AalTest::AreEqual(location.startLine, expectedList[i].startLine);
+            AalTest::AreEqual(location.endLine, expectedList[i].endLine);
         }
     }
-};
+}
 
-QTEST_MAIN(SourceLocationTests)
-#include "SourceLocationTests.moc"
+TestSuite SourceLocationTestsSuite()
+{
+    TestSuite suite{};
+
+    suite.add(QString("SingleSourceLocation"), SingleSourceLocation, SingleSourceLocation_Data);
+    suite.add(QString("MultipleSourceLocations"), MultipleSourceLocations);
+
+    return suite;
+}
