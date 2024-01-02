@@ -401,7 +401,7 @@ namespace Simple
 
 namespace Parameterized
 {
-    void TestCanExecute(bool data)
+    void TestCanExecuteWithParameters(bool data)
     {
         TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
@@ -413,9 +413,174 @@ namespace Parameterized
         AalTest::AreEqual(i, 1);
     }
 
-    QList<std::tuple<bool>> TestCanExecute_Data()
+    QList<std::tuple<bool>> TestCanExecuteWithParameters_Data()
     {
         return { std::make_tuple(true), std::make_tuple(false) };
+    }
+
+    void TestPassesWhenAllSubTestsPass()
+    {
+        int expectedPasses = 1;
+        int expectedFails = 0;
+        int expectedSkips = 0;
+        TestRunner runner{ TestRunner::OutputMode::None };
+        TestSuite suite{};
+
+        suite.add(QString(), [](bool value)
+            {
+                // do nothing
+            }, 
+            []() 
+            { 
+                return QList{ std::make_tuple(true), std::make_tuple(false) }; 
+            });
+        runner.run(suite);
+
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
+    }
+
+    void TestPassesWhenOneSubTestsPassesAndOthersSkip()
+    {
+        int expectedPasses = 1;
+        int expectedFails = 0;
+        int expectedSkips = 0;
+        TestRunner runner{ TestRunner::OutputMode::None };
+        TestSuite suite{};
+
+        suite.add(QString(), [](bool value)
+            {
+                if (value)
+                    AalTest::Skip();
+            },
+            []()
+            {
+                return QList{ std::make_tuple(true), std::make_tuple(false), std::make_tuple(false) };
+            });
+        runner.run(suite);
+
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
+    }
+
+    void TestFailsWhenAllSubTestsFails()
+    {
+        int expectedPasses = 0;
+        int expectedFails = 1;
+        int expectedSkips = 0;
+        TestRunner runner{ TestRunner::OutputMode::None };
+        TestSuite suite{};
+
+        suite.add(QString(), [](bool value)
+            {
+                AalTest::Fail();
+            },
+            []()
+            {
+                return QList{ std::make_tuple(false), std::make_tuple(false) };
+            });
+        runner.run(suite);
+
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
+    }
+
+    void TestFailsWhenOneSubTestsFails()
+    {
+        int expectedPasses = 0;
+        int expectedFails = 1;
+        int expectedSkips = 0;
+        TestRunner runner{ TestRunner::OutputMode::None };
+        TestSuite suite{};
+
+        suite.add(QString(), [](bool value)
+            {
+                AalTest::IsTrue(value);
+            },
+            []()
+            {
+                return QList{ std::make_tuple(true), std::make_tuple(false) };
+            });
+        runner.run(suite);
+
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
+    }
+
+    void TestFailsWhenAllSubTestsSkipButOneFails()
+    {
+        int expectedPasses = 0;
+        int expectedFails = 1;
+        int expectedSkips = 0;
+        TestRunner runner{ TestRunner::OutputMode::None };
+        TestSuite suite{};
+
+        suite.add(QString(), [](bool value)
+            {
+                if (value)
+                    AalTest::Skip();
+
+                AalTest::Fail();
+            },
+            []()
+            {
+                return QList{ std::make_tuple(false), std::make_tuple(true), std::make_tuple(false) };
+            });
+        runner.run(suite);
+
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
+    }
+
+    void TestSkipWhenAllSubTestsSkip()
+    {
+        int expectedPasses = 0;
+        int expectedFails = 0;
+        int expectedSkips = 1;
+        TestRunner runner{ TestRunner::OutputMode::None };
+        TestSuite suite{};
+
+        suite.add(QString(), [](bool value)
+            {
+                AalTest::Skip();
+            },
+            []()
+            {
+                return QList{ std::make_tuple(true), std::make_tuple(false) };
+            });
+        runner.run(suite);
+
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
+    }
+
+    void TestWithoutDataGetMarkedAsSkipped()
+    {
+        int expectedPasses = 0;
+        int expectedFails = 0;
+        int expectedSkips = 1;
+        TestRunner runner{ TestRunner::OutputMode::None };
+        TestSuite suite{};
+
+        suite.add(QString(), [](bool value)
+            {
+                // do nothing
+            },
+            []()
+            {
+                return QList<std::tuple<bool>>{};
+            });
+        runner.run(suite);
+
+        AalTest::AreEqual(expectedPasses, suite.passedTests());
+        AalTest::AreEqual(expectedFails, suite.failedTests());
+        AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 }
 
@@ -453,9 +618,14 @@ TestSuite AalTestTestsSuiteParameterized()
     using namespace Parameterized;
 
     TestSuite suite{};
-    suite.add(QString("TestCanExecute"), TestCanExecute, TestCanExecute_Data);
-
-
+    suite.add(QString("TestCanExecuteWithParameters"), TestCanExecuteWithParameters, TestCanExecuteWithParameters_Data);
+    suite.add(QString("TestPassesWhenAllSubTestsPass"), TestPassesWhenAllSubTestsPass);
+    suite.add(QString("TestPassesWhenOneSubTestsPassesAndOthersSkip"), TestPassesWhenOneSubTestsPassesAndOthersSkip);
+    suite.add(QString("TestFailsWhenAllSubTestsFails"), TestFailsWhenAllSubTestsFails);
+    suite.add(QString("TestFailsWhenOneSubTestsFails"), TestFailsWhenOneSubTestsFails);
+    suite.add(QString("TestFailsWhenAllSubTestsSkipButOneFails"), TestFailsWhenAllSubTestsSkipButOneFails);
+    suite.add(QString("TestSkipWhenAllSubTestsSkip"), TestSkipWhenAllSubTestsSkip);
+    suite.add(QString("TestWithoutDataGetMarkedAsSkipped"), TestWithoutDataGetMarkedAsSkipped);
 
     return suite;
 }

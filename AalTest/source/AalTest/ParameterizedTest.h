@@ -23,6 +23,14 @@ public:
         auto totalSubTestCount = m_data.size();
         auto currentTest = 1;
         auto testResult = TestResult::Passed;
+        if (totalSubTestCount == 0)
+        {
+            setResult(TestResult::Skipped);
+            return TestResult::Skipped;
+        }
+
+        auto failCount = 0;
+        auto skipCount = 0;
 
         for (const auto& tuple : m_data)
         {
@@ -40,20 +48,26 @@ public:
             {
                 output->updateTestResult(resultPosition, TestResult::Skipped);
                 output->writeTestSkippedMessage(e);
+                skipCount++;
             }
             catch (FailedTestException& e)
             {
                 output->updateTestResult(resultPosition, TestResult::Failed);
                 output->writeTestFailedMessage(e);
-                testResult = TestResult::Failed;
+                failCount++;
             }
             catch (ValueMismatchTestException& e)
             {
                 output->updateTestResult(resultPosition, TestResult::Failed);
                 output->writeTestValueMismatchMessage(e);
-                testResult = TestResult::Failed;
+                failCount++;
             }
         }
+
+        if (totalSubTestCount == skipCount)
+            testResult = TestResult::Skipped;
+        else if (failCount > 0)
+            testResult = TestResult::Failed;
 
         setResult(testResult);
         return testResult;
