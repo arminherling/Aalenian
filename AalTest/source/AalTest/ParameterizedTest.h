@@ -66,6 +66,7 @@ public:
                 output->writeTestValueMismatchMessage(e);
                 failCount++;
             }
+            currentTest++;
         }
 
         if (totalSubTestCount == skipCount)
