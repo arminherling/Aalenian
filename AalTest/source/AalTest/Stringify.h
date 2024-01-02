@@ -14,7 +14,7 @@ AALTEST_API QString Stringify(const std::chrono::nanoseconds& ns);
 template<class T>
 QString Stringify(T t)
 {
-    return QString("missing stringify case");
+    return QString("?");
 }
 
 template<class ...Ts>
