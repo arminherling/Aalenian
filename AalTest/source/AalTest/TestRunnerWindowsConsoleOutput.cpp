@@ -1,4 +1,5 @@
 #include "TestRunnerWindowsConsoleOutput.h"
+#include <AalTest/Stringify.h>
 #include <iostream>
 #include <Windows.h>
 
@@ -108,7 +109,7 @@ QPoint TestRunnerWindowsConsoleOutput::writeSubTestHeader(int indentation, int c
     return { x, y };
 }
 
-void TestRunnerWindowsConsoleOutput::updateTestResult(const QPoint& position, TestResult result)
+void TestRunnerWindowsConsoleOutput::updateTestResult(const QPoint& position, TestResult result, const std::chrono::nanoseconds& duration)
 {
     std::cout << std::flush;
 
@@ -122,7 +123,11 @@ void TestRunnerWindowsConsoleOutput::updateTestResult(const QPoint& position, Te
     cursorPosition.Y = position.y();
     SetConsoleCursorPosition(m_consoleHandle, cursorPosition);
 
-    std::cout << StringifyTestResult(result, true).toStdString() << std::flush;
+    std::cout << StringifyTestResult(result, true).toStdString(); 
+    if (duration != std::chrono::nanoseconds::zero())
+        std::cout << " " << Stringify(duration).toStdString();
+
+    std::cout << std::flush;
 
     cursorPosition.X = oldX;
     cursorPosition.Y = oldY;
@@ -157,7 +162,9 @@ void TestRunnerWindowsConsoleOutput::writeTestRunnerResult(const TestSuiteResult
         << " " << StringifyTestResult(TestResult::Skipped, true).toStdString()
         << " " << ResultNumber(result.skippedTestCount, result.totalTestCount)
         << " " << StringifyTestResult(TestResult::Failed, true).toStdString()
-        << " " << ResultNumber(result.failedTestCount, result.totalTestCount) << std::endl;
+        << " " << ResultNumber(result.failedTestCount, result.totalTestCount) 
+        << " TIME " << Stringify(result.duration).toStdString()
+        << std::endl;
 }
 
 void TestRunnerWindowsConsoleOutput::writeTestRunnerTotalResult(const QList<TestSuiteResult>& results)
@@ -169,9 +176,9 @@ void TestRunnerWindowsConsoleOutput::writeTestRunnerTotalResult(const QList<Test
         totalResult.skippedTestCount += result.skippedTestCount;
         totalResult.failedTestCount += result.failedTestCount;
         totalResult.totalTestCount += result.totalTestCount;
+        totalResult.duration += result.duration;
     }
-
-    std::cout << "         ==== Total Result ==== " << std::endl;
+    std::cout << "                  ==== Total Result ====" << std::endl;
     writeTestRunnerResult(totalResult);
 }
 

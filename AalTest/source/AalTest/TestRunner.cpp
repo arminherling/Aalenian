@@ -40,7 +40,7 @@ void TestRunner::run(const QList<TestSuite>& suites)
         m_output->writeTestRunnerResult(result);
         m_output->writeEmptyLine();
     }
-
+    m_output->writeEmptyLine();
     m_output->writeTestRunnerTotalResult(results);
 }
 
@@ -54,16 +54,24 @@ TestSuiteResult TestRunner::runInternal(const TestSuite& suite)
     auto subTestIndentation = (totalCountString.length() * 2) + 1;
 
     m_output->writeSuiteName(suite.name());
+    auto suiteStartTime = std::chrono::high_resolution_clock::now();
 
     for (const auto& test : tests)
     {
         auto resultPosition = m_output->writeTestHeader(currentTest, totalTestCount, test->testName());
+        auto testStartTime = std::chrono::high_resolution_clock::now();
 
         auto result = test->run(m_output, subTestIndentation);
 
-        m_output->updateTestResult(resultPosition, result);
+        auto testEndTime = std::chrono::high_resolution_clock::now();
+        auto testDuration = testEndTime - testStartTime;
+
+        m_output->updateTestResult(resultPosition, result, testDuration);
         currentTest++;
     }
 
-    return { suite.passedTests(), suite.skippedTests(), suite.failedTests(), totalTestCount };
+    auto suiteEndTime = std::chrono::high_resolution_clock::now();
+    auto suiteDuration = suiteEndTime - suiteStartTime;
+
+    return { suite.passedTests(), suite.skippedTests(), suite.failedTests(), totalTestCount, suiteDuration };
 }

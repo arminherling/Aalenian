@@ -38,10 +38,14 @@ public:
             try
             {
                 resultPosition = output->writeSubTestHeader(headerIndentation, currentTest, totalSubTestCount, Stringify(tuple));
+                auto startTime = std::chrono::high_resolution_clock::now();
 
                 std::apply(m_function, tuple);
 
-                output->updateTestResult(resultPosition, TestResult::Passed);
+                auto endTime = std::chrono::high_resolution_clock::now();
+                auto testDuration = endTime - startTime;
+
+                output->updateTestResult(resultPosition, TestResult::Passed, testDuration);
                 output->writeTestPassedMessage();
             }
             catch (SkipTestException& e)

@@ -1,4 +1,5 @@
-#include "Stringify.h"
+﻿#include "Stringify.h"
+#include <QTextStream>
 
 QString Stringify(bool value)
 {
@@ -18,4 +19,28 @@ QString Stringify(const char* str)
 QString Stringify(const QString& string)
 {
     return QString("\"%1\"").arg(string);
+}
+
+QString Stringify(const std::chrono::nanoseconds& input)
+{
+    auto ns = input;
+
+    using namespace std::chrono;
+
+    auto s = duration_cast<seconds>(ns);
+    ns -= s;
+    auto ms = duration_cast<milliseconds>(ns);
+    ns -= ms;
+    auto us = duration_cast<microseconds>(ns);
+    ns -= us;
+
+    QString output;
+    QTextStream stream{ &output };
+
+    stream << s.count() << QString("s ");
+    stream << QString::number(ms.count()).rightJustified(3, '0') << QString("ms ");
+    stream << QString::number(us.count()).rightJustified(3, '0') << QString("μs ");
+    stream << QString::number(ns.count()).rightJustified(3, '0') << QString("ns");
+
+    return output;
 }
