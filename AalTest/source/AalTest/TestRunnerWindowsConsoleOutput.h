@@ -9,7 +9,7 @@ public:
     
     void writeSuiteName(const QString& name) override;
     QPoint writeTestHeader(int currentTest, int totalTests, const QString& testName) override;
-    QPoint writeSubTestHeader(int indentation, int currentTest, int totalTests) override;
+    QPoint writeSubTestHeader(int indentation, int currentTest, int totalTests, const QString& parameters) override;
     void updateTestResult(const QPoint& position, TestResult result) override;
     void writeTestPassedMessage() override;
     void writeTestSkippedMessage(SkipTestException& e) override;

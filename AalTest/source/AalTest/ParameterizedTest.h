@@ -1,5 +1,6 @@
 #pragma once
 
+#include <AalTest/Stringify.h>
 #include <AalTest/TestBase.h>
 #include <AalTest/TestResult.h>
 #include <AalTest/TestRunnerOutputBase.h>
@@ -28,7 +29,7 @@ public:
             QPoint resultPosition;
             try
             {
-                resultPosition = output->writeSubTestHeader(headerIndentation, currentTest, totalSubTestCount);
+                resultPosition = output->writeSubTestHeader(headerIndentation, currentTest, totalSubTestCount, Stringify(tuple));
 
                 std::apply(m_function, tuple);
 

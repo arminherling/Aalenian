@@ -86,7 +86,7 @@ QPoint TestRunnerWindowsConsoleOutput::writeTestHeader(int currentTest, int tota
     return { x, y };
 }
 
-QPoint TestRunnerWindowsConsoleOutput::writeSubTestHeader(int indentation, int currentTest, int totalTests)
+QPoint TestRunnerWindowsConsoleOutput::writeSubTestHeader(int indentation, int currentTest, int totalTests, const QString& parameters)
 {
     auto indent = QString(" ").repeated(1 + indentation).toStdString();
     auto testNumber = TestNumber(currentTest, totalTests);
@@ -94,8 +94,9 @@ QPoint TestRunnerWindowsConsoleOutput::writeSubTestHeader(int indentation, int c
 
     auto testAndSubTestSizeDifference = testNumberSize - indentation;
     auto headerSize = m_headerSize - indentation - testAndSubTestSizeDifference;
+    auto truncatedParameters = parameters.left(headerSize - 3);
 
-    std::cout << indent << testNumber << " " << QString().leftJustified(headerSize, '.').toStdString() << " " << std::flush;
+    std::cout << indent << testNumber << " " << truncatedParameters.leftJustified(headerSize, '.').toStdString() << " " << std::flush;
 
     CONSOLE_SCREEN_BUFFER_INFO screenBuffer;
     GetConsoleScreenBufferInfo(m_consoleHandle, &screenBuffer);

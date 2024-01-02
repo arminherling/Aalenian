@@ -102,6 +102,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="source\AalTest\Stringify.h" />
     <ClInclude Include="source\AalTest\ValueMismatchTestException.h" />
     <ClInclude Include="source\AalTest\Asserts.h" />
     <ClInclude Include="source\AalTest.h" />
@@ -120,6 +121,7 @@
     <ClInclude Include="source\AalTest\TestSuiteResult.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\AalTest\Stringify.cpp" />
     <ClCompile Include="source\AalTest\ValueMismatchTestException.cpp" />
     <ClCompile Include="source\AalTest\Asserts.cpp" />
     <ClCompile Include="source\AalTest\FailedTestException.cpp" />
