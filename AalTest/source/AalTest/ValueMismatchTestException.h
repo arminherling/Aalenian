@@ -1,10 +1,11 @@
 #pragma once
 
+#include <AalTest/API.h>
 #include <exception>
 #include <QString>
 #include <source_location>
 
-class ValueMismatchTestException : public std::exception
+class AALTEST_API ValueMismatchTestException : public std::exception
 {
 public:
     ValueMismatchTestException(const QString& expected, const QString& actual, const std::source_location& sourceLocation);
