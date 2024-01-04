@@ -4,7 +4,6 @@
 #include <Compiler/File.h>
 #include <Debug/ParseTreePrinter.h>
 #include <iostream>
-#include <QCoreApplication>
 #include <QDirIterator>
 #include <Syntax/Lexer.h>
 #include <Syntax/Parser.h>
@@ -47,8 +46,7 @@ namespace
 
     QList<std::tuple<QString, QString, QString, QString>> FileTests_Data()
     {
-        auto appDir = QDir(QCoreApplication::applicationDirPath());
-        auto testDataDir = QDir(appDir.filePath(QString("../../Tests/Data")));
+        auto testDataDir = QDir(QString("../../Tests/Data"));
         auto absolutePath = testDataDir.absolutePath();
 
         QList<std::tuple<QString, QString, QString, QString>> data{};
