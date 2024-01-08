@@ -2,4 +2,4 @@
 
 #include <AalTest/TestSuite.h>
 
-TestSuite VirtualMachineTestsSuite();
+TestSuite VirtualMachineTests();

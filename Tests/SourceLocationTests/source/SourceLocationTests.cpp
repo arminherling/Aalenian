@@ -117,7 +117,7 @@ namespace
     }
 }
 
-TestSuite SourceLocationTestsSuite()
+TestSuite SourceLocationTests()
 {
     TestSuite suite{};
 

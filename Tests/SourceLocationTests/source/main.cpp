@@ -4,7 +4,7 @@
 int main()
 {
     TestRunner runner{};
-    auto testSuite = SourceLocationTestsSuite();
+    auto testSuite = SourceLocationTests();
 
     runner.run(testSuite);
 

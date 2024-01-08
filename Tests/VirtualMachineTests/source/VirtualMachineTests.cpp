@@ -820,7 +820,7 @@ namespace
     }
 }
 
-TestSuite VirtualMachineTestsSuite()
+TestSuite VirtualMachineTests()
 {
     TestSuite suite{};
 
