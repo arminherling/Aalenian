@@ -14,10 +14,16 @@ QString Stringify(TokenKind kind)
 			return QString("Slash");
 		case TokenKind::Dot:
 			return QString("Dot");
+		case TokenKind::Colon:
+			return QString("Colon");
+		case TokenKind::DoubleColon:
+			return QString("DoubleColon");
 		case TokenKind::Comma:
 			return QString("Comma");
 		case TokenKind::Equal:
 			return QString("Equal");
+		case TokenKind::Underscore:
+			return QString("Underscore");
 		case TokenKind::OpenParenthesis:
 			return QString("OpenParenthesis");
 		case TokenKind::CloseParenthesis:

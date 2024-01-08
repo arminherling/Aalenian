@@ -11,8 +11,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="source\LexerTests.cpp">
+    <ClCompile Include="source\main.cpp">
       <Filter>Source Files</Filter>
-    </QtMoc>
+    </ClCompile>
+    <ClCompile Include="source\LexerTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\LexerTests.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

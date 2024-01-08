@@ -1,35 +1,15 @@
-#include <QTest>
-
+#include <AalTest.h>
+#include <Debug/ByteCodeDisassembler.h>
+#include <iostream>
 #include <VirtualMachine/ByteCode.h>
 #include <VirtualMachine/ByteCodeAssembler.h>
 #include <VirtualMachine/Register.h>
 #include <VirtualMachine/VM.h>
 
-#include <Debug/ByteCodeDisassembler.h>
-
-enum MoveType : u8
+namespace
 {
-    Bool,
-    Int32
-};
-
-class VirtualMachineTests : public QObject
-{
-    Q_OBJECT
-
-private slots:
-    void LoadBool_data()
+    void LoadBool(const QString& testName, bool value)
     {
-        QTest::addColumn<bool>("value");
-
-        QTest::newRow("true") << true;
-        QTest::newRow("false") << false;
-    }
-
-    void LoadBool()
-    {
-        QFETCH(bool, value);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadBool(1, value);
@@ -38,30 +18,25 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(1);
-        QVERIFY(loadedValue.isBool());
-        QCOMPARE(loadedValue.asBool(), value);
+        AalTest::IsTrue(loadedValue.isBool());
+        AalTest::AreEqual(loadedValue.asBool(), value);
     }
 
-    void NotBool_data()
+    QList<std::tuple<QString, bool>> LoadBool_Data()
     {
-        QTest::addColumn<bool>("value");
-        QTest::addColumn<bool>("expectedResult");
-
-        QTest::newRow("!true = false") << true << false;
-        QTest::newRow("!false = true") << false << true;
+        return {
+            std::make_tuple(QString("true"), true),
+            std::make_tuple(QString("false"), false),
+        };
     }
 
-    void NotBool()
+    void NotBool(const QString& testName, bool value, bool expectedResult)
     {
-        QFETCH(bool, value);
-        QFETCH(bool, expectedResult);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadBool(1, value);
@@ -71,33 +46,25 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
-        QVERIFY(loadedValue.isBool());
-        QCOMPARE(loadedValue.asBool(), expectedResult);
+        AalTest::IsTrue(loadedValue.isBool());
+        AalTest::AreEqual(loadedValue.asBool(), expectedResult);
     }
 
-    void EqualBool_data()
+    QList<std::tuple<QString, bool, bool>> NotBool_Data()
     {
-        QTest::addColumn<bool>("lhs");
-        QTest::addColumn<bool>("rhs");
-        QTest::addColumn<bool>("expectedResult");
-
-        QTest::newRow("true == false = false") << true << false << false;
-        QTest::newRow("true == true = true") << true << true << true;
-        QTest::newRow("false == false = true") << false << false << true;
+        return {
+            std::make_tuple(QString("!true = false"), true, false),
+            std::make_tuple(QString("!false = true"), false, true)
+        };
     }
 
-    void EqualBool()
+    void EqualBool(const QString& testName, bool lhs, bool rhs, bool expectedResult)
     {
-        QFETCH(bool, lhs);
-        QFETCH(bool, rhs);
-        QFETCH(bool, expectedResult);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadBool(1, lhs);
@@ -108,33 +75,26 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
-        QVERIFY(loadedValue.isBool());
-        QCOMPARE(loadedValue.asBool(), expectedResult);
+        AalTest::IsTrue(loadedValue.isBool());
+        AalTest::AreEqual(loadedValue.asBool(), expectedResult);
     }
 
-    void NotEqualBool_data()
+    QList<std::tuple<QString, bool, bool, bool>> EqualBool_Data()
     {
-        QTest::addColumn<bool>("lhs");
-        QTest::addColumn<bool>("rhs");
-        QTest::addColumn<bool>("expectedResult");
-
-        QTest::newRow("true != false = true") << true << false << true;
-        QTest::newRow("true != true = false") << true << true << false;
-        QTest::newRow("false != false = false") << false << false << false;
+        return {
+            std::make_tuple(QString("true == false = false"), true, false, false),
+            std::make_tuple(QString("true == true = true"), true, true, true),
+            std::make_tuple(QString("false == false = true"), false, false, true)
+        };
     }
 
-    void NotEqualBool()
+    void NotEqualBool(const QString& testName, bool lhs, bool rhs, bool expectedResult)
     {
-        QFETCH(bool, lhs);
-        QFETCH(bool, rhs);
-        QFETCH(bool, expectedResult);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadBool(1, lhs);
@@ -145,28 +105,26 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
-        QVERIFY(loadedValue.isBool());
-        QCOMPARE(loadedValue.asBool(), expectedResult);
+        AalTest::IsTrue(loadedValue.isBool());
+        AalTest::AreEqual(loadedValue.asBool(), expectedResult);
     }
 
-    void LoadInt32_data()
+    QList<std::tuple<QString, bool, bool, bool>> NotEqualBool_Data()
     {
-        QTest::addColumn<i32>("value");
-
-        QTest::newRow("123") << 123;
-        QTest::newRow("-100000") << -100000;
+        return {
+            std::make_tuple(QString("true != false = true"), true, false, true),
+            std::make_tuple(QString("true != true = false"), true, true, false),
+            std::make_tuple(QString("false != false = false"), false, false, false)
+        };
     }
 
-    void LoadInt32()
+    void LoadInt32(const QString& testName, i32 value)
     {
-        QFETCH(i32, value);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadInt32(1, value);
@@ -175,32 +133,25 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(1);
-        QVERIFY(loadedValue.isInt32());
-        QCOMPARE(loadedValue.asInt32(), value);
+        AalTest::IsTrue(loadedValue.isInt32());
+        AalTest::AreEqual(loadedValue.asInt32(), value);
     }
 
-    void AddInt32_data()
+    QList<std::tuple<QString, i32>> LoadInt32_Data()
     {
-        QTest::addColumn<i32>("lhs");
-        QTest::addColumn<i32>("rhs");
-        QTest::addColumn<i32>("expectedResult");
-
-        QTest::newRow("10 + 100 = 110") << 10 << 100 << 110;
-        QTest::newRow("-500 + -100 = -600") << -500 << -100 << -600;
+        return {
+            std::make_tuple(QString("123"), 123),
+            std::make_tuple(QString("-100000"), -100000)
+        };
     }
 
-    void AddInt32()
+    void AddInt32(const QString& testName, i32 lhs, i32 rhs, i32 expectedResult)
     {
-        QFETCH(i32, lhs);
-        QFETCH(i32, rhs);
-        QFETCH(i32, expectedResult);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadInt32(1, lhs);
@@ -211,32 +162,25 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
-        QVERIFY(loadedValue.isInt32());
-        QCOMPARE(loadedValue.asInt32(), expectedResult);
+        AalTest::IsTrue(loadedValue.isInt32());
+        AalTest::AreEqual(loadedValue.asInt32(), expectedResult);
     }
 
-    void SubtractInt32_data()
+    QList<std::tuple<QString, i32, i32, i32>> AddInt32_Data()
     {
-        QTest::addColumn<i32>("lhs");
-        QTest::addColumn<i32>("rhs");
-        QTest::addColumn<i32>("expectedResult");
-
-        QTest::newRow("10 - 100 = -90") << 10 << 100 << -90;
-        QTest::newRow("-500 - -100 = -400") << -500 << -100 << -400;
+        return {
+            std::make_tuple(QString("10 + 100 = 110"), 10, 100, 110),
+            std::make_tuple(QString("-500 + -100 = -600"), -500, -100, -600)
+        };
     }
 
-    void SubtractInt32()
+    void SubtractInt32(const QString& testName, i32 lhs, i32 rhs, i32 expectedResult)
     {
-        QFETCH(i32, lhs);
-        QFETCH(i32, rhs);
-        QFETCH(i32, expectedResult);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadInt32(1, lhs);
@@ -247,32 +191,25 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
-        QVERIFY(loadedValue.isInt32());
-        QCOMPARE(loadedValue.asInt32(), expectedResult);
+        AalTest::IsTrue(loadedValue.isInt32());
+        AalTest::AreEqual(loadedValue.asInt32(), expectedResult);
     }
 
-    void MultiplyInt32_data()
+    QList<std::tuple<QString, i32, i32, i32>> SubtractInt32_Data()
     {
-        QTest::addColumn<i32>("lhs");
-        QTest::addColumn<i32>("rhs");
-        QTest::addColumn<i32>("expectedResult");
-
-        QTest::newRow("10 * 100 = 1000") << 10 << 100 << 1000;
-        QTest::newRow("5 * -100 = -500") << 5 << -100 << -500;
+        return {
+            std::make_tuple(QString("10 - 100 = -90"), 10, 100, -90),
+            std::make_tuple(QString("-500 - -100 = -400"), -500, -100, -400)
+        };
     }
 
-    void MultiplyInt32()
+    void MultiplyInt32(const QString& testName, i32 lhs, i32 rhs, i32 expectedResult)
     {
-        QFETCH(i32, lhs);
-        QFETCH(i32, rhs);
-        QFETCH(i32, expectedResult);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadInt32(1, lhs);
@@ -283,32 +220,25 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
-        QVERIFY(loadedValue.isInt32());
-        QCOMPARE(loadedValue.asInt32(), expectedResult);
+        AalTest::IsTrue(loadedValue.isInt32());
+        AalTest::AreEqual(loadedValue.asInt32(), expectedResult);
     }
 
-    void DivideInt32_data()
+    QList<std::tuple<QString, i32, i32, i32>> MultiplyInt32_Data()
     {
-        QTest::addColumn<i32>("lhs");
-        QTest::addColumn<i32>("rhs");
-        QTest::addColumn<i32>("expectedResult");
-
-        QTest::newRow("100 / 10 = 10") << 100 << 10 << 10;
-        QTest::newRow("-100 / 5 = -20") << -100 << 5 << -20;
+        return {
+            std::make_tuple(QString("10 * 100 = 1000"), 10, 100, 1000),
+            std::make_tuple(QString("5 * -100 = -500"), 5, -100, -500)
+        };
     }
 
-    void DivideInt32()
+    void DivideInt32(const QString& testName, i32 lhs, i32 rhs, i32 expectedResult)
     {
-        QFETCH(i32, lhs);
-        QFETCH(i32, rhs);
-        QFETCH(i32, expectedResult);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadInt32(1, lhs);
@@ -319,31 +249,25 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
-        QVERIFY(loadedValue.isInt32());
-        QCOMPARE(loadedValue.asInt32(), expectedResult);
+        AalTest::IsTrue(loadedValue.isInt32());
+        AalTest::AreEqual(loadedValue.asInt32(), expectedResult);
     }
 
-    void NegateIn32_data()
+    QList<std::tuple<QString, i32, i32, i32>> DivideInt32_Data()
     {
-        QTest::addColumn<i32>("value");
-        QTest::addColumn<i32>("expectedResult");
-
-        QTest::newRow("-(10) = -10") << 10 << -10;
-        QTest::newRow("-(-100) = 100") << -100 << 100;
-        QTest::newRow("-(0) = 0") << 0 << 0;
+        return {
+            std::make_tuple(QString("100 / 10 = 10"), 100, 10, 10),
+            std::make_tuple(QString("-100 / 5 = -20"), -100, 5, -20)
+        };
     }
 
-    void NegateIn32()
+    void NegateIn32(const QString& testName, i32 value, i32 expectedResult)
     {
-        QFETCH(i32, value);
-        QFETCH(i32, expectedResult);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadInt32(1, value);
@@ -353,32 +277,26 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
-        QVERIFY(loadedValue.isInt32());
-        QCOMPARE(loadedValue.asInt32(), expectedResult);
+        AalTest::IsTrue(loadedValue.isInt32());
+        AalTest::AreEqual(loadedValue.asInt32(), expectedResult);
     }
 
-    void EqualInt32_data()
+    QList<std::tuple<QString, i32, i32>> NegateIn32_Data()
     {
-        QTest::addColumn<i32>("lhs");
-        QTest::addColumn<i32>("rhs");
-        QTest::addColumn<bool>("expectedResult");
-
-        QTest::newRow("100 == 10 = false") << 100 << 10 << false;
-        QTest::newRow("5 == 5 = true") << 5 << 5 << true;
+        return {
+            std::make_tuple(QString("-(10) = -10"), 10, -10),
+            std::make_tuple(QString("-(-100) = 100"), -100, 100),
+            std::make_tuple(QString("-(0) = 0"), 0, 0)
+        };
     }
 
-    void EqualInt32()
+    void EqualInt32(const QString& testName, i32 lhs, i32 rhs, bool expectedResult)
     {
-        QFETCH(i32, lhs);
-        QFETCH(i32, rhs);
-        QFETCH(bool, expectedResult);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadInt32(1, lhs);
@@ -389,32 +307,25 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
-        QVERIFY(loadedValue.isBool());
-        QCOMPARE(loadedValue.asBool(), expectedResult);
+        AalTest::IsTrue(loadedValue.isBool());
+        AalTest::AreEqual(loadedValue.asBool(), expectedResult);
     }
 
-    void NotEqualInt32_data()
+    QList<std::tuple<QString, i32, i32, bool>> EqualInt32_Data()
     {
-        QTest::addColumn<i32>("lhs");
-        QTest::addColumn<i32>("rhs");
-        QTest::addColumn<bool>("expectedResult");
-
-        QTest::newRow("100 != 10 = true") << 100 << 10 << true;
-        QTest::newRow("5 != 5 = false") << 5 << 5 << false;
+        return {
+            std::make_tuple(QString("100 == 10 = false"), 100, 10, false),
+            std::make_tuple(QString("5 == 5 = true"), 5, 5, true)
+        };
     }
 
-    void NotEqualInt32()
+    void NotEqualInt32(const QString& testName, i32 lhs, i32 rhs, bool expectedResult)
     {
-        QFETCH(i32, lhs);
-        QFETCH(i32, rhs);
-        QFETCH(bool, expectedResult);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadInt32(1, lhs);
@@ -425,33 +336,25 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
-        QVERIFY(loadedValue.isBool());
-        QCOMPARE(loadedValue.asBool(), expectedResult);
+        AalTest::IsTrue(loadedValue.isBool());
+        AalTest::AreEqual(loadedValue.asBool(), expectedResult);
     }
 
-    void GreaterInt32_data()
+    QList<std::tuple<QString, i32, i32, bool>> NotEqualInt32_Data()
     {
-        QTest::addColumn<i32>("lhs");
-        QTest::addColumn<i32>("rhs");
-        QTest::addColumn<bool>("expectedResult");
-
-        QTest::newRow("100 > 10 = true") << 100 << 10 << true;
-        QTest::newRow("5 > 5 = false") << 5 << 5 << false;
-        QTest::newRow("1 > 2 = false") << 1 << 2 << false;
+        return {
+            std::make_tuple(QString("100 != 10 = true"), 100, 10, true),
+            std::make_tuple(QString("5 != 5 = false"), 5, 5, false)
+        };
     }
 
-    void GreaterInt32()
+    void GreaterInt32(const QString& testName, i32 lhs, i32 rhs, bool expectedResult)
     {
-        QFETCH(i32, lhs);
-        QFETCH(i32, rhs);
-        QFETCH(bool, expectedResult);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadInt32(1, lhs);
@@ -462,33 +365,26 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
-        QVERIFY(loadedValue.isBool());
-        QCOMPARE(loadedValue.asBool(), expectedResult);
+        AalTest::IsTrue(loadedValue.isBool());
+        AalTest::AreEqual(loadedValue.asBool(), expectedResult);
     }
 
-    void GreaterOrEqualInt32_data()
+    QList<std::tuple<QString, i32, i32, bool>> GreaterInt32_Data()
     {
-        QTest::addColumn<i32>("lhs");
-        QTest::addColumn<i32>("rhs");
-        QTest::addColumn<bool>("expectedResult");
-
-        QTest::newRow("100 >= 10 = true") << 100 << 10 << true;
-        QTest::newRow("5 >= 5 = true") << 5 << 5 << true;
-        QTest::newRow("1 >= 2 = false") << 1 << 2 << false;
+        return {
+            std::make_tuple(QString("100 > 10 = true"), 100, 10, true),
+            std::make_tuple(QString("5 > 5 = false"), 5, 5, false),
+            std::make_tuple(QString("1 > 2 = false"), 1, 2, false)
+        };
     }
 
-    void GreaterOrEqualInt32()
+    void GreaterOrEqualInt32(const QString& testName, i32 lhs, i32 rhs, bool expectedResult)
     {
-        QFETCH(i32, lhs);
-        QFETCH(i32, rhs);
-        QFETCH(bool, expectedResult);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadInt32(1, lhs);
@@ -499,33 +395,26 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
-        QVERIFY(loadedValue.isBool());
-        QCOMPARE(loadedValue.asBool(), expectedResult);
+        AalTest::IsTrue(loadedValue.isBool());
+        AalTest::AreEqual(loadedValue.asBool(), expectedResult);
     }
 
-    void LessInt32_data()
+    QList<std::tuple<QString, i32, i32, bool>> GreaterOrEqualInt32_Data()
     {
-        QTest::addColumn<i32>("lhs");
-        QTest::addColumn<i32>("rhs");
-        QTest::addColumn<bool>("expectedResult");
-
-        QTest::newRow("100 < 10 = false") << 100 << 10 << false;
-        QTest::newRow("5 < 5 = false") << 5 << 5 << false;
-        QTest::newRow("1 < 2 = true") << 1 << 2 << true;
+        return {
+            std::make_tuple(QString("100 >= 10 = true"), 100, 10, true),
+            std::make_tuple(QString("5 >= 5 = true"), 5, 5, true),
+            std::make_tuple(QString("1 >= 2 = false"), 1, 2, false)
+        };
     }
 
-    void LessInt32()
+    void LessInt32(const QString& testName, i32 lhs, i32 rhs, bool expectedResult)
     {
-        QFETCH(i32, lhs);
-        QFETCH(i32, rhs);
-        QFETCH(bool, expectedResult);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadInt32(1, lhs);
@@ -536,33 +425,26 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
-        QVERIFY(loadedValue.isBool());
-        QCOMPARE(loadedValue.asBool(), expectedResult);
+        AalTest::IsTrue(loadedValue.isBool());
+        AalTest::AreEqual(loadedValue.asBool(), expectedResult);
     }
 
-    void LessOrEqualInt32_data()
+    QList<std::tuple<QString, i32, i32, bool>> LessInt32_Data()
     {
-        QTest::addColumn<i32>("lhs");
-        QTest::addColumn<i32>("rhs");
-        QTest::addColumn<bool>("expectedResult");
-
-        QTest::newRow("100 <= 10 = false") << 100 << 10 << false;
-        QTest::newRow("5 <= 5 = true") << 5 << 5 << true;
-        QTest::newRow("1 <= 2 = true") << 1 << 2 << true;
+        return {
+            std::make_tuple(QString("100 < 10 = false"), 100, 10, false),
+            std::make_tuple(QString("5 < 5 = false"), 5, 5, false),
+            std::make_tuple(QString("1 < 2 = true"), 1, 2, true)
+        };
     }
 
-    void LessOrEqualInt32()
+    void LessOrEqualInt32(const QString& testName, i32 lhs, i32 rhs, bool expectedResult)
     {
-        QFETCH(i32, lhs);
-        QFETCH(i32, rhs);
-        QFETCH(bool, expectedResult);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadInt32(1, lhs);
@@ -573,72 +455,77 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
-        QVERIFY(loadedValue.isBool());
-        QCOMPARE(loadedValue.asBool(), expectedResult);
+        AalTest::IsTrue(loadedValue.isBool());
+        AalTest::AreEqual(loadedValue.asBool(), expectedResult);
     }
 
-    void Move_data()
+    QList<std::tuple<QString, i32, i32, bool>> LessOrEqualInt32_Data()
     {
-        QTest::addColumn<QVariant>("value");
-        QTest::addColumn<MoveType>("type");
-
-        QTest::newRow("true") << QVariant::fromValue(true) << MoveType::Bool;
-        QTest::newRow("false") << QVariant::fromValue(false) << MoveType::Bool;
-
-        QTest::newRow("0") << QVariant::fromValue(0) << MoveType::Int32;
-        QTest::newRow("100") << QVariant::fromValue(100) << MoveType::Int32;
-        QTest::newRow("-99") << QVariant::fromValue(-99) << MoveType::Int32;
+        return {
+            std::make_tuple(QString("100 <= 10 = false"), 100, 10, false),
+            std::make_tuple(QString("5 <= 5 = true"), 5, 5, true),
+            std::make_tuple(QString("1 <= 2 = true"), 1, 2, true)
+        };
     }
 
-    void Move()
+    void MoveBool(const QString& testName, bool value)
     {
-        QFETCH(QVariant, value);
-        QFETCH(MoveType, type);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
-        switch (type)
-        {
-            case Bool:
-                assembler.emitLoadBool(1, value.toBool());
-                break;
-            case Int32:
-                assembler.emitLoadInt32(1, value.toInt());
-                break;
-            default:
-                TODO();
-                break;
-        }
+        assembler.emitLoadBool(1, value);
         assembler.emitMove(0, 1);
         assembler.emitHalt();
         VM vm;
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
-        switch (type)
-        {
-            case Bool:
-                QCOMPARE(loadedValue.asBool(), value);
-                break;
-            case Int32:
-                QCOMPARE(loadedValue.asInt32(), value);
-                break;
-            default:
-                TODO();
-                break;
-        }
+        AalTest::AreEqual(loadedValue.asBool(), value);
+    }
+
+    QList<std::tuple<QString, bool>> MoveBool_Data()
+    {
+        return {
+            std::make_tuple(QString("true"), true),
+            std::make_tuple(QString("false"), false)
+        };
+    }
+
+    void MoveInt32(const QString& testName, i32 value)
+    {
+        ByteCode code;
+        ByteCodeAssembler assembler{ code };
+        assembler.emitLoadInt32(1, value);
+        assembler.emitMove(0, 1);
+        assembler.emitHalt();
+        VM vm;
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        vm.run(code);
+
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+
+        auto loadedValue = vm.getValue(0);
+        AalTest::AreEqual(loadedValue.asInt32(), value);
+    }
+
+    QList<std::tuple<QString, i32>> MoveInt32_Data()
+    {
+        return {
+            std::make_tuple(QString("0"), 0),
+            std::make_tuple(QString("100"), 100),
+            std::make_tuple(QString("-99"), -99)
+        };
     }
 
     void Jump()
@@ -655,30 +542,17 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
-        QVERIFY(loadedValue.isInt32());
-        QCOMPARE(loadedValue.asInt32(), 10);
+        AalTest::IsTrue(loadedValue.isInt32());
+        AalTest::AreEqual(loadedValue.asInt32(), 10);
     }
 
-    void JumpIfTrue_data()
+    void JumpIfTrue(const QString& testName, bool condition, i32 expectedResult)
     {
-        QTest::addColumn<bool>("condition");
-        QTest::addColumn<i32>("expectedResult");
-
-        QTest::newRow("false -> 20") << false << 20;
-        QTest::newRow("true -> 10") << true << 10;
-    }
-
-    void JumpIfTrue()
-    {
-        QFETCH(bool, condition);
-        QFETCH(i32, expectedResult);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadBool(0, condition);
@@ -692,30 +566,25 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(1);
-        QVERIFY(loadedValue.isInt32());
-        QCOMPARE(loadedValue.asInt32(), expectedResult);
+        AalTest::IsTrue(loadedValue.isInt32());
+        AalTest::AreEqual(loadedValue.asInt32(), expectedResult);
     }
 
-    void JumpIfFalse_data()
+    QList<std::tuple<QString, bool, i32>> JumpIfTrue_Data()
     {
-        QTest::addColumn<bool>("condition");
-        QTest::addColumn<i32>("expectedResult");
-
-        QTest::newRow("false -> 10") << false << 10;
-        QTest::newRow("true -> 20") << true << 20;
+        return {
+            std::make_tuple(QString("false -> 20"), false, 20),
+            std::make_tuple(QString("true -> 10"), true, 10)
+        };
     }
 
-    void JumpIfFalse()
+    void JumpIfFalse(const QString& testName, bool condition, i32 expectedResult)
     {
-        QFETCH(bool, condition);
-        QFETCH(i32, expectedResult);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadBool(0, condition);
@@ -729,28 +598,25 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(1);
-        QVERIFY(loadedValue.isInt32());
-        QCOMPARE(loadedValue.asInt32(), expectedResult);
+        AalTest::IsTrue(loadedValue.isInt32());
+        AalTest::AreEqual(loadedValue.asInt32(), expectedResult);
     }
 
-    void PrintBool_data()
+    QList<std::tuple<QString, bool, i32>> JumpIfFalse_Data()
     {
-        QTest::addColumn<bool>("value");
-
-        QTest::newRow("true") << true;
-        QTest::newRow("false") << false;
+        return {
+            std::make_tuple(QString("false -> 10"), false, 10),
+            std::make_tuple(QString("true -> 20"), true, 20)
+        };
     }
 
-    void PrintBool()
+    void PrintBool(const QString& testName, bool value)
     {
-        QFETCH(bool, value);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadBool(0, value);
@@ -761,24 +627,21 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
+
         auto endTime = std::chrono::high_resolution_clock::now();
-
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
     }
 
-    void PrintInt32_data()
+    QList<std::tuple<QString, bool>> PrintBool_Data()
     {
-        QTest::addColumn<i32>("value");
-
-        QTest::newRow("0") << 0;
-        QTest::newRow("12345") << 12345;
+        return {
+            std::make_tuple(QString("true"), true),
+            std::make_tuple(QString("false"), false)
+        };
     }
 
-    void PrintInt32()
+    void PrintInt32(const QString& testName, i32 value)
     {
-        QFETCH(i32, value);
-
         ByteCode code;
         ByteCodeAssembler assembler{ code };
         assembler.emitLoadInt32(0, value);
@@ -789,10 +652,17 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+    }
+
+    QList<std::tuple<QString, i32>> PrintInt32_Data()
+    {
+        return {
+            std::make_tuple(QString("0"), 0),
+            std::make_tuple(QString("12345"), 12345)
+        };
     }
 
     void PrintNewLine()
@@ -805,10 +675,9 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
     }
 
     void LoweredWhileLoop()
@@ -836,17 +705,16 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
-        QVERIFY(loadedValue.isInt32());
-        QCOMPARE(loadedValue.asInt32(), 10);
+        AalTest::IsTrue(loadedValue.isInt32());
+        AalTest::AreEqual(loadedValue.asInt32(), 10);
     }
 
-    void FunctionDeclaration()
+    void FunctionDeclarationTest()
     {
         auto functionName = QString("function");
         auto returnValues = 1;
@@ -857,11 +725,11 @@ private slots:
         assembler.declareFunction(functionName, returnValues, parameterValues);
 
         auto optDeclaration = code.getFunctionDeclaration(functionName);
-        QVERIFY(optDeclaration.has_value());
+        AalTest::IsTrue(optDeclaration.has_value());
         auto declaration = optDeclaration.value();
-        QCOMPARE(declaration.name, functionName);
-        QCOMPARE(declaration.returnValues, returnValues);
-        QCOMPARE(declaration.parameterValues, parameterValues);
+        AalTest::AreEqual(declaration.name, functionName);
+        AalTest::AreEqual(declaration.returnValues, returnValues);
+        AalTest::AreEqual(declaration.parameterValues, parameterValues);
     }
 
     void FunctionCall()
@@ -888,10 +756,9 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
-        auto endTime = std::chrono::high_resolution_clock::now();
 
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
     }
 
     void Fib20()
@@ -947,12 +814,44 @@ private slots:
 
         auto startTime = std::chrono::high_resolution_clock::now();
         vm.run(code);
+
         auto endTime = std::chrono::high_resolution_clock::now();
-
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ms";
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
     }
-};
+}
 
-QTEST_MAIN(VirtualMachineTests)
-#include "VirtualMachineTests.moc"
+TestSuite VirtualMachineTests()
+{
+    TestSuite suite{};
+
+    suite.add(QString("LoadBool"), LoadBool, LoadBool_Data);
+    suite.add(QString("NotBool"), NotBool, NotBool_Data);
+    suite.add(QString("EqualBool"), EqualBool, EqualBool_Data);
+    suite.add(QString("NotEqualBool"), NotEqualBool, NotEqualBool_Data);
+    suite.add(QString("LoadInt32"), LoadInt32, LoadInt32_Data);
+    suite.add(QString("AddInt32"), AddInt32, AddInt32_Data);
+    suite.add(QString("SubtractInt32"), SubtractInt32, SubtractInt32_Data);
+    suite.add(QString("MultiplyInt32"), MultiplyInt32, MultiplyInt32_Data);
+    suite.add(QString("DivideInt32"), DivideInt32, DivideInt32_Data);
+    suite.add(QString("NegateIn32"), NegateIn32, NegateIn32_Data);
+    suite.add(QString("EqualInt32"), EqualInt32, EqualInt32_Data);
+    suite.add(QString("NotEqualInt32"), NotEqualInt32, NotEqualInt32_Data);
+    suite.add(QString("GreaterInt32"), GreaterInt32, GreaterInt32_Data);
+    suite.add(QString("GreaterOrEqualInt32"), GreaterOrEqualInt32, GreaterOrEqualInt32_Data);
+    suite.add(QString("LessInt32"), LessInt32, LessInt32_Data);
+    suite.add(QString("LessOrEqualInt32"), LessOrEqualInt32, LessOrEqualInt32_Data);
+    suite.add(QString("MoveBool"), MoveBool, MoveBool_Data);
+    suite.add(QString("MoveInt32"), MoveInt32, MoveInt32_Data);
+    suite.add(QString("Jump"), Jump);
+    suite.add(QString("JumpIfTrue"), JumpIfTrue, JumpIfTrue_Data);
+    suite.add(QString("JumpIfFalse"), JumpIfFalse, JumpIfFalse_Data);
+    suite.add(QString("PrintBool"), PrintBool, PrintBool_Data);
+    suite.add(QString("PrintInt32"), PrintInt32, PrintInt32_Data);
+    suite.add(QString("PrintNewLine"), PrintNewLine);
+    suite.add(QString("LoweredWhileLoop"), LoweredWhileLoop);
+    suite.add(QString("FunctionDeclaration"), FunctionDeclarationTest);
+    suite.add(QString("FunctionCall"), FunctionCall);
+    suite.add(QString("Fib20"), Fib20);
+
+    return suite;
+}

@@ -11,9 +11,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="source\VirtualMachineTests.cpp">
+    <ClCompile Include="source\main.cpp">
       <Filter>Source Files</Filter>
-    </QtMoc>
+    </ClCompile>
+    <ClCompile Include="source\VirtualMachineTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\VirtualMachineTests.h">

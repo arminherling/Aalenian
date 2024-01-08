@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -11,20 +11,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{ee6f3abb-3a06-4580-ac3b-caeb330d293a}</ProjectGuid>
+    <ProjectGuid>{2bfda352-3351-4c17-91ed-daaf1841e043}</ProjectGuid>
     <Keyword>QtVS_v304</Keyword>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.22000.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.22000.0</WindowsTargetPlatformVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
-    <ProjectName>VirtualMachineTests</ProjectName>
+    <ProjectName>AalTest</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -47,10 +47,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
+    <IncludePath>$(ProjectDir)source;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
+    <IncludePath>$(ProjectDir)source;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="Shared" />
@@ -66,16 +68,11 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Compiler\source;$(SolutionDir)AalTest\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(Qt_LIBS_)</AdditionalDependencies>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Compiler\source;$(SolutionDir)AalTest\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -84,9 +81,10 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>AALTEST_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -96,28 +94,41 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>AALTEST_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\VirtualMachineTests.cpp" />
+    <ClInclude Include="source\AalTest\Stringify.h" />
+    <ClInclude Include="source\AalTest\ValueMismatchTestException.h" />
+    <ClInclude Include="source\AalTest\Asserts.h" />
+    <ClInclude Include="source\AalTest.h" />
+    <ClInclude Include="source\AalTest\FailedTestException.h" />
+    <ClInclude Include="source\AalTest\ParameterizedTest.h" />
+    <ClInclude Include="source\AalTest\SimpleTest.h" />
+    <ClInclude Include="source\AalTest\SkipTestException.h" />
+    <ClInclude Include="source\AalTest\TestBase.h" />
+    <ClInclude Include="source\AalTest\TestResult.h" />
+    <ClInclude Include="source\AalTest\TestRunner.h" />
+    <ClInclude Include="source\AalTest\TestRunnerOutputBase.h" />
+    <ClInclude Include="source\AalTest\TestSuite.h" />
+    <ClInclude Include="source\AalTest\API.h" />
+    <ClInclude Include="source\AalTest\TestRunnerNullOutput.h" />
+    <ClInclude Include="source\AalTest\TestRunnerWindowsConsoleOutput.h" />
+    <ClInclude Include="source\AalTest\TestSuiteResult.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\AalTest\AalTest.vcxproj">
-      <Project>{2bfda352-3351-4c17-91ed-daaf1841e043}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Compiler\Compiler.vcxproj">
-      <Project>{ed117daf-7b4c-4399-aa9c-baa6f995a518}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="source\VirtualMachineTests.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\AalTest\Stringify.cpp" />
+    <ClCompile Include="source\AalTest\ValueMismatchTestException.cpp" />
+    <ClCompile Include="source\AalTest\Asserts.cpp" />
+    <ClCompile Include="source\AalTest\FailedTestException.cpp" />
+    <ClCompile Include="source\AalTest\SkipTestException.cpp" />
+    <ClCompile Include="source\AalTest\TestRunner.cpp" />
+    <ClCompile Include="source\AalTest\TestSuite.cpp" />
+    <ClCompile Include="source\AalTest\TestRunnerWindowsConsoleOutput.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

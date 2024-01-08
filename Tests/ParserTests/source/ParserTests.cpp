@@ -1,26 +1,55 @@
-#include <QTest>
-#include <QDirIterator>
-
+#include "ParserTests.h"
+#include <AalTest.h>
 #include <Compiler/DiagnosticsBag.h>
 #include <Compiler/File.h>
+#include <Debug/ParseTreePrinter.h>
+#include <iostream>
+#include <QDirIterator>
 #include <Syntax/Lexer.h>
 #include <Syntax/Parser.h>
-#include <Debug/ParseTreePrinter.h>
 
-class ParserTests : public QObject
+namespace
 {
-    Q_OBJECT
-
-private slots:
-    void FileTests_data()
+    void FileTests(const QString& fileName, const QString& inputFilePath, const QString& outputFilePath, const QString& errorFilePath)
     {
-        QTest::addColumn<QString>("inputFilePath");
-        QTest::addColumn<QString>("outputFilePath");
-        QTest::addColumn<QString>("errorFilePath");
+        if (!QFile::exists(inputFilePath))
+            AalTest::Fail();// ("In file missing");
+        if (!QFile::exists(outputFilePath))
+            AalTest::Skip();// ("Out file missing");
 
-        auto appDir = QDir(QCoreApplication::applicationDirPath());
-        auto testDataDir = QDir(appDir.filePath(QString("../../Tests/Data")));
+        auto input = File::ReadAllText(inputFilePath);
+        auto source = std::make_shared<SourceText>(input);
+        DiagnosticsBag diagnostics;
+
+        auto tokens = Lex(source, diagnostics);
+
+        auto startTime = std::chrono::high_resolution_clock::now();
+        auto parseTree = Parse(tokens, diagnostics);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        std::cout << "      Parse(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+
+        ParseTreePrinter printer{ parseTree };
+        auto output = printer.PrettyPrint();
+        auto expectedOutput = File::ReadAllText(outputFilePath);
+
+        AalTest::AreEqual(output, expectedOutput);
+        if (!QFile::exists(errorFilePath))
+        {
+            AalTest::IsTrue(diagnostics.Diagnostics().empty());
+        }
+        else
+        {
+            AalTest::Fail();// ("TODO compare errors with error file once we got some");
+        }
+    }
+
+    QList<std::tuple<QString, QString, QString, QString>> FileTests_Data()
+    {
+        auto testDataDir = QDir(QString("../../Tests/Data"));
         auto absolutePath = testDataDir.absolutePath();
+
+        QList<std::tuple<QString, QString, QString, QString>> data{};
 
         QDirIterator it(absolutePath, QStringList() << QString("*.in"), QDir::Filter::Files, QDirIterator::IteratorFlag::Subdirectories);
         while (it.hasNext())
@@ -34,49 +63,17 @@ private slots:
             auto errorPath = QDir::cleanPath(fullFilePathWithoutExtension + QString(".error_parse"));
 
             auto testName = directory.dirName() + '/' + file.completeBaseName();
-            QTest::newRow(testName.toStdString().c_str()) << inPath << outPath << errorPath;
+            data.append(std::make_tuple(testName, inPath, outPath, errorPath));
         }
+        return data;
     }
+}
 
-    void FileTests()
-    {
-        QFETCH(QString, inputFilePath);
-        QFETCH(QString, outputFilePath);
-        QFETCH(QString, errorFilePath);
+TestSuite ParserTestsSuite()
+{
+    TestSuite suite{};
 
-        if (!QFile::exists(inputFilePath))
-            QFAIL("In file missing");
-        if (!QFile::exists(outputFilePath))
-            QSKIP("Out file missing");
+    suite.add(QString("FileTests"), FileTests, FileTests_Data);
 
-        auto input = File::ReadAllText(inputFilePath);
-        auto source = std::make_shared<SourceText>(input);
-        DiagnosticsBag diagnostics;
-
-        auto tokens = Lex(source, diagnostics);
-
-        auto startTime = std::chrono::high_resolution_clock::now();
-        auto parseTree = Parse(tokens, diagnostics);
-        auto endTime = std::chrono::high_resolution_clock::now();
-
-        auto elapsed_time_ms = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
-        qDebug() << "Time: " << elapsed_time_ms << "ns";
-
-        ParseTreePrinter printer{ parseTree };
-        auto output = printer.PrettyPrint();
-        auto expectedOutput = File::ReadAllText(outputFilePath);
-
-        QCOMPARE(output, expectedOutput);
-        if (!QFile::exists(errorFilePath))
-        {
-            QVERIFY(diagnostics.Diagnostics().empty());
-        }
-        else
-        {
-            QFAIL("TODO compare errors with error file once we got some");
-        }
-    }
-};
-
-QTEST_MAIN(ParserTests)
-#include "ParserTests.moc"
+    return suite;
+}
