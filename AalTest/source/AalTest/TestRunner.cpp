@@ -47,27 +47,22 @@ void TestRunner::run(const QList<TestSuite>& suites)
 TestSuiteResult TestRunner::runInternal(const TestSuite& suite)
 {
     auto tests = suite.tests();
-    auto totalTestCount = (int)tests.size();
     auto currentTest = 1;
-
+    auto totalTestCount = 0;
+    for (const auto& test : tests)
+    {
+        totalTestCount += test->testCount();
+    }
     auto totalCountString = QString::number(totalTestCount);
-    auto subTestIndentation = (totalCountString.length() * 2) + 1;
 
     m_output->writeSuiteName(suite.name());
     auto suiteStartTime = std::chrono::high_resolution_clock::now();
 
     for (const auto& test : tests)
     {
-        auto resultPosition = m_output->writeTestHeader(currentTest, totalTestCount, test->testName());
-        auto testStartTime = std::chrono::high_resolution_clock::now();
-
-        auto result = test->run(m_output, subTestIndentation);
-
-        auto testEndTime = std::chrono::high_resolution_clock::now();
-        auto testDuration = testEndTime - testStartTime;
-
-        m_output->updateTestResult(resultPosition, result, testDuration);
-        currentTest++;
+        auto resultPosition = test->writeHeader(m_output, currentTest, totalTestCount);
+        test->run(m_output, totalCountString.length(), currentTest);
+        test->writeResult(m_output, resultPosition);
     }
 
     auto suiteEndTime = std::chrono::high_resolution_clock::now();

@@ -45,17 +45,44 @@ public:
 
     int passedTests() const
     {
-        return std::count_if(begin(m_tests), end(m_tests), [](auto test) { return test->result() == TestResult::Passed; });
+        auto passed = 0;
+        for (const auto& test : m_tests)
+        {
+            for (const auto data : test->result().data)
+            {
+                if(data == TestResultKind::Passed)
+                    passed++;
+            }
+        }
+        return passed;
     }
 
     int failedTests() const
     {
-        return std::count_if(begin(m_tests), end(m_tests), [](auto test) { return test->result() == TestResult::Failed; });
+        auto failed = 0;
+        for (const auto& test : m_tests)
+        {
+            for (const auto data : test->result().data)
+            {
+                if (data == TestResultKind::Failed)
+                    failed++;
+            }
+        }
+        return failed;
     }
 
     int skippedTests() const
     {
-        return std::count_if(begin(m_tests), end(m_tests), [](auto test) { return test->result() == TestResult::Skipped; });
+        auto skipped = 0;
+        for (const auto& test : m_tests)
+        {
+            for (const auto data : test->result().data)
+            {
+                if (data == TestResultKind::Skipped)
+                    skipped++;
+            }
+        }
+        return skipped;
     }
 
 private:

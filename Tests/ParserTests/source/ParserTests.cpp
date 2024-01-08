@@ -27,7 +27,7 @@ namespace
         auto parseTree = Parse(tokens, diagnostics);
         auto endTime = std::chrono::high_resolution_clock::now();
 
-        std::cout << "   Parse(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      Parse(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         ParseTreePrinter printer{ parseTree };
         auto output = printer.PrettyPrint();

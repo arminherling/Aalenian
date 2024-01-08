@@ -20,7 +20,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(1);
         AalTest::IsTrue(loadedValue.isBool());
@@ -48,7 +48,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::IsTrue(loadedValue.isBool());
@@ -77,7 +77,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::IsTrue(loadedValue.isBool());
@@ -107,7 +107,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::IsTrue(loadedValue.isBool());
@@ -135,7 +135,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(1);
         AalTest::IsTrue(loadedValue.isInt32());
@@ -164,7 +164,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::IsTrue(loadedValue.isInt32());
@@ -193,7 +193,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::IsTrue(loadedValue.isInt32());
@@ -222,7 +222,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::IsTrue(loadedValue.isInt32());
@@ -251,7 +251,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::IsTrue(loadedValue.isInt32());
@@ -279,7 +279,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::IsTrue(loadedValue.isInt32());
@@ -309,7 +309,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::IsTrue(loadedValue.isBool());
@@ -338,7 +338,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::IsTrue(loadedValue.isBool());
@@ -367,7 +367,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::IsTrue(loadedValue.isBool());
@@ -397,7 +397,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::IsTrue(loadedValue.isBool());
@@ -427,7 +427,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::IsTrue(loadedValue.isBool());
@@ -457,7 +457,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::IsTrue(loadedValue.isBool());
@@ -486,7 +486,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::AreEqual(loadedValue.asBool(), value);
@@ -513,7 +513,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::AreEqual(loadedValue.asInt32(), value);
@@ -544,7 +544,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::IsTrue(loadedValue.isInt32());
@@ -568,7 +568,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(1);
         AalTest::IsTrue(loadedValue.isInt32());
@@ -600,7 +600,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(1);
         AalTest::IsTrue(loadedValue.isInt32());
@@ -629,7 +629,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
     }
 
     QList<std::tuple<QString, bool>> PrintBool_Data()
@@ -654,7 +654,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
     }
 
     QList<std::tuple<QString, i32>> PrintInt32_Data()
@@ -677,7 +677,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
     }
 
     void LoweredWhileLoop()
@@ -707,7 +707,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto loadedValue = vm.getValue(0);
         AalTest::IsTrue(loadedValue.isInt32());
@@ -758,7 +758,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
     }
 
     void Fib20()
@@ -816,7 +816,7 @@ namespace
         vm.run(code);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      run(): " << Stringify(endTime - startTime).toStdString() << std::endl;
     }
 }
 

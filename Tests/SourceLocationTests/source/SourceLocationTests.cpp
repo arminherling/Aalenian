@@ -18,7 +18,7 @@ namespace
         auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         auto& location = tokens.GetSourceLocation(token.locationIndex);
         AalTest::AreEqual(location.startIndex, expectedLocation.startIndex);
@@ -99,7 +99,7 @@ namespace
         auto tokens = Lex(input, diagnostics);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         AalTest::AreEqual(tokens.size(), expectedList.size());
         for (auto i = 0; i < tokens.size(); i++)

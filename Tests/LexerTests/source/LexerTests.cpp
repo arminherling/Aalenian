@@ -22,7 +22,7 @@ namespace
         auto token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         AalTest::AreEqual(token.kind, expectedKind);
     }
@@ -65,7 +65,7 @@ namespace
         auto token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         AalTest::AreEqual(token.kind, TokenKind::EndOfFile);
     }
@@ -94,7 +94,7 @@ namespace
         auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         AalTest::AreEqual(token.kind, TokenKind::Identifier);
         auto& lexeme = tokens.GetLexeme(token.kindIndex);
@@ -130,7 +130,7 @@ namespace
         auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         AalTest::AreEqual(token.kind, TokenKind::Number);
         auto& lexeme = tokens.GetLexeme(token.kindIndex);
@@ -163,7 +163,7 @@ namespace
         auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         AalTest::AreEqual(token.kind, TokenKind::String);
         auto& lexeme = tokens.GetLexeme(token.kindIndex);
@@ -193,7 +193,7 @@ namespace
         AalTest::IsTrue(!diagnostics.Diagnostics().empty());
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         AalTest::AreEqual(token.kind, TokenKind::Error);
         auto& lexeme = tokens.GetLexeme(token.kindIndex);
@@ -220,7 +220,7 @@ namespace
         auto tokens = Lex(source, diagnostics);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         AalTest::IsTrue(diagnostics.Diagnostics().empty());
         AalTest::AreEqual(tokens.size(), tokenCount);
@@ -259,7 +259,7 @@ namespace
         auto tokens = Lex(source, diagnostics);
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        std::cout << "   Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+        std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
     }
 }
 

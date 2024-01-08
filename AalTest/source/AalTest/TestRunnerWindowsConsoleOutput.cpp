@@ -1,17 +1,20 @@
-#include "TestRunnerWindowsConsoleOutput.h"
+﻿#include "TestRunnerWindowsConsoleOutput.h"
 #include <AalTest/Stringify.h>
 #include <iostream>
 #include <Windows.h>
 
 namespace
 {
-    std::string TestNumber(int currentNumber, int totalCount)
+    std::string TestNumber(int currentNumber, int totalCount, bool printNumber)
     {
         auto totalCountString = QString::number(totalCount);
         auto countCharCount = totalCountString.length();
         auto numberString = QString::number(currentNumber);
 
-        return QString("%1/%2").arg(numberString.rightJustified(countCharCount, ' '), totalCountString).toStdString();
+        if (printNumber)
+            return numberString.rightJustified(countCharCount, ' ').toStdString();
+        else
+            return QString().rightJustified(countCharCount, ' ').toStdString();
     }
 
     std::string ResultNumber(int currentNumber, int totalCount)
@@ -22,19 +25,19 @@ namespace
         return QString("%1/%2").arg(numberString, totalCountString).toStdString();
     }
 
-    QString StringifyTestResult(TestResult result, bool colorize)
+    QString StringifyTestResult(TestResultKind result, bool colorize)
     {
         if (colorize)
         {
             switch (result)
             {
-                case TestResult::Skipped:
+                case TestResultKind::Skipped:
                     return QString("\033[38;2;255;228;160mSKIP\033[0m");
-                case TestResult::Failed:
+                case TestResultKind::Failed:
                     return QString("\033[38;2;244;75;86mFAIL\033[0m");
-                case TestResult::Passed:
+                case TestResultKind::Passed:
                     return QString("\033[38;2;138;226;138mPASS\033[0m");
-                case TestResult::Invalid:
+                case TestResultKind::Invalid:
                 default:
                     return QString("....");
             }
@@ -43,13 +46,13 @@ namespace
         {
             switch (result)
             {
-                case TestResult::Skipped:
+                case TestResultKind::Skipped:
                     return QString("SKIP");
-                case TestResult::Failed:
+                case TestResultKind::Failed:
                     return QString("FAIL");
-                case TestResult::Passed:
+                case TestResultKind::Passed:
                     return QString("PASS");
-                case TestResult::Invalid:
+                case TestResultKind::Invalid:
                 default:
                     return QString("....");
             }
@@ -73,10 +76,17 @@ void TestRunnerWindowsConsoleOutput::writeSuiteName(const QString& name)
     std::cout << "         --== " << name.toStdString() << " ==--" << std::endl;
 }
 
-QPoint TestRunnerWindowsConsoleOutput::writeTestHeader(int currentTest, int totalTests, const QString& testName)
+QPoint TestRunnerWindowsConsoleOutput::writeTestHeader(int currentTest, int totalTests, const QString& testName, bool hasSubTests)
 {
-    std::cout << " " << TestNumber(currentTest, totalTests) << " " << testName.leftJustified(m_headerSize, '.').toStdString() << " " << std::flush;
-
+    std::cout << " " << TestNumber(currentTest, totalTests, !hasSubTests);
+    if (hasSubTests)
+    {
+        std::cout << testName.toStdString() << std::endl;
+        return {};
+    }
+        
+    std::cout << " " << testName.leftJustified(m_headerSize, '.').toStdString() << " " << std::flush;
+    
     CONSOLE_SCREEN_BUFFER_INFO screenBuffer;
     GetConsoleScreenBufferInfo(m_consoleHandle, &screenBuffer);
     int x = screenBuffer.dwCursorPosition.X;
@@ -89,15 +99,17 @@ QPoint TestRunnerWindowsConsoleOutput::writeTestHeader(int currentTest, int tota
 
 QPoint TestRunnerWindowsConsoleOutput::writeSubTestHeader(int indentation, int currentTest, int totalTests, const QString& parameters)
 {
-    auto indent = QString(" ").repeated(1 + indentation).toStdString();
-    auto testNumber = TestNumber(currentTest, totalTests);
+    auto indent = QString(" ").repeated(indentation + 2);
+    
+    auto testNumber = TestNumber(currentTest, totalTests, true);
     auto testNumberSize = testNumber.size();
 
-    auto testAndSubTestSizeDifference = testNumberSize - indentation;
-    auto headerSize = m_headerSize - indentation - testAndSubTestSizeDifference;
+    auto spaceAndDashSize = 3;
+    auto testAndSubTestSizeDifference = testNumberSize - indent.size();
+    auto headerSize = m_headerSize - indent.size() - testAndSubTestSizeDifference - spaceAndDashSize;
     auto truncatedParameters = parameters.left(headerSize - 3);
 
-    std::cout << indent << testNumber << " " << truncatedParameters.leftJustified(headerSize, '.').toStdString() << " " << std::flush;
+    std::cout << indent.toStdString() << testNumber << " - " << truncatedParameters.leftJustified(headerSize, '.').toStdString() << " " << std::flush;
 
     CONSOLE_SCREEN_BUFFER_INFO screenBuffer;
     GetConsoleScreenBufferInfo(m_consoleHandle, &screenBuffer);
@@ -109,9 +121,12 @@ QPoint TestRunnerWindowsConsoleOutput::writeSubTestHeader(int indentation, int c
     return { x, y };
 }
 
-void TestRunnerWindowsConsoleOutput::updateTestResult(const QPoint& position, TestResult result, const std::chrono::nanoseconds& duration)
+void TestRunnerWindowsConsoleOutput::updateTestResult(const QPoint& position, TestResultKind result)
 {
     std::cout << std::flush;
+
+    if (position.isNull())
+        return;
 
     CONSOLE_SCREEN_BUFFER_INFO screenBuffer;
     GetConsoleScreenBufferInfo(m_consoleHandle, &screenBuffer);
@@ -123,11 +138,7 @@ void TestRunnerWindowsConsoleOutput::updateTestResult(const QPoint& position, Te
     cursorPosition.Y = position.y();
     SetConsoleCursorPosition(m_consoleHandle, cursorPosition);
 
-    std::cout << StringifyTestResult(result, true).toStdString(); 
-    if (duration != std::chrono::nanoseconds::zero())
-        std::cout << " " << Stringify(duration).toStdString();
-
-    std::cout << std::flush;
+    std::cout << StringifyTestResult(result, true).toStdString() << std::flush;
 
     cursorPosition.X = oldX;
     cursorPosition.Y = oldY;
@@ -157,11 +168,11 @@ void TestRunnerWindowsConsoleOutput::writeTestValueMismatchMessage(ValueMismatch
 void TestRunnerWindowsConsoleOutput::writeTestRunnerResult(const TestSuiteResult& result)
 {
     std::cout
-        << " " << StringifyTestResult(TestResult::Passed, true).toStdString()
+        << " " << StringifyTestResult(TestResultKind::Passed, true).toStdString()
         << " " << ResultNumber(result.passedTestCount, result.totalTestCount)
-        << " " << StringifyTestResult(TestResult::Skipped, true).toStdString()
+        << " " << StringifyTestResult(TestResultKind::Skipped, true).toStdString()
         << " " << ResultNumber(result.skippedTestCount, result.totalTestCount)
-        << " " << StringifyTestResult(TestResult::Failed, true).toStdString()
+        << " " << StringifyTestResult(TestResultKind::Failed, true).toStdString()
         << " " << ResultNumber(result.failedTestCount, result.totalTestCount) 
         << " TIME " << Stringify(result.duration).toStdString()
         << std::endl;

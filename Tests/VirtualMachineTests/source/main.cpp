@@ -4,7 +4,7 @@
 int main()
 {
     TestRunner runner{};
-    auto testSuites = VirtualMachineTestsSuite();
+    auto testSuites = VirtualMachineTests();
 
     runner.run(testSuites);
 

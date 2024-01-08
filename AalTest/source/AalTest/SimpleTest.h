@@ -16,37 +16,51 @@ public:
     {
     }
 
-    TestResult run(const std::unique_ptr<TestRunnerOutputBase>& output, int headerIndentation) override
+    QPoint writeHeader(const std::unique_ptr<TestRunnerOutputBase>& output, int currentTest, int totalTestCount) const override
+    {
+        return output->writeTestHeader(currentTest, totalTestCount, testName(), false);
+    }
+
+    void run(const std::unique_ptr<TestRunnerOutputBase>& output, int headerIndentation, int& currentTest) override
     {
         try
         {
             m_function();
 
-            setResult(TestResult::Passed);
+            addResult(TestResultKind::Passed);
             output->writeTestPassedMessage();
         }
         catch (SkipTestException& e)
         {
-            setResult(TestResult::Skipped);
+            addResult(TestResultKind::Skipped);
             output->writeTestSkippedMessage(e);
         }
         catch (FailedTestException& e)
         {
-            setResult(TestResult::Failed);
+            addResult(TestResultKind::Failed);
             output->writeTestFailedMessage(e);
         }
         catch (ValueMismatchTestException& e)
         {
-            setResult(TestResult::Failed);
+            addResult(TestResultKind::Failed);
             output->writeTestValueMismatchMessage(e);
         }
+        currentTest++;
+    }
 
-        return result();
+    void writeResult(const std::unique_ptr<TestRunnerOutputBase>& output, const QPoint& position) const override
+    {
+        output->updateTestResult(position, result().data.first());
     }
 
     const QString& testName() const override
     {
         return m_testName;
+    }
+
+    int testCount() const override
+    {
+        return 1;
     }
 
 private:

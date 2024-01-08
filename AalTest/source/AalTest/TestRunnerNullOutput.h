@@ -9,9 +9,9 @@ public:
     TestRunnerNullOutput() = default;
 
     void writeSuiteName(const QString& name) override {};
-    QPoint writeTestHeader(int currentTest, int totalTests, const QString& testName) override { return QPoint(); };
+    QPoint writeTestHeader(int currentTest, int totalTests, const QString& testName, bool hasSubTests) override { return QPoint(); };
     QPoint writeSubTestHeader(int indentation, int currentTest, int totalTests, const QString& parameters) override { return QPoint(); };
-    void updateTestResult(const QPoint& position, TestResult result, const std::chrono::nanoseconds& duration) override {};
+    void updateTestResult(const QPoint& position, TestResultKind result) override {};
     void writeTestPassedMessage() override {};
     void writeTestSkippedMessage(SkipTestException& e) override {};
     void writeTestFailedMessage(FailedTestException& e) override {};

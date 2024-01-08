@@ -418,9 +418,9 @@ namespace Parameterized
         return { std::make_tuple(true), std::make_tuple(false) };
     }
 
-    void TestPassesWhenAllSubTestsPass()
+    void TestWithTwoEmptySubTestsHasTwoPasses()
     {
-        int expectedPasses = 1;
+        int expectedPasses = 2;
         int expectedFails = 0;
         int expectedSkips = 0;
         TestRunner runner{ TestRunner::OutputMode::None };
@@ -441,11 +441,11 @@ namespace Parameterized
         AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
-    void TestPassesWhenOneSubTestsPassesAndOthersSkip()
+    void TestWithSkipOnTrueInThreeSubTestsHasTwoPassesAndOneSkip()
     {
-        int expectedPasses = 1;
+        int expectedPasses = 2;
         int expectedFails = 0;
-        int expectedSkips = 0;
+        int expectedSkips = 1;
         TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
@@ -465,10 +465,10 @@ namespace Parameterized
         AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
-    void TestFailsWhenAllSubTestsFails()
+    void TestWithFailInTwoSubTestsHasTwoFails()
     {
         int expectedPasses = 0;
-        int expectedFails = 1;
+        int expectedFails = 2;
         int expectedSkips = 0;
         TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
@@ -488,9 +488,9 @@ namespace Parameterized
         AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
-    void TestFailsWhenOneSubTestsFails()
+    void TestWithIsTrueCheckInTwoSubTestsHasOnePassAndOneFails()
     {
-        int expectedPasses = 0;
+        int expectedPasses = 1;
         int expectedFails = 1;
         int expectedSkips = 0;
         TestRunner runner{ TestRunner::OutputMode::None };
@@ -511,11 +511,11 @@ namespace Parameterized
         AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
-    void TestFailsWhenAllSubTestsSkipButOneFails()
+    void TestWithSkipOnTrueAndFailHasOneSkipAndTwoFails()
     {
         int expectedPasses = 0;
-        int expectedFails = 1;
-        int expectedSkips = 0;
+        int expectedFails = 2;
+        int expectedSkips = 1;
         TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
@@ -537,11 +537,11 @@ namespace Parameterized
         AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
-    void TestSkipWhenAllSubTestsSkip()
+    void TestWithSkipInTwoSubTestsHasTwoSkips()
     {
         int expectedPasses = 0;
         int expectedFails = 0;
-        int expectedSkips = 1;
+        int expectedSkips = 2;
         TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
@@ -560,11 +560,11 @@ namespace Parameterized
         AalTest::AreEqual(expectedSkips, suite.skippedTests());
     }
 
-    void TestWithoutDataGetMarkedAsSkipped()
+    void TestWithoutDataDontExecute()
     {
         int expectedPasses = 0;
         int expectedFails = 0;
-        int expectedSkips = 1;
+        int expectedSkips = 0;
         TestRunner runner{ TestRunner::OutputMode::None };
         TestSuite suite{};
 
@@ -619,13 +619,13 @@ TestSuite AalTestTestsSuiteParameterized()
 
     TestSuite suite{};
     suite.add(QString("TestCanExecuteWithParameters"), TestCanExecuteWithParameters, TestCanExecuteWithParameters_Data);
-    suite.add(QString("TestPassesWhenAllSubTestsPass"), TestPassesWhenAllSubTestsPass);
-    suite.add(QString("TestPassesWhenOneSubTestsPassesAndOthersSkip"), TestPassesWhenOneSubTestsPassesAndOthersSkip);
-    suite.add(QString("TestFailsWhenAllSubTestsFails"), TestFailsWhenAllSubTestsFails);
-    suite.add(QString("TestFailsWhenOneSubTestsFails"), TestFailsWhenOneSubTestsFails);
-    suite.add(QString("TestFailsWhenAllSubTestsSkipButOneFails"), TestFailsWhenAllSubTestsSkipButOneFails);
-    suite.add(QString("TestSkipWhenAllSubTestsSkip"), TestSkipWhenAllSubTestsSkip);
-    suite.add(QString("TestWithoutDataGetMarkedAsSkipped"), TestWithoutDataGetMarkedAsSkipped);
+    suite.add(QString("TestWithTwoEmptySubTestsHasTwoPasses"), TestWithTwoEmptySubTestsHasTwoPasses);
+    suite.add(QString("TestWithSkipOnTrueInThreeSubTestsHasTwoPassesAndOneSkip"), TestWithSkipOnTrueInThreeSubTestsHasTwoPassesAndOneSkip);
+    suite.add(QString("TestWithFailInTwoSubTestsHasTwoFails"), TestWithFailInTwoSubTestsHasTwoFails);
+    suite.add(QString("TestWithIsTrueCheckInTwoSubTestsHasOnePassAndOneFails"), TestWithIsTrueCheckInTwoSubTestsHasOnePassAndOneFails);
+    suite.add(QString("TestWithSkipOnTrueAndFailHasOneSkipAndTwoFails"), TestWithSkipOnTrueAndFailHasOneSkipAndTwoFails);
+    suite.add(QString("TestWithSkipInTwoSubTestsHasTwoSkips"), TestWithSkipInTwoSubTestsHasTwoSkips);
+    suite.add(QString("TestWithoutDataDontExecute"), TestWithoutDataDontExecute);
 
     return suite;
 }

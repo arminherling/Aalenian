@@ -5,7 +5,6 @@
 #include <AalTest/TestResult.h>
 #include <AalTest/TestSuiteResult.h>
 #include <AalTest/ValueMismatchTestException.h>
-#include <chrono>
 #include <QList>
 #include <QPoint>
 
@@ -13,9 +12,9 @@ class TestRunnerOutputBase
 {
 public:
     virtual void writeSuiteName(const QString& name) = 0;
-    virtual QPoint writeTestHeader(int currentTest, int totalTests, const QString& testName) = 0;
+    virtual QPoint writeTestHeader(int currentTest, int totalTests, const QString& testName, bool hasSubTests) = 0;
     virtual QPoint writeSubTestHeader(int indentation, int currentTest, int totalTests, const QString& parameters) = 0;
-    virtual void updateTestResult(const QPoint& position, TestResult result, const std::chrono::nanoseconds& duration = std::chrono::nanoseconds::zero()) = 0;
+    virtual void updateTestResult(const QPoint& position, TestResultKind result) = 0;
     virtual void writeTestPassedMessage() = 0;
     virtual void writeTestSkippedMessage(SkipTestException& e) = 0;
     virtual void writeTestFailedMessage(FailedTestException& e) = 0;

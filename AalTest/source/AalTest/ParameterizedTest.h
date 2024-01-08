@@ -18,19 +18,17 @@ public:
     {
     }
 
-    TestResult run(const std::unique_ptr<TestRunnerOutputBase>& output, int headerIndentation) override
+    QPoint writeHeader(const std::unique_ptr<TestRunnerOutputBase>& output, int currentTest, int totalTestCount) const override
+    {
+        return output->writeTestHeader(currentTest, totalTestCount, testName(), true);
+    }
+
+    void run(const std::unique_ptr<TestRunnerOutputBase>& output, int headerIndentation, int& currentTest) override
     {
         auto totalSubTestCount = m_data.size();
-        auto currentTest = 1;
-        auto testResult = TestResult::Passed;
+        auto testResult = TestResultKind::Passed;
         if (totalSubTestCount == 0)
-        {
-            setResult(TestResult::Skipped);
-            return TestResult::Skipped;
-        }
-
-        auto failCount = 0;
-        auto skipCount = 0;
+            return;
 
         for (const auto& tuple : m_data)
         {
@@ -38,49 +36,47 @@ public:
             try
             {
                 resultPosition = output->writeSubTestHeader(headerIndentation, currentTest, totalSubTestCount, Stringify(tuple));
-                auto startTime = std::chrono::high_resolution_clock::now();
 
                 std::apply(m_function, tuple);
 
-                auto endTime = std::chrono::high_resolution_clock::now();
-                auto testDuration = endTime - startTime;
-
-                output->updateTestResult(resultPosition, TestResult::Passed, testDuration);
+                output->updateTestResult(resultPosition, TestResultKind::Passed);
                 output->writeTestPassedMessage();
+                addResult(TestResultKind::Passed);
             }
             catch (SkipTestException& e)
             {
-                output->updateTestResult(resultPosition, TestResult::Skipped);
+                output->updateTestResult(resultPosition, TestResultKind::Skipped);
                 output->writeTestSkippedMessage(e);
-                skipCount++;
+                addResult(TestResultKind::Skipped);
             }
             catch (FailedTestException& e)
             {
-                output->updateTestResult(resultPosition, TestResult::Failed);
+                output->updateTestResult(resultPosition, TestResultKind::Failed);
                 output->writeTestFailedMessage(e);
-                failCount++;
+                addResult(TestResultKind::Failed);
             }
             catch (ValueMismatchTestException& e)
             {
-                output->updateTestResult(resultPosition, TestResult::Failed);
+                output->updateTestResult(resultPosition, TestResultKind::Failed);
                 output->writeTestValueMismatchMessage(e);
-                failCount++;
+                addResult(TestResultKind::Failed);
             }
             currentTest++;
         }
+    }
 
-        if (totalSubTestCount == skipCount)
-            testResult = TestResult::Skipped;
-        else if (failCount > 0)
-            testResult = TestResult::Failed;
-
-        setResult(testResult);
-        return testResult;
+    void writeResult(const std::unique_ptr<TestRunnerOutputBase>& output, const QPoint& position) const override
+    {
     }
 
     const QString& testName() const override
     {
         return m_testName;
+    }
+
+    int testCount() const override
+    {
+        return m_data.size();
     }
 
 private:

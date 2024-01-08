@@ -1,9 +1,16 @@
 #pragma once
 
-enum class TestResult
+#include <QList>
+
+enum class TestResultKind
 {
     Invalid,
     Skipped,
     Failed,
     Passed
+};
+
+struct TestResult
+{
+    QList<TestResultKind> data;
 };
