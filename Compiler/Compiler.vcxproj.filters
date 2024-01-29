@@ -173,6 +173,9 @@
     <ClCompile Include="source\Debug\TypedTreePrinter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Debug\BasePrinter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Compiler\DiagnosticsBag.h">
@@ -359,6 +362,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Debug\TypedTreePrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Debug\BasePrinter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

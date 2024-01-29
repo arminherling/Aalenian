@@ -1,11 +1,8 @@
 #include <Debug/ParseTreePrinter.h>
 
 ParseTreePrinter::ParseTreePrinter(ParseTree& parseTree, i32 indentation)
-    : m_parseTree{ parseTree }
-    , m_indentation{ indentation }
-    , m_indentationLevel{ 0 }
-    , m_output{ QString() }
-    , m_stream{ &m_output }
+    : BasePrinter(indentation)
+    , m_parseTree{ parseTree }
 {
 }
 
@@ -148,7 +145,7 @@ void ParseTreePrinter::PrettyPrintAssignmentStatement(AssignmentStatement* state
 {
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
-    
+
     stream() << Indentation() << QString("Left: {") << NewLine();
     PushIndentation();
     PrettyPrintNode(statement->leftExpression());
@@ -317,7 +314,7 @@ void ParseTreePrinter::PrettyPrintReturnStatement(ReturnStatement* statement)
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
 
-    if(statement->expression().has_value())
+    if (statement->expression().has_value())
         PrettyPrintNode(statement->expression().value());
 
     PopIndentation();
