@@ -11,12 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{7b5e85f0-892a-4d90-8777-4a430d086303}</ProjectGuid>
+    <ProjectGuid>{5e4fc12c-5853-41d8-afec-ba359de39e97}</ProjectGuid>
     <Keyword>QtVS_v304</Keyword>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.22000.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.22000.0</WindowsTargetPlatformVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
-    <ProjectName>AllInOne</ProjectName>
+    <ProjectName>TypeCheckerTests</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -111,21 +111,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\AalTestTests\source\AalTestTests.cpp" />
-    <ClCompile Include="..\LexerTests\source\LexerTests.cpp" />
-    <ClCompile Include="..\ParserTests\source\ParserTests.cpp" />
-    <ClCompile Include="..\TypeCheckerTests\source\TypeCheckerTests.cpp" />
-    <ClCompile Include="..\SourceLocationTests\source\SourceLocationTests.cpp" />
-    <ClCompile Include="..\VirtualMachineTests\source\VirtualMachineTests.cpp" />
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\TypeCheckerTests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\AalTestTests\source\AalTestTests.h" />
-    <ClInclude Include="..\LexerTests\source\LexerTests.h" />
-    <ClInclude Include="..\ParserTests\source\ParserTests.h" />
-    <ClInclude Include="..\TypeCheckerTests\source\TypeCheckerTests.h" />
-    <ClInclude Include="..\SourceLocationTests\source\SourceLocationTests.h" />
-    <ClInclude Include="..\VirtualMachineTests\source\VirtualMachineTests.h" />
+    <ClInclude Include="source\TypeCheckerTests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

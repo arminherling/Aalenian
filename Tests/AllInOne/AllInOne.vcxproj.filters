@@ -20,6 +20,9 @@
     <ClCompile Include="..\ParserTests\source\ParserTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\TypeCheckerTests\source\TypeCheckerTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\SourceLocationTests\source\SourceLocationTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -38,6 +41,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ParserTests\source\ParserTests.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TypeCheckerTests\source\TypeCheckerTests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\SourceLocationTests\source\SourceLocationTests.h">
