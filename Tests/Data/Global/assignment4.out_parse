@@ -4,6 +4,6 @@ AssignmentStatement: {
     }
     Right: {
         NumberLiteral: 0
-        TypeNode: i32
+        TypeName: i32
     }
 }

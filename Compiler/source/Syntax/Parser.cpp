@@ -230,11 +230,11 @@ Statement* Parser::ParseEnumDefinitionStatement()
     auto name = AdvanceOnMatch(TokenKind::Identifier);
 
     auto current = CurrentToken();
-    std::optional<TypeNode> baseType;
+    std::optional<TypeName> baseType;
     if (current.kind == TokenKind::Colon)
     {
         AdvanceCurrentIndex();
-        baseType = ParseTypeNode();
+        baseType = ParseTypeName();
         current = CurrentToken();
     }
 
@@ -257,12 +257,12 @@ Statement* Parser::ParseFieldDeclarationStatement()
     auto name = ParseNameExpression();
     auto current = CurrentToken();
     std::optional<Token> colon;
-    std::optional<TypeNode> type;
+    std::optional<TypeName> type;
     if (current.kind == TokenKind::Colon)
     {
         AdvanceCurrentIndex();
         colon = current;
-        type = ParseTypeNode();
+        type = ParseTypeName();
         current = CurrentToken();
     }
 
@@ -480,11 +480,11 @@ ArgumentsNode* Parser::ParseArgumentsNode()
     return new ArgumentsNode(openParenthesis, arguments, closeParenthesis);
 }
 
-TypeNode Parser::ParseTypeNode()
+TypeName Parser::ParseTypeName()
 {
     auto ref = TryMatchKeyword(QString("ref"));
     auto name = ParseNameExpression();
-    return TypeNode(ref, name);
+    return TypeName(ref, name);
 }
 
 NameExpression* Parser::ParseNameExpression()
@@ -501,7 +501,7 @@ NumberLiteral* Parser::ParseNumberLiteral()
     if (current.kind == TokenKind::Colon)
     {
         AdvanceCurrentIndex();
-        auto type = ParseTypeNode();
+        auto type = ParseTypeName();
         return new NumberLiteral(number, current, type);
     }
 
@@ -565,7 +565,7 @@ ParameterNode* Parser::ParseParameterNode()
 {
     auto name = ParseNameExpression();
     auto colon = AdvanceOnMatch(TokenKind::Colon);
-    auto type = ParseTypeNode();
+    auto type = ParseTypeName();
 
     return new ParameterNode(name, colon, type);
 }

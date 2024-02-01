@@ -5,7 +5,7 @@ TypeDefinitionStatement: {
             Field: {
                 NameExpression: x
             }
-            TypeNode: i32
+            TypeName: i32
             Value: {
                 NumberLiteral: 0
             }
@@ -14,7 +14,7 @@ TypeDefinitionStatement: {
             Field: {
                 NameExpression: y
             }
-            TypeNode: i32
+            TypeName: i32
         }
     }
 }

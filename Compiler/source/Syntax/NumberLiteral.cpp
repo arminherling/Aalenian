@@ -9,7 +9,7 @@ NumberLiteral::NumberLiteral(const Token& token)
 NumberLiteral::NumberLiteral(
     const Token& token,
     const Token& colon,
-    const TypeNode& type)
+    const TypeName& type)
     : Expression(NodeKind::NumberLiteral)
     , m_token{ token }
     , m_colon{ colon }

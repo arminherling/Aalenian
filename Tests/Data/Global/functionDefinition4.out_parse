@@ -4,12 +4,12 @@ FunctionDefinitionStatement: {
         ParameterNode: {
             NameExpression: a
             Ref: true
-            TypeNode: i32
+            TypeName: i32
         }
         ParameterNode: {
             NameExpression: b
             Ref: true
-            TypeNode: i32
+            TypeName: i32
         }
     }
     BlockNode(3): {

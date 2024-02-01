@@ -5,7 +5,7 @@ FunctionDefinitionStatement: {
     BlockNode(1): {
         ReturnStatement: {
             NumberLiteral: 1
-            TypeNode: i32
+            TypeName: i32
         }
     }
 }
@@ -14,7 +14,7 @@ FunctionDefinitionStatement: {
     ParametersNode(1): {
         ParameterNode: {
             NameExpression: x
-            TypeNode: i32
+            TypeName: i32
         }
     }
     BlockNode(0): {

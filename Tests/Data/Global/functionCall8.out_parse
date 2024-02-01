@@ -14,7 +14,7 @@ FunctionDefinitionStatement: {
     ParametersNode(1): {
         ParameterNode: {
             NameExpression: x
-            TypeNode: Values
+            TypeName: Values
         }
     }
     BlockNode(0): {

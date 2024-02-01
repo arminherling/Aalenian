@@ -1,9 +1,9 @@
-#include "TypeNode.h"
+#include "TypeName.h"
 
-TypeNode::TypeNode(
+TypeName::TypeName(
     const std::optional<Token>& ref,
     NameExpression* name)
-    : Node(NodeKind::TypeNode)
+    : Node(NodeKind::TypeName)
     , m_ref{ ref }
     , m_name{ name }
 {

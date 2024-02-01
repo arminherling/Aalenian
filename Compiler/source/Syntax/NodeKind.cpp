@@ -54,8 +54,8 @@ QString StringifyNodeKind(NodeKind kind)
         case NodeKind::NumberLiteral:
             return QString("NumberLiteral");
 
-        case NodeKind::TypeNode:
-            return QString("TypeNode");
+        case NodeKind::TypeName:
+            return QString("TypeName");
         case NodeKind::ArgumentNode:
             return QString("ArgumentNode");
         case NodeKind::ArgumentsNode:

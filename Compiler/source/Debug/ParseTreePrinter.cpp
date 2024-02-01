@@ -196,7 +196,7 @@ void ParseTreePrinter::PrettyPrintEnumDefinitionStatement(EnumDefinitionStatemen
     stream() << Indentation() << StringifyNodeKind(NodeKind::NameExpression) << QString(": %1").arg(nameLexeme) << NewLine();
 
     if (statement->baseType().has_value())
-        PrettyPrintTypeNode(statement->baseType().value());
+        PrettyPrintTypeName(statement->baseType().value());
 
     PrettyPrintBlockNode(statement->body());
     PopIndentation();
@@ -246,7 +246,7 @@ void ParseTreePrinter::PrettyPrintFieldDeclarationStatement(FieldDeclarationStat
     stream() << Indentation() << QString("}") << NewLine();
 
     if (statement->type().has_value())
-        PrettyPrintTypeNode(statement->type().value());
+        PrettyPrintTypeName(statement->type().value());
 
     if (statement->expression().has_value())
     {
@@ -354,7 +354,7 @@ void ParseTreePrinter::PrettyPrintParameterNode(ParameterNode* parameter)
     PushIndentation();
 
     PrettyPrintNameExpression(parameter->name());
-    PrettyPrintTypeNode(parameter->type());
+    PrettyPrintTypeName(parameter->type());
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
@@ -404,14 +404,14 @@ void ParseTreePrinter::PrettyPrintFunctionCallExpression(FunctionCallExpression*
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-void ParseTreePrinter::PrettyPrintTypeNode(const TypeNode& type)
+void ParseTreePrinter::PrettyPrintTypeName(const TypeName& type)
 {
     auto token = type.name()->identifier();
     auto lexeme = m_parseTree.Tokens().GetLexeme(token.kindIndex);
     if (type.isReference())
         stream() << Indentation() << QString("Ref: true") << NewLine();
 
-    stream() << Indentation() << StringifyNodeKind(NodeKind::TypeNode) << QString(": ") << lexeme << NewLine();
+    stream() << Indentation() << StringifyNodeKind(NodeKind::TypeName) << QString(": ") << lexeme << NewLine();
 }
 
 void ParseTreePrinter::PrettyPrintBoolLiteral(BoolLiteral* node)
@@ -437,7 +437,7 @@ void ParseTreePrinter::PrettyPrintNumberLiteral(NumberLiteral* number)
     if (!optionalType.has_value())
         return;
 
-    PrettyPrintTypeNode(optionalType.value());
+    PrettyPrintTypeName(optionalType.value());
 }
 
 void ParseTreePrinter::PrettyPrintGroupingExpression(GroupingExpression* grouping)

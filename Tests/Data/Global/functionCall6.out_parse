@@ -3,7 +3,7 @@ FunctionDefinitionStatement: {
     ParametersNode(1): {
         ParameterNode: {
             NameExpression: x
-            TypeNode: i32
+            TypeName: i32
         }
     }
     BlockNode(0): {

@@ -130,7 +130,7 @@
     <ClCompile Include="source\Syntax\ReturnStatement.cpp" />
     <ClCompile Include="source\Syntax\ScopeAccessExpression.cpp" />
     <ClCompile Include="source\Syntax\Statement.cpp" />
-    <ClCompile Include="source\Syntax\TypeNode.cpp" />
+    <ClCompile Include="source\Syntax\TypeName.cpp" />
     <ClCompile Include="source\Syntax\TypeDefinitionStatement.cpp" />
     <ClCompile Include="source\Syntax\UnaryExpression.cpp" />
     <ClCompile Include="source\Syntax\WhileStatement.cpp" />
@@ -184,7 +184,7 @@
     <ClInclude Include="source\Syntax\ReturnStatement.h" />
     <ClInclude Include="source\Syntax\ScopeAccessExpression.h" />
     <ClInclude Include="source\Syntax\Statement.h" />
-    <ClInclude Include="source\Syntax\TypeNode.h" />
+    <ClInclude Include="source\Syntax\TypeName.h" />
     <ClInclude Include="source\Syntax\TypeDefinitionStatement.h" />
     <ClInclude Include="source\Syntax\UnaryExpression.h" />
     <ClInclude Include="source\Syntax\WhileStatement.h" />

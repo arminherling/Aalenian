@@ -3,7 +3,7 @@ FunctionDefinitionStatement: {
     ParametersNode(1): {
         ParameterNode: {
             NameExpression: x
-            TypeNode: bool
+            TypeName: bool
         }
     }
     BlockNode(0): {

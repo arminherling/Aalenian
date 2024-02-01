@@ -27,7 +27,7 @@
 #include <Syntax/ParseTree.h>
 #include <Syntax/ReturnStatement.h>
 #include <Syntax/TypeDefinitionStatement.h>
-#include <Syntax/TypeNode.h>
+#include <Syntax/TypeName.h>
 #include <Syntax/UnaryExpression.h>
 #include <Syntax/WhileStatement.h>
 
@@ -59,7 +59,7 @@ private:
 
     void PrettyPrintDiscardLiteral(DiscardLiteral* discard);
     void PrettyPrintFunctionCallExpression(FunctionCallExpression* functionCall);
-    void PrettyPrintTypeNode(const TypeNode& type);
+    void PrettyPrintTypeName(const TypeName& type);
     void PrettyPrintBoolLiteral(BoolLiteral* node);
     void PrettyPrintNameExpression(NameExpression* name);
     void PrettyPrintNumberLiteral(NumberLiteral* number);
