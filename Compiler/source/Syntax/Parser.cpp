@@ -234,7 +234,7 @@ Statement* Parser::ParseEnumDefinitionStatement()
     if (current.kind == TokenKind::Colon)
     {
         AdvanceCurrentIndex();
-        baseType = ParseTypeName();
+        baseType = ParseTypeNode();
         current = CurrentToken();
     }
 
@@ -262,7 +262,7 @@ Statement* Parser::ParseFieldDeclarationStatement()
     {
         AdvanceCurrentIndex();
         colon = current;
-        type = ParseTypeName();
+        type = ParseTypeNode();
         current = CurrentToken();
     }
 
@@ -480,7 +480,7 @@ ArgumentsNode* Parser::ParseArgumentsNode()
     return new ArgumentsNode(openParenthesis, arguments, closeParenthesis);
 }
 
-TypeName Parser::ParseTypeName()
+TypeName Parser::ParseTypeNode()
 {
     auto ref = TryMatchKeyword(QString("ref"));
     auto name = ParseNameExpression();
@@ -501,7 +501,7 @@ NumberLiteral* Parser::ParseNumberLiteral()
     if (current.kind == TokenKind::Colon)
     {
         AdvanceCurrentIndex();
-        auto type = ParseTypeName();
+        auto type = ParseTypeNode();
         return new NumberLiteral(number, current, type);
     }
 
@@ -565,7 +565,7 @@ ParameterNode* Parser::ParseParameterNode()
 {
     auto name = ParseNameExpression();
     auto colon = AdvanceOnMatch(TokenKind::Colon);
-    auto type = ParseTypeName();
+    auto type = ParseTypeNode();
 
     return new ParameterNode(name, colon, type);
 }
@@ -673,7 +673,7 @@ bool Parser::HasPossibleReturnValue(const Token& returnKeyword)
     return isOnSameLine;
 }
 
-COMPILER_API ParseTree Parse(const TokenBuffer& tokens, DiagnosticsBag& diagnostics) noexcept
+ParseTree Parse(const TokenBuffer& tokens, DiagnosticsBag& diagnostics) noexcept
 {
     Parser parser{ tokens, diagnostics };
     return parser.Parse();

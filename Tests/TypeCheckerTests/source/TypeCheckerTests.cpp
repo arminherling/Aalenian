@@ -5,6 +5,7 @@
 #include <Debug/ParseTreePrinter.h>
 #include <iostream>
 #include <QDirIterator>
+#include <Semantic/TypeChecker.h>
 #include <Syntax/Lexer.h>
 #include <Syntax/Parser.h>
 
@@ -22,9 +23,10 @@ namespace
         DiagnosticsBag diagnostics;
 
         auto tokens = Lex(source, diagnostics);
+        auto parseTree = Parse(tokens, diagnostics);
 
         auto startTime = std::chrono::high_resolution_clock::now();
-        auto parseTree = Parse(tokens, diagnostics);
+        auto typedTree = TypeCheck(parseTree, diagnostics);
         auto endTime = std::chrono::high_resolution_clock::now();
 
         std::cout << "      Type check(): " << Stringify(endTime - startTime).toStdString() << std::endl;

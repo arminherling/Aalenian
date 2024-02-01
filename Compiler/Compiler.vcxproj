@@ -155,6 +155,8 @@
     <ClCompile Include="source\VirtualMachine\Register.cpp" />
     <ClCompile Include="source\VirtualMachine\VM.cpp" />
     <ClCompile Include="source\VirtualMachine\Value.cpp" />
+    <ClCompile Include="source\Semantic\TypeChecker.cpp" />
+    <ClCompile Include="source\Semantic\TypedTree.cpp" />
     <ClInclude Include="source\Debug\BasePrinter.h" />
     <ClInclude Include="source\Debug\TypedTreePrinter.h" />
     <ClInclude Include="source\Syntax\NodeKind.h" />
@@ -219,6 +221,8 @@
     <ClInclude Include="source\Debug\ParseTreePrinter.h" />
     <ClInclude Include="source\VirtualMachine\VM.h" />
     <ClInclude Include="source\VirtualMachine\Value.h" />
+    <ClInclude Include="source\Semantic\TypeChecker.h" />
+    <ClInclude Include="source\Semantic\TypedTree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
