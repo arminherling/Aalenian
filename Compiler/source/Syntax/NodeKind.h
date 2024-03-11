@@ -37,7 +37,12 @@ enum class COMPILER_API NodeKind
     ArgumentsNode,
     ParameterNode,
     ParametersNode,
-    BlockNode
+    BlockNode,
+
+    TypedAssignmentStatement,
+
+    TypedGlobalValue,
+    I32Literal
 };
 
 COMPILER_API QString StringifyNodeKind(NodeKind kind);

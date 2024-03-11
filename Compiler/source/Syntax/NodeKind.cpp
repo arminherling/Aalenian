@@ -66,6 +66,15 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("ParametersNode");
         case NodeKind::BlockNode:
             return QString("BlockNode");
+
+        case NodeKind::TypedAssignmentStatement:
+            return QString("TypedAssignmentStatement");
+
+        case NodeKind::TypedGlobalValue:
+            return QString("TypedGlobalValue");
+        case NodeKind::I32Literal:
+            return QString("I32Literal");
+
         default:
             TODO("String for NodeKind value was not defined yet");
     }

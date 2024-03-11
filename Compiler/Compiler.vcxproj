@@ -101,6 +101,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Semantic\I32Literal.cpp" />
+    <ClCompile Include="source\Semantic\Environment.cpp" />
     <ClCompile Include="source\Debug\BasePrinter.cpp" />
     <ClCompile Include="source\Debug\TypedTreePrinter.cpp" />
     <ClCompile Include="source\Syntax\NodeKind.cpp" />
@@ -157,6 +159,15 @@
     <ClCompile Include="source\VirtualMachine\Value.cpp" />
     <ClCompile Include="source\Semantic\TypeChecker.cpp" />
     <ClCompile Include="source\Semantic\TypedTree.cpp" />
+    <ClCompile Include="source\Semantic\TypedNode.cpp" />
+    <ClCompile Include="source\Semantic\TypeDatabase.cpp" />
+    <ClCompile Include="source\Semantic\TypedGlobalValue.cpp" />
+    <ClCompile Include="source\Semantic\TypedAssignmentStatement.cpp" />
+    <ClCompile Include="source\Semantic\TypedStatement.cpp" />
+    <ClCompile Include="source\Semantic\TypedExpression.cpp" />
+    <ClCompile Include="source\Semantic\Type.cpp" />
+    <ClInclude Include="source\Semantic\I32Literal.h" />
+    <ClInclude Include="source\Semantic\Environment.h" />
     <ClInclude Include="source\Debug\BasePrinter.h" />
     <ClInclude Include="source\Debug\TypedTreePrinter.h" />
     <ClInclude Include="source\Syntax\NodeKind.h" />
@@ -223,6 +234,13 @@
     <ClInclude Include="source\VirtualMachine\Value.h" />
     <ClInclude Include="source\Semantic\TypeChecker.h" />
     <ClInclude Include="source\Semantic\TypedTree.h" />
+    <ClInclude Include="source\Semantic\TypedNode.h" />
+    <ClInclude Include="source\Semantic\TypeDatabase.h" />
+    <ClInclude Include="source\Semantic\TypedGlobalValue.h" />
+    <ClInclude Include="source\Semantic\TypedAssignmentStatement.h" />
+    <ClInclude Include="source\Semantic\TypedStatement.h" />
+    <ClInclude Include="source\Semantic\TypedExpression.h" />
+    <ClInclude Include="source\Semantic\Type.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

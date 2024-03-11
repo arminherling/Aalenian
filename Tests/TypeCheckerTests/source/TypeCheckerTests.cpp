@@ -2,10 +2,12 @@
 #include <AalTest.h>
 #include <Compiler/DiagnosticsBag.h>
 #include <Compiler/File.h>
-#include <Debug/ParseTreePrinter.h>
+#include <Debug/TypedTreePrinter.h>
 #include <iostream>
 #include <QDirIterator>
+#include <Semantic/Environment.h>
 #include <Semantic/TypeChecker.h>
+#include <Semantic/TypeDatabase.h>
 #include <Syntax/Lexer.h>
 #include <Syntax/Parser.h>
 
@@ -25,13 +27,16 @@ namespace
         auto tokens = Lex(source, diagnostics);
         auto parseTree = Parse(tokens, diagnostics);
 
+        TypeDatabase typeDatabase;
+        Environment environment;
+
         auto startTime = std::chrono::high_resolution_clock::now();
-        auto typedTree = TypeCheck(parseTree, diagnostics);
+        auto typedTree = TypeCheck(parseTree, environment, typeDatabase, diagnostics);
         auto endTime = std::chrono::high_resolution_clock::now();
 
         std::cout << "      Type check(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
-        ParseTreePrinter printer{ parseTree };
+        TypedTreePrinter printer{ typedTree, typeDatabase };
         auto output = printer.PrettyPrint();
         auto expectedOutput = File::ReadAllText(outputFilePath);
 
