@@ -98,7 +98,7 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
             }
             case TokenKind::Identifier:
             {
-                auto lexeme = m_tokens.GetLexeme(currentToken.kindIndex);
+                auto lexeme = m_tokens.GetLexeme(currentToken);
                 if (scope == StatementScope::Global)
                 {
                     if (IsFunctionDefinitionKeyword(lexeme))
@@ -597,7 +597,7 @@ Token Parser::AdvanceOnMatch(TokenKind kind)
 std::optional<BoolLiteral*> Parser::TryParseBoolLiteral()
 {
     auto currentToken = CurrentToken();
-    auto lexeme = m_tokens.GetLexeme(currentToken.kindIndex);
+    auto lexeme = m_tokens.GetLexeme(currentToken);
     if (IsTrueKeyword(lexeme))
     {
         AdvanceCurrentIndex();
@@ -615,7 +615,7 @@ std::optional<Token> Parser::TryMatchKeyword(const QStringView& keyword)
 {
     auto currentToken = CurrentToken();
     if (currentToken.kind == TokenKind::Identifier 
-        && m_tokens.GetLexeme(currentToken.kindIndex) == keyword)
+        && m_tokens.GetLexeme(currentToken) == keyword)
     {
         AdvanceCurrentIndex();
         return currentToken;

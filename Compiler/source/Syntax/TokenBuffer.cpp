@@ -43,7 +43,7 @@ const SourceLocation& TokenBuffer::GetSourceLocation(const Token& token) const n
     return sourceLocations.at(token.locationIndex);
 }
 
-const QStringView& TokenBuffer::GetLexeme(i32 lexemeIndex) const noexcept
+const QStringView& TokenBuffer::GetLexeme(const Token& token) const noexcept
 {
-    return lexemes.at(lexemeIndex);
+    return lexemes.at(token.kindIndex);
 }

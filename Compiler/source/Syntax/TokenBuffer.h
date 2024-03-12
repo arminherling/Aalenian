@@ -21,7 +21,7 @@ public:
     const Token& operator[](i32 position) const noexcept;
 
     const SourceLocation& GetSourceLocation(const Token& token) const noexcept;
-    const QStringView& GetLexeme(i32 lexemeIndex) const noexcept;
+    const QStringView& GetLexeme(const Token& token) const noexcept;
 
 private:
     std::vector<Token> tokens;

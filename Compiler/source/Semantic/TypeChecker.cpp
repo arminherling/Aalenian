@@ -92,12 +92,12 @@ TypedStatement* TypeChecker::TypeCheckAssignmentStatement(AssignmentStatement* s
 
 TypedExpression* TypeChecker::TypeCheckNameExpression(NameExpression* expression)
 {
-    auto lexemeIndex = expression->identifier().kindIndex;
-    auto name = m_parseTree.Tokens().GetLexeme(lexemeIndex);
+    auto identifier = expression->identifier();
+    auto lexeme = m_parseTree.Tokens().GetLexeme(identifier);
 
     // TODO check environment if variable already exist, return it in that case
 
-    auto variable = new TypedGlobalValue(name.toString(), expression, Type::I32());
+    auto variable = new TypedGlobalValue(lexeme.toString(), expression, Type::I32());
     
     // TODO register variable in environment 
     
@@ -106,15 +106,12 @@ TypedExpression* TypeChecker::TypeCheckNameExpression(NameExpression* expression
 
 TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)
 {
-    auto lexemeIndex = literal->token().kindIndex;
-    auto valueLexeme = m_parseTree.Tokens().GetLexeme(lexemeIndex);
-
     auto numberType = Type::Invalid();
     if (literal->type().has_value())
     {
-        auto literalType = literal->type().value();
-        auto typeLexemeIndex = literalType.name()->identifier().kindIndex;
-        auto typeName = m_parseTree.Tokens().GetLexeme(typeLexemeIndex);
+        auto typeToken = literal->type().value();
+        auto identifierToken = typeToken.name()->identifier();
+        auto typeName = m_parseTree.Tokens().GetLexeme(identifierToken);
         
         numberType = m_typeDatabase.getNumberTypeByName(typeName);
     }
@@ -122,6 +119,9 @@ TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)
     {
         numberType = m_options.defaultIntegerType;
     }
+
+    auto numberToken = literal->token();
+    auto valueLexeme = m_parseTree.Tokens().GetLexeme(numberToken);
 
     if (numberType == Type::I32())
     {
