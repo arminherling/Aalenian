@@ -117,7 +117,6 @@ TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)
         auto typeName = m_parseTree.Tokens().GetLexeme(typeLexemeIndex);
         
         numberType = m_typeDatabase.getNumberTypeByName(typeName);
-
     }
     else
     {

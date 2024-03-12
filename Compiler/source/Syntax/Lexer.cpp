@@ -161,7 +161,7 @@ auto LexString(TokenBuffer& tokenBuffer, DiagnosticsBag& diagnostics, const Sour
     else
     {
         auto token = AddLexemeAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Error, startIndex, startColumn, startLine);
-        auto& location = tokenBuffer.GetSourceLocation(token.locationIndex);
+        auto& location = tokenBuffer.GetSourceLocation(token);
         diagnostics.AddError(DiagnosticKind::_0002_UnterminatedString, location);
         return token;
     }
@@ -295,7 +295,7 @@ auto LexString(TokenBuffer& tokenBuffer, DiagnosticsBag& diagnostics, const Sour
                 }
 
                 auto token = AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Unknown);
-                const auto& location = tokenBuffer.GetSourceLocation(token.locationIndex);
+                const auto& location = tokenBuffer.GetSourceLocation(token);
                 diagnostics.AddError(DiagnosticKind::_0001_FoundIllegalCharacter, location);
                 break;
             }

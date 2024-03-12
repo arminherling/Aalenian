@@ -38,9 +38,9 @@ const Token& TokenBuffer::operator[](i32 position) const noexcept
     return tokens.at(position);
 }
 
-const SourceLocation& TokenBuffer::GetSourceLocation(i32 sourceLocationIndex) const noexcept
+const SourceLocation& TokenBuffer::GetSourceLocation(const Token& token) const noexcept
 {
-    return sourceLocations.at(sourceLocationIndex);
+    return sourceLocations.at(token.locationIndex);
 }
 
 const QStringView& TokenBuffer::GetLexeme(i32 lexemeIndex) const noexcept

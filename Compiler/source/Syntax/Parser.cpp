@@ -164,7 +164,7 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                 }
                 else
                 {
-                    const auto& location = m_tokens.GetSourceLocation(currentToken.locationIndex);
+                    const auto& location = m_tokens.GetSourceLocation(currentToken);
                     m_diagnostics.AddError(DiagnosticKind::Unknown, location);
 
                     AdvanceCurrentIndex();
@@ -175,7 +175,7 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
             {
                 if (scope == StatementScope::Global)
                 {
-                    const auto& location = m_tokens.GetSourceLocation(currentToken.locationIndex);
+                    const auto& location = m_tokens.GetSourceLocation(currentToken);
                     m_diagnostics.AddError(DiagnosticKind::Unknown, location);
 
                     AdvanceCurrentIndex();
@@ -188,7 +188,7 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
             }
             default:
             {
-                const auto& location = m_tokens.GetSourceLocation(currentToken.locationIndex);
+                const auto& location = m_tokens.GetSourceLocation(currentToken);
                 m_diagnostics.AddError(DiagnosticKind::Unknown, location);
 
                 AdvanceCurrentIndex();
@@ -427,7 +427,7 @@ Expression* Parser::ParsePrimaryExpression()
         }
         default:
         {
-            const auto& location = m_tokens.GetSourceLocation(currentToken.locationIndex);
+            const auto& location = m_tokens.GetSourceLocation(currentToken);
             m_diagnostics.AddError(DiagnosticKind::Unknown, location);
 
             AdvanceCurrentIndex();
@@ -588,7 +588,7 @@ Token Parser::AdvanceOnMatch(TokenKind kind)
     }
     else
     {
-        const auto& location = m_tokens.GetSourceLocation(currentToken.locationIndex);
+        const auto& location = m_tokens.GetSourceLocation(currentToken);
         m_diagnostics.AddError(DiagnosticKind::_0003_ExpectedXButGotY, location);
         return Token::ToError(currentToken);
     }
@@ -629,7 +629,7 @@ void Parser::SkipUntil(TokenKind kind)
     auto currentToken = CurrentToken();
     while (currentToken.kind != kind || currentToken.kind == TokenKind::EndOfFile)
     {
-        const auto& location = m_tokens.GetSourceLocation(currentToken.locationIndex);
+        const auto& location = m_tokens.GetSourceLocation(currentToken);
         m_diagnostics.AddError(DiagnosticKind::Unknown, location);
 
         AdvanceCurrentIndex();
@@ -653,8 +653,8 @@ bool Parser::HasLineBreakSinceLastMemberAccess()
         return false;
 
     auto lastToken = Peek(-1);
-    auto lastTokenLocation = m_tokens.GetSourceLocation(lastToken.locationIndex);
-    auto currentTokenLocation = m_tokens.GetSourceLocation(currentToken.locationIndex);
+    auto lastTokenLocation = m_tokens.GetSourceLocation(lastToken);
+    auto currentTokenLocation = m_tokens.GetSourceLocation(currentToken);
 
     auto hasEmptyLineBreak = (currentTokenLocation.endLine - lastTokenLocation.endLine) >= 2;
     return hasEmptyLineBreak;
@@ -666,8 +666,8 @@ bool Parser::HasPossibleReturnValue(const Token& returnKeyword)
     if (currentToken.kind == TokenKind::CloseBracket)
         return false;
 
-    auto returnTokenLocation = m_tokens.GetSourceLocation(returnKeyword.locationIndex);
-    auto currentTokenLocation = m_tokens.GetSourceLocation(currentToken.locationIndex);
+    auto returnTokenLocation = m_tokens.GetSourceLocation(returnKeyword);
+    auto currentTokenLocation = m_tokens.GetSourceLocation(currentToken);
 
     auto isOnSameLine = returnTokenLocation.endLine == currentTokenLocation.endLine;
     return isOnSameLine;

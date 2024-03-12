@@ -20,7 +20,7 @@ public:
     i32 size() const noexcept;
     const Token& operator[](i32 position) const noexcept;
 
-    const SourceLocation& GetSourceLocation(i32 sourceLocationIndex) const noexcept;
+    const SourceLocation& GetSourceLocation(const Token& token) const noexcept;
     const QStringView& GetLexeme(i32 lexemeIndex) const noexcept;
 
 private:
