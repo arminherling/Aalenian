@@ -116,10 +116,8 @@ TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)
         auto typeLexemeIndex = literalType.name()->identifier().kindIndex;
         auto typeName = m_parseTree.Tokens().GetLexeme(typeLexemeIndex);
         
-        if (typeName == QStringView(u"i32"))
-        {
-            numberType = Type::I32();
-        }
+        numberType = m_typeDatabase.getNumberTypeByName(typeName);
+
     }
     else
     {
