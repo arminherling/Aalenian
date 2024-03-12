@@ -1,0 +1,15 @@
+TypedAssignmentStatement: {
+    Left: {
+        TypedGlobalValue: {
+            Name: a
+            Type: i32
+        }
+    }
+    Right: {
+        I32Literal: {
+            Value: 1
+            Type: i32
+        }
+    }
+    Type: i32
+}

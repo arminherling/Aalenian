@@ -433,5 +433,8 @@
     <ClInclude Include="source\Semantic\Type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\Semantic\TypeCheckerOptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

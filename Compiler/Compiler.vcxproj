@@ -170,6 +170,7 @@
     <ClInclude Include="source\Semantic\Environment.h" />
     <ClInclude Include="source\Debug\BasePrinter.h" />
     <ClInclude Include="source\Debug\TypedTreePrinter.h" />
+    <ClInclude Include="source\Semantic\TypeCheckerOptions.h" />
     <ClInclude Include="source\Syntax\NodeKind.h" />
     <ClInclude Include="source\Syntax\ArgumentNode.h" />
     <ClInclude Include="source\Syntax\ArgumentsNode.h" />

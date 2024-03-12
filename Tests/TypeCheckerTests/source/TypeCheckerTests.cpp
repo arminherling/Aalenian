@@ -7,6 +7,7 @@
 #include <QDirIterator>
 #include <Semantic/Environment.h>
 #include <Semantic/TypeChecker.h>
+#include <Semantic/TypeCheckerOptions.h>
 #include <Semantic/TypeDatabase.h>
 #include <Syntax/Lexer.h>
 #include <Syntax/Parser.h>
@@ -29,9 +30,12 @@ namespace
 
         TypeDatabase typeDatabase;
         Environment environment;
+        TypeCheckerOptions options{
+            .defaultIntegerType = Type::I32()
+        };
 
         auto startTime = std::chrono::high_resolution_clock::now();
-        auto typedTree = TypeCheck(parseTree, environment, typeDatabase, diagnostics);
+        auto typedTree = TypeCheck(parseTree, options, environment, typeDatabase, diagnostics);
         auto endTime = std::chrono::high_resolution_clock::now();
 
         std::cout << "      Type check(): " << Stringify(endTime - startTime).toStdString() << std::endl;

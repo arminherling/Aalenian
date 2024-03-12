@@ -4,8 +4,14 @@
 #include <Semantic/TypedAssignmentStatement.h>
 #include <Semantic/I32Literal.h>
 
-TypeChecker::TypeChecker(const ParseTree& parseTree, Environment& environment, TypeDatabase& typeDatabase, DiagnosticsBag& diagnostics)
+TypeChecker::TypeChecker(
+    const ParseTree& parseTree, 
+    const TypeCheckerOptions& options, 
+    Environment& environment, 
+    TypeDatabase& typeDatabase, 
+    DiagnosticsBag& diagnostics)
     : m_parseTree{ parseTree }
+    , m_options{ options }
     , m_environment{ environment }
     , m_typeDatabase{ typeDatabase }
     , m_diagnostics{ diagnostics }
@@ -24,9 +30,14 @@ TypedTree TypeChecker::TypeCheck()
     return TypedTree(m_parseTree.Tokens(), globalStatements);
 }
 
-TypedTree TypeCheck(const ParseTree& parseTree, Environment& environment, TypeDatabase& typeDatabase, DiagnosticsBag& diagnostics) noexcept
+TypedTree TypeCheck(
+    const ParseTree& parseTree, 
+    const TypeCheckerOptions& options, 
+    Environment& environment, 
+    TypeDatabase& typeDatabase, 
+    DiagnosticsBag& diagnostics) noexcept
 {
-    TypeChecker typeChecker{ parseTree, environment, typeDatabase, diagnostics };
+    TypeChecker typeChecker{ parseTree, options, environment, typeDatabase, diagnostics };
     return typeChecker.TypeCheck();
 }
 
@@ -98,20 +109,31 @@ TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)
     auto lexemeIndex = literal->token().kindIndex;
     auto valueLexeme = m_parseTree.Tokens().GetLexeme(lexemeIndex);
 
-    assert(literal->type().has_value());
+    auto numberType = Type::Invalid();
+    if (literal->type().has_value())
+    {
+        auto literalType = literal->type().value();
+        auto typeLexemeIndex = literalType.name()->identifier().kindIndex;
+        auto typeName = m_parseTree.Tokens().GetLexeme(typeLexemeIndex);
+        
+        if (typeName == QStringView(u"i32"))
+        {
+            numberType = Type::I32();
+        }
+    }
+    else
+    {
+        numberType = m_options.defaultIntegerType;
+    }
 
-    auto literalType = literal->type().value();
-    auto typeLexemeIndex = literalType.name()->identifier().kindIndex;
-    auto typeName = m_parseTree.Tokens().GetLexeme(typeLexemeIndex);
-
-    if (typeName == QString("i32"))
+    if (numberType == Type::I32())
     {
         bool ok;
         auto value = valueLexeme.toInt(&ok);
 
         assert(ok);
 
-        return new I32Literal(value, literal, Type::Invalid());
+        return new I32Literal(value, literal, numberType);
     }
 
     return nullptr;

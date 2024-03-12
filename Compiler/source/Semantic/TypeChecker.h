@@ -4,6 +4,7 @@
 #include <Compiler/DiagnosticsBag.h>
 #include <Semantic/Environment.h>
 #include <Semantic/Type.h>
+#include <Semantic/TypeCheckerOptions.h>
 #include <Semantic/TypeDatabase.h>
 #include <Semantic/TypedExpression.h>
 #include <Semantic/TypedNode.h>
@@ -17,7 +18,12 @@
 class COMPILER_API TypeChecker
 {
 public:
-    TypeChecker(const ParseTree& parseTree, Environment& environment, TypeDatabase& typeDatabase, DiagnosticsBag& diagnostics);
+    TypeChecker(
+        const ParseTree& parseTree, 
+        const TypeCheckerOptions& options, 
+        Environment& environment, 
+        TypeDatabase& typeDatabase, 
+        DiagnosticsBag& diagnostics);
 
     TypedTree TypeCheck();
 
@@ -32,9 +38,15 @@ private:
     Type inferType(TypedNode* node);
 
     ParseTree m_parseTree;
+    TypeCheckerOptions m_options;
     Environment& m_environment; 
     TypeDatabase& m_typeDatabase;
     DiagnosticsBag& m_diagnostics;
 };
 
-COMPILER_API TypedTree TypeCheck(const ParseTree& parseTree, Environment& environment, TypeDatabase& typeDatabase, DiagnosticsBag& diagnostics) noexcept;
+COMPILER_API TypedTree TypeCheck(
+    const ParseTree& parseTree, 
+    const TypeCheckerOptions& options, 
+    Environment& environment, 
+    TypeDatabase& typeDatabase, 
+    DiagnosticsBag& diagnostics) noexcept;
