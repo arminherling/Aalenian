@@ -209,6 +209,9 @@
     <ClCompile Include="source\Semantic\Type.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Semantic\TypeDefinition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Compiler\DiagnosticsBag.h">
@@ -434,6 +437,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Semantic\TypeCheckerOptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Semantic\TypeDefinition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

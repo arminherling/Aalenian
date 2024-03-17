@@ -94,5 +94,6 @@ void TypedTreePrinter::PrettyPrintI32Literal(I32Literal* literal)
 
 QString TypedTreePrinter::PrettyPrintType(Type type)
 {
-    return QString("Type: i32");
+    auto definition = m_typeDatabase.getTypeDefinition(type);
+    return QString("Type: %1").arg(definition.name());
 }

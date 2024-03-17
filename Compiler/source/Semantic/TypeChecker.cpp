@@ -97,7 +97,7 @@ TypedExpression* TypeChecker::TypeCheckNameExpression(NameExpression* expression
 
     // TODO check environment if variable already exist, return it in that case
 
-    auto variable = new TypedGlobalValue(lexeme.toString(), expression, Type::I32());
+    auto variable = new TypedGlobalValue(lexeme.toString(), expression, Type::Invalid());
     
     // TODO register variable in environment 
     
@@ -113,7 +113,7 @@ TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)
         auto identifierToken = typeToken.name()->identifier();
         auto typeName = m_parseTree.Tokens().GetLexeme(identifierToken);
         
-        numberType = m_typeDatabase.getNumberTypeByName(typeName);
+        numberType = m_typeDatabase.getBuiltinNumberTypeByName(typeName);
     }
     else
     {
@@ -133,6 +133,7 @@ TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)
         return new I32Literal(value, literal, numberType);
     }
 
+    // We need an error node and need to print diagnostics about unknown number type
     return nullptr;
 }
 

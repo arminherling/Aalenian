@@ -1,11 +1,30 @@
 #include "TypeDatabase.h"
 
-Type TypeDatabase::getNumberTypeByName(QStringView typeName)
+TypeDatabase::TypeDatabase()
+    : m_invalidType{ Type::Invalid().id(), QString("???") }
 {
-    if (typeName == QStringView(u"i32"))
-    {
-        return Type::I32();
-    }
+    addBuiltinNumberType(Type::I32().id(), QStringView(u"i32"));
+}
 
-    return Type::Invalid();
+Type TypeDatabase::getBuiltinNumberTypeByName(QStringView typeName)
+{
+    if (auto search = m_builtinTypes.find(typeName.toString()); search != m_builtinTypes.end())
+        return search->second;
+    else
+        return Type::Invalid();
+}
+
+TypeDefinition TypeDatabase::getTypeDefinition(Type type)
+{
+    if (auto search = m_typeDefinitions.find(type.id()); search != m_typeDefinitions.end())
+        return search->second;
+    else
+        return m_invalidType;
+}
+
+void TypeDatabase::addBuiltinNumberType(i32 id, QStringView name)
+{
+    auto typeName = name.toString();
+    m_builtinTypes.insert({ typeName, Type{id} });
+    m_typeDefinitions.insert({ id, TypeDefinition{id, typeName} });
 }
