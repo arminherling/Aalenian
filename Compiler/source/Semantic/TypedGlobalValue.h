@@ -7,10 +7,10 @@
 class COMPILER_API TypedGlobalValue : public TypedExpression
 {
 public:
-    TypedGlobalValue(const QString& name, Node* source, Type type);
+    TypedGlobalValue(QStringView name, Node* source, Type type);
 
-    QString& name() { return m_name; }
+    QStringView name() { return m_name; }
 
 private:
-    QString m_name;
+    QStringView m_name;
 };

@@ -25,6 +25,6 @@ TypeDefinition TypeDatabase::getTypeDefinition(Type type)
 void TypeDatabase::addBuiltinNumberType(i32 id, QStringView name)
 {
     auto typeName = name.toString();
-    m_builtinTypes.insert({ typeName, Type{id} });
-    m_typeDefinitions.insert({ id, TypeDefinition{id, typeName} });
+    m_builtinTypes.emplace(typeName, Type{ id });
+    m_typeDefinitions.emplace(id, TypeDefinition{ id, typeName });
 }

@@ -87,6 +87,12 @@ TypedStatement* TypeChecker::TypeCheckAssignmentStatement(AssignmentStatement* s
         left->setType(inferedType);
     }
 
+    if (left->kind() == NodeKind::TypedGlobalValue)
+    {
+        auto globalValue = ((TypedGlobalValue*)left);
+        m_environment.addBinding(globalValue->name(), globalValue->type());
+    }
+
     return new TypedAssignmentStatement(left, right, statement, inferedType);
 }
 
@@ -94,14 +100,8 @@ TypedExpression* TypeChecker::TypeCheckNameExpression(NameExpression* expression
 {
     auto identifier = expression->identifier();
     auto lexeme = m_parseTree.Tokens().GetLexeme(identifier);
-
-    // TODO check environment if variable already exist, return it in that case
-
-    auto variable = new TypedGlobalValue(lexeme.toString(), expression, Type::Invalid());
-    
-    // TODO register variable in environment 
-    
-    return variable;
+    auto type = m_environment.tryGetBinding(lexeme);
+    return new TypedGlobalValue(lexeme, expression, type);
 }
 
 TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)
