@@ -82,7 +82,7 @@ TypedStatement* TypeChecker::TypeCheckAssignmentStatement(AssignmentStatement* s
 
     auto inferedType = inferType(right);
     
-    if (left->type() == Type::Invalid())
+    if (left->type() == Type::Undefined())
     {
         left->setType(inferedType);
     }
@@ -106,7 +106,7 @@ TypedExpression* TypeChecker::TypeCheckNameExpression(NameExpression* expression
 
 TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)
 {
-    auto numberType = Type::Invalid();
+    auto numberType = Type::Undefined();
     if (literal->type().has_value())
     {
         auto typeToken = literal->type().value();

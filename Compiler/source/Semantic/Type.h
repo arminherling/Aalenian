@@ -9,7 +9,7 @@ public:
 
     [[nodiscard]] i32 id() const noexcept { return m_id; }
 
-    static Type Invalid() { return Type(-1); }
+    static Type Undefined() { return Type(-1); }
     static Type I32() { return Type(1); }
 
 private:

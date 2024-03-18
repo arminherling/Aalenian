@@ -1,7 +1,7 @@
 #include "TypeDatabase.h"
 
 TypeDatabase::TypeDatabase()
-    : m_invalidType{ Type::Invalid().id(), QString("???") }
+    : m_invalidType{ Type::Undefined().id(), QString("???") }
 {
     addBuiltinNumberType(Type::I32().id(), QStringView(u"i32"));
 }
@@ -12,7 +12,7 @@ Type TypeDatabase::getBuiltinNumberTypeByName(QStringView typeName) const noexce
     if (m_builtinTypes.contains(name))
         return m_builtinTypes.at(name);
     else
-        return Type::Invalid();
+        return Type::Undefined();
 }
 
 TypeDefinition& TypeDatabase::getTypeDefinition(Type type) noexcept
