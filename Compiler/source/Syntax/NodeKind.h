@@ -40,6 +40,8 @@ enum class COMPILER_API NodeKind
     BlockNode,
 
     TypedAssignmentStatement,
+    
+    TypedFunctionCallExpression,
 
     TypedGlobalValue,
     I32Literal

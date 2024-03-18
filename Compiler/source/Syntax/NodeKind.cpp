@@ -69,6 +69,9 @@ QString StringifyNodeKind(NodeKind kind)
 
         case NodeKind::TypedAssignmentStatement:
             return QString("TypedAssignmentStatement");
+        
+        case NodeKind::TypedFunctionCallExpression:
+            return QString("TypedFunctionCallExpression");
 
         case NodeKind::TypedGlobalValue:
             return QString("TypedGlobalValue");

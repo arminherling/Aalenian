@@ -1,8 +1,9 @@
 #include "TypeChecker.h"
 
-#include <Semantic/TypedGlobalValue.h>
-#include <Semantic/TypedAssignmentStatement.h>
 #include <Semantic/I32Literal.h>
+#include <Semantic/TypedAssignmentStatement.h>
+#include <Semantic/TypedFunctionCallExpression.h>
+#include <Semantic/TypedGlobalValue.h>
 
 TypeChecker::TypeChecker(
     const ParseTree& parseTree, 
@@ -67,6 +68,10 @@ TypedExpression* TypeChecker::TypeCheckExpression(Expression* expression)
         case NodeKind::NumberLiteral:
         {
             return TypeCheckNumberLiteral((NumberLiteral*)expression);
+        }
+        case NodeKind::FunctionCallExpression:
+        {
+            return TypeCheckFunctionCallExpression((FunctionCallExpression*)expression);
         }
         default:
         {
@@ -133,8 +138,19 @@ TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)
         return new I32Literal(value, literal, numberType);
     }
 
-    // We need an error node and need to print diagnostics about unknown number type
+    // TODO We need an error node and need to print diagnostics about unknown number type
     return nullptr;
+}
+
+TypedExpression* TypeChecker::TypeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression)
+{
+    auto name = functionCallExpression->name();
+    auto lexeme = m_parseTree.Tokens().GetLexeme(name);
+    auto type = m_environment.tryGetBinding(lexeme);
+    // TODO type check parameters and find the correct function call
+    // TODO check if function was defined before and what type it returns, assume undefined for now
+    // TODO print diagnostic if the function wasnt defined before
+    return new TypedFunctionCallExpression(lexeme, functionCallExpression, Type::Undefined());
 }
 
 Type TypeChecker::inferType(TypedNode* node)

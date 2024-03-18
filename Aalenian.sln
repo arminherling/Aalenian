@@ -103,6 +103,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global", "Global", "{170649
 		Tests\Data\Global\assignment1.out_type = Tests\Data\Global\assignment1.out_type
 		Tests\Data\Global\assignment2.in = Tests\Data\Global\assignment2.in
 		Tests\Data\Global\assignment2.out_parse = Tests\Data\Global\assignment2.out_parse
+		Tests\Data\Global\assignment2.out_type = Tests\Data\Global\assignment2.out_type
 		Tests\Data\Global\assignment3.in = Tests\Data\Global\assignment3.in
 		Tests\Data\Global\assignment3.out_parse = Tests\Data\Global\assignment3.out_parse
 		Tests\Data\Global\assignment4.in = Tests\Data\Global\assignment4.in

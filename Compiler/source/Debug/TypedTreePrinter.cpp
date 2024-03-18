@@ -29,6 +29,11 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
             PrettyPrintTypedAssignmentStatement((TypedAssignmentStatement*)node);
             break;
         }
+        case NodeKind::TypedFunctionCallExpression:
+        {
+            PrettyPrintTypedFunctionCallExpression((TypedFunctionCallExpression*)node);
+            break;
+        }
         case NodeKind::TypedGlobalValue:
         {
             PrettyPrintTypedGlobalValue((TypedGlobalValue*)node);
@@ -80,6 +85,27 @@ void TypedTreePrinter::PrettyPrintTypedGlobalValue(TypedGlobalValue* value)
     stream() << Indentation() << QString("}") << NewLine();
 }
 
+void TypedTreePrinter::PrettyPrintTypedFunctionCallExpression(TypedFunctionCallExpression* functionCall)
+{
+
+    //auto nameToken = functionCall->name();
+    //auto nameLexeme = m_parseTree.Tokens().GetLexeme(nameToken);
+    stream() << Indentation() << StringifyNodeKind(functionCall->kind()) << QString(": {") << NewLine();
+
+    PushIndentation();
+
+    stream() << Indentation() << QString("Name: ") << functionCall->name() << NewLine();
+    PrettyPrintTypedArgumentsNode(/*functionCall->arguments()*/); // TODO
+    stream() << Indentation() << PrettyPrintType(functionCall->type()) << NewLine();
+
+    //stream() << Indentation() << StringifyNodeKind(NodeKind::TypedNameExpression) << QString(": %1").arg(nameLexeme) << NewLine();
+    //PrettyPrintArgumentsNode(functionCall->arguments());
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+
+}
+
 void TypedTreePrinter::PrettyPrintI32Literal(I32Literal* literal)
 {
     stream() << Indentation() << StringifyNodeKind(literal->kind()) << QString(": {") << NewLine();
@@ -88,6 +114,15 @@ void TypedTreePrinter::PrettyPrintI32Literal(I32Literal* literal)
     stream() << Indentation() << QString("Value: ") << literal->value() <<  NewLine();
     stream() << Indentation() << PrettyPrintType(literal->type()) << NewLine();
 
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void TypedTreePrinter::PrettyPrintTypedArgumentsNode()
+{
+    // TODO rewrite whole method once we type check the arguments
+    stream() << Indentation() << StringifyNodeKind(NodeKind::ArgumentsNode) << QString("(0): {") << NewLine();
+    PushIndentation();
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 }
