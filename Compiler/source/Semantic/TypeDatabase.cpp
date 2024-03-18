@@ -6,18 +6,20 @@ TypeDatabase::TypeDatabase()
     addBuiltinNumberType(Type::I32().id(), QStringView(u"i32"));
 }
 
-Type TypeDatabase::getBuiltinNumberTypeByName(QStringView typeName)
+Type TypeDatabase::getBuiltinNumberTypeByName(QStringView typeName) const noexcept
 {
-    if (auto search = m_builtinTypes.find(typeName.toString()); search != m_builtinTypes.end())
-        return search->second;
+    auto name = typeName.toString();
+    if (m_builtinTypes.contains(name))
+        return m_builtinTypes.at(name);
     else
         return Type::Invalid();
 }
 
-TypeDefinition TypeDatabase::getTypeDefinition(Type type)
+TypeDefinition& TypeDatabase::getTypeDefinition(Type type) noexcept
 {
-    if (auto search = m_typeDefinitions.find(type.id()); search != m_typeDefinitions.end())
-        return search->second;
+    auto id = type.id();
+    if (m_typeDefinitions.contains(id))
+        return m_typeDefinitions.at(id);
     else
         return m_invalidType;
 }

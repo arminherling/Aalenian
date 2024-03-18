@@ -12,8 +12,8 @@ class COMPILER_API TypeDatabase
 public:
     TypeDatabase();
 
-    Type getBuiltinNumberTypeByName(QStringView typeName);
-    TypeDefinition getTypeDefinition(Type type);
+    [[nodiscard]] Type getBuiltinNumberTypeByName(QStringView typeName) const noexcept;
+    [[nodiscard]] TypeDefinition& getTypeDefinition(Type type) noexcept;
 
 private:
     std::unordered_map<QString, Type> m_builtinTypes;
