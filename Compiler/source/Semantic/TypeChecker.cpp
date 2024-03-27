@@ -128,7 +128,7 @@ TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)
         auto identifierToken = typeToken.name()->identifier();
         auto typeName = m_parseTree.Tokens().GetLexeme(identifierToken);
         
-        numberType = m_typeDatabase.getBuiltinNumberTypeByName(typeName);
+        numberType = m_typeDatabase.getBuiltinTypeByName(typeName);
     }
     else
     {

@@ -12,7 +12,7 @@ class COMPILER_API TypeDatabase
 public:
     TypeDatabase();
 
-    [[nodiscard]] Type getBuiltinNumberTypeByName(QStringView typeName) const noexcept;
+    [[nodiscard]] Type getBuiltinTypeByName(QStringView typeName) const noexcept;
     [[nodiscard]] TypeDefinition& getTypeDefinition(Type type) noexcept;
 
 private:

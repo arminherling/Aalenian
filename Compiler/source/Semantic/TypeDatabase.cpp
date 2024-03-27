@@ -7,7 +7,7 @@ TypeDatabase::TypeDatabase()
     addBuiltinType(Type::I32(), QStringView(u"i32"));
 }
 
-Type TypeDatabase::getBuiltinNumberTypeByName(QStringView typeName) const noexcept
+Type TypeDatabase::getBuiltinTypeByName(QStringView typeName) const noexcept
 {
     auto name = typeName.toString();
     if (m_builtinTypes.contains(name))
