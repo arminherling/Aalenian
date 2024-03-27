@@ -502,6 +502,7 @@ NumberLiteral* Parser::ParseNumberLiteral()
     {
         AdvanceCurrentIndex();
         auto type = ParseTypeNode();
+        // TODO add diagnostic for invalid type
         return new NumberLiteral(number, current, type);
     }
 
