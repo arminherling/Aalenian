@@ -92,9 +92,6 @@ void TypedTreePrinter::PrettyPrintTypedGlobalValue(TypedGlobalValue* value)
 
 void TypedTreePrinter::PrettyPrintTypedFunctionCallExpression(TypedFunctionCallExpression* functionCall)
 {
-
-    //auto nameToken = functionCall->name();
-    //auto nameLexeme = m_parseTree.Tokens().GetLexeme(nameToken);
     stream() << Indentation() << StringifyNodeKind(functionCall->kind()) << QString(": {") << NewLine();
 
     PushIndentation();
@@ -103,12 +100,8 @@ void TypedTreePrinter::PrettyPrintTypedFunctionCallExpression(TypedFunctionCallE
     PrettyPrintTypedArgumentsNode(/*functionCall->arguments()*/); // TODO
     stream() << Indentation() << PrettyPrintType(functionCall->type()) << NewLine();
 
-    //stream() << Indentation() << StringifyNodeKind(NodeKind::TypedNameExpression) << QString(": %1").arg(nameLexeme) << NewLine();
-    //PrettyPrintArgumentsNode(functionCall->arguments());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
-
-
 }
 
 void TypedTreePrinter::PrettyPrintDiscard(Discard* discard)
