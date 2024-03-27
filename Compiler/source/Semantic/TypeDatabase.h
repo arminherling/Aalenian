@@ -20,5 +20,6 @@ private:
     std::unordered_map<i32, TypeDefinition> m_typeDefinitions;
     TypeDefinition m_invalidType;
 
+    void addDiscardType();
     void addBuiltinNumberType(i32 id, QStringView name);
 };

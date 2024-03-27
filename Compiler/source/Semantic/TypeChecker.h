@@ -13,6 +13,7 @@
 #include <Syntax/AssignmentStatement.h>
 #include <Syntax/FunctionCallExpression.h>
 #include <Syntax/NameExpression.h>
+#include <Syntax/DiscardLiteral.h>
 #include <Syntax/NumberLiteral.h>
 #include <Syntax/ParseTree.h>
 
@@ -34,6 +35,7 @@ private:
 
     TypedStatement* TypeCheckAssignmentStatement(AssignmentStatement* statement);
     TypedExpression* TypeCheckNameExpression(NameExpression* expression);
+    TypedExpression* TypeCheckDiscardLiteral(DiscardLiteral* literal);
     TypedExpression* TypeCheckNumberLiteral(NumberLiteral* literal);
     TypedExpression* TypeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression);
 

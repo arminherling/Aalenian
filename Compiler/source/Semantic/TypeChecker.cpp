@@ -1,5 +1,6 @@
 #include "TypeChecker.h"
 
+#include <Semantic/Discard.h>
 #include <Semantic/I32Literal.h>
 #include <Semantic/TypedAssignmentStatement.h>
 #include <Semantic/TypedFunctionCallExpression.h>
@@ -65,6 +66,10 @@ TypedExpression* TypeChecker::TypeCheckExpression(Expression* expression)
         {
             return TypeCheckNameExpression((NameExpression*)expression);
         }
+        case NodeKind::DiscardLiteral:
+        {
+            return TypeCheckDiscardLiteral((DiscardLiteral*)expression);
+        }
         case NodeKind::NumberLiteral:
         {
             return TypeCheckNumberLiteral((NumberLiteral*)expression);
@@ -107,6 +112,11 @@ TypedExpression* TypeChecker::TypeCheckNameExpression(NameExpression* expression
     auto lexeme = m_parseTree.Tokens().GetLexeme(identifier);
     auto type = m_environment.tryGetBinding(lexeme);
     return new TypedGlobalValue(lexeme, expression, type);
+}
+
+TypedExpression* TypeChecker::TypeCheckDiscardLiteral(DiscardLiteral* literal)
+{
+    return new Discard(literal);
 }
 
 TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)

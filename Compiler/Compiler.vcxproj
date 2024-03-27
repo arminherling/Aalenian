@@ -101,6 +101,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Semantic\Discard.cpp" />
     <ClCompile Include="source\Semantic\I32Literal.cpp" />
     <ClCompile Include="source\Semantic\Environment.cpp" />
     <ClCompile Include="source\Debug\BasePrinter.cpp" />
@@ -168,6 +169,7 @@
     <ClCompile Include="source\Semantic\TypedStatement.cpp" />
     <ClCompile Include="source\Semantic\TypedExpression.cpp" />
     <ClCompile Include="source\Semantic\Type.cpp" />
+    <ClInclude Include="source\Semantic\Discard.h" />
     <ClInclude Include="source\Semantic\I32Literal.h" />
     <ClInclude Include="source\Semantic\Environment.h" />
     <ClInclude Include="source\Debug\BasePrinter.h" />

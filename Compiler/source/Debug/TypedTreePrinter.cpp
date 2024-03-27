@@ -39,6 +39,11 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
             PrettyPrintTypedGlobalValue((TypedGlobalValue*)node);
             break;
         }
+        case NodeKind::Discard:
+        {
+            PrettyPrintDiscard((Discard*)node);
+            break;
+        }
         case NodeKind::I32Literal:
         {
             PrettyPrintI32Literal((I32Literal*)node);
@@ -104,6 +109,17 @@ void TypedTreePrinter::PrettyPrintTypedFunctionCallExpression(TypedFunctionCallE
     stream() << Indentation() << QString("}") << NewLine();
 
 
+}
+
+void TypedTreePrinter::PrettyPrintDiscard(Discard* discard)
+{
+    stream() << Indentation() << StringifyNodeKind(discard->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << PrettyPrintType(discard->type()) << NewLine();
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
 }
 
 void TypedTreePrinter::PrettyPrintI32Literal(I32Literal* literal)

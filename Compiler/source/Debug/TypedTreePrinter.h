@@ -2,6 +2,7 @@
 
 #include <Debug/BasePrinter.h>
 #include <Defines.h>
+#include <Semantic/Discard.h>
 #include <Semantic/I32Literal.h>
 #include <Semantic/TypedAssignmentStatement.h>
 #include <Semantic/TypeDatabase.h>
@@ -23,6 +24,7 @@ private:
     void PrettyPrintTypedAssignmentStatement(TypedAssignmentStatement* statement);
     void PrettyPrintTypedGlobalValue(TypedGlobalValue* value);
     void PrettyPrintTypedFunctionCallExpression(TypedFunctionCallExpression* functionCall);
+    void PrettyPrintDiscard(Discard* discard);
     void PrettyPrintI32Literal(I32Literal* literal);
 
     void PrettyPrintTypedArgumentsNode();

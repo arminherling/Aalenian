@@ -44,6 +44,7 @@ enum class COMPILER_API NodeKind
     TypedFunctionCallExpression,
 
     TypedGlobalValue,
+    Discard,
     I32Literal
 };
 

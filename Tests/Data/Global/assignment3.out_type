@@ -1,0 +1,16 @@
+TypedAssignmentStatement: {
+    Left: {
+        Discard: {
+            Type: _
+        }
+    }
+    Right: {
+        TypedFunctionCallExpression: {
+            Name: func
+            ArgumentsNode(0): {
+            }
+            Type: ???
+        }
+    }
+    Type: ???
+}

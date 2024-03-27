@@ -3,6 +3,7 @@
 TypeDatabase::TypeDatabase()
     : m_invalidType{ Type::Undefined().id(), QString("???") }
 {
+    addDiscardType();
     addBuiltinNumberType(Type::I32().id(), QStringView(u"i32"));
 }
 
@@ -22,6 +23,15 @@ TypeDefinition& TypeDatabase::getTypeDefinition(Type type) noexcept
         return m_typeDefinitions.at(id);
     else
         return m_invalidType;
+}
+
+void TypeDatabase::addDiscardType()
+{
+    auto discardType = Type::Discard();
+    auto id = discardType.id();
+    auto typeName = QString("_");
+    m_builtinTypes.emplace(typeName, discardType);
+    m_typeDefinitions.emplace(id, TypeDefinition{ id, typeName });
 }
 
 void TypeDatabase::addBuiltinNumberType(i32 id, QStringView name)
