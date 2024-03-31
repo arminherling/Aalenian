@@ -10,9 +10,9 @@ class COMPILER_API TypedNode
 public:
     TypedNode(Node* source, NodeKind kind, Type type);
 
-    Node* source() { return m_source; }
-    NodeKind kind() { return m_kind; }
-    Type type() { return m_type; }
+    [[nodiscard]] Node* source() const noexcept { return m_source; }
+    [[nodiscard]] NodeKind kind() const noexcept { return m_kind; }
+    [[nodiscard]] Type type() const noexcept { return m_type; }
     void setType(Type type) { m_type = type; }
 
 private:

@@ -11,7 +11,8 @@ public:
 
     static Type Discard() { return Type(-2); }
     static Type Undefined() { return Type(-1); }
-    static Type I32() { return Type(1); }
+    static Type U8() { return Type(1); }
+    static Type I32() { return Type(2); }
 
 private:
     i32 m_id;

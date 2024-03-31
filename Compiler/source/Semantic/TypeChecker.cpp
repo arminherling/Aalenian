@@ -3,6 +3,7 @@
 #include <Semantic/Discard.h>
 #include <Semantic/I32Literal.h>
 #include <Semantic/TypedAssignmentStatement.h>
+#include <Semantic/TypedEnumDefinitionStatement.h>
 #include <Semantic/TypedFunctionCallExpression.h>
 #include <Semantic/TypedGlobalValue.h>
 
@@ -50,6 +51,10 @@ TypedStatement* TypeChecker::TypeCheckStatement(Statement* statement)
         case NodeKind::AssignmentStatement:
         {
             return TypeCheckAssignmentStatement((AssignmentStatement*)statement);
+        }
+        case NodeKind::EnumDefinitionStatement:
+        {
+            return TypeCheckEnumDefinitionStatement((EnumDefinitionStatement*)statement);
         }
         default:
         {
@@ -104,6 +109,35 @@ TypedStatement* TypeChecker::TypeCheckAssignmentStatement(AssignmentStatement* s
     }
 
     return new TypedAssignmentStatement(left, right, statement, inferedType);
+}
+
+TypedStatement* TypeChecker::TypeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement)
+{
+    auto optionalBaseTypeName = statement->baseType();
+    auto baseType = Type::Undefined();
+    if (optionalBaseTypeName.has_value())
+    {
+        auto typeName = optionalBaseTypeName.value().name();
+        auto identifier = typeName->identifier();
+        auto lexeme = m_parseTree.Tokens().GetLexeme(identifier);
+        baseType = m_typeDatabase.getBuiltinTypeByName(lexeme);
+
+    }
+    else
+    {
+        baseType = m_options.defaultEnumBaseType;
+    }
+
+    if (baseType == Type::Undefined())
+    {
+        // TODO We need an error node and need to print diagnostics about unknown enum base type
+    }
+
+    auto nameToken = statement->name();
+    auto enumName = m_parseTree.Tokens().GetLexeme(nameToken);
+    auto type = m_typeDatabase.createType(enumName);
+
+    return new TypedEnumDefinitionStatement(enumName, type, baseType, statement);
 }
 
 TypedExpression* TypeChecker::TypeCheckNameExpression(NameExpression* expression)

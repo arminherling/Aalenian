@@ -11,6 +11,7 @@
 #include <Semantic/TypedStatement.h>
 #include <Semantic/TypedTree.h>
 #include <Syntax/AssignmentStatement.h>
+#include <Syntax/EnumDefinitionStatement.h>
 #include <Syntax/FunctionCallExpression.h>
 #include <Syntax/NameExpression.h>
 #include <Syntax/DiscardLiteral.h>
@@ -34,6 +35,7 @@ private:
     TypedExpression* TypeCheckExpression(Expression* expression);
 
     TypedStatement* TypeCheckAssignmentStatement(AssignmentStatement* statement);
+    TypedStatement* TypeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement);
     TypedExpression* TypeCheckNameExpression(NameExpression* expression);
     TypedExpression* TypeCheckDiscardLiteral(DiscardLiteral* literal);
     TypedExpression* TypeCheckNumberLiteral(NumberLiteral* literal);

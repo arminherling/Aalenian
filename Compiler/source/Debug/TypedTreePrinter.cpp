@@ -29,6 +29,11 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
             PrettyPrintTypedAssignmentStatement((TypedAssignmentStatement*)node);
             break;
         }
+        case NodeKind::TypedEnumDefinitionStatement:
+        {
+            PrettyPrintTypedEnumDefinitionStatement((TypedEnumDefinitionStatement*)node);
+            break;
+        }
         case NodeKind::TypedFunctionCallExpression:
         {
             PrettyPrintTypedFunctionCallExpression((TypedFunctionCallExpression*)node);
@@ -73,6 +78,25 @@ void TypedTreePrinter::PrettyPrintTypedAssignmentStatement(TypedAssignmentStatem
     stream() << Indentation() << QString("}") << NewLine();
 
     stream() << Indentation() << PrettyPrintType(statement->type()) << NewLine();
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void TypedTreePrinter::PrettyPrintTypedEnumDefinitionStatement(TypedEnumDefinitionStatement* statement)
+{
+    stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << QString("Type: enum") << NewLine();
+    stream() << Indentation() << QString("Name: ") << statement->name() << NewLine();
+
+    auto baseTypeDefinition = m_typeDatabase.getTypeDefinition(statement->baseType());
+    stream() << Indentation() << QString("BaseType: ") << baseTypeDefinition.name() << NewLine();
+
+    // TODO fields
+    stream() << Indentation() << QString("Fields(0): {") << NewLine();
+    stream() << Indentation() << QString("}") << NewLine();
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();

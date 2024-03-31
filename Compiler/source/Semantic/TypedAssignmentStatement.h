@@ -14,8 +14,8 @@ public:
         Node* source,
         Type type);
 
-    [[nodiscard]] TypedExpression* leftExpression() noexcept { return m_leftExpression; }
-    [[nodiscard]] TypedExpression* rightExpression() noexcept { return m_rightExpression; }
+    [[nodiscard]] TypedExpression* leftExpression() const noexcept { return m_leftExpression; }
+    [[nodiscard]] TypedExpression* rightExpression() const noexcept { return m_rightExpression; }
 
 private:
     TypedExpression* m_leftExpression;

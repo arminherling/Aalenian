@@ -6,4 +6,5 @@
 struct COMPILER_API TypeCheckerOptions
 {
     Type defaultIntegerType;
+    Type defaultEnumBaseType;
 };

@@ -5,6 +5,7 @@
 #include <Semantic/Discard.h>
 #include <Semantic/I32Literal.h>
 #include <Semantic/TypedAssignmentStatement.h>
+#include <Semantic/TypedEnumDefinitionStatement.h>
 #include <Semantic/TypeDatabase.h>
 #include <Semantic/TypedFunctionCallExpression.h>
 #include <Semantic/TypedGlobalValue.h>
@@ -22,6 +23,7 @@ private:
     void PrettyPrintNode(TypedNode* node);
 
     void PrettyPrintTypedAssignmentStatement(TypedAssignmentStatement* statement);
+    void PrettyPrintTypedEnumDefinitionStatement(TypedEnumDefinitionStatement* statement);
     void PrettyPrintTypedGlobalValue(TypedGlobalValue* value);
     void PrettyPrintTypedFunctionCallExpression(TypedFunctionCallExpression* functionCall);
     void PrettyPrintDiscard(Discard* discard);

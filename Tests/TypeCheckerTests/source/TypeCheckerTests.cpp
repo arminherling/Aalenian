@@ -31,7 +31,8 @@ namespace
         TypeDatabase typeDatabase;
         Environment environment;
         TypeCheckerOptions options{
-            .defaultIntegerType = Type::I32()
+            .defaultIntegerType = Type::I32(),
+            .defaultEnumBaseType = Type::U8()
         };
 
         auto startTime = std::chrono::high_resolution_clock::now();

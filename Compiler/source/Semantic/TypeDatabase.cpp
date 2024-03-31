@@ -2,8 +2,10 @@
 
 TypeDatabase::TypeDatabase()
     : m_invalidType{ Type::Undefined().id(), QString("???") }
+    , m_nextId{ 100 }
 {
     addBuiltinType(Type::Discard(), QStringView(u"_"));
+    addBuiltinType(Type::U8(), QStringView(u"u8"));
     addBuiltinType(Type::I32(), QStringView(u"i32"));
 }
 
@@ -23,6 +25,13 @@ TypeDefinition& TypeDatabase::getTypeDefinition(Type type) noexcept
         return m_typeDefinitions.at(id);
     else
         return m_invalidType;
+}
+
+Type TypeDatabase::createType(QStringView name)
+{
+    auto typeName = name.toString();
+    m_typeDefinitions.emplace(m_nextId, TypeDefinition{ m_nextId, typeName });
+    return Type{ m_nextId++ };
 }
 
 void TypeDatabase::addBuiltinType(Type type, QStringView name)
