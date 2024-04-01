@@ -1,6 +1,6 @@
 EnumDefinitionStatement: {
     NameExpression: Values
-    BlockNode(2): {
+    FieldDefinitions(2): {
         EnumFieldDefinitionStatement: {
             NameExpression: First
         }

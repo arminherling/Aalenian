@@ -29,7 +29,6 @@ private:
         Global,
         Function,
         Method,
-        Enum,
         Type
     };
 
@@ -39,6 +38,7 @@ private:
     Statement* ParseExpressionStatement();
     Statement* ParseFunctionDefinitionStatement();
     Statement* ParseEnumDefinitionStatement();
+    QList<EnumFieldDefinitionStatement*> ParseEnumFieldDefinitions();
     Statement* ParseTypeDefinitionStatement();
     Statement* ParseFieldDeclarationStatement();
     Statement* ParseMethodDefinitionStatement();
@@ -53,7 +53,6 @@ private:
     ParametersNode* ParseParametersNode();
     ArgumentsNode* ParseArgumentsNode();
     BlockNode* ParseFunctionBody();
-    BlockNode* ParseEnumBody();
     BlockNode* ParseTypeBody();
     BlockNode* ParseMethodBody();
     BlockNode* ParseBlockNode(StatementScope scope);

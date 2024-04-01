@@ -1,5 +1,5 @@
 EnumDefinitionStatement: {
     NameExpression: Empty
-    BlockNode(0): {
+    FieldDefinitions(0): {
     }
 }

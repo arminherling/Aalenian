@@ -2,6 +2,7 @@
 
 #include <Defines.h>
 #include <Syntax/BlockNode.h>
+#include <Syntax/EnumFieldDefinitionStatement.h>
 #include <Syntax/Statement.h>
 #include <Syntax/Token.h>
 #include <Syntax/TypeName.h>
@@ -13,16 +14,22 @@ public:
         const Token& keyword,
         const Token& name,
         const std::optional<TypeName>& type,
-        BlockNode* body);
+        const Token& openBracket,
+        const QList<EnumFieldDefinitionStatement*>& fieldDefinitions,
+        const Token& closeBracket);
 
     [[nodiscard]] const Token& keyword() noexcept { return m_keyword; }
     [[nodiscard]] const Token& name() noexcept { return m_name; }
     [[nodiscard]] const std::optional<TypeName>& baseType() noexcept { return m_baseType; }
-    [[nodiscard]] BlockNode* body() noexcept { return m_body; }
+    [[nodiscard]] const Token& openBracket() noexcept { return m_openBracket; }
+    [[nodiscard]] const QList<EnumFieldDefinitionStatement*>& statements() noexcept { return m_fieldDefinitions; }
+    [[nodiscard]] const Token& closeBracket() noexcept { return m_closeBracket; }
 
 private:
     Token m_keyword;
     Token m_name;
     std::optional<TypeName> m_baseType;
-    BlockNode* m_body;
+    Token m_openBracket;
+    QList<EnumFieldDefinitionStatement*> m_fieldDefinitions;
+    Token m_closeBracket;
 };

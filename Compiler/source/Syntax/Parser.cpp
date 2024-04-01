@@ -146,11 +146,6 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                     statements.append(ParseFieldDeclarationStatement());
                     break;
                 }
-                else if (scope == StatementScope::Enum)
-                {
-                    statements.append(ParseEnumFieldDefinitionStatement());
-                    break;
-                }
 
                 auto nextToken = NextToken();
                 if (nextToken.kind == TokenKind::Equal)
@@ -238,9 +233,46 @@ Statement* Parser::ParseEnumDefinitionStatement()
         current = CurrentToken();
     }
 
-    auto body = ParseEnumBody();
+    auto openBracket = AdvanceOnMatch(TokenKind::OpenBracket);
+    auto fieldDefinitions = ParseEnumFieldDefinitions();
+    auto closeBracket = AdvanceOnMatch(TokenKind::CloseBracket);
 
-    return new EnumDefinitionStatement(keyword, name, baseType, body);
+    return new EnumDefinitionStatement(keyword, name, baseType, openBracket, fieldDefinitions, closeBracket);
+}
+
+QList<EnumFieldDefinitionStatement*> Parser::ParseEnumFieldDefinitions()
+{
+    QList<EnumFieldDefinitionStatement*> definitions;
+
+    auto currentToken = CurrentToken();
+    while (true)
+    {
+        switch (currentToken.kind)
+        {
+            case TokenKind::Identifier:
+            {
+                definitions.append(ParseEnumFieldDefinitionStatement());
+                break;
+            }
+            case TokenKind::CloseBracket:
+            case TokenKind::EndOfFile:
+            {
+                return definitions;
+            }
+            default:
+            {
+                const auto& location = m_tokens.GetSourceLocation(currentToken);
+                m_diagnostics.AddError(DiagnosticKind::Unknown, location);
+
+                AdvanceCurrentIndex();
+                break;
+            }
+        }
+
+        currentToken = CurrentToken();
+    }
+
+    return definitions;
 }
 
 Statement* Parser::ParseTypeDefinitionStatement()
@@ -536,11 +568,6 @@ EnumFieldDefinitionStatement* Parser::ParseEnumFieldDefinitionStatement()
 BlockNode* Parser::ParseFunctionBody()
 {
     return ParseBlockNode(StatementScope::Function);
-}
-
-BlockNode* Parser::ParseEnumBody()
-{
-    return ParseBlockNode(StatementScope::Enum);
 }
 
 BlockNode* Parser::ParseTypeBody()

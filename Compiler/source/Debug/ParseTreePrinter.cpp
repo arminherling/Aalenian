@@ -198,7 +198,16 @@ void ParseTreePrinter::PrettyPrintEnumDefinitionStatement(EnumDefinitionStatemen
     if (statement->baseType().has_value())
         PrettyPrintTypeName(statement->baseType().value());
 
-    PrettyPrintBlockNode(statement->body());
+    const auto& fieldDefinitions = statement->statements();
+    stream() << Indentation() << QString("FieldDefinitions(%1): {").arg(fieldDefinitions.size()) << NewLine();
+    PushIndentation();
+
+    for (const auto& fieldDefinition : fieldDefinitions)
+        PrettyPrintNode(fieldDefinition);
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 }
