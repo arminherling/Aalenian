@@ -1,10 +1,10 @@
 EnumDefinitionStatement: {
     NameExpression: Values
     BlockNode(2): {
-        EnumMemberDefinitionStatement: {
+        EnumFieldDefinitionStatement: {
             NameExpression: First
         }
-        EnumMemberDefinitionStatement: {
+        EnumFieldDefinitionStatement: {
             NameExpression: Second
         }
     }

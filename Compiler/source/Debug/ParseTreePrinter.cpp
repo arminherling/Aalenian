@@ -40,9 +40,9 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
             PrettyPrintEnumDefinitionStatement((EnumDefinitionStatement*)node);
             break;
         }
-        case NodeKind::EnumMemberDefinitionStatement:
+        case NodeKind::EnumFieldDefinitionStatement:
         {
-            PrettyPrintEnumMemberDefinitionStatement((EnumMemberDefinitionStatement*)node);
+            PrettyPrintEnumFieldDefinitionStatement((EnumFieldDefinitionStatement*)node);
             break;
         }
         case NodeKind::TypeDefinitionStatement:
@@ -203,7 +203,7 @@ void ParseTreePrinter::PrettyPrintEnumDefinitionStatement(EnumDefinitionStatemen
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-void ParseTreePrinter::PrettyPrintEnumMemberDefinitionStatement(EnumMemberDefinitionStatement* statement)
+void ParseTreePrinter::PrettyPrintEnumFieldDefinitionStatement(EnumFieldDefinitionStatement* statement)
 {
     auto nameToken = statement->name()->identifier();
     auto nameLexeme = m_parseTree.Tokens().GetLexeme(nameToken);

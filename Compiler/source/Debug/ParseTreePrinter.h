@@ -10,7 +10,7 @@
 #include <Syntax/BoolLiteral.h>
 #include <Syntax/DiscardLiteral.h>
 #include <Syntax/EnumDefinitionStatement.h>
-#include <Syntax/EnumMemberDefinitionStatement.h>
+#include <Syntax/EnumFieldDefinitionStatement.h>
 #include <Syntax/Error.h>
 #include <Syntax/ExpressionStatement.h>
 #include <Syntax/FieldDeclarationStatement.h>
@@ -44,7 +44,7 @@ private:
     void PrettyPrintExpressionStatement(ExpressionStatement* statement);
     void PrettyPrintFunctionDefinitionStatement(FunctionDefinitionStatement* statement);
     void PrettyPrintEnumDefinitionStatement(EnumDefinitionStatement* statement);
-    void PrettyPrintEnumMemberDefinitionStatement(EnumMemberDefinitionStatement* statement);
+    void PrettyPrintEnumFieldDefinitionStatement(EnumFieldDefinitionStatement* statement);
     void PrettyPrintTypeDefinitionStatement(TypeDefinitionStatement* statement);
     void PrettyPrintFieldDeclarationStatement(FieldDeclarationStatement* statement);
     void PrettyPrintMethodDefinitionStatement(MethodDefinitionStatement* statement);

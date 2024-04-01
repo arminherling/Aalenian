@@ -12,7 +12,7 @@ enum class COMPILER_API NodeKind
     ExpressionStatement,
     FunctionDefinitionStatement,
     EnumDefinitionStatement,
-    EnumMemberDefinitionStatement,
+    EnumFieldDefinitionStatement,
     TypeDefinitionStatement,
     FieldDeclarationStatement,
     MethodDefinitionStatement,

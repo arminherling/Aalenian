@@ -6,11 +6,11 @@
 #include <Syntax/Token.h>
 #include <Syntax/NumberLiteral.h>
 
-class COMPILER_API EnumMemberDefinitionStatement : public Statement
+class COMPILER_API EnumFieldDefinitionStatement : public Statement
 {
 public:
-    EnumMemberDefinitionStatement(NameExpression* name);
-    EnumMemberDefinitionStatement(
+    EnumFieldDefinitionStatement(NameExpression* name);
+    EnumFieldDefinitionStatement(
         NameExpression* name,
         const Token& equal, 
         NumberLiteral* value);

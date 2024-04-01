@@ -152,7 +152,7 @@
     <ClCompile Include="source\Syntax\NumberLiteral.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Syntax\EnumMemberDefinitionStatement.cpp">
+    <ClCompile Include="source\Syntax\EnumFieldDefinitionStatement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Syntax\Error.cpp">
@@ -397,7 +397,7 @@
     <ClInclude Include="source\Syntax\NumberLiteral.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Syntax\EnumMemberDefinitionStatement.h">
+    <ClInclude Include="source\Syntax\EnumFieldDefinitionStatement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Syntax\Error.h">

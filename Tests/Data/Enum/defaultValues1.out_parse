@@ -1,13 +1,13 @@
 EnumDefinitionStatement: {
     NameExpression: Values
     BlockNode(3): {
-        EnumMemberDefinitionStatement: {
+        EnumFieldDefinitionStatement: {
             NameExpression: First
         }
-        EnumMemberDefinitionStatement: {
+        EnumFieldDefinitionStatement: {
             NameExpression: Second
         }
-        EnumMemberDefinitionStatement: {
+        EnumFieldDefinitionStatement: {
             NameExpression: Third
         }
     }

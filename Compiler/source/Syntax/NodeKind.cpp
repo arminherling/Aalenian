@@ -17,8 +17,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("FunctionDefinitionStatement");
         case NodeKind::EnumDefinitionStatement:
             return QString("EnumDefinitionStatement");
-        case NodeKind::EnumMemberDefinitionStatement:
-            return QString("EnumMemberDefinitionStatement");
+        case NodeKind::EnumFieldDefinitionStatement:
+            return QString("EnumFieldDefinitionStatement");
         case NodeKind::TypeDefinitionStatement:
             return QString("TypeDefinitionStatement");
         case NodeKind::FieldDeclarationStatement:

@@ -7,7 +7,7 @@
 #include <Syntax/ArgumentsNode.h>
 #include <Syntax/BoolLiteral.h>
 #include <Syntax/BlockNode.h>
-#include <Syntax/EnumMemberDefinitionStatement.h>
+#include <Syntax/EnumFieldDefinitionStatement.h>
 #include <Syntax/Expression.h>
 #include <Syntax/GroupingExpression.h>
 #include <Syntax/Statement.h>
@@ -63,7 +63,7 @@ private:
     NameExpression* ParseNameExpression();
     NumberLiteral* ParseNumberLiteral();
     GroupingExpression* ParseGroupingExpression();
-    EnumMemberDefinitionStatement* ParseEnumMemberDefinitionStatement();
+    EnumFieldDefinitionStatement* ParseEnumFieldDefinitionStatement();
 
     Token AdvanceOnMatch(TokenKind kind);
     std::optional<BoolLiteral*> TryParseBoolLiteral();

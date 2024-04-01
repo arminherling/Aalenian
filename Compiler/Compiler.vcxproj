@@ -118,7 +118,7 @@
     <ClCompile Include="source\Syntax\BoolLiteral.cpp" />
     <ClCompile Include="source\Syntax\DiscardLiteral.cpp" />
     <ClCompile Include="source\Syntax\EnumDefinitionStatement.cpp" />
-    <ClCompile Include="source\Syntax\EnumMemberDefinitionStatement.cpp" />
+    <ClCompile Include="source\Syntax\EnumFieldDefinitionStatement.cpp" />
     <ClCompile Include="source\Syntax\Error.cpp" />
     <ClCompile Include="source\Syntax\Expression.cpp" />
     <ClCompile Include="source\Syntax\ExpressionStatement.cpp" />
@@ -188,7 +188,7 @@
     <ClInclude Include="source\Syntax\BoolLiteral.h" />
     <ClInclude Include="source\Syntax\DiscardLiteral.h" />
     <ClInclude Include="source\Syntax\EnumDefinitionStatement.h" />
-    <ClInclude Include="source\Syntax\EnumMemberDefinitionStatement.h" />
+    <ClInclude Include="source\Syntax\EnumFieldDefinitionStatement.h" />
     <ClInclude Include="source\Syntax\Error.h" />
     <ClInclude Include="source\Syntax\Expression.h" />
     <ClInclude Include="source\Syntax\ExpressionStatement.h" />
