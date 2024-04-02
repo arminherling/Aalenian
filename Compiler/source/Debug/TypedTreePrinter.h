@@ -33,6 +33,7 @@ private:
 
     void PrettyPrintTypedArgumentsNode();
     QString PrettyPrintType(Type type);
+    QString PrettyPrintEnumFieldValue(TypedEnumFieldDefinitionNode* field);
 
     TypedTree& m_typedTree;
     TypeDatabase m_typeDatabase;

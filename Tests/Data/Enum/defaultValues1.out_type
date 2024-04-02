@@ -1,0 +1,19 @@
+TypedEnumDefinitionStatement: {
+    Type: enum
+    Name: Values
+    BaseType: u8
+    Fields(3): {
+        TypedEnumFieldDefinitionNode: {
+            Name: First
+            Value: 0
+        }
+        TypedEnumFieldDefinitionNode: {
+            Name: Second
+            Value: 1
+        }
+        TypedEnumFieldDefinitionNode: {
+            Name: Third
+            Value: 2
+        }
+    }
+}

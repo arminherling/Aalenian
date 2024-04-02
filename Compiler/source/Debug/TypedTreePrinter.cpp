@@ -107,7 +107,7 @@ void TypedTreePrinter::PrettyPrintTypedEnumDefinitionStatement(TypedEnumDefiniti
         stream() << Indentation() << StringifyNodeKind(field->kind()) << QString(": {") << NewLine();
         PushIndentation();
         stream() << Indentation() << QString("Name: ") << field->name() << NewLine();
-        stream() << Indentation() << QString("Value: ") << 0 << NewLine();
+        stream() << Indentation() << QString("Value: ") << PrettyPrintEnumFieldValue(field) << NewLine();
         PopIndentation();
         stream() << Indentation() << QString("}") << NewLine();
     }
@@ -193,4 +193,24 @@ QString TypedTreePrinter::PrettyPrintType(Type type)
 {
     auto definition = m_typeDatabase.getTypeDefinition(type);
     return QString("Type: %1").arg(definition.name());
+}
+
+QString TypedTreePrinter::PrettyPrintEnumFieldValue(TypedEnumFieldDefinitionNode* literal)
+{
+    auto value = literal->value();
+    switch (value->kind())
+    {
+        case NodeKind::U8Literal:
+        {
+            auto u8Literal = (U8Literal*)value;
+            return QString::number(u8Literal->value());
+        }
+        case NodeKind::I32Literal:
+        {
+            auto i32Literal = (I32Literal*)value;
+            return QString::number(i32Literal->value());
+        }
+    }
+
+    return QString();
 }
