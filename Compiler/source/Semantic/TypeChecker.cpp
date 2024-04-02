@@ -150,10 +150,26 @@ QList<TypedEnumFieldDefinitionNode*> TypeChecker::TypeCheckEnumFieldDefinitionNo
     {
         auto nameToken = definition->name()->identifier();
         auto name = m_parseTree.Tokens().GetLexeme(nameToken);
-        auto typedLiteral = ConvertValueToTypedLiteral(nextValue++, baseType, definition);
+        
+        if (definition->value().has_value())
+        {
+            auto numberLiteral = definition->value().value();
+            auto numberToken = numberLiteral->token();
+            auto valueLexeme = m_parseTree.Tokens().GetLexeme(numberToken);
 
-        enumFields.append(new TypedEnumFieldDefinitionNode(name, typedLiteral));
-        //auto typedLiteral = ConvertValueToTypedLiteral(valueLexeme, baseType, definition);
+            auto [typedLiteral, value] = ConvertValueToTypedLiteral(valueLexeme, baseType, definition);
+            if (typedLiteral != nullptr)
+            {
+                nextValue = value + 1;
+                enumFields.append(new TypedEnumFieldDefinitionNode(name, typedLiteral));
+            }
+        }
+        else
+        {
+            auto [typedLiteral, value] = ConvertValueToTypedLiteral(nextValue++, baseType, definition);
+            if (typedLiteral != nullptr)
+                enumFields.append(new TypedEnumFieldDefinitionNode(name, typedLiteral));
+        }
     }
     return enumFields;
 }
@@ -190,7 +206,7 @@ TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)
     auto numberToken = literal->token();
     auto valueLexeme = m_parseTree.Tokens().GetLexeme(numberToken);
 
-    auto typedLiteral = ConvertValueToTypedLiteral(valueLexeme, numberType, literal);
+    auto [typedLiteral, value] = ConvertValueToTypedLiteral(valueLexeme, numberType, literal);
     if (typedLiteral != nullptr)
         return typedLiteral;
 
@@ -214,7 +230,7 @@ Type TypeChecker::inferType(TypedNode* node)
     return node->type();
 }
 
-TypedExpression* TypeChecker::ConvertValueToTypedLiteral(QStringView valueLexeme, Type type, Node* source)
+std::tuple<TypedExpression*, i32> TypeChecker::ConvertValueToTypedLiteral(QStringView valueLexeme, Type type, Node* source)
 {
     if (type == Type::U8())
     {
@@ -226,7 +242,7 @@ TypedExpression* TypeChecker::ConvertValueToTypedLiteral(QStringView valueLexeme
         assert(value >= 0);
         assert(value <= UINT8_MAX);
 
-        return new U8Literal((u8)value, source, type);
+        return { new U8Literal((u8)value, source, type), value };
     }
     else if (type == Type::I32())
     {
@@ -236,13 +252,13 @@ TypedExpression* TypeChecker::ConvertValueToTypedLiteral(QStringView valueLexeme
 
         // TODO add error for values outside of the i32 range
 
-        return new I32Literal(value, source, type);
+        return { new I32Literal(value, source, type), value };
     }
 
-    return nullptr;
+    return { nullptr, 0 };
 }
 
-TypedExpression* TypeChecker::ConvertValueToTypedLiteral(i32 value, Type type, Node* source)
+std::tuple<TypedExpression*, i32> TypeChecker::ConvertValueToTypedLiteral(i32 value, Type type, Node* source)
 {
     if (type == Type::U8())
     {
@@ -250,12 +266,13 @@ TypedExpression* TypeChecker::ConvertValueToTypedLiteral(i32 value, Type type, N
         assert(value >= 0);
         assert(value <= UINT8_MAX);
 
-        return new U8Literal((u8)value, source, type);
+        return { new U8Literal((u8)value, source, type), value };
     }
     else if (type == Type::I32())
     {
-        return new I32Literal(value, source, type);
+        return { new I32Literal(value, source, type), value };
     }
 
-    return nullptr;
+    return { nullptr, 0 };
+
 }

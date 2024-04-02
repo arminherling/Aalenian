@@ -1,4 +1,4 @@
-enum Values 
+enum Values
 {
     First
     Second = 5

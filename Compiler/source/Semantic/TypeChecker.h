@@ -44,8 +44,8 @@ private:
     TypedExpression* TypeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression);
 
     Type inferType(TypedNode* node);
-    TypedExpression* ConvertValueToTypedLiteral(QStringView literal, Type type, Node* source);
-    TypedExpression* ConvertValueToTypedLiteral(i32 value, Type type, Node* source);
+    std::tuple<TypedExpression*, i32> ConvertValueToTypedLiteral(QStringView literal, Type type, Node* source);
+    std::tuple<TypedExpression*, i32> ConvertValueToTypedLiteral(i32 value, Type type, Node* source);
 
     ParseTree m_parseTree;
     TypeCheckerOptions m_options;
