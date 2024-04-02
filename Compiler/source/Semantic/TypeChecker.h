@@ -12,6 +12,7 @@
 #include <Semantic/TypedStatement.h>
 #include <Semantic/TypedTree.h>
 #include <Syntax/AssignmentStatement.h>
+#include <Syntax/BinaryExpression.h>
 #include <Syntax/DiscardLiteral.h>
 #include <Syntax/EnumDefinitionStatement.h>
 #include <Syntax/FunctionCallExpression.h>
@@ -38,10 +39,10 @@ private:
     TypedStatement* TypeCheckAssignmentStatement(AssignmentStatement* statement);
     TypedStatement* TypeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement);
     QList<TypedEnumFieldDefinitionNode*> TypeCheckEnumFieldDefinitionNodes(const QList<EnumFieldDefinitionStatement*> fieldDefinitions, Type baseType);
+    TypedExpression* TypeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression); 
     TypedExpression* TypeCheckNameExpression(NameExpression* expression);
     TypedExpression* TypeCheckDiscardLiteral(DiscardLiteral* literal);
     TypedExpression* TypeCheckNumberLiteral(NumberLiteral* literal);
-    TypedExpression* TypeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression);
 
     Type inferType(TypedNode* node);
     std::tuple<TypedExpression*, i32> ConvertValueToTypedLiteral(QStringView literal, Type type, Node* source);

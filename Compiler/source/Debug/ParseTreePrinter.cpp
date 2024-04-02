@@ -465,7 +465,7 @@ void ParseTreePrinter::PrettyPrintUnaryExpression(UnaryExpression* unaryExpressi
     stream() << Indentation() << StringifyNodeKind(unaryExpression->kind()) << QString(": {") << NewLine();
     PushIndentation();
 
-    stream() << Indentation() << QString("Operation: ") << StringifyUnaryOperation(unaryExpression->unaryOperator().kind) << NewLine();
+    stream() << Indentation() << QString("Operation: ") << StringifyUnaryOperation(unaryExpression->unaryOperator()) << NewLine();
 
     stream() << Indentation() << QString("Expression: {") << NewLine();
     PushIndentation();
@@ -488,7 +488,7 @@ void ParseTreePrinter::PrettyPrintBinaryExpression(BinaryExpression* binaryExpre
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 
-    stream() << Indentation() << QString("Operation: ") << StringifyBinaryOperation(binaryExpression->binaryOperator().kind) << NewLine();
+    stream() << Indentation() << QString("Operation: ") << StringifyBinaryOperation(binaryExpression->binaryOperator()) << NewLine();
 
     stream() << Indentation() << QString("Right: {") << NewLine();
     PushIndentation();

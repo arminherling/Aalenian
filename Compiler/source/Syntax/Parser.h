@@ -2,19 +2,21 @@
 
 #include <Defines.h>
 #include <Compiler/DiagnosticsBag.h>
-#include <Syntax/TokenBuffer.h>
 #include <Syntax/ArgumentNode.h>
 #include <Syntax/ArgumentsNode.h>
-#include <Syntax/BoolLiteral.h>
+#include <Syntax/BinaryExpression.h>
 #include <Syntax/BlockNode.h>
+#include <Syntax/BoolLiteral.h>
 #include <Syntax/EnumFieldDefinitionStatement.h>
 #include <Syntax/Expression.h>
 #include <Syntax/GroupingExpression.h>
-#include <Syntax/Statement.h>
 #include <Syntax/NumberLiteral.h>
 #include <Syntax/ParameterNode.h>
 #include <Syntax/ParametersNode.h>
 #include <Syntax/ParseTree.h>
+#include <Syntax/Statement.h>
+#include <Syntax/TokenBuffer.h>
+#include <Syntax/UnaryExpression.h>
 
 class COMPILER_API Parser
 {
@@ -76,6 +78,8 @@ private:
 
     bool HasLineBreakSinceLastMemberAccess();
     bool HasPossibleReturnValue(const Token& returnKeyword);
+    BinaryOperatornKind ConvertBinaryOperatorTokenKindToEnum(TokenKind kind);
+    UnaryOperatornKind ConvertUnaryOperatorTokenKindToEnum(TokenKind kind);
 
     TokenBuffer m_tokens;
     DiagnosticsBag& m_diagnostics;

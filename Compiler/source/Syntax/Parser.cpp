@@ -9,8 +9,6 @@
 #include <Syntax/IfStatement.h>
 #include <Syntax/WhileStatement.h>
 #include <Syntax/ReturnStatement.h>
-#include <Syntax/UnaryExpression.h>
-#include <Syntax/BinaryExpression.h>
 #include <Syntax/DiscardLiteral.h>
 #include <Syntax/MemberAccessExpression.h>
 #include <Syntax/ScopeAccessExpression.h>
@@ -382,9 +380,9 @@ Expression* Parser::ParseExpression()
 Expression* Parser::ParseBinaryExpression(i32 parentPrecedence)
 {
     Expression* left = nullptr;
-    auto unaryOperator = CurrentToken();
+    auto unaryOperatorToken = CurrentToken();
 
-    auto unaryPrecedence = UnaryOperatorPrecedence(unaryOperator.kind);
+    auto unaryPrecedence = UnaryOperatorPrecedence(unaryOperatorToken.kind);
     if (unaryPrecedence == 0 || unaryPrecedence < parentPrecedence)
     {
         left = ParsePrimaryExpression();
@@ -392,17 +390,18 @@ Expression* Parser::ParseBinaryExpression(i32 parentPrecedence)
     else
     {
         AdvanceCurrentIndex();
+        auto unaryOperator = ConvertUnaryOperatorTokenKindToEnum(unaryOperatorToken.kind);
         auto expression = ParseBinaryExpression(unaryPrecedence);
-        left = new UnaryExpression(unaryOperator, expression);
+        left = new UnaryExpression(unaryOperatorToken, unaryOperator, expression);
     }
 
     while (true)
     {
-        auto binaryOperator = CurrentToken();
-        if (binaryOperator.kind == TokenKind::EndOfFile)
+        auto binaryOperatorToken = CurrentToken();
+        if (binaryOperatorToken.kind == TokenKind::EndOfFile)
             break;
 
-        auto binaryPrecedence = BinaryOperatorPrecedence(binaryOperator.kind);
+        auto binaryPrecedence = BinaryOperatorPrecedence(binaryOperatorToken.kind);
         if (binaryPrecedence == 0 || binaryPrecedence <= parentPrecedence)
             break;
 
@@ -411,8 +410,9 @@ Expression* Parser::ParseBinaryExpression(i32 parentPrecedence)
             break;
 
         AdvanceCurrentIndex();
+        auto binaryOperator = ConvertBinaryOperatorTokenKindToEnum(binaryOperatorToken.kind);
         auto right = ParseBinaryExpression(binaryPrecedence);
-        left = new BinaryExpression(left, binaryOperator, right);
+        left = new BinaryExpression(left, binaryOperatorToken, binaryOperator, right);
     }
 
     return left;
@@ -699,6 +699,38 @@ bool Parser::HasPossibleReturnValue(const Token& returnKeyword)
 
     auto isOnSameLine = returnTokenLocation.endLine == currentTokenLocation.endLine;
     return isOnSameLine;
+}
+
+BinaryOperatornKind Parser::ConvertBinaryOperatorTokenKindToEnum(TokenKind kind)
+{
+    switch (kind)
+    {
+        case TokenKind::DoubleColon:
+            return BinaryOperatornKind::ScopeAccess;
+        case TokenKind::Dot:
+            return BinaryOperatornKind::MemberAccess;
+        case TokenKind::Plus:
+            return BinaryOperatornKind::Addition;
+        case TokenKind::Minus:
+            return BinaryOperatornKind::Subtraction;
+        case TokenKind::Star:
+            return BinaryOperatornKind::Multiplication;
+        case TokenKind::Slash:
+            return BinaryOperatornKind::Division;
+        default:
+            return BinaryOperatornKind::Invalid;
+    }
+}
+
+UnaryOperatornKind Parser::ConvertUnaryOperatorTokenKindToEnum(TokenKind kind)
+{
+    switch (kind)
+    {
+        case TokenKind::Minus:
+            return UnaryOperatornKind::Negation;
+        default:
+            return UnaryOperatornKind::Invalid;
+    }
 }
 
 ParseTree Parse(const TokenBuffer& tokens, DiagnosticsBag& diagnostics) noexcept

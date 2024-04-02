@@ -68,6 +68,10 @@ TypedExpression* TypeChecker::TypeCheckExpression(Expression* expression)
 {
     switch (expression->kind())
     {
+        case NodeKind::FunctionCallExpression:
+        {
+            return TypeCheckFunctionCallExpression((FunctionCallExpression*)expression);
+        }
         case NodeKind::NameExpression:
         {
             return TypeCheckNameExpression((NameExpression*)expression);
@@ -79,10 +83,6 @@ TypedExpression* TypeChecker::TypeCheckExpression(Expression* expression)
         case NodeKind::NumberLiteral:
         {
             return TypeCheckNumberLiteral((NumberLiteral*)expression);
-        }
-        case NodeKind::FunctionCallExpression:
-        {
-            return TypeCheckFunctionCallExpression((FunctionCallExpression*)expression);
         }
         default:
         {
@@ -96,10 +96,10 @@ TypedStatement* TypeChecker::TypeCheckAssignmentStatement(AssignmentStatement* s
     auto left = TypeCheckExpression(statement->leftExpression());
     auto right = TypeCheckExpression(statement->rightExpression());
 
-    auto inferedType = inferType(right);
-    
-    if (left->type() == Type::Undefined())
+    auto inferedType = Type::Undefined();
+    if (left->type() == Type::Undefined() && right != nullptr)
     {
+        inferedType = inferType(right);
         left->setType(inferedType);
     }
 

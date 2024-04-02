@@ -22,6 +22,12 @@ QString TypedTreePrinter::PrettyPrint()
 
 void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
 {
+    if (node == nullptr)
+    {
+        stream() << Indentation() << QString("TypedNode was null!!") << NewLine();
+        return;
+    }
+
     switch (node->kind())
     {
         case NodeKind::TypedAssignmentStatement:

@@ -31,7 +31,5 @@ enum class COMPILER_API TokenKind
 };
 
 COMPILER_API QString Stringify(TokenKind kind);
-COMPILER_API QString StringifyUnaryOperation(TokenKind kind);
-COMPILER_API QString StringifyBinaryOperation(TokenKind kind);
 COMPILER_API i32 UnaryOperatorPrecedence(TokenKind kind);
 COMPILER_API i32 BinaryOperatorPrecedence(TokenKind kind);
