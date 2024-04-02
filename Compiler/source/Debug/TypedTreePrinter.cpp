@@ -94,8 +94,20 @@ void TypedTreePrinter::PrettyPrintTypedEnumDefinitionStatement(TypedEnumDefiniti
     auto baseTypeDefinition = m_typeDatabase.getTypeDefinition(statement->baseType());
     stream() << Indentation() << QString("BaseType: ") << baseTypeDefinition.name() << NewLine();
 
-    // TODO fields
-    stream() << Indentation() << QString("Fields(0): {") << NewLine();
+    auto fields = statement->fields();
+    stream() << Indentation() << QString("Fields(%1): {").arg(fields.count()) << NewLine();
+    PushIndentation();
+    for (const auto& field : fields)
+    {
+        stream() << Indentation() << StringifyNodeKind(field->kind()) << QString(": {") << NewLine();
+        PushIndentation();
+        stream() << Indentation() << QString("Name: ") << field->name() << NewLine();
+        stream() << Indentation() << QString("Value: ") << 0 << NewLine();
+        PopIndentation();
+        stream() << Indentation() << QString("}") << NewLine();
+    }
+
+    PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 
     PopIndentation();

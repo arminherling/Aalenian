@@ -18,12 +18,12 @@ public:
         const QList<EnumFieldDefinitionStatement*>& fieldDefinitions,
         const Token& closeBracket);
 
-    [[nodiscard]] const Token& keyword() noexcept { return m_keyword; }
-    [[nodiscard]] const Token& name() noexcept { return m_name; }
-    [[nodiscard]] const std::optional<TypeName>& baseType() noexcept { return m_baseType; }
-    [[nodiscard]] const Token& openBracket() noexcept { return m_openBracket; }
-    [[nodiscard]] const QList<EnumFieldDefinitionStatement*>& statements() noexcept { return m_fieldDefinitions; }
-    [[nodiscard]] const Token& closeBracket() noexcept { return m_closeBracket; }
+    [[nodiscard]] const Token& keyword() const noexcept { return m_keyword; }
+    [[nodiscard]] const Token& name() const noexcept { return m_name; }
+    [[nodiscard]] const std::optional<TypeName>& baseType() const noexcept { return m_baseType; }
+    [[nodiscard]] const Token& openBracket() const noexcept { return m_openBracket; }
+    [[nodiscard]] const QList<EnumFieldDefinitionStatement*>& fieldDefinitions() const noexcept { return m_fieldDefinitions; }
+    [[nodiscard]] const Token& closeBracket() const noexcept { return m_closeBracket; }
 
 private:
     Token m_keyword;

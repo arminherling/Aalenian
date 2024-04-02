@@ -1,0 +1,11 @@
+TypedEnumDefinitionStatement: {
+    Type: enum
+    Name: Values
+    BaseType: i32
+    Fields(1): {
+        TypedEnumFieldDefinitionNode: {
+            Name: Value
+            Value: 0
+        }
+    }
+}

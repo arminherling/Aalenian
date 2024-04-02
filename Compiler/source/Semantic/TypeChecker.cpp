@@ -121,7 +121,6 @@ TypedStatement* TypeChecker::TypeCheckEnumDefinitionStatement(EnumDefinitionStat
         auto identifier = typeName->identifier();
         auto lexeme = m_parseTree.Tokens().GetLexeme(identifier);
         baseType = m_typeDatabase.getBuiltinTypeByName(lexeme);
-
     }
     else
     {
@@ -133,11 +132,29 @@ TypedStatement* TypeChecker::TypeCheckEnumDefinitionStatement(EnumDefinitionStat
         // TODO We need an error node and need to print diagnostics about unknown enum base type
     }
 
+    auto enumFields = TypeCheckEnumFieldDefinitionNodes(statement->fieldDefinitions(), baseType);
+
     auto nameToken = statement->name();
     auto enumName = m_parseTree.Tokens().GetLexeme(nameToken);
     auto type = m_typeDatabase.createType(enumName);
 
-    return new TypedEnumDefinitionStatement(enumName, type, baseType, statement);
+    return new TypedEnumDefinitionStatement(enumName, type, baseType, enumFields, statement);
+}
+
+QList<TypedEnumFieldDefinitionNode*> TypeChecker::TypeCheckEnumFieldDefinitionNodes(const QList<EnumFieldDefinitionStatement*> fieldDefinitions, Type baseType)
+{
+    QList<TypedEnumFieldDefinitionNode*> enumFields;
+    int nextValue = 0;
+    for (const auto definition : fieldDefinitions)
+    {
+        auto nameToken = definition->name()->identifier();
+        auto name = m_parseTree.Tokens().GetLexeme(nameToken);
+        auto typedLiteral = ConvertValueToTypedLiteral(nextValue++, baseType, definition);
+
+        enumFields.append(new TypedEnumFieldDefinitionNode(name, typedLiteral));
+        //auto typedLiteral = ConvertValueToTypedLiteral(valueLexeme, baseType, definition);
+    }
+    return enumFields;
 }
 
 TypedExpression* TypeChecker::TypeCheckNameExpression(NameExpression* expression)
@@ -172,15 +189,9 @@ TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)
     auto numberToken = literal->token();
     auto valueLexeme = m_parseTree.Tokens().GetLexeme(numberToken);
 
-    if (numberType == Type::I32())
-    {
-        bool ok;
-        auto value = valueLexeme.toInt(&ok);
-
-        assert(ok);
-
-        return new I32Literal(value, literal, numberType);
-    }
+    auto typedLiteral = ConvertValueToTypedLiteral(valueLexeme, numberType, literal);
+    if (typedLiteral != nullptr)
+        return typedLiteral;
 
     // TODO We need an error node and need to print diagnostics about unknown number type
     return nullptr;
@@ -200,4 +211,29 @@ TypedExpression* TypeChecker::TypeCheckFunctionCallExpression(FunctionCallExpres
 Type TypeChecker::inferType(TypedNode* node)
 {
     return node->type();
+}
+
+TypedExpression* TypeChecker::ConvertValueToTypedLiteral(QStringView valueLexeme, Type type, Node* source)
+{
+    if (type == Type::I32())
+    {
+        bool ok;
+        auto value = valueLexeme.toInt(&ok);
+
+        assert(ok);
+
+        return new I32Literal(value, source, type);
+    }
+
+    return nullptr;
+}
+
+TypedExpression* TypeChecker::ConvertValueToTypedLiteral(i32 value, Type type, Node* source)
+{
+    if (type == Type::I32())
+    {
+        return new I32Literal(value, source, type);
+    }
+
+    return nullptr;
 }

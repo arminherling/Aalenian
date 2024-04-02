@@ -45,7 +45,7 @@ namespace
         auto output = printer.PrettyPrint();
         auto expectedOutput = File::ReadAllText(outputFilePath);
 
-        AalTest::AreEqual(output, expectedOutput);
+        AalTest::AreEqual(expectedOutput, output);
         if (!QFile::exists(errorFilePath))
         {
             AalTest::IsTrue(diagnostics.Diagnostics().empty());

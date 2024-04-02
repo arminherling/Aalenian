@@ -108,6 +108,7 @@
     <ClCompile Include="source\Debug\TypedTreePrinter.cpp" />
     <ClCompile Include="source\Semantic\TypeDefinition.cpp" />
     <ClCompile Include="source\Semantic\TypedEnumDefinitionStatement.cpp" />
+    <ClCompile Include="source\Semantic\TypedEnumFieldDefinitionNode.cpp" />
     <ClCompile Include="source\Semantic\TypedFunctionCallExpression.cpp" />
     <ClCompile Include="source\Syntax\NodeKind.cpp" />
     <ClCompile Include="source\Syntax\ArgumentNode.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="source\Semantic\TypeCheckerOptions.h" />
     <ClInclude Include="source\Semantic\TypeDefinition.h" />
     <ClInclude Include="source\Semantic\TypedEnumDefinitionStatement.h" />
+    <ClInclude Include="source\Semantic\TypedEnumFieldDefinitionNode.h" />
     <ClInclude Include="source\Semantic\TypedFunctionCallExpression.h" />
     <ClInclude Include="source\Syntax\NodeKind.h" />
     <ClInclude Include="source\Syntax\ArgumentNode.h" />
