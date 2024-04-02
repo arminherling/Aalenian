@@ -2,6 +2,7 @@
 
 #include <Semantic/Discard.h>
 #include <Semantic/I32Literal.h>
+#include <Semantic/U8Literal.h>
 #include <Semantic/TypedAssignmentStatement.h>
 #include <Semantic/TypedEnumDefinitionStatement.h>
 #include <Semantic/TypedFunctionCallExpression.h>
@@ -215,12 +216,25 @@ Type TypeChecker::inferType(TypedNode* node)
 
 TypedExpression* TypeChecker::ConvertValueToTypedLiteral(QStringView valueLexeme, Type type, Node* source)
 {
+    if (type == Type::U8())
+    {
+        bool ok;
+        auto value = valueLexeme.toInt(&ok);
+        assert(ok);
+        
+        // TODO add error for values outside of the u8 range
+        assert(value >= 0);
+        assert(value <= UINT8_MAX);
+
+        return new U8Literal((u8)value, source, type);
+    }
     if (type == Type::I32())
     {
         bool ok;
         auto value = valueLexeme.toInt(&ok);
-
         assert(ok);
+
+        // TODO add error for values outside of the i32 range
 
         return new I32Literal(value, source, type);
     }

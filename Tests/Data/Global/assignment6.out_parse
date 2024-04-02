@@ -1,0 +1,9 @@
+AssignmentStatement: {
+    Left: {
+        NameExpression: a
+    }
+    Right: {
+        NumberLiteral: 0
+        TypeName: u8
+    }
+}

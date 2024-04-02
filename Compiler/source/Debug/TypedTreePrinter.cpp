@@ -49,6 +49,11 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
             PrettyPrintDiscard((Discard*)node);
             break;
         }
+        case NodeKind::U8Literal:
+        {
+            PrettyPrintU8Literal((U8Literal*)node);
+            break;
+        }
         case NodeKind::I32Literal:
         {
             PrettyPrintI32Literal((I32Literal*)node);
@@ -146,6 +151,18 @@ void TypedTreePrinter::PrettyPrintDiscard(Discard* discard)
     PushIndentation();
 
     stream() << Indentation() << PrettyPrintType(discard->type()) << NewLine();
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void TypedTreePrinter::PrettyPrintU8Literal(U8Literal* literal)
+{
+    stream() << Indentation() << StringifyNodeKind(literal->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << QString("Value: ") << literal->value() << NewLine();
+    stream() << Indentation() << PrettyPrintType(literal->type()) << NewLine();
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();

@@ -81,6 +81,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("TypedGlobalValue");
         case NodeKind::Discard:
             return QString("Discard");
+        case NodeKind::U8Literal:
+            return QString("U8Literal");
         case NodeKind::I32Literal:
             return QString("I32Literal");
 

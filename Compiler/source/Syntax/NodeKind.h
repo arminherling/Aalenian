@@ -47,6 +47,7 @@ enum class COMPILER_API NodeKind
 
     TypedGlobalValue,
     Discard,
+    U8Literal,
     I32Literal
 };
 
