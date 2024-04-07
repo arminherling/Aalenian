@@ -5,6 +5,7 @@
 #include <Semantic/U8Literal.h>
 #include <Semantic/TypedAssignmentStatement.h>
 #include <Semantic/TypedEnumDefinitionStatement.h>
+#include <Semantic/TypedEnumFieldAccessExpression.h>
 #include <Semantic/TypedFunctionCallExpression.h>
 #include <Semantic/TypedGlobalValue.h>
 
@@ -68,6 +69,10 @@ TypedExpression* TypeChecker::TypeCheckExpression(Expression* expression)
 {
     switch (expression->kind())
     {
+        case NodeKind::BinaryExpression:
+        {
+            return TypeCheckBinaryExpressionExpression((BinaryExpression*)expression);
+        }
         case NodeKind::FunctionCallExpression:
         {
             return TypeCheckFunctionCallExpression((FunctionCallExpression*)expression);
@@ -121,7 +126,7 @@ TypedStatement* TypeChecker::TypeCheckEnumDefinitionStatement(EnumDefinitionStat
         auto typeName = optionalBaseTypeName.value().name();
         auto identifier = typeName->identifier();
         auto lexeme = m_parseTree.Tokens().GetLexeme(identifier);
-        baseType = m_typeDatabase.getBuiltinTypeByName(lexeme);
+        baseType = m_typeDatabase.getTypeByName(lexeme);
     }
     else
     {
@@ -133,17 +138,19 @@ TypedStatement* TypeChecker::TypeCheckEnumDefinitionStatement(EnumDefinitionStat
         // TODO We need an error node and need to print diagnostics about unknown enum base type
     }
 
-    auto enumFields = TypeCheckEnumFieldDefinitionNodes(statement->fieldDefinitions(), baseType);
 
     auto nameToken = statement->name();
     auto enumName = m_parseTree.Tokens().GetLexeme(nameToken);
-    auto type = m_typeDatabase.createType(enumName);
+    auto enumType = m_typeDatabase.createType(enumName, TypeKind::Enum);
+    auto enumFields = TypeCheckEnumFieldDefinitionNodes(enumType, baseType, statement->fieldDefinitions());
 
-    return new TypedEnumDefinitionStatement(enumName, type, baseType, enumFields, statement);
+    return new TypedEnumDefinitionStatement(enumName, enumType, baseType, enumFields, statement);
 }
 
-QList<TypedEnumFieldDefinitionNode*> TypeChecker::TypeCheckEnumFieldDefinitionNodes(const QList<EnumFieldDefinitionStatement*> fieldDefinitions, Type baseType)
+QList<TypedEnumFieldDefinitionNode*> TypeChecker::TypeCheckEnumFieldDefinitionNodes(Type enumType, Type baseType, const QList<EnumFieldDefinitionStatement*> fieldDefinitions)
 {
+    auto& enumTypeDefinition = m_typeDatabase.getTypeDefinition(enumType);
+
     QList<TypedEnumFieldDefinitionNode*> enumFields;
     int nextValue = 0;
     for (const auto definition : fieldDefinitions)
@@ -162,16 +169,57 @@ QList<TypedEnumFieldDefinitionNode*> TypeChecker::TypeCheckEnumFieldDefinitionNo
             {
                 nextValue = value + 1;
                 enumFields.append(new TypedEnumFieldDefinitionNode(name, typedLiteral));
+                enumTypeDefinition.addField(enumType, name, typedLiteral);
             }
         }
         else
         {
             auto [typedLiteral, value] = ConvertValueToTypedLiteral(nextValue++, baseType, definition);
             if (typedLiteral != nullptr)
+            {
                 enumFields.append(new TypedEnumFieldDefinitionNode(name, typedLiteral));
+                enumTypeDefinition.addField(enumType, name, typedLiteral);
+            }
         }
     }
     return enumFields;
+}
+
+TypedExpression* TypeChecker::TypeCheckBinaryExpressionExpression(BinaryExpression* binaryExpression)
+{
+    switch (binaryExpression->binaryOperator())
+    {
+        case BinaryOperatornKind::ScopeAccess:
+        {
+            auto leftExpression = binaryExpression->leftExpression();
+            //TODO disallow other expressions
+            assert(leftExpression->kind() == NodeKind::NameExpression);
+            auto scopeNameExpression = (NameExpression*)leftExpression;
+            auto scopeName = m_parseTree.Tokens().GetLexeme(scopeNameExpression->identifier());
+            auto scopeType = m_typeDatabase.getTypeByName(scopeName);
+            auto scopeTypeDefinition = m_typeDatabase.getTypeDefinition(scopeType);
+
+            switch (scopeTypeDefinition.kind())
+            {
+                case TypeKind::Enum:
+                {
+                    auto rightExpression = binaryExpression->rightExpression();
+                    //TODO allow/disallow other expressions
+                    assert(rightExpression->kind() == NodeKind::NameExpression);
+                    auto fieldNameExpression = (NameExpression*)rightExpression;
+                    auto fieldName = m_parseTree.Tokens().GetLexeme(fieldNameExpression->identifier());
+                    auto enumField = scopeTypeDefinition.getFieldByName(fieldName);
+                    return new TypedEnumFieldAccessExpression(scopeType, enumField, binaryExpression);
+                }
+            }
+        }
+        default:
+        {
+            TODO("Missing Expression!!");
+        }
+    }
+
+    return nullptr;
 }
 
 TypedExpression* TypeChecker::TypeCheckNameExpression(NameExpression* expression)
@@ -196,7 +244,7 @@ TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)
         auto identifierToken = typeToken.name()->identifier();
         auto typeName = m_parseTree.Tokens().GetLexeme(identifierToken);
         
-        numberType = m_typeDatabase.getBuiltinTypeByName(typeName);
+        numberType = m_typeDatabase.getTypeByName(typeName);
     }
     else
     {

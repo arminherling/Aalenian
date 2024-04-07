@@ -40,6 +40,11 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
             PrettyPrintTypedEnumDefinitionStatement((TypedEnumDefinitionStatement*)node);
             break;
         }
+        case NodeKind::TypedEnumFieldAccessExpression:
+        {
+            PrettyPrintTypedEnumFieldAccessExpression((TypedEnumFieldAccessExpression*)node);
+            break;
+        }
         case NodeKind::TypedFunctionCallExpression:
         {
             PrettyPrintTypedFunctionCallExpression((TypedFunctionCallExpression*)node);
@@ -113,13 +118,26 @@ void TypedTreePrinter::PrettyPrintTypedEnumDefinitionStatement(TypedEnumDefiniti
         stream() << Indentation() << StringifyNodeKind(field->kind()) << QString(": {") << NewLine();
         PushIndentation();
         stream() << Indentation() << QString("Name: ") << field->name() << NewLine();
-        stream() << Indentation() << QString("Value: ") << PrettyPrintEnumFieldValue(field) << NewLine();
+        stream() << Indentation() << QString("Value: ") << PrettyPrintEnumFieldValue(field->value()) << NewLine();
         PopIndentation();
         stream() << Indentation() << QString("}") << NewLine();
     }
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void TypedTreePrinter::PrettyPrintTypedEnumFieldAccessExpression(TypedEnumFieldAccessExpression* expression)
+{
+    stream() << Indentation() << StringifyNodeKind(expression->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << PrettyPrintType(expression->type()) << NewLine();
+    stream() << Indentation() << QString("Name: ") << expression->fieldName() << NewLine();
+    stream() << Indentation() << QString("Value: ") << PrettyPrintEnumFieldValue(expression->field()->value()) << NewLine();
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
@@ -201,19 +219,18 @@ QString TypedTreePrinter::PrettyPrintType(Type type)
     return QString("Type: %1").arg(definition.name());
 }
 
-QString TypedTreePrinter::PrettyPrintEnumFieldValue(TypedEnumFieldDefinitionNode* literal)
+QString TypedTreePrinter::PrettyPrintEnumFieldValue(TypedExpression* exppression)
 {
-    auto value = literal->value();
-    switch (value->kind())
+    switch (exppression->kind())
     {
         case NodeKind::U8Literal:
         {
-            auto u8Literal = (U8Literal*)value;
+            auto u8Literal = (U8Literal*)exppression;
             return QString::number(u8Literal->value());
         }
         case NodeKind::I32Literal:
         {
-            auto i32Literal = (I32Literal*)value;
+            auto i32Literal = (I32Literal*)exppression;
             return QString::number(i32Literal->value());
         }
     }

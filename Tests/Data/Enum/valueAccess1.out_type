@@ -1,0 +1,31 @@
+TypedEnumDefinitionStatement: {
+    Type: enum
+    Name: Values
+    BaseType: u8
+    Fields(2): {
+        TypedEnumFieldDefinitionNode: {
+            Name: First
+            Value: 0
+        }
+        TypedEnumFieldDefinitionNode: {
+            Name: Second
+            Value: 1
+        }
+    }
+}
+TypedAssignmentStatement: {
+    Left: {
+        TypedGlobalValue: {
+            Name: s
+            Type: Values
+        }
+    }
+    Right: {
+        TypedEnumFieldAccessExpression: {
+            Type: Values
+            Name: Second
+            Value: 1
+        }
+    }
+    Type: Values
+}

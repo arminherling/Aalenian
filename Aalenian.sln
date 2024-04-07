@@ -38,6 +38,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Enum", "Enum", "{4557A6C9-4
 		Tests\Data\Enum\empty1.out_type = Tests\Data\Enum\empty1.out_type
 		Tests\Data\Enum\valueAccess1.in = Tests\Data\Enum\valueAccess1.in
 		Tests\Data\Enum\valueAccess1.out_parse = Tests\Data\Enum\valueAccess1.out_parse
+		Tests\Data\Enum\valueAccess1.out_type = Tests\Data\Enum\valueAccess1.out_type
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Expressions", "Expressions", "{ED3682DF-D106-4B20-9CFD-59D88EF2D14B}"

@@ -4,4 +4,4 @@ enum Values
     Second
 }
 
-_ = Values::First
+s = Values::Second

@@ -102,12 +102,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\Semantic\Discard.cpp" />
+    <ClCompile Include="source\Semantic\Field.cpp" />
     <ClCompile Include="source\Semantic\I32Literal.cpp" />
     <ClCompile Include="source\Semantic\Environment.cpp" />
     <ClCompile Include="source\Debug\BasePrinter.cpp" />
     <ClCompile Include="source\Debug\TypedTreePrinter.cpp" />
     <ClCompile Include="source\Semantic\TypeDefinition.cpp" />
     <ClCompile Include="source\Semantic\TypedEnumDefinitionStatement.cpp" />
+    <ClCompile Include="source\Semantic\TypedEnumFieldAccessExpression.cpp" />
     <ClCompile Include="source\Semantic\TypedEnumFieldDefinitionNode.cpp" />
     <ClCompile Include="source\Semantic\TypedFunctionCallExpression.cpp" />
     <ClCompile Include="source\Semantic\U8Literal.cpp" />
@@ -173,6 +175,7 @@
     <ClCompile Include="source\Semantic\TypedExpression.cpp" />
     <ClCompile Include="source\Semantic\Type.cpp" />
     <ClInclude Include="source\Semantic\Discard.h" />
+    <ClInclude Include="source\Semantic\Field.h" />
     <ClInclude Include="source\Semantic\I32Literal.h" />
     <ClInclude Include="source\Semantic\Environment.h" />
     <ClInclude Include="source\Debug\BasePrinter.h" />
@@ -180,6 +183,7 @@
     <ClInclude Include="source\Semantic\TypeCheckerOptions.h" />
     <ClInclude Include="source\Semantic\TypeDefinition.h" />
     <ClInclude Include="source\Semantic\TypedEnumDefinitionStatement.h" />
+    <ClInclude Include="source\Semantic\TypedEnumFieldAccessExpression.h" />
     <ClInclude Include="source\Semantic\TypedEnumFieldDefinitionNode.h" />
     <ClInclude Include="source\Semantic\TypedFunctionCallExpression.h" />
     <ClInclude Include="source\Semantic\U8Literal.h" />
@@ -254,6 +258,9 @@
     <ClInclude Include="source\Semantic\TypedStatement.h" />
     <ClInclude Include="source\Semantic\TypedExpression.h" />
     <ClInclude Include="source\Semantic\Type.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

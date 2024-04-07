@@ -7,6 +7,7 @@
 #include <Semantic/TypedAssignmentStatement.h>
 #include <Semantic/TypeDatabase.h>
 #include <Semantic/TypedEnumDefinitionStatement.h>
+#include <Semantic/TypedEnumFieldAccessExpression.h>
 #include <Semantic/TypedFunctionCallExpression.h>
 #include <Semantic/TypedGlobalValue.h>
 #include <Semantic/TypedNode.h>
@@ -25,6 +26,7 @@ private:
 
     void PrettyPrintTypedAssignmentStatement(TypedAssignmentStatement* statement);
     void PrettyPrintTypedEnumDefinitionStatement(TypedEnumDefinitionStatement* statement);
+    void PrettyPrintTypedEnumFieldAccessExpression(TypedEnumFieldAccessExpression* expression);
     void PrettyPrintTypedGlobalValue(TypedGlobalValue* value);
     void PrettyPrintTypedFunctionCallExpression(TypedFunctionCallExpression* functionCall);
     void PrettyPrintDiscard(Discard* discard);
@@ -33,7 +35,7 @@ private:
 
     void PrettyPrintTypedArgumentsNode();
     QString PrettyPrintType(Type type);
-    QString PrettyPrintEnumFieldValue(TypedEnumFieldDefinitionNode* field);
+    QString PrettyPrintEnumFieldValue(TypedExpression* exppression);
 
     TypedTree& m_typedTree;
     TypeDatabase m_typeDatabase;

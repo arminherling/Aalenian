@@ -11,7 +11,7 @@ EnumDefinitionStatement: {
 }
 AssignmentStatement: {
     Left: {
-        DiscardLiteral: _
+        NameExpression: s
     }
     Right: {
         BinaryExpression: {

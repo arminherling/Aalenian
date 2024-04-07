@@ -1,7 +1,7 @@
 #include "TypeDatabase.h"
 
 TypeDatabase::TypeDatabase()
-    : m_invalidType{ Type::Undefined().id(), QString("???") }
+    : m_invalidType{ Type::Undefined().id(), QString("???"), TypeKind::Invalid }
     , m_nextId{ 100 }
 {
     addBuiltinType(Type::Discard(), QStringView(u"_"));
@@ -9,11 +9,11 @@ TypeDatabase::TypeDatabase()
     addBuiltinType(Type::I32(), QStringView(u"i32"));
 }
 
-Type TypeDatabase::getBuiltinTypeByName(QStringView typeName) const noexcept
+Type TypeDatabase::getTypeByName(QStringView typeName) const noexcept
 {
     auto name = typeName.toString();
-    if (m_builtinTypes.contains(name))
-        return m_builtinTypes.at(name);
+    if (m_typeNames.contains(name))
+        return m_typeNames.at(name);
     else
         return Type::Undefined();
 }
@@ -27,10 +27,11 @@ TypeDefinition& TypeDatabase::getTypeDefinition(Type type) noexcept
         return m_invalidType;
 }
 
-Type TypeDatabase::createType(QStringView name)
+Type TypeDatabase::createType(QStringView name, TypeKind kind)
 {
     auto typeName = name.toString();
-    m_typeDefinitions.emplace(m_nextId, TypeDefinition{ m_nextId, typeName });
+    m_typeNames.emplace(typeName, Type{ m_nextId });
+    m_typeDefinitions.emplace(m_nextId, TypeDefinition{ m_nextId, typeName, kind });
     return Type{ m_nextId++ };
 }
 
@@ -38,6 +39,6 @@ void TypeDatabase::addBuiltinType(Type type, QStringView name)
 {
     auto id = type.id();
     auto typeName = name.toString();
-    m_builtinTypes.emplace(typeName, Type{ id });
-    m_typeDefinitions.emplace(id, TypeDefinition{ id, typeName });
+    m_typeNames.emplace(typeName, Type{ id });
+    m_typeDefinitions.emplace(id, TypeDefinition{ id, typeName, TypeKind::Builtin });
 }

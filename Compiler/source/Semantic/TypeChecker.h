@@ -38,7 +38,8 @@ private:
 
     TypedStatement* TypeCheckAssignmentStatement(AssignmentStatement* statement);
     TypedStatement* TypeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement);
-    QList<TypedEnumFieldDefinitionNode*> TypeCheckEnumFieldDefinitionNodes(const QList<EnumFieldDefinitionStatement*> fieldDefinitions, Type baseType);
+    QList<TypedEnumFieldDefinitionNode*> TypeCheckEnumFieldDefinitionNodes(Type enumType, Type baseType, const QList<EnumFieldDefinitionStatement*> fieldDefinitions);
+    TypedExpression* TypeCheckBinaryExpressionExpression(BinaryExpression* binaryExpression);
     TypedExpression* TypeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression); 
     TypedExpression* TypeCheckNameExpression(NameExpression* expression);
     TypedExpression* TypeCheckDiscardLiteral(DiscardLiteral* literal);

@@ -227,6 +227,12 @@
     <ClCompile Include="source\Semantic\U8Literal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Semantic\Field.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Semantic\TypedEnumFieldAccessExpression.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Compiler\DiagnosticsBag.h">
@@ -472,5 +478,14 @@
     <ClInclude Include="source\Semantic\U8Literal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\Semantic\Field.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Semantic\TypedEnumFieldAccessExpression.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

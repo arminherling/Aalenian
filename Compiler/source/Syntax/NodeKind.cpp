@@ -73,6 +73,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("TypedEnumDefinitionStatement");
         case NodeKind::TypedEnumFieldDefinitionNode:
             return QString("TypedEnumFieldDefinitionNode");
+        case NodeKind::TypedEnumFieldAccessExpression:
+            return QString("TypedEnumFieldAccessExpression");
 
         case NodeKind::TypedFunctionCallExpression:
             return QString("TypedFunctionCallExpression");
