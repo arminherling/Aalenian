@@ -41,9 +41,9 @@ private:
     void PrettyPrintPrintNewLine();
     void PrettyPrintHalt();
 
-    QTextStream& stream() { return m_stream; }
-    QByteArray toUtf8() { return m_output.toUtf8(); }
-    QString NewLine() { return QString("\n"); }
+    [[nodiscard]] QTextStream& stream() noexcept { return m_stream; }
+    [[nodiscard]] QByteArray toUtf8() const noexcept { return m_output.toUtf8(); }
+    [[nodiscard]] QString NewLine() const noexcept { return QString("\n"); }
 
     ByteCode& m_byteCode;
     u16 m_ip;

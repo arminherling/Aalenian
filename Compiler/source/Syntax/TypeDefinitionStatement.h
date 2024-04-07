@@ -13,9 +13,9 @@ public:
         const Token& name, 
         BlockNode* body);
 
-    [[nodiscard]] const Token& keyword() noexcept { return m_keyword; }
-    [[nodiscard]] const Token& name() noexcept { return m_name; }
-    [[nodiscard]] BlockNode* body() noexcept { return m_body; }
+    [[nodiscard]] const Token& keyword() const noexcept { return m_keyword; }
+    [[nodiscard]] const Token& name() const noexcept { return m_name; }
+    [[nodiscard]] BlockNode* body() const noexcept { return m_body; }
 
 private:
     Token m_keyword;

@@ -36,7 +36,7 @@ class COMPILER_API ParseTreePrinter : public BasePrinter
 public:
     ParseTreePrinter(ParseTree& parseTree, i32 indentation = 4);
 
-    QString PrettyPrint();
+    [[nodiscard]] QString PrettyPrint();
 
 private:
     void PrettyPrintNode(Node* node);

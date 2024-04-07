@@ -12,7 +12,7 @@ public:
         const Token& returnKeyword, 
         const std::optional<Expression*>& expression);
 
-    [[nodiscard]] std::optional<Expression*> expression() noexcept { return m_expression; }
+    [[nodiscard]] std::optional<Expression*> expression() const noexcept { return m_expression; }
 
 private:
     Token m_returnKeyword;

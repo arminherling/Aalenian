@@ -10,7 +10,7 @@ class COMPILER_API Environment
 {
 public:
     void addBinding(QStringView identifier, Type type);
-    Type tryGetBinding(QStringView identifier);
+    [[nodiscard]] Type tryGetBinding(QStringView identifier) const noexcept;
 
 private:
     std::unordered_map<QString, Type> m_bindings;

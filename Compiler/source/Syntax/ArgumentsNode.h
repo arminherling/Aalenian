@@ -14,9 +14,9 @@ public:
         const QList<ArgumentNode*>& arguments,
         const Token& closeParenthesis);
 
-    [[nodiscard]] const Token& openParenthesis() noexcept { return m_openParenthesis; }
-    [[nodiscard]] const QList<ArgumentNode*>& arguments() noexcept { return m_arguments; }
-    [[nodiscard]] const Token& closeParenthesis() noexcept { return m_closeParenthesis; }
+    [[nodiscard]] const Token& openParenthesis() const noexcept { return m_openParenthesis; }
+    [[nodiscard]] const QList<ArgumentNode*>& arguments() const noexcept { return m_arguments; }
+    [[nodiscard]] const Token& closeParenthesis() const noexcept { return m_closeParenthesis; }
 
 private:
     Token m_openParenthesis;

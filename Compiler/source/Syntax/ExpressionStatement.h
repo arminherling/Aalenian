@@ -9,7 +9,7 @@ class COMPILER_API ExpressionStatement : public Statement
 public:
     ExpressionStatement(Expression* expression);
 
-    [[nodiscard]] Expression* expression() noexcept { return m_expression; }
+    [[nodiscard]] Expression* expression() const noexcept { return m_expression; }
 
 private:
     Expression* m_expression;

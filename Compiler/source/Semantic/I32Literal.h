@@ -9,7 +9,7 @@ class COMPILER_API I32Literal : public TypedExpression
 public:
     I32Literal(i32 value, Node* source, Type type);
 
-    i32 value() { return m_value; }
+    [[nodiscard]] i32 value() const noexcept { return m_value; }
 
 private:
     i32 m_value;

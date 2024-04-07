@@ -16,11 +16,11 @@ public:
         const std::optional<Token>& equals,
         const std::optional<Expression*>& expression);
 
-    [[nodiscard]] NameExpression* name() noexcept { return m_name; }
-    [[nodiscard]] const std::optional<Token>& colon() noexcept { return m_colon; }
-    [[nodiscard]] const std::optional<TypeName>& type() noexcept { return m_type; }
-    [[nodiscard]] const std::optional<Token>& equals() noexcept { return m_equals; }
-    [[nodiscard]] const std::optional<Expression*>& expression() noexcept { return m_expression; }
+    [[nodiscard]] NameExpression* name() const noexcept { return m_name; }
+    [[nodiscard]] const std::optional<Token>& colon() const noexcept { return m_colon; }
+    [[nodiscard]] const std::optional<TypeName>& type() const noexcept { return m_type; }
+    [[nodiscard]] const std::optional<Token>& equals() const noexcept { return m_equals; }
+    [[nodiscard]] const std::optional<Expression*>& expression() const noexcept { return m_expression; }
 
 private:
     NameExpression* m_name;

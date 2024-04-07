@@ -8,7 +8,7 @@ class COMPILER_API Node
 public:
     Node(NodeKind kind);
 
-    NodeKind kind() { return m_kind; }
+    [[nodiscard]] NodeKind kind() const noexcept { return m_kind; }
 
 private:
     NodeKind m_kind;

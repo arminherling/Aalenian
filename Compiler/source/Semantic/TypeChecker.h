@@ -33,21 +33,21 @@ public:
     TypedTree TypeCheck();
 
 private:
-    TypedStatement* TypeCheckStatement(Statement* statement);
-    TypedExpression* TypeCheckExpression(Expression* expression);
+    [[nodiscard]] TypedStatement* TypeCheckStatement(Statement* statement);
+    [[nodiscard]] TypedExpression* TypeCheckExpression(Expression* expression);
 
-    TypedStatement* TypeCheckAssignmentStatement(AssignmentStatement* statement);
-    TypedStatement* TypeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement);
-    QList<TypedEnumFieldDefinitionNode*> TypeCheckEnumFieldDefinitionNodes(Type enumType, Type baseType, const QList<EnumFieldDefinitionStatement*> fieldDefinitions);
-    TypedExpression* TypeCheckBinaryExpressionExpression(BinaryExpression* binaryExpression);
-    TypedExpression* TypeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression); 
-    TypedExpression* TypeCheckNameExpression(NameExpression* expression);
-    TypedExpression* TypeCheckDiscardLiteral(DiscardLiteral* literal);
-    TypedExpression* TypeCheckNumberLiteral(NumberLiteral* literal);
+    [[nodiscard]] TypedStatement* TypeCheckAssignmentStatement(AssignmentStatement* statement);
+    [[nodiscard]] TypedStatement* TypeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement);
+    [[nodiscard]] QList<TypedEnumFieldDefinitionNode*> TypeCheckEnumFieldDefinitionNodes(Type enumType, Type baseType, const QList<EnumFieldDefinitionStatement*> fieldDefinitions);
+    [[nodiscard]] TypedExpression* TypeCheckBinaryExpressionExpression(BinaryExpression* binaryExpression);
+    [[nodiscard]] TypedExpression* TypeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression); 
+    [[nodiscard]] TypedExpression* TypeCheckNameExpression(NameExpression* expression);
+    [[nodiscard]] TypedExpression* TypeCheckDiscardLiteral(DiscardLiteral* literal);
+    [[nodiscard]] TypedExpression* TypeCheckNumberLiteral(NumberLiteral* literal);
 
-    Type inferType(TypedNode* node);
-    std::tuple<TypedExpression*, i32> ConvertValueToTypedLiteral(QStringView literal, Type type, Node* source);
-    std::tuple<TypedExpression*, i32> ConvertValueToTypedLiteral(i32 value, Type type, Node* source);
+    [[nodiscard]] Type inferType(TypedNode* node);
+    [[nodiscard]] std::tuple<TypedExpression*, i32> ConvertValueToTypedLiteral(QStringView literal, Type type, Node* source);
+    [[nodiscard]] std::tuple<TypedExpression*, i32> ConvertValueToTypedLiteral(i32 value, Type type, Node* source);
 
     ParseTree m_parseTree;
     TypeCheckerOptions m_options;

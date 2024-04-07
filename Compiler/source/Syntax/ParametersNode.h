@@ -14,9 +14,9 @@ public:
         const QList<ParameterNode*>& parameters,
         const Token& closeParenthesis);
 
-    [[nodiscard]] const Token& openParenthesis() noexcept { return m_openParenthesis; }
-    [[nodiscard]] const QList<ParameterNode*>& parameters() noexcept { return m_parameters; }
-    [[nodiscard]] const Token& closeParenthesis() noexcept { return m_closeParenthesis; }
+    [[nodiscard]] const Token& openParenthesis() const noexcept { return m_openParenthesis; }
+    [[nodiscard]] const QList<ParameterNode*>& parameters() const noexcept { return m_parameters; }
+    [[nodiscard]] const Token& closeParenthesis() const noexcept { return m_closeParenthesis; }
 
 private:
     Token m_openParenthesis;

@@ -19,7 +19,7 @@ class COMPILER_API TypedTreePrinter : public BasePrinter
 public:
     TypedTreePrinter(TypedTree& typedTree, const TypeDatabase& typeDatabase, i32 indentation = 4);
 
-    QString PrettyPrint();
+    [[nodiscard]] QString PrettyPrint();
 
 private:
     void PrettyPrintNode(TypedNode* node);
@@ -34,8 +34,8 @@ private:
     void PrettyPrintI32Literal(I32Literal* literal);
 
     void PrettyPrintTypedArgumentsNode();
-    QString PrettyPrintType(Type type);
-    QString PrettyPrintEnumFieldValue(TypedExpression* exppression);
+    [[nodiscard]] QString PrettyPrintType(Type type) noexcept;
+    [[nodiscard]] QString PrettyPrintEnumFieldValue(TypedExpression* exppression) const noexcept;
 
     TypedTree& m_typedTree;
     TypeDatabase m_typeDatabase;

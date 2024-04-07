@@ -24,7 +24,7 @@ public:
     [[nodiscard]] TypeKind kind() const noexcept { return m_kind; }
     [[nodiscard]] Field* getFieldByName(QStringView fieldName) const noexcept;
 
-    void addField(Type type, QStringView name, TypedExpression* expression);
+    void addField(Type type, QStringView name, TypedExpression* expression) noexcept;
 
 private:
     i32 m_id;

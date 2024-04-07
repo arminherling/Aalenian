@@ -15,9 +15,9 @@ public:
         const Token& equal, 
         NumberLiteral* value);
 
-    [[nodiscard]] NameExpression* name() noexcept { return m_name; }
-    [[nodiscard]] const std::optional<Token>& equal() noexcept { return m_equal; }
-    [[nodiscard]] const std::optional<NumberLiteral*>& value() noexcept { return m_value; }
+    [[nodiscard]] NameExpression* name() const noexcept { return m_name; }
+    [[nodiscard]] const std::optional<Token>& equal() const noexcept { return m_equal; }
+    [[nodiscard]] const std::optional<NumberLiteral*>& value() const noexcept { return m_value; }
 
 private:
     NameExpression* m_name;

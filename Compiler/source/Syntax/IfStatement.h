@@ -14,8 +14,8 @@ public:
         Expression* condition, 
         BlockNode* body);
 
-    [[nodiscard]] Expression* condition() noexcept { return m_condition; }
-    [[nodiscard]] BlockNode* body() noexcept { return m_body; }
+    [[nodiscard]] Expression* condition() const noexcept { return m_condition; }
+    [[nodiscard]] BlockNode* body() const noexcept { return m_body; }
 
 private:
     Token m_ifKeyword;

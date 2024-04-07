@@ -11,8 +11,8 @@ public:
         const Token& doubleColon, 
         Expression* expression);
 
-    [[nodiscard]] const Token& doubleColon() noexcept { return m_doubleColon; }
-    [[nodiscard]] Expression* expression() noexcept { return m_expression; }
+    [[nodiscard]] const Token& doubleColon() const noexcept { return m_doubleColon; }
+    [[nodiscard]] Expression* expression() const noexcept { return m_expression; }
 
 private:
     Token m_doubleColon;

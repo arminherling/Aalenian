@@ -14,9 +14,9 @@ public:
         const Token& colon, 
         const TypeName& type);
 
-    [[nodiscard]] const Token& token() noexcept { return m_token; }
-    [[nodiscard]] const std::optional<Token>& colon() noexcept { return m_colon; }
-    [[nodiscard]] const std::optional<TypeName>& type() noexcept { return m_type; }
+    [[nodiscard]] const Token& token() const noexcept { return m_token; }
+    [[nodiscard]] const std::optional<Token>& colon() const noexcept { return m_colon; }
+    [[nodiscard]] const std::optional<TypeName>& type() const noexcept { return m_type; }
 
 private:
     Token m_token;

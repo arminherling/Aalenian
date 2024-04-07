@@ -15,7 +15,7 @@ public:
     [[nodiscard]] Type getTypeByName(QStringView typeName) const noexcept;
     [[nodiscard]] TypeDefinition& getTypeDefinition(Type type) noexcept;
 
-    Type createType(QStringView name, TypeKind kind);
+    [[nodiscard]] Type createType(QStringView name, TypeKind kind) noexcept;
 
 private:
     std::unordered_map<QString, Type> m_typeNames;
@@ -23,5 +23,5 @@ private:
     TypeDefinition m_invalidType;
     i32 m_nextId;
 
-    void addBuiltinType(Type type, QStringView name);
+    void addBuiltinType(Type type, QStringView name) noexcept;
 };

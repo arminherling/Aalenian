@@ -13,7 +13,7 @@ public:
     [[nodiscard]] Node* source() const noexcept { return m_source; }
     [[nodiscard]] NodeKind kind() const noexcept { return m_kind; }
     [[nodiscard]] Type type() const noexcept { return m_type; }
-    void setType(Type type) { m_type = type; }
+    void setType(Type type) noexcept { m_type = type; }
 
 private:
     Node* m_source;

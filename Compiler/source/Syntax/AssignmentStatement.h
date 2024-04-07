@@ -13,8 +13,8 @@ public:
         const Token& equalsToken, 
         Expression* rightExpression);
 
-    [[nodiscard]] Expression* leftExpression() noexcept { return m_leftExpression; }
-    [[nodiscard]] Expression* rightExpression() noexcept { return m_rightExpression; }
+    [[nodiscard]] Expression* leftExpression() const noexcept { return m_leftExpression; }
+    [[nodiscard]] Expression* rightExpression() const noexcept { return m_rightExpression; }
 
 private:
     Expression* m_leftExpression;

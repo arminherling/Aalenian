@@ -7,7 +7,7 @@ TypeDefinition::TypeDefinition(i32 id, const QString& name, TypeKind kind)
 {
 }
 
-void TypeDefinition::addField(Type type, QStringView name, TypedExpression* expression)
+void TypeDefinition::addField(Type type, QStringView name, TypedExpression* expression) noexcept
 {
     m_fields.emplace(name.toString(), new Field(type, name, expression));
 }

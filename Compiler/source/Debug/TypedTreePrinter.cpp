@@ -213,13 +213,13 @@ void TypedTreePrinter::PrettyPrintTypedArgumentsNode()
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-QString TypedTreePrinter::PrettyPrintType(Type type)
+QString TypedTreePrinter::PrettyPrintType(Type type) noexcept
 {
     auto definition = m_typeDatabase.getTypeDefinition(type);
     return QString("Type: %1").arg(definition.name());
 }
 
-QString TypedTreePrinter::PrettyPrintEnumFieldValue(TypedExpression* exppression)
+QString TypedTreePrinter::PrettyPrintEnumFieldValue(TypedExpression* exppression) const noexcept
 {
     switch (exppression->kind())
     {

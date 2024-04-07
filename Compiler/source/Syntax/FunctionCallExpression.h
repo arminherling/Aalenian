@@ -12,8 +12,8 @@ public:
         const Token& nameToken, 
         ArgumentsNode* arguments);
 
-    [[nodiscard]] const Token& name() noexcept { return m_nameToken; }
-    [[nodiscard]] ArgumentsNode* arguments() { return m_arguments; }
+    [[nodiscard]] const Token& name() const noexcept { return m_nameToken; }
+    [[nodiscard]] ArgumentsNode* arguments() const noexcept { return m_arguments; }
 
 private:
     Token m_nameToken;

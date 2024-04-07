@@ -11,8 +11,8 @@ public:
         const Token& dot, 
         Expression* expression);
 
-    [[nodiscard]] const Token& dot() noexcept { return m_dot; }
-    [[nodiscard]] Expression* expression() noexcept { return m_expression; }
+    [[nodiscard]] const Token& dot() const noexcept { return m_dot; }
+    [[nodiscard]] Expression* expression() const noexcept { return m_expression; }
 
 private:
     Token m_dot;

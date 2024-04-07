@@ -7,8 +7,3 @@ ParseTree::ParseTree(
     , m_statements{ statements }
 {
 }
-
-QList<Statement*> ParseTree::GlobalStatements() const
-{
-    return m_statements;
-}

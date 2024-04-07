@@ -30,6 +30,6 @@ enum class COMPILER_API TokenKind
     EndOfFile
 };
 
-COMPILER_API QString Stringify(TokenKind kind);
-COMPILER_API i32 UnaryOperatorPrecedence(TokenKind kind);
-COMPILER_API i32 BinaryOperatorPrecedence(TokenKind kind);
+COMPILER_API [[nodiscard]] QString Stringify(TokenKind kind);
+COMPILER_API [[nodiscard]] i32 UnaryOperatorPrecedence(TokenKind kind);
+COMPILER_API [[nodiscard]] i32 BinaryOperatorPrecedence(TokenKind kind);

@@ -24,10 +24,10 @@ public:
         BinaryOperatornKind binaryOperator,
         Expression* rightExpression);
 
-    [[nodiscard]] Expression* leftExpression() noexcept { return m_leftExpression; }
-    [[nodiscard]] const Token& binaryOperatorToken() noexcept { return m_binaryOperatorToken; }
-    [[nodiscard]] BinaryOperatornKind binaryOperator() noexcept { return m_binaryOperator; }
-    [[nodiscard]] Expression* rightExpression() noexcept { return m_rightExpression; }
+    [[nodiscard]] Expression* leftExpression() const noexcept { return m_leftExpression; }
+    [[nodiscard]] const Token& binaryOperatorToken() const noexcept { return m_binaryOperatorToken; }
+    [[nodiscard]] BinaryOperatornKind binaryOperator() const noexcept { return m_binaryOperator; }
+    [[nodiscard]] Expression* rightExpression() const noexcept { return m_rightExpression; }
 
 private:
     Expression* m_leftExpression;

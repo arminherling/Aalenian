@@ -12,9 +12,9 @@ public:
         Expression* expression, 
         const Token& closeParenthesis);
 
-    [[nodiscard]] const Token& openParenthesis() noexcept { return m_openParenthesis; }
-    [[nodiscard]] Expression* expression() noexcept { return m_expression; }
-    [[nodiscard]] const Token& closeParenthesis() noexcept { return m_closeParenthesis; }
+    [[nodiscard]] const Token& openParenthesis() const noexcept { return m_openParenthesis; }
+    [[nodiscard]] Expression* expression() const noexcept { return m_expression; }
+    [[nodiscard]] const Token& closeParenthesis() const noexcept { return m_closeParenthesis; }
 
 private:
     Token m_openParenthesis;

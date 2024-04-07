@@ -13,8 +13,8 @@ public:
         const TypeName& type);
 
     [[nodiscard]] NameExpression* name() const noexcept { return m_name; }
-    [[nodiscard]] const Token& colon() noexcept { return m_colon; }
-    [[nodiscard]] const TypeName& type() noexcept { return m_type; }
+    [[nodiscard]] const Token& colon() const noexcept { return m_colon; }
+    [[nodiscard]] const TypeName& type() const noexcept { return m_type; }
 
 private:
     NameExpression* m_name;

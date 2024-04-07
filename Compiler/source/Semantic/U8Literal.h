@@ -9,7 +9,7 @@ class COMPILER_API U8Literal : public TypedExpression
 public:
     U8Literal(u8 value, Node* source, Type type);
 
-    u8 value() { return m_value; }
+    [[nodiscard]] u8 value() const noexcept { return m_value; }
 
 private:
     u8 m_value;

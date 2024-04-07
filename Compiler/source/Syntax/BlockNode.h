@@ -14,9 +14,9 @@ public:
         const QList<Statement*>& statements, 
         const Token& closeBracket);
 
-    [[nodiscard]] const Token& openBracket() noexcept { return m_openBracket; }
-    [[nodiscard]] const QList<Statement*>& statements() noexcept { return m_statements; }
-    [[nodiscard]] const Token& closeBracket() noexcept { return m_closeBracket; }
+    [[nodiscard]] const Token& openBracket() const noexcept { return m_openBracket; }
+    [[nodiscard]] const QList<Statement*>& statements() const noexcept { return m_statements; }
+    [[nodiscard]] const Token& closeBracket() const noexcept { return m_closeBracket; }
 
 private:
     Token m_openBracket;

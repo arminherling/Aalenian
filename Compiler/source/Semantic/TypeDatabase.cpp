@@ -27,7 +27,7 @@ TypeDefinition& TypeDatabase::getTypeDefinition(Type type) noexcept
         return m_invalidType;
 }
 
-Type TypeDatabase::createType(QStringView name, TypeKind kind)
+Type TypeDatabase::createType(QStringView name, TypeKind kind) noexcept
 {
     auto typeName = name.toString();
     m_typeNames.emplace(typeName, Type{ m_nextId });
@@ -35,7 +35,7 @@ Type TypeDatabase::createType(QStringView name, TypeKind kind)
     return Type{ m_nextId++ };
 }
 
-void TypeDatabase::addBuiltinType(Type type, QStringView name)
+void TypeDatabase::addBuiltinType(Type type, QStringView name) noexcept
 {
     auto id = type.id();
     auto typeName = name.toString();

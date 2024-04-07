@@ -18,9 +18,9 @@ public:
         UnaryOperatornKind unaryOperator,
         Expression* expression);
 
-    [[nodiscard]] const Token& unaryOperatorToken() noexcept { return m_unaryOperatorToken; }
-    [[nodiscard]] UnaryOperatornKind unaryOperator() noexcept { return m_unaryOperator; }
-    [[nodiscard]] Expression* expression() noexcept { return m_expression; }
+    [[nodiscard]] const Token& unaryOperatorToken() const noexcept { return m_unaryOperatorToken; }
+    [[nodiscard]] UnaryOperatornKind unaryOperator() const noexcept { return m_unaryOperator; }
+    [[nodiscard]] Expression* expression() const noexcept { return m_expression; }
 
 private:
     Token m_unaryOperatorToken;
@@ -28,4 +28,4 @@ private:
     Expression* m_expression;
 };
 
-COMPILER_API QString StringifyUnaryOperation(UnaryOperatornKind kind);
+COMPILER_API [[nodiscard]] QString StringifyUnaryOperation(UnaryOperatornKind kind);

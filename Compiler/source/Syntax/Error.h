@@ -9,7 +9,7 @@ class COMPILER_API Error : public Expression
 public:
     Error(const Token& token);
 
-    [[nodiscard]] const Token& token() noexcept { return m_token; }
+    [[nodiscard]] const Token& token() const noexcept { return m_token; }
 
 private:
     Token m_token;
