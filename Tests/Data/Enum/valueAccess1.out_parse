@@ -20,7 +20,7 @@ AssignmentStatement: {
             }
             Operation: Scope Access
             Right: {
-                NameExpression: First
+                NameExpression: Second
             }
         }
     }
