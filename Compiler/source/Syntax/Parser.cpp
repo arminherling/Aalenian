@@ -62,56 +62,56 @@ Parser::Parser(const TokenBuffer& tokens, DiagnosticsBag& diagnostics)
 {
 }
 
-ParseTree Parser::Parse()
+ParseTree Parser::parse()
 {
-    auto globalStatements = ParseGlobalStatements();
+    auto globalStatements = parseGlobalStatements();
 
     return ParseTree(m_tokens, globalStatements);
 }
 
-QList<Statement*> Parser::ParseGlobalStatements()
+QList<Statement*> Parser::parseGlobalStatements()
 {
-    return ParseStatements(StatementScope::Global);
+    return parseStatements(StatementScope::Global);
 }
 
-QList<Statement*> Parser::ParseStatements(StatementScope scope)
+QList<Statement*> Parser::parseStatements(StatementScope scope)
 {
     QList<Statement*> statements;
 
-    auto currentToken = CurrentToken();
+    auto current = currentToken();
     while (true)
     {
-        switch (currentToken.kind)
+        switch (current.kind)
         {
             case TokenKind::Underscore:
             {
-                statements.append(ParseAssignmentStatement());
+                statements.append(parseAssignmentStatement());
                 break;
             }
             case TokenKind::Dot:
             case TokenKind::Number:
             {
-                statements.append(ParseExpressionStatement());
+                statements.append(parseExpressionStatement());
                 break;
             }
             case TokenKind::Identifier:
             {
-                auto lexeme = m_tokens.GetLexeme(currentToken);
+                auto lexeme = m_tokens.getLexeme(current);
                 if (scope == StatementScope::Global)
                 {
                     if (IsFunctionDefinitionKeyword(lexeme))
                     {
-                        statements.append(ParseFunctionDefinitionStatement());
+                        statements.append(parseFunctionDefinitionStatement());
                         break;
                     }
                     else if (IsTypeDefinitionKeyword(lexeme))
                     {
-                        statements.append(ParseTypeDefinitionStatement());
+                        statements.append(parseTypeDefinitionStatement());
                         break;
                     }
                     else if (IsEnumDefinitionKeyword(lexeme))
                     {
-                        statements.append(ParseEnumDefinitionStatement());
+                        statements.append(parseEnumDefinitionStatement());
                         break;
                     }
                 }
@@ -119,17 +119,17 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                 {
                     if (IsIfKeyword(lexeme))
                     {
-                        statements.append(ParseIfStatement(scope));
+                        statements.append(parseIfStatement(scope));
                         break;
                     }
                     else if (IsWhileKeyword(lexeme))
                     {
-                        statements.append(ParseWhileStatement(scope));
+                        statements.append(parseWhileStatement(scope));
                         break;
                     }
                     else if (IsReturnKeyword(lexeme))
                     {
-                        statements.append(ParseReturnStatement());
+                        statements.append(parseReturnStatement());
                         break;
                     }
                 }
@@ -137,30 +137,30 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
                 {
                     if (IsFunctionDefinitionKeyword(lexeme))
                     {
-                        statements.append(ParseMethodDefinitionStatement());
+                        statements.append(parseMethodDefinitionStatement());
                         break;
                     }
 
-                    statements.append(ParseFieldDeclarationStatement());
+                    statements.append(parseFieldDeclarationStatement());
                     break;
                 }
 
-                auto nextToken = NextToken();
-                if (nextToken.kind == TokenKind::Equal)
+                auto next = nextToken();
+                if (next.kind == TokenKind::Equal)
                 {
-                    statements.append(ParseAssignmentStatement());
+                    statements.append(parseAssignmentStatement());
                 }
-                else if (nextToken.kind == TokenKind::OpenParenthesis)
+                else if (next.kind == TokenKind::OpenParenthesis)
                 {
-                    auto expressionStatement = ParseExpressionStatement();
+                    auto expressionStatement = parseExpressionStatement();
                     statements.append(expressionStatement);
                 }
                 else
                 {
-                    const auto& location = m_tokens.GetSourceLocation(currentToken);
+                    const auto& location = m_tokens.getSourceLocation(current);
                     m_diagnostics.AddError(DiagnosticKind::Unknown, location);
 
-                    AdvanceCurrentIndex();
+                    advanceCurrentIndex();
                 }
                 break;
             }
@@ -168,10 +168,10 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
             {
                 if (scope == StatementScope::Global)
                 {
-                    const auto& location = m_tokens.GetSourceLocation(currentToken);
+                    const auto& location = m_tokens.getSourceLocation(current);
                     m_diagnostics.AddError(DiagnosticKind::Unknown, location);
 
-                    AdvanceCurrentIndex();
+                    advanceCurrentIndex();
                     break;
                 }
             }
@@ -181,75 +181,75 @@ QList<Statement*> Parser::ParseStatements(StatementScope scope)
             }
             default:
             {
-                const auto& location = m_tokens.GetSourceLocation(currentToken);
+                const auto& location = m_tokens.getSourceLocation(current);
                 m_diagnostics.AddError(DiagnosticKind::Unknown, location);
 
-                AdvanceCurrentIndex();
+                advanceCurrentIndex();
                 break;
             }
         }
 
-        currentToken = CurrentToken();
+        current = currentToken();
     }
 }
 
-Statement* Parser::ParseAssignmentStatement()
+Statement* Parser::parseAssignmentStatement()
 {
-    auto leftExpression = ParsePrimaryExpression();
-    auto equals = AdvanceOnMatch(TokenKind::Equal);
-    auto rightExpression = ParseExpression();
+    auto leftExpression = parsePrimaryExpression();
+    auto equals = advanceOnMatch(TokenKind::Equal);
+    auto rightExpression = parseExpression();
     return new AssignmentStatement(leftExpression, equals, rightExpression);
 }
 
-Statement* Parser::ParseExpressionStatement()
+Statement* Parser::parseExpressionStatement()
 {
-    auto expression = ParseExpression();
+    auto expression = parseExpression();
     return new ExpressionStatement(expression);
 }
 
-Statement* Parser::ParseFunctionDefinitionStatement()
+Statement* Parser::parseFunctionDefinitionStatement()
 {
-    auto keyword = AdvanceOnMatch(TokenKind::Identifier);
-    auto name = AdvanceOnMatch(TokenKind::Identifier);
-    auto signature = ParseParametersNode();
-    auto body = ParseFunctionBody();
+    auto keyword = advanceOnMatch(TokenKind::Identifier);
+    auto name = advanceOnMatch(TokenKind::Identifier);
+    auto signature = parseParametersNode();
+    auto body = parseFunctionBody();
 
     return new FunctionDefinitionStatement(keyword, name, signature, body);
 }
 
-Statement* Parser::ParseEnumDefinitionStatement()
+Statement* Parser::parseEnumDefinitionStatement()
 {
-    auto keyword = AdvanceOnMatch(TokenKind::Identifier);
-    auto name = AdvanceOnMatch(TokenKind::Identifier);
+    auto keyword = advanceOnMatch(TokenKind::Identifier);
+    auto name = advanceOnMatch(TokenKind::Identifier);
 
-    auto current = CurrentToken();
+    auto current = currentToken();
     std::optional<TypeName> baseType;
     if (current.kind == TokenKind::Colon)
     {
-        AdvanceCurrentIndex();
-        baseType = ParseTypeNode();
-        current = CurrentToken();
+        advanceCurrentIndex();
+        baseType = parseTypeNode();
+        current = currentToken();
     }
 
-    auto openBracket = AdvanceOnMatch(TokenKind::OpenBracket);
-    auto fieldDefinitions = ParseEnumFieldDefinitions();
-    auto closeBracket = AdvanceOnMatch(TokenKind::CloseBracket);
+    auto openBracket = advanceOnMatch(TokenKind::OpenBracket);
+    auto fieldDefinitions = parseEnumFieldDefinitions();
+    auto closeBracket = advanceOnMatch(TokenKind::CloseBracket);
 
     return new EnumDefinitionStatement(keyword, name, baseType, openBracket, fieldDefinitions, closeBracket);
 }
 
-QList<EnumFieldDefinitionStatement*> Parser::ParseEnumFieldDefinitions()
+QList<EnumFieldDefinitionStatement*> Parser::parseEnumFieldDefinitions()
 {
     QList<EnumFieldDefinitionStatement*> definitions;
 
-    auto currentToken = CurrentToken();
+    auto current = currentToken();
     while (true)
     {
-        switch (currentToken.kind)
+        switch (current.kind)
         {
             case TokenKind::Identifier:
             {
-                definitions.append(ParseEnumFieldDefinitionStatement());
+                definitions.append(parseEnumFieldDefinitionStatement());
                 break;
             }
             case TokenKind::CloseBracket:
@@ -259,41 +259,41 @@ QList<EnumFieldDefinitionStatement*> Parser::ParseEnumFieldDefinitions()
             }
             default:
             {
-                const auto& location = m_tokens.GetSourceLocation(currentToken);
+                const auto& location = m_tokens.getSourceLocation(current);
                 m_diagnostics.AddError(DiagnosticKind::Unknown, location);
 
-                AdvanceCurrentIndex();
+                advanceCurrentIndex();
                 break;
             }
         }
 
-        currentToken = CurrentToken();
+        current = currentToken();
     }
 
     return definitions;
 }
 
-Statement* Parser::ParseTypeDefinitionStatement()
+Statement* Parser::parseTypeDefinitionStatement()
 {
-    auto keyword = AdvanceOnMatch(TokenKind::Identifier);
-    auto name = AdvanceOnMatch(TokenKind::Identifier);
-    auto body = ParseTypeBody();
+    auto keyword = advanceOnMatch(TokenKind::Identifier);
+    auto name = advanceOnMatch(TokenKind::Identifier);
+    auto body = parseTypeBody();
 
     return new TypeDefinitionStatement(keyword, name, body);
 }
 
-Statement* Parser::ParseFieldDeclarationStatement()
+Statement* Parser::parseFieldDeclarationStatement()
 {
-    auto name = ParseNameExpression();
-    auto current = CurrentToken();
+    auto name = parseNameExpression();
+    auto current = currentToken();
     std::optional<Token> colon;
     std::optional<TypeName> type;
     if (current.kind == TokenKind::Colon)
     {
-        AdvanceCurrentIndex();
+        advanceCurrentIndex();
         colon = current;
-        type = ParseTypeNode();
-        current = CurrentToken();
+        type = parseTypeNode();
+        current = currentToken();
     }
 
     std::optional<Token> equals;
@@ -301,103 +301,103 @@ Statement* Parser::ParseFieldDeclarationStatement()
     if (current.kind == TokenKind::Equal)
     {
         equals = current;
-        AdvanceCurrentIndex();
-        expression = ParseExpression();
+        advanceCurrentIndex();
+        expression = parseExpression();
     }
 
     return new FieldDeclarationStatement(name, colon, type, equals, expression);
 }
 
-Statement* Parser::ParseMethodDefinitionStatement()
+Statement* Parser::parseMethodDefinitionStatement()
 {
-    auto keyword = AdvanceOnMatch(TokenKind::Identifier);
-    auto name = AdvanceOnMatch(TokenKind::Identifier);
-    auto signature = ParseParametersNode();
-    auto body = ParseMethodBody();
+    auto keyword = advanceOnMatch(TokenKind::Identifier);
+    auto name = advanceOnMatch(TokenKind::Identifier);
+    auto signature = parseParametersNode();
+    auto body = parseMethodBody();
 
     return new MethodDefinitionStatement(keyword, name, signature, body);
 }
 
-Statement* Parser::ParseIfStatement(StatementScope scope)
+Statement* Parser::parseIfStatement(StatementScope scope)
 {
-    auto keyword = AdvanceOnMatch(TokenKind::Identifier);
-    auto condition = ParseExpression();
-    auto block = ParseBlockNode(scope);
+    auto keyword = advanceOnMatch(TokenKind::Identifier);
+    auto condition = parseExpression();
+    auto block = parseBlockNode(scope);
 
     return new IfStatement(keyword, condition, block);
 }
 
-Statement* Parser::ParseWhileStatement(StatementScope scope)
+Statement* Parser::parseWhileStatement(StatementScope scope)
 {
-    auto keyword = AdvanceOnMatch(TokenKind::Identifier);
-    auto condition = ParseExpression();
-    auto block = ParseBlockNode(scope);
+    auto keyword = advanceOnMatch(TokenKind::Identifier);
+    auto condition = parseExpression();
+    auto block = parseBlockNode(scope);
 
     return new WhileStatement(keyword, condition, block);
 }
 
-Statement* Parser::ParseReturnStatement()
+Statement* Parser::parseReturnStatement()
 {
-    auto keyword = AdvanceOnMatch(TokenKind::Identifier);
+    auto keyword = advanceOnMatch(TokenKind::Identifier);
 
     std::optional<Expression*> expression;
     // Special case: we need to disambiguate between returns in void functions and normal functions
     // we do this by breaking the code up with a line break
-    if(HasPossibleReturnValue(keyword))
-        expression = ParseExpression();
+    if(hasPossibleReturnValue(keyword))
+        expression = parseExpression();
     
     return new ReturnStatement(keyword, expression);
 }
 
-ParametersNode* Parser::ParseParametersNode()
+ParametersNode* Parser::parseParametersNode()
 {
-    auto openParenthesis = AdvanceOnMatch(TokenKind::OpenParenthesis);
-    auto currentToken = CurrentToken();
+    auto openParenthesis = advanceOnMatch(TokenKind::OpenParenthesis);
+    auto current = currentToken();
 
     QList<ParameterNode*> parameters;
-    while (currentToken.kind != TokenKind::CloseParenthesis)
+    while (current.kind != TokenKind::CloseParenthesis)
     {
-        parameters.append(ParseParameterNode());
-        if (CurrentToken().kind == TokenKind::Comma)
+        parameters.append(parseParameterNode());
+        if (currentToken().kind == TokenKind::Comma)
         {
-            AdvanceCurrentIndex();
+            advanceCurrentIndex();
 
             // if(CurrentToken().kind == TokenKind::CloseParenthesis)
             // Too many commas or too few parameters
         }
-        currentToken = CurrentToken();
+        current = currentToken();
     }
 
-    auto closeParenthesis = AdvanceOnMatch(TokenKind::CloseParenthesis);
+    auto closeParenthesis = advanceOnMatch(TokenKind::CloseParenthesis);
     return new ParametersNode(openParenthesis, parameters, closeParenthesis);
 }
 
-Expression* Parser::ParseExpression()
+Expression* Parser::parseExpression()
 {
-    return ParseBinaryExpression(0);
+    return parseBinaryExpression(0);
 }
 
-Expression* Parser::ParseBinaryExpression(i32 parentPrecedence)
+Expression* Parser::parseBinaryExpression(i32 parentPrecedence)
 {
     Expression* left = nullptr;
-    auto unaryOperatorToken = CurrentToken();
+    auto unaryOperatorToken = currentToken();
 
     auto unaryPrecedence = UnaryOperatorPrecedence(unaryOperatorToken.kind);
     if (unaryPrecedence == 0 || unaryPrecedence < parentPrecedence)
     {
-        left = ParsePrimaryExpression();
+        left = parsePrimaryExpression();
     }
     else
     {
-        AdvanceCurrentIndex();
-        auto unaryOperator = ConvertUnaryOperatorTokenKindToEnum(unaryOperatorToken.kind);
-        auto expression = ParseBinaryExpression(unaryPrecedence);
+        advanceCurrentIndex();
+        auto unaryOperator = convertUnaryOperatorTokenKindToEnum(unaryOperatorToken.kind);
+        auto expression = parseBinaryExpression(unaryPrecedence);
         left = new UnaryExpression(unaryOperatorToken, unaryOperator, expression);
     }
 
     while (true)
     {
-        auto binaryOperatorToken = CurrentToken();
+        auto binaryOperatorToken = currentToken();
         if (binaryOperatorToken.kind == TokenKind::EndOfFile)
             break;
 
@@ -406,134 +406,133 @@ Expression* Parser::ParseBinaryExpression(i32 parentPrecedence)
             break;
 
         // Special case: empty lines prevent unintended method chaining
-        if (HasLineBreakSinceLastMemberAccess())
+        if (hasLineBreakSinceLastMemberAccess())
             break;
 
-        AdvanceCurrentIndex();
-        auto binaryOperator = ConvertBinaryOperatorTokenKindToEnum(binaryOperatorToken.kind);
-        auto right = ParseBinaryExpression(binaryPrecedence);
+        advanceCurrentIndex();
+        auto binaryOperator = convertBinaryOperatorTokenKindToEnum(binaryOperatorToken.kind);
+        auto right = parseBinaryExpression(binaryPrecedence);
         left = new BinaryExpression(left, binaryOperatorToken, binaryOperator, right);
     }
 
     return left;
 }
 
-Expression* Parser::ParsePrimaryExpression()
+Expression* Parser::parsePrimaryExpression()
 {
-    auto currentToken = CurrentToken();
+    auto current = currentToken();
 
-    switch (currentToken.kind)
+    switch (current.kind)
     {
         case TokenKind::Underscore:
         {
-            AdvanceCurrentIndex();
-            return new DiscardLiteral(currentToken);
+            advanceCurrentIndex();
+            return new DiscardLiteral(current);
         }
         case TokenKind::Identifier:
         {
-            auto maybeBool = TryParseBoolLiteral();
+            auto maybeBool = tryParseBoolLiteral();
             if (maybeBool.has_value())
                 return maybeBool.value();
 
-            return ParseFunctionCallOrNameExpression();
+            return parseFunctionCallOrNameExpression();
         }
         case TokenKind::Number:
         {
-            return ParseNumberLiteral();
+            return parseNumberLiteral();
         }
         case TokenKind::OpenParenthesis:
         {
-            return ParseGroupingExpression();
+            return parseGroupingExpression();
         }
         case TokenKind::Dot:
         {
-            AdvanceCurrentIndex();
-            auto expression = ParseFunctionCallOrNameExpression();
-            return new MemberAccessExpression(currentToken, expression);
+            advanceCurrentIndex();
+            auto expression = parseFunctionCallOrNameExpression();
+            return new MemberAccessExpression(current, expression);
         }
         case TokenKind::DoubleColon:
         {
-            AdvanceCurrentIndex();
-            auto expression = ParseFunctionCallOrNameExpression();
-            return new ScopeAccessExpression(currentToken, expression);
+            advanceCurrentIndex();
+            auto expression = parseFunctionCallOrNameExpression();
+            return new ScopeAccessExpression(current, expression);
         }
         default:
         {
-            const auto& location = m_tokens.GetSourceLocation(currentToken);
+            const auto& location = m_tokens.getSourceLocation(current);
             m_diagnostics.AddError(DiagnosticKind::Unknown, location);
 
-            AdvanceCurrentIndex();
-            return new Error(currentToken);
+            advanceCurrentIndex();
+            return new Error(current);
         }
     }
 }
 
-Expression* Parser::ParseFunctionCallOrNameExpression()
+Expression* Parser::parseFunctionCallOrNameExpression()
 {
-    auto nextToken = NextToken();
-
-    if (nextToken.kind == TokenKind::OpenParenthesis)
+    auto next = nextToken();
+    if (next.kind == TokenKind::OpenParenthesis)
     {
-        return ParseFunctionCallExpression();
+        return parseFunctionCallExpression();
     }
     else
     {
-        return ParseNameExpression();
+        return parseNameExpression();
     }
 }
 
-Expression* Parser::ParseFunctionCallExpression()
+Expression* Parser::parseFunctionCallExpression()
 {
-    auto name = AdvanceOnMatch(TokenKind::Identifier);
-    auto arguments = ParseArgumentsNode();
+    auto name = advanceOnMatch(TokenKind::Identifier);
+    auto arguments = parseArgumentsNode();
     return new FunctionCallExpression(name, arguments);
 }
 
-ArgumentsNode* Parser::ParseArgumentsNode()
+ArgumentsNode* Parser::parseArgumentsNode()
 {
-    auto openParenthesis = AdvanceOnMatch(TokenKind::OpenParenthesis);
-    auto currentToken = CurrentToken();
+    auto openParenthesis = advanceOnMatch(TokenKind::OpenParenthesis);
+    auto current = currentToken();
 
     QList<ArgumentNode*> arguments;
-    while (currentToken.kind != TokenKind::CloseParenthesis)
+    while (current.kind != TokenKind::CloseParenthesis)
     {
-        arguments.append(ParseArgumentNode());
-        if (CurrentToken().kind == TokenKind::Comma)
+        arguments.append(parseArgumentNode());
+        if (currentToken().kind == TokenKind::Comma)
         {
-            AdvanceCurrentIndex();
+            advanceCurrentIndex();
 
             // if(CurrentToken().kind == TokenKind::CloseParenthesis)
             // Too many commas or too few arguments
         }
-        currentToken = CurrentToken();
+        current = currentToken();
     }
 
-    auto closeParenthesis = AdvanceOnMatch(TokenKind::CloseParenthesis);
+    auto closeParenthesis = advanceOnMatch(TokenKind::CloseParenthesis);
     return new ArgumentsNode(openParenthesis, arguments, closeParenthesis);
 }
 
-TypeName Parser::ParseTypeNode()
+TypeName Parser::parseTypeNode()
 {
-    auto ref = TryMatchKeyword(QString("ref"));
-    auto name = ParseNameExpression();
+    auto ref = tryMatchKeyword(QString("ref"));
+    auto name = parseNameExpression();
     return TypeName(ref, name);
 }
 
-NameExpression* Parser::ParseNameExpression()
+NameExpression* Parser::parseNameExpression()
 {
-    auto name = AdvanceOnMatch(TokenKind::Identifier);
+    auto name = advanceOnMatch(TokenKind::Identifier);
     return new NameExpression(name);
 }
 
-NumberLiteral* Parser::ParseNumberLiteral()
+NumberLiteral* Parser::parseNumberLiteral()
 {
-    auto number = AdvanceOnMatch(TokenKind::Number);
+    auto number = advanceOnMatch(TokenKind::Number);
 
-    auto current = CurrentToken();
+    auto current = currentToken();
     if (current.kind == TokenKind::Colon)
     {
-        AdvanceCurrentIndex();
-        auto type = ParseTypeNode();
+        advanceCurrentIndex();
+        auto type = parseTypeNode();
         // TODO add diagnostic for invalid type
         return new NumberLiteral(number, current, type);
     }
@@ -541,131 +540,131 @@ NumberLiteral* Parser::ParseNumberLiteral()
     return new NumberLiteral(number);
 }
 
-GroupingExpression* Parser::ParseGroupingExpression()
+GroupingExpression* Parser::parseGroupingExpression()
 {
-    auto openParenthesis = AdvanceOnMatch(TokenKind::OpenParenthesis);
-    auto expression = ParseExpression();
-    auto closeParenthesis = AdvanceOnMatch(TokenKind::CloseParenthesis);
+    auto openParenthesis = advanceOnMatch(TokenKind::OpenParenthesis);
+    auto expression = parseExpression();
+    auto closeParenthesis = advanceOnMatch(TokenKind::CloseParenthesis);
 
     return new GroupingExpression(openParenthesis, expression, closeParenthesis);
 }
 
-EnumFieldDefinitionStatement* Parser::ParseEnumFieldDefinitionStatement()
+EnumFieldDefinitionStatement* Parser::parseEnumFieldDefinitionStatement()
 {
-    auto memberName = ParseNameExpression();
+    auto memberName = parseNameExpression();
 
-    auto current = CurrentToken();
+    auto current = currentToken();
     if (current.kind == TokenKind::Equal)
     {
-        AdvanceCurrentIndex();
-        auto value = ParseNumberLiteral();
+        advanceCurrentIndex();
+        auto value = parseNumberLiteral();
         return new EnumFieldDefinitionStatement(memberName, current, value);
     }
 
     return new EnumFieldDefinitionStatement(memberName);
 }
 
-BlockNode* Parser::ParseFunctionBody()
+BlockNode* Parser::parseFunctionBody()
 {
-    return ParseBlockNode(StatementScope::Function);
+    return parseBlockNode(StatementScope::Function);
 }
 
-BlockNode* Parser::ParseTypeBody()
+BlockNode* Parser::parseTypeBody()
 {
-    return ParseBlockNode(StatementScope::Type);
+    return parseBlockNode(StatementScope::Type);
 }
 
-BlockNode* Parser::ParseMethodBody()
+BlockNode* Parser::parseMethodBody()
 {
-    return ParseBlockNode(StatementScope::Method);
+    return parseBlockNode(StatementScope::Method);
 }
 
-BlockNode* Parser::ParseBlockNode(StatementScope scope)
+BlockNode* Parser::parseBlockNode(StatementScope scope)
 {
-    auto openBracket = AdvanceOnMatch(TokenKind::OpenBracket);
-    auto statements = ParseStatements(scope);
-    auto closeBracket = AdvanceOnMatch(TokenKind::CloseBracket);
+    auto openBracket = advanceOnMatch(TokenKind::OpenBracket);
+    auto statements = parseStatements(scope);
+    auto closeBracket = advanceOnMatch(TokenKind::CloseBracket);
 
     return new BlockNode(openBracket, statements, closeBracket);
 }
 
-ParameterNode* Parser::ParseParameterNode()
+ParameterNode* Parser::parseParameterNode()
 {
-    auto name = ParseNameExpression();
-    auto colon = AdvanceOnMatch(TokenKind::Colon);
-    auto type = ParseTypeNode();
+    auto name = parseNameExpression();
+    auto colon = advanceOnMatch(TokenKind::Colon);
+    auto type = parseTypeNode();
 
     return new ParameterNode(name, colon, type);
 }
 
-ArgumentNode* Parser::ParseArgumentNode()
+ArgumentNode* Parser::parseArgumentNode()
 {
-    auto ref = TryMatchKeyword(QString("ref"));
-    auto expression = ParseExpression();
+    auto ref = tryMatchKeyword(QString("ref"));
+    auto expression = parseExpression();
 
     return new ArgumentNode(ref, expression);
 }
 
-Token Parser::AdvanceOnMatch(TokenKind kind)
+Token Parser::advanceOnMatch(TokenKind kind)
 {
-    auto currentToken = CurrentToken();
-    if (currentToken.kind == kind)
+    auto current = currentToken();
+    if (current.kind == kind)
     {
-        AdvanceCurrentIndex();
-        return currentToken;
+        advanceCurrentIndex();
+        return current;
     }
     else
     {
-        const auto& location = m_tokens.GetSourceLocation(currentToken);
+        const auto& location = m_tokens.getSourceLocation(current);
         m_diagnostics.AddError(DiagnosticKind::_0003_ExpectedXButGotY, location);
-        return Token::ToError(currentToken);
+        return Token::ToError(current);
     }
 }
 
-std::optional<BoolLiteral*> Parser::TryParseBoolLiteral()
+std::optional<BoolLiteral*> Parser::tryParseBoolLiteral()
 {
-    auto currentToken = CurrentToken();
-    auto lexeme = m_tokens.GetLexeme(currentToken);
+    auto current = currentToken();
+    auto lexeme = m_tokens.getLexeme(current);
     if (IsTrueKeyword(lexeme))
     {
-        AdvanceCurrentIndex();
+        advanceCurrentIndex();
         return new BoolLiteral(true);
     }
     else if (IsFalseKeyword(lexeme))
     {
-        AdvanceCurrentIndex();
+        advanceCurrentIndex();
         return new BoolLiteral(false);
     }
     return {};
 }
 
-std::optional<Token> Parser::TryMatchKeyword(const QStringView& keyword)
+std::optional<Token> Parser::tryMatchKeyword(const QStringView& keyword)
 {
-    auto currentToken = CurrentToken();
-    if (currentToken.kind == TokenKind::Identifier 
-        && m_tokens.GetLexeme(currentToken) == keyword)
+    auto current = currentToken();
+    if (current.kind == TokenKind::Identifier
+        && m_tokens.getLexeme(current) == keyword)
     {
-        AdvanceCurrentIndex();
-        return currentToken;
+        advanceCurrentIndex();
+        return current;
     }
 
     return std::optional<Token>();
 }
 
-void Parser::SkipUntil(TokenKind kind)
+void Parser::skipUntil(TokenKind kind)
 {
-    auto currentToken = CurrentToken();
-    while (currentToken.kind != kind || currentToken.kind == TokenKind::EndOfFile)
+    auto current = currentToken();
+    while (current.kind != kind || current.kind == TokenKind::EndOfFile)
     {
-        const auto& location = m_tokens.GetSourceLocation(currentToken);
+        const auto& location = m_tokens.getSourceLocation(current);
         m_diagnostics.AddError(DiagnosticKind::Unknown, location);
 
-        AdvanceCurrentIndex();
-        currentToken = CurrentToken();
+        advanceCurrentIndex();
+        current = currentToken();
     }
 }
 
-Token Parser::Peek(i32 offset)
+Token Parser::peek(i32 offset)
 {
     auto index = m_currentIndex + offset;
     if (index >= m_tokens.size())
@@ -674,34 +673,34 @@ Token Parser::Peek(i32 offset)
     return m_tokens[index];
 }
 
-bool Parser::HasLineBreakSinceLastMemberAccess()
+bool Parser::hasLineBreakSinceLastMemberAccess()
 {
-    auto currentToken = CurrentToken();
-    if (currentToken.kind != TokenKind::Dot)
+    auto current = currentToken();
+    if (current.kind != TokenKind::Dot)
         return false;
 
-    auto lastToken = Peek(-1);
-    auto lastTokenLocation = m_tokens.GetSourceLocation(lastToken);
-    auto currentTokenLocation = m_tokens.GetSourceLocation(currentToken);
+    auto lastToken = peek(-1);
+    auto lastTokenLocation = m_tokens.getSourceLocation(lastToken);
+    auto currentTokenLocation = m_tokens.getSourceLocation(current);
 
     auto hasEmptyLineBreak = (currentTokenLocation.endLine - lastTokenLocation.endLine) >= 2;
     return hasEmptyLineBreak;
 }
 
-bool Parser::HasPossibleReturnValue(const Token& returnKeyword)
+bool Parser::hasPossibleReturnValue(const Token& returnKeyword)
 {
-    auto currentToken = CurrentToken();
-    if (currentToken.kind == TokenKind::CloseBracket)
+    auto current = currentToken();
+    if (current.kind == TokenKind::CloseBracket)
         return false;
 
-    auto returnTokenLocation = m_tokens.GetSourceLocation(returnKeyword);
-    auto currentTokenLocation = m_tokens.GetSourceLocation(currentToken);
+    auto returnTokenLocation = m_tokens.getSourceLocation(returnKeyword);
+    auto currentTokenLocation = m_tokens.getSourceLocation(current);
 
     auto isOnSameLine = returnTokenLocation.endLine == currentTokenLocation.endLine;
     return isOnSameLine;
 }
 
-BinaryOperatornKind Parser::ConvertBinaryOperatorTokenKindToEnum(TokenKind kind)
+BinaryOperatornKind Parser::convertBinaryOperatorTokenKindToEnum(TokenKind kind)
 {
     switch (kind)
     {
@@ -722,7 +721,7 @@ BinaryOperatornKind Parser::ConvertBinaryOperatorTokenKindToEnum(TokenKind kind)
     }
 }
 
-UnaryOperatornKind Parser::ConvertUnaryOperatorTokenKindToEnum(TokenKind kind)
+UnaryOperatornKind Parser::convertUnaryOperatorTokenKindToEnum(TokenKind kind)
 {
     switch (kind)
     {
@@ -736,5 +735,5 @@ UnaryOperatornKind Parser::ConvertUnaryOperatorTokenKindToEnum(TokenKind kind)
 ParseTree Parse(const TokenBuffer& tokens, DiagnosticsBag& diagnostics) noexcept
 {
     Parser parser{ tokens, diagnostics };
-    return parser.Parse();
+    return parser.parse();
 }

@@ -23,7 +23,7 @@ class COMPILER_API Parser
 public:
     Parser(const TokenBuffer& tokens, DiagnosticsBag& diagnostics);
 
-    ParseTree Parse();
+    ParseTree parse();
 
 private:
     enum class StatementScope
@@ -34,52 +34,52 @@ private:
         Type
     };
 
-    QList<Statement*> ParseGlobalStatements();
-    QList<Statement*> ParseStatements(StatementScope scope);
-    Statement* ParseAssignmentStatement();
-    Statement* ParseExpressionStatement();
-    Statement* ParseFunctionDefinitionStatement();
-    Statement* ParseEnumDefinitionStatement();
-    QList<EnumFieldDefinitionStatement*> ParseEnumFieldDefinitions();
-    Statement* ParseTypeDefinitionStatement();
-    Statement* ParseFieldDeclarationStatement();
-    Statement* ParseMethodDefinitionStatement();
-    Statement* ParseIfStatement(StatementScope scope);
-    Statement* ParseWhileStatement(StatementScope scope);
-    Statement* ParseReturnStatement();
-    Expression* ParseExpression();
-    Expression* ParseBinaryExpression(i32 parentPrecedence);
-    Expression* ParsePrimaryExpression();
-    Expression* ParseFunctionCallOrNameExpression();
-    Expression* ParseFunctionCallExpression();
-    ParametersNode* ParseParametersNode();
-    ArgumentsNode* ParseArgumentsNode();
-    BlockNode* ParseFunctionBody();
-    BlockNode* ParseTypeBody();
-    BlockNode* ParseMethodBody();
-    BlockNode* ParseBlockNode(StatementScope scope);
-    ParameterNode* ParseParameterNode();
-    ArgumentNode* ParseArgumentNode();
-    TypeName ParseTypeNode();
-    NameExpression* ParseNameExpression();
-    NumberLiteral* ParseNumberLiteral();
-    GroupingExpression* ParseGroupingExpression();
-    EnumFieldDefinitionStatement* ParseEnumFieldDefinitionStatement();
+    QList<Statement*> parseGlobalStatements();
+    QList<Statement*> parseStatements(StatementScope scope);
+    Statement* parseAssignmentStatement();
+    Statement* parseExpressionStatement();
+    Statement* parseFunctionDefinitionStatement();
+    Statement* parseEnumDefinitionStatement();
+    QList<EnumFieldDefinitionStatement*> parseEnumFieldDefinitions();
+    Statement* parseTypeDefinitionStatement();
+    Statement* parseFieldDeclarationStatement();
+    Statement* parseMethodDefinitionStatement();
+    Statement* parseIfStatement(StatementScope scope);
+    Statement* parseWhileStatement(StatementScope scope);
+    Statement* parseReturnStatement();
+    Expression* parseExpression();
+    Expression* parseBinaryExpression(i32 parentPrecedence);
+    Expression* parsePrimaryExpression();
+    Expression* parseFunctionCallOrNameExpression();
+    Expression* parseFunctionCallExpression();
+    ParametersNode* parseParametersNode();
+    ArgumentsNode* parseArgumentsNode();
+    BlockNode* parseFunctionBody();
+    BlockNode* parseTypeBody();
+    BlockNode* parseMethodBody();
+    BlockNode* parseBlockNode(StatementScope scope);
+    ParameterNode* parseParameterNode();
+    ArgumentNode* parseArgumentNode();
+    TypeName parseTypeNode();
+    NameExpression* parseNameExpression();
+    NumberLiteral* parseNumberLiteral();
+    GroupingExpression* parseGroupingExpression();
+    EnumFieldDefinitionStatement* parseEnumFieldDefinitionStatement();
 
-    Token AdvanceOnMatch(TokenKind kind);
-    std::optional<BoolLiteral*> TryParseBoolLiteral();
-    std::optional<Token> TryMatchKeyword(const QStringView& keyword);
-    void SkipUntil(TokenKind kind);
+    Token advanceOnMatch(TokenKind kind);
+    std::optional<BoolLiteral*> tryParseBoolLiteral();
+    std::optional<Token> tryMatchKeyword(const QStringView& keyword);
+    void skipUntil(TokenKind kind);
 
-    Token Peek(i32 offset);
-    Token CurrentToken() { return Peek(0); }
-    Token NextToken() { return Peek(1); }
-    void AdvanceCurrentIndex() { m_currentIndex++; }
+    Token peek(i32 offset);
+    Token currentToken() { return peek(0); }
+    Token nextToken() { return peek(1); }
+    void advanceCurrentIndex() { m_currentIndex++; }
 
-    bool HasLineBreakSinceLastMemberAccess();
-    bool HasPossibleReturnValue(const Token& returnKeyword);
-    BinaryOperatornKind ConvertBinaryOperatorTokenKindToEnum(TokenKind kind);
-    UnaryOperatornKind ConvertUnaryOperatorTokenKindToEnum(TokenKind kind);
+    bool hasLineBreakSinceLastMemberAccess();
+    bool hasPossibleReturnValue(const Token& returnKeyword);
+    BinaryOperatornKind convertBinaryOperatorTokenKindToEnum(TokenKind kind);
+    UnaryOperatornKind convertUnaryOperatorTokenKindToEnum(TokenKind kind);
 
     TokenBuffer m_tokens;
     DiagnosticsBag& m_diagnostics;

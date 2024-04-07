@@ -20,7 +20,7 @@ namespace
         auto endTime = std::chrono::high_resolution_clock::now();
         std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
-        auto& location = tokens.GetSourceLocation(token);
+        auto& location = tokens.getSourceLocation(token);
         AalTest::AreEqual(location.startIndex, expectedLocation.startIndex);
         AalTest::AreEqual(location.endIndex, expectedLocation.endIndex);
         AalTest::AreEqual(location.startColumn, expectedLocation.startColumn);
@@ -104,7 +104,7 @@ namespace
         AalTest::AreEqual(tokens.size(), expectedList.size());
         for (auto i = 0; i < tokens.size(); i++)
         {
-            auto& location = tokens.GetSourceLocation(tokens[i]);
+            auto& location = tokens.getSourceLocation(tokens[i]);
 
             AalTest::AreEqual(location.startIndex, expectedList[i].startIndex);
             AalTest::AreEqual(location.endIndex, expectedList[i].endIndex);

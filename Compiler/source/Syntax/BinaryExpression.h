@@ -36,4 +36,4 @@ private:
     Expression* m_rightExpression;
 };
 
-COMPILER_API QString StringifyBinaryOperation(BinaryOperatornKind kind);
+COMPILER_API [[nodiscard]] QString StringifyBinaryOperation(BinaryOperatornKind kind);

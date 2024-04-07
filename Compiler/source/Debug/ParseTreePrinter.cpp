@@ -8,7 +8,7 @@ ParseTreePrinter::ParseTreePrinter(ParseTree& parseTree, i32 indentation)
 
 QString ParseTreePrinter::PrettyPrint()
 {
-    for (const auto& globalStatement : m_parseTree.GlobalStatements())
+    for (const auto& globalStatement : m_parseTree.globalStatements())
     {
         PrettyPrintNode(globalStatement);
     }
@@ -175,7 +175,7 @@ void ParseTreePrinter::PrettyPrintExpressionStatement(ExpressionStatement* state
 void ParseTreePrinter::PrettyPrintFunctionDefinitionStatement(FunctionDefinitionStatement* statement)
 {
     auto nameToken = statement->name();
-    auto nameLexeme = m_parseTree.Tokens().GetLexeme(nameToken);
+    auto nameLexeme = m_parseTree.tokens().getLexeme(nameToken);
 
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
@@ -189,7 +189,7 @@ void ParseTreePrinter::PrettyPrintFunctionDefinitionStatement(FunctionDefinition
 void ParseTreePrinter::PrettyPrintEnumDefinitionStatement(EnumDefinitionStatement* statement)
 {
     auto nameToken = statement->name();
-    auto nameLexeme = m_parseTree.Tokens().GetLexeme(nameToken);
+    auto nameLexeme = m_parseTree.tokens().getLexeme(nameToken);
 
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
@@ -215,7 +215,7 @@ void ParseTreePrinter::PrettyPrintEnumDefinitionStatement(EnumDefinitionStatemen
 void ParseTreePrinter::PrettyPrintEnumFieldDefinitionStatement(EnumFieldDefinitionStatement* statement)
 {
     auto nameToken = statement->name()->identifier();
-    auto nameLexeme = m_parseTree.Tokens().GetLexeme(nameToken);
+    auto nameLexeme = m_parseTree.tokens().getLexeme(nameToken);
 
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
@@ -233,7 +233,7 @@ void ParseTreePrinter::PrettyPrintEnumFieldDefinitionStatement(EnumFieldDefiniti
 void ParseTreePrinter::PrettyPrintTypeDefinitionStatement(TypeDefinitionStatement* statement)
 {
     auto nameToken = statement->name();
-    auto nameLexeme = m_parseTree.Tokens().GetLexeme(nameToken);
+    auto nameLexeme = m_parseTree.tokens().getLexeme(nameToken);
 
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
@@ -273,7 +273,7 @@ void ParseTreePrinter::PrettyPrintFieldDeclarationStatement(FieldDeclarationStat
 void ParseTreePrinter::PrettyPrintMethodDefinitionStatement(MethodDefinitionStatement* statement)
 {
     auto nameToken = statement->name();
-    auto nameLexeme = m_parseTree.Tokens().GetLexeme(nameToken);
+    auto nameLexeme = m_parseTree.tokens().getLexeme(nameToken);
 
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
@@ -403,7 +403,7 @@ void ParseTreePrinter::PrettyPrintDiscardLiteral(DiscardLiteral* discard)
 void ParseTreePrinter::PrettyPrintFunctionCallExpression(FunctionCallExpression* functionCall)
 {
     auto nameToken = functionCall->name();
-    auto nameLexeme = m_parseTree.Tokens().GetLexeme(nameToken);
+    auto nameLexeme = m_parseTree.tokens().getLexeme(nameToken);
     stream() << Indentation() << StringifyNodeKind(functionCall->kind()) << QString(": {") << NewLine();
 
     PushIndentation();
@@ -416,7 +416,7 @@ void ParseTreePrinter::PrettyPrintFunctionCallExpression(FunctionCallExpression*
 void ParseTreePrinter::PrettyPrintTypeName(const TypeName& type)
 {
     auto token = type.name()->identifier();
-    auto lexeme = m_parseTree.Tokens().GetLexeme(token);
+    auto lexeme = m_parseTree.tokens().getLexeme(token);
     if (type.isReference())
         stream() << Indentation() << QString("Ref: true") << NewLine();
 
@@ -432,14 +432,14 @@ void ParseTreePrinter::PrettyPrintBoolLiteral(BoolLiteral* node)
 void ParseTreePrinter::PrettyPrintNameExpression(NameExpression* name)
 {
     auto token = name->identifier();
-    auto lexeme = m_parseTree.Tokens().GetLexeme(token);
+    auto lexeme = m_parseTree.tokens().getLexeme(token);
     stream() << Indentation() << StringifyNodeKind(name->kind()) << QString(": %1").arg(lexeme) << NewLine();
 }
 
 void ParseTreePrinter::PrettyPrintNumberLiteral(NumberLiteral* number)
 {
     auto token = number->token();
-    auto lexeme = m_parseTree.Tokens().GetLexeme(token);
+    auto lexeme = m_parseTree.tokens().getLexeme(token);
     stream() << Indentation() << StringifyNodeKind(number->kind()) << QString(": %1").arg(lexeme) << NewLine();
 
     auto optionalType = number->type();

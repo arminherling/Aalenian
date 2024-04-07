@@ -12,8 +12,8 @@ public:
         const TokenBuffer& tokens,
         const QList<TypedStatement*>& statements);
 
-    [[nodiscard]] QList<TypedStatement*> GlobalStatements() const noexcept;
-    [[nodiscard]] const TokenBuffer& Tokens() noexcept { return m_tokens; }
+    [[nodiscard]] QList<TypedStatement*> globalStatements() const noexcept;
+    [[nodiscard]] const TokenBuffer& tokens() noexcept { return m_tokens; }
 
 private:
     TokenBuffer m_tokens;

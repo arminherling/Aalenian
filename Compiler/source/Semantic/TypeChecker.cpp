@@ -23,16 +23,16 @@ TypeChecker::TypeChecker(
 {
 }
 
-TypedTree TypeChecker::TypeCheck()
+TypedTree TypeChecker::typeCheck()
 {
     QList<TypedStatement*> globalStatements;
 
-    for (const auto& globalStatement : m_parseTree.GlobalStatements())
+    for (const auto& globalStatement : m_parseTree.globalStatements())
     {
-        globalStatements.append(TypeCheckStatement(globalStatement));
+        globalStatements.append(typeCheckStatement(globalStatement));
     }
 
-    return TypedTree(m_parseTree.Tokens(), globalStatements);
+    return TypedTree(m_parseTree.tokens(), globalStatements);
 }
 
 TypedTree TypeCheck(
@@ -43,20 +43,20 @@ TypedTree TypeCheck(
     DiagnosticsBag& diagnostics) noexcept
 {
     TypeChecker typeChecker{ parseTree, options, environment, typeDatabase, diagnostics };
-    return typeChecker.TypeCheck();
+    return typeChecker.typeCheck();
 }
 
-TypedStatement* TypeChecker::TypeCheckStatement(Statement* statement)
+TypedStatement* TypeChecker::typeCheckStatement(Statement* statement)
 {
     switch (statement->kind())
     {
         case NodeKind::AssignmentStatement:
         {
-            return TypeCheckAssignmentStatement((AssignmentStatement*)statement);
+            return typeCheckAssignmentStatement((AssignmentStatement*)statement);
         }
         case NodeKind::EnumDefinitionStatement:
         {
-            return TypeCheckEnumDefinitionStatement((EnumDefinitionStatement*)statement);
+            return typeCheckEnumDefinitionStatement((EnumDefinitionStatement*)statement);
         }
         default:
         {
@@ -65,29 +65,29 @@ TypedStatement* TypeChecker::TypeCheckStatement(Statement* statement)
     }
 }
 
-TypedExpression* TypeChecker::TypeCheckExpression(Expression* expression)
+TypedExpression* TypeChecker::typeCheckExpression(Expression* expression)
 {
     switch (expression->kind())
     {
         case NodeKind::BinaryExpression:
         {
-            return TypeCheckBinaryExpressionExpression((BinaryExpression*)expression);
+            return typeCheckBinaryExpressionExpression((BinaryExpression*)expression);
         }
         case NodeKind::FunctionCallExpression:
         {
-            return TypeCheckFunctionCallExpression((FunctionCallExpression*)expression);
+            return typeCheckFunctionCallExpression((FunctionCallExpression*)expression);
         }
         case NodeKind::NameExpression:
         {
-            return TypeCheckNameExpression((NameExpression*)expression);
+            return typeCheckNameExpression((NameExpression*)expression);
         }
         case NodeKind::DiscardLiteral:
         {
-            return TypeCheckDiscardLiteral((DiscardLiteral*)expression);
+            return typeCheckDiscardLiteral((DiscardLiteral*)expression);
         }
         case NodeKind::NumberLiteral:
         {
-            return TypeCheckNumberLiteral((NumberLiteral*)expression);
+            return typeCheckNumberLiteral((NumberLiteral*)expression);
         }
         default:
         {
@@ -96,10 +96,10 @@ TypedExpression* TypeChecker::TypeCheckExpression(Expression* expression)
     }
 }
 
-TypedStatement* TypeChecker::TypeCheckAssignmentStatement(AssignmentStatement* statement)
+TypedStatement* TypeChecker::typeCheckAssignmentStatement(AssignmentStatement* statement)
 {
-    auto left = TypeCheckExpression(statement->leftExpression());
-    auto right = TypeCheckExpression(statement->rightExpression());
+    auto left = typeCheckExpression(statement->leftExpression());
+    auto right = typeCheckExpression(statement->rightExpression());
 
     auto inferedType = Type::Undefined();
     if (left->type() == Type::Undefined() && right != nullptr)
@@ -117,7 +117,7 @@ TypedStatement* TypeChecker::TypeCheckAssignmentStatement(AssignmentStatement* s
     return new TypedAssignmentStatement(left, right, statement, inferedType);
 }
 
-TypedStatement* TypeChecker::TypeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement)
+TypedStatement* TypeChecker::typeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement)
 {
     auto optionalBaseTypeName = statement->baseType();
     auto baseType = Type::Undefined();
@@ -125,7 +125,7 @@ TypedStatement* TypeChecker::TypeCheckEnumDefinitionStatement(EnumDefinitionStat
     {
         auto typeName = optionalBaseTypeName.value().name();
         auto identifier = typeName->identifier();
-        auto lexeme = m_parseTree.Tokens().GetLexeme(identifier);
+        auto lexeme = m_parseTree.tokens().getLexeme(identifier);
         baseType = m_typeDatabase.getTypeByName(lexeme);
     }
     else
@@ -140,14 +140,14 @@ TypedStatement* TypeChecker::TypeCheckEnumDefinitionStatement(EnumDefinitionStat
 
 
     auto nameToken = statement->name();
-    auto enumName = m_parseTree.Tokens().GetLexeme(nameToken);
+    auto enumName = m_parseTree.tokens().getLexeme(nameToken);
     auto enumType = m_typeDatabase.createType(enumName, TypeKind::Enum);
-    auto enumFields = TypeCheckEnumFieldDefinitionNodes(enumType, baseType, statement->fieldDefinitions());
+    auto enumFields = typeCheckEnumFieldDefinitionNodes(enumType, baseType, statement->fieldDefinitions());
 
     return new TypedEnumDefinitionStatement(enumName, enumType, baseType, enumFields, statement);
 }
 
-QList<TypedEnumFieldDefinitionNode*> TypeChecker::TypeCheckEnumFieldDefinitionNodes(Type enumType, Type baseType, const QList<EnumFieldDefinitionStatement*> fieldDefinitions)
+QList<TypedEnumFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNodes(Type enumType, Type baseType, const QList<EnumFieldDefinitionStatement*> fieldDefinitions)
 {
     auto& enumTypeDefinition = m_typeDatabase.getTypeDefinition(enumType);
 
@@ -156,15 +156,15 @@ QList<TypedEnumFieldDefinitionNode*> TypeChecker::TypeCheckEnumFieldDefinitionNo
     for (const auto definition : fieldDefinitions)
     {
         auto nameToken = definition->name()->identifier();
-        auto name = m_parseTree.Tokens().GetLexeme(nameToken);
+        auto name = m_parseTree.tokens().getLexeme(nameToken);
         
         if (definition->value().has_value())
         {
             auto numberLiteral = definition->value().value();
             auto numberToken = numberLiteral->token();
-            auto valueLexeme = m_parseTree.Tokens().GetLexeme(numberToken);
+            auto valueLexeme = m_parseTree.tokens().getLexeme(numberToken);
 
-            auto [typedLiteral, value] = ConvertValueToTypedLiteral(valueLexeme, baseType, definition);
+            auto [typedLiteral, value] = convertValueToTypedLiteral(valueLexeme, baseType, definition);
             if (typedLiteral != nullptr)
             {
                 nextValue = value + 1;
@@ -174,7 +174,7 @@ QList<TypedEnumFieldDefinitionNode*> TypeChecker::TypeCheckEnumFieldDefinitionNo
         }
         else
         {
-            auto [typedLiteral, value] = ConvertValueToTypedLiteral(nextValue++, baseType, definition);
+            auto [typedLiteral, value] = convertValueToTypedLiteral(nextValue++, baseType, definition);
             if (typedLiteral != nullptr)
             {
                 enumFields.append(new TypedEnumFieldDefinitionNode(name, typedLiteral));
@@ -185,7 +185,7 @@ QList<TypedEnumFieldDefinitionNode*> TypeChecker::TypeCheckEnumFieldDefinitionNo
     return enumFields;
 }
 
-TypedExpression* TypeChecker::TypeCheckBinaryExpressionExpression(BinaryExpression* binaryExpression)
+TypedExpression* TypeChecker::typeCheckBinaryExpressionExpression(BinaryExpression* binaryExpression)
 {
     switch (binaryExpression->binaryOperator())
     {
@@ -195,7 +195,7 @@ TypedExpression* TypeChecker::TypeCheckBinaryExpressionExpression(BinaryExpressi
             //TODO disallow other expressions
             assert(leftExpression->kind() == NodeKind::NameExpression);
             auto scopeNameExpression = (NameExpression*)leftExpression;
-            auto scopeName = m_parseTree.Tokens().GetLexeme(scopeNameExpression->identifier());
+            auto scopeName = m_parseTree.tokens().getLexeme(scopeNameExpression->identifier());
             auto scopeType = m_typeDatabase.getTypeByName(scopeName);
             auto scopeTypeDefinition = m_typeDatabase.getTypeDefinition(scopeType);
 
@@ -207,7 +207,7 @@ TypedExpression* TypeChecker::TypeCheckBinaryExpressionExpression(BinaryExpressi
                     //TODO allow/disallow other expressions
                     assert(rightExpression->kind() == NodeKind::NameExpression);
                     auto fieldNameExpression = (NameExpression*)rightExpression;
-                    auto fieldName = m_parseTree.Tokens().GetLexeme(fieldNameExpression->identifier());
+                    auto fieldName = m_parseTree.tokens().getLexeme(fieldNameExpression->identifier());
                     auto enumField = scopeTypeDefinition.getFieldByName(fieldName);
                     return new TypedEnumFieldAccessExpression(scopeType, enumField, binaryExpression);
                 }
@@ -222,27 +222,27 @@ TypedExpression* TypeChecker::TypeCheckBinaryExpressionExpression(BinaryExpressi
     return nullptr;
 }
 
-TypedExpression* TypeChecker::TypeCheckNameExpression(NameExpression* expression)
+TypedExpression* TypeChecker::typeCheckNameExpression(NameExpression* expression)
 {
     auto identifier = expression->identifier();
-    auto lexeme = m_parseTree.Tokens().GetLexeme(identifier);
+    auto lexeme = m_parseTree.tokens().getLexeme(identifier);
     auto type = m_environment.tryGetBinding(lexeme);
     return new TypedGlobalValue(lexeme, expression, type);
 }
 
-TypedExpression* TypeChecker::TypeCheckDiscardLiteral(DiscardLiteral* literal)
+TypedExpression* TypeChecker::typeCheckDiscardLiteral(DiscardLiteral* literal)
 {
     return new Discard(literal);
 }
 
-TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)
+TypedExpression* TypeChecker::typeCheckNumberLiteral(NumberLiteral* literal)
 {
     auto numberType = Type::Undefined();
     if (literal->type().has_value())
     {
         auto typeToken = literal->type().value();
         auto identifierToken = typeToken.name()->identifier();
-        auto typeName = m_parseTree.Tokens().GetLexeme(identifierToken);
+        auto typeName = m_parseTree.tokens().getLexeme(identifierToken);
         
         numberType = m_typeDatabase.getTypeByName(typeName);
     }
@@ -252,9 +252,9 @@ TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)
     }
 
     auto numberToken = literal->token();
-    auto valueLexeme = m_parseTree.Tokens().GetLexeme(numberToken);
+    auto valueLexeme = m_parseTree.tokens().getLexeme(numberToken);
 
-    auto [typedLiteral, value] = ConvertValueToTypedLiteral(valueLexeme, numberType, literal);
+    auto [typedLiteral, value] = convertValueToTypedLiteral(valueLexeme, numberType, literal);
     if (typedLiteral != nullptr)
         return typedLiteral;
 
@@ -262,10 +262,10 @@ TypedExpression* TypeChecker::TypeCheckNumberLiteral(NumberLiteral* literal)
     return nullptr;
 }
 
-TypedExpression* TypeChecker::TypeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression)
+TypedExpression* TypeChecker::typeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression)
 {
     auto name = functionCallExpression->name();
-    auto lexeme = m_parseTree.Tokens().GetLexeme(name);
+    auto lexeme = m_parseTree.tokens().getLexeme(name);
     auto type = m_environment.tryGetBinding(lexeme);
     // TODO type check parameters and find the correct function call
     // TODO check if function was defined before and what type it returns, assume undefined for now
@@ -278,7 +278,7 @@ Type TypeChecker::inferType(TypedNode* node)
     return node->type();
 }
 
-std::tuple<TypedExpression*, i32> TypeChecker::ConvertValueToTypedLiteral(QStringView valueLexeme, Type type, Node* source)
+std::tuple<TypedExpression*, i32> TypeChecker::convertValueToTypedLiteral(QStringView valueLexeme, Type type, Node* source)
 {
     if (type == Type::U8())
     {
@@ -306,7 +306,7 @@ std::tuple<TypedExpression*, i32> TypeChecker::ConvertValueToTypedLiteral(QStrin
     return { nullptr, 0 };
 }
 
-std::tuple<TypedExpression*, i32> TypeChecker::ConvertValueToTypedLiteral(i32 value, Type type, Node* source)
+std::tuple<TypedExpression*, i32> TypeChecker::convertValueToTypedLiteral(i32 value, Type type, Node* source)
 {
     if (type == Type::U8())
     {

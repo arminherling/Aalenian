@@ -10,19 +10,19 @@ TokenBuffer::TokenBuffer(i32 initialSize)
     sourceLocations.reserve(initialSize);
 }
 
-Token TokenBuffer::AddToken(const Token& token) noexcept
+Token TokenBuffer::addToken(const Token& token) noexcept
 {
     tokens.push_back(token);
     return token;
 }
 
-i32 TokenBuffer::AddLexeme(const QStringView& lexeme) noexcept
+i32 TokenBuffer::addLexeme(const QStringView& lexeme) noexcept
 {
     lexemes.push_back(lexeme);
     return lexemes.size() - 1;
 }
 
-i32 TokenBuffer::AddSourceLocation(const SourceLocation& sourceLocation) noexcept
+i32 TokenBuffer::addSourceLocation(const SourceLocation& sourceLocation) noexcept
 {
     sourceLocations.push_back(sourceLocation);
     return sourceLocations.size() - 1;
@@ -38,12 +38,12 @@ const Token& TokenBuffer::operator[](i32 position) const noexcept
     return tokens.at(position);
 }
 
-const SourceLocation& TokenBuffer::GetSourceLocation(const Token& token) const noexcept
+const SourceLocation& TokenBuffer::getSourceLocation(const Token& token) const noexcept
 {
     return sourceLocations.at(token.locationIndex);
 }
 
-const QStringView& TokenBuffer::GetLexeme(const Token& token) const noexcept
+const QStringView& TokenBuffer::getLexeme(const Token& token) const noexcept
 {
     return lexemes.at(token.kindIndex);
 }

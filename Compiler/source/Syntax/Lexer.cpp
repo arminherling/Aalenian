@@ -75,7 +75,7 @@ auto AdvanceCurrentIndexAndResetLine(i32& currentIndex, i32& currentLine, i32& c
 auto AddTokenKindAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn, TokenKind tokenKind) noexcept
 {
     auto tokenSize = TokenSize(tokenKind);
-    auto locationIndex = tokenBuffer.AddSourceLocation(
+    auto locationIndex = tokenBuffer.addSourceLocation(
         {
             .source = source,
             .startIndex = currentIndex,
@@ -86,14 +86,14 @@ auto AddTokenKindAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr&
             .endLine = currentLine
         });
     AdvanceCurrentIndex(currentIndex, currentColumn);
-    return tokenBuffer.AddToken({ .kind = tokenKind, .locationIndex = locationIndex });
+    return tokenBuffer.addToken({ .kind = tokenKind, .locationIndex = locationIndex });
 };
 
 [[nodiscard]] auto AddLexemeAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn, TokenKind tokenKind, i32 startIndex, i32 startColumn, i32 startLine) noexcept
 {
     auto length = currentIndex - startIndex;
-    auto identifierIndex = tokenBuffer.AddLexeme(QStringView(source->text).sliced(startIndex, length));
-    auto locationIndex = tokenBuffer.AddSourceLocation(
+    auto identifierIndex = tokenBuffer.addLexeme(QStringView(source->text).sliced(startIndex, length));
+    auto locationIndex = tokenBuffer.addSourceLocation(
         {
             .source = source,
             .startIndex = startIndex,
@@ -103,7 +103,7 @@ auto AddTokenKindAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr&
             .startLine = startLine,
             .endLine = currentLine
         });
-    return tokenBuffer.AddToken({ .kind = tokenKind, .kindIndex = identifierIndex, .locationIndex = locationIndex });
+    return tokenBuffer.addToken({ .kind = tokenKind, .kindIndex = identifierIndex, .locationIndex = locationIndex });
 };
 
 auto LexIdentifier(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn) noexcept
@@ -161,7 +161,7 @@ auto LexString(TokenBuffer& tokenBuffer, DiagnosticsBag& diagnostics, const Sour
     else
     {
         auto token = AddLexemeAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Error, startIndex, startColumn, startLine);
-        auto& location = tokenBuffer.GetSourceLocation(token);
+        auto& location = tokenBuffer.getSourceLocation(token);
         diagnostics.AddError(DiagnosticKind::_0002_UnterminatedString, location);
         return token;
     }
@@ -295,7 +295,7 @@ auto LexString(TokenBuffer& tokenBuffer, DiagnosticsBag& diagnostics, const Sour
                 }
 
                 auto token = AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Unknown);
-                const auto& location = tokenBuffer.GetSourceLocation(token);
+                const auto& location = tokenBuffer.getSourceLocation(token);
                 diagnostics.AddError(DiagnosticKind::_0001_FoundIllegalCharacter, location);
                 break;
             }

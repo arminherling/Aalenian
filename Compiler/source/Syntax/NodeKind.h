@@ -52,4 +52,4 @@ enum class COMPILER_API NodeKind
     I32Literal
 };
 
-COMPILER_API QString StringifyNodeKind(NodeKind kind);
+COMPILER_API [[nodiscard]] QString StringifyNodeKind(NodeKind kind);

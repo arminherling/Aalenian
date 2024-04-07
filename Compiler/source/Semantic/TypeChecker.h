@@ -30,24 +30,24 @@ public:
         TypeDatabase& typeDatabase, 
         DiagnosticsBag& diagnostics);
 
-    TypedTree TypeCheck();
+    TypedTree typeCheck();
 
 private:
-    [[nodiscard]] TypedStatement* TypeCheckStatement(Statement* statement);
-    [[nodiscard]] TypedExpression* TypeCheckExpression(Expression* expression);
+    [[nodiscard]] TypedStatement* typeCheckStatement(Statement* statement);
+    [[nodiscard]] TypedExpression* typeCheckExpression(Expression* expression);
 
-    [[nodiscard]] TypedStatement* TypeCheckAssignmentStatement(AssignmentStatement* statement);
-    [[nodiscard]] TypedStatement* TypeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement);
-    [[nodiscard]] QList<TypedEnumFieldDefinitionNode*> TypeCheckEnumFieldDefinitionNodes(Type enumType, Type baseType, const QList<EnumFieldDefinitionStatement*> fieldDefinitions);
-    [[nodiscard]] TypedExpression* TypeCheckBinaryExpressionExpression(BinaryExpression* binaryExpression);
-    [[nodiscard]] TypedExpression* TypeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression); 
-    [[nodiscard]] TypedExpression* TypeCheckNameExpression(NameExpression* expression);
-    [[nodiscard]] TypedExpression* TypeCheckDiscardLiteral(DiscardLiteral* literal);
-    [[nodiscard]] TypedExpression* TypeCheckNumberLiteral(NumberLiteral* literal);
+    [[nodiscard]] TypedStatement* typeCheckAssignmentStatement(AssignmentStatement* statement);
+    [[nodiscard]] TypedStatement* typeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement);
+    [[nodiscard]] QList<TypedEnumFieldDefinitionNode*> typeCheckEnumFieldDefinitionNodes(Type enumType, Type baseType, const QList<EnumFieldDefinitionStatement*> fieldDefinitions);
+    [[nodiscard]] TypedExpression* typeCheckBinaryExpressionExpression(BinaryExpression* binaryExpression);
+    [[nodiscard]] TypedExpression* typeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression); 
+    [[nodiscard]] TypedExpression* typeCheckNameExpression(NameExpression* expression);
+    [[nodiscard]] TypedExpression* typeCheckDiscardLiteral(DiscardLiteral* literal);
+    [[nodiscard]] TypedExpression* typeCheckNumberLiteral(NumberLiteral* literal);
 
     [[nodiscard]] Type inferType(TypedNode* node);
-    [[nodiscard]] std::tuple<TypedExpression*, i32> ConvertValueToTypedLiteral(QStringView literal, Type type, Node* source);
-    [[nodiscard]] std::tuple<TypedExpression*, i32> ConvertValueToTypedLiteral(i32 value, Type type, Node* source);
+    [[nodiscard]] std::tuple<TypedExpression*, i32> convertValueToTypedLiteral(QStringView literal, Type type, Node* source);
+    [[nodiscard]] std::tuple<TypedExpression*, i32> convertValueToTypedLiteral(i32 value, Type type, Node* source);
 
     ParseTree m_parseTree;
     TypeCheckerOptions m_options;

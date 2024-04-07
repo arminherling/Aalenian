@@ -12,7 +12,7 @@ TypedTreePrinter::TypedTreePrinter(
 
 QString TypedTreePrinter::PrettyPrint()
 {
-    for (const auto& globalStatement : m_typedTree.GlobalStatements())
+    for (const auto& globalStatement : m_typedTree.globalStatements())
     {
         PrettyPrintNode(globalStatement);
     }

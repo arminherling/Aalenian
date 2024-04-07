@@ -33,4 +33,4 @@ enum Op : u8
     Halt
 };
 
-COMPILER_API QString StringifyOp(Op op);
+COMPILER_API [[nodiscard]] QString StringifyOp(Op op);

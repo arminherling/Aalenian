@@ -8,7 +8,7 @@ TypedTree::TypedTree(
 {
 }
 
-QList<TypedStatement*> TypedTree::GlobalStatements() const noexcept
+QList<TypedStatement*> TypedTree::globalStatements() const noexcept
 {
     return m_statements;
 }
