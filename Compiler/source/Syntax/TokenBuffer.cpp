@@ -45,5 +45,5 @@ const SourceLocation& TokenBuffer::getSourceLocation(const Token& token) const n
 
 const QStringView& TokenBuffer::getLexeme(const Token& token) const noexcept
 {
-    return lexemes.at(token.kindIndex);
+    return lexemes.at(token.lexemeIndex);
 }

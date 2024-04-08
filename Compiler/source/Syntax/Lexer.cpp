@@ -103,7 +103,7 @@ auto AddTokenKindAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr&
             .startLine = startLine,
             .endLine = currentLine
         });
-    return tokenBuffer.addToken({ .kind = tokenKind, .kindIndex = identifierIndex, .locationIndex = locationIndex });
+    return tokenBuffer.addToken({ .kind = tokenKind, .lexemeIndex = identifierIndex, .locationIndex = locationIndex });
 };
 
 auto LexIdentifier(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn) noexcept

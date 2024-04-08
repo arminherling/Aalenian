@@ -155,7 +155,10 @@ TypedStatement* TypeChecker::typeCheckEnumDefinitionStatement(EnumDefinitionStat
     return new TypedEnumDefinitionStatement(enumName, enumType, baseType, enumFields, statement);
 }
 
-QList<TypedEnumFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNodes(Type enumType, Type baseType, const QList<EnumFieldDefinitionStatement*> fieldDefinitions)
+QList<TypedEnumFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNodes(
+    Type enumType, 
+    Type baseType, 
+    const QList<EnumFieldDefinitionStatement*>& fieldDefinitions)
 {
     auto& enumTypeDefinition = m_typeDatabase.getTypeDefinition(enumType);
 

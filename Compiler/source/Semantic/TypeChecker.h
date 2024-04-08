@@ -39,7 +39,10 @@ private:
 
     [[nodiscard]] TypedStatement* typeCheckAssignmentStatement(AssignmentStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement);
-    [[nodiscard]] QList<TypedEnumFieldDefinitionNode*> typeCheckEnumFieldDefinitionNodes(Type enumType, Type baseType, const QList<EnumFieldDefinitionStatement*> fieldDefinitions);
+    [[nodiscard]] QList<TypedEnumFieldDefinitionNode*> typeCheckEnumFieldDefinitionNodes(
+        Type enumType, 
+        Type baseType, 
+        const QList<EnumFieldDefinitionStatement*>& fieldDefinitions);
     [[nodiscard]] TypedExpression* typeCheckUnaryExpressionExpression(UnaryExpression* unaryExpression);
     [[nodiscard]] TypedExpression* typeCheckBinaryExpressionExpression(BinaryExpression* binaryExpression);
     [[nodiscard]] TypedExpression* typeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression); 
