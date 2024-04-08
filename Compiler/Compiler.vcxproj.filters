@@ -236,6 +236,9 @@
     <ClCompile Include="source\Semantic\TypedNegationExpression.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Semantic\TypedTypeDefinitionStatement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Compiler\DiagnosticsBag.h">
@@ -488,6 +491,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Semantic\TypedNegationExpression.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Semantic\TypedTypeDefinitionStatement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

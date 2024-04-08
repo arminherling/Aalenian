@@ -1,6 +1,6 @@
 TypedEnumDefinitionStatement: {
-    Type: enum
-    Name: Values
+    TypeKind: enum
+    TypeName: Values
     BaseType: i32
     Fields(1): {
         TypedEnumFieldDefinitionNode: {

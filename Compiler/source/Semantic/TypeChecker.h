@@ -19,6 +19,7 @@
 #include <Syntax/NameExpression.h>
 #include <Syntax/NumberLiteral.h>
 #include <Syntax/ParseTree.h>
+#include <Syntax/TypeDefinitionStatement.h>
 #include <Syntax/UnaryExpression.h>
 
 class COMPILER_API TypeChecker
@@ -39,6 +40,7 @@ private:
 
     [[nodiscard]] TypedStatement* typeCheckAssignmentStatement(AssignmentStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement);
+    [[nodiscard]] TypedStatement* typeCheckTypeDefinitionStatement(TypeDefinitionStatement* statement);
     [[nodiscard]] QList<TypedEnumFieldDefinitionNode*> typeCheckEnumFieldDefinitionNodes(
         Type enumType, 
         Type baseType, 

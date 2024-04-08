@@ -1,0 +1,8 @@
+TypedTypeDefinitionStatement: {
+    TypeKind: type
+    TypeName: Empty
+    Fields(0): {
+    }
+    Methods(0): {
+    }
+}

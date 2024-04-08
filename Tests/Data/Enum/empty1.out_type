@@ -1,6 +1,6 @@
 TypedEnumDefinitionStatement: {
-    Type: enum
-    Name: Empty
+    TypeKind: enum
+    TypeName: Empty
     BaseType: u8
     Fields(0): {
     }

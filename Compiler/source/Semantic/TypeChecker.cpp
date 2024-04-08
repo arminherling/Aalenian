@@ -9,6 +9,7 @@
 #include <Semantic/TypedFunctionCallExpression.h>
 #include <Semantic/TypedGlobalValue.h>
 #include <Semantic/TypedNegationExpression.h>
+#include <Semantic/TypedTypeDefinitionStatement.h>
 
 TypeChecker::TypeChecker(
     const ParseTree& parseTree, 
@@ -58,6 +59,10 @@ TypedStatement* TypeChecker::typeCheckStatement(Statement* statement)
         case NodeKind::EnumDefinitionStatement:
         {
             return typeCheckEnumDefinitionStatement((EnumDefinitionStatement*)statement);
+        }
+        case NodeKind::TypeDefinitionStatement:
+        {
+            return typeCheckTypeDefinitionStatement((TypeDefinitionStatement*)statement);
         }
         default:
         {
@@ -149,10 +154,23 @@ TypedStatement* TypeChecker::typeCheckEnumDefinitionStatement(EnumDefinitionStat
 
     auto nameToken = statement->name();
     auto enumName = m_parseTree.tokens().getLexeme(nameToken);
+    // TODO check if there is already a type with the name
     auto enumType = m_typeDatabase.createType(enumName, TypeKind::Enum);
     auto enumFields = typeCheckEnumFieldDefinitionNodes(enumType, baseType, statement->fieldDefinitions());
 
     return new TypedEnumDefinitionStatement(enumName, enumType, baseType, enumFields, statement);
+}
+
+TypedStatement* TypeChecker::typeCheckTypeDefinitionStatement(TypeDefinitionStatement* statement)
+{
+    auto nameToken = statement->name();
+    auto typeName = m_parseTree.tokens().getLexeme(nameToken);
+    // TODO check if there is already a type with the name
+    auto newType = m_typeDatabase.createType(typeName, TypeKind::Type);
+    // TODO typecheck fields
+    // TODO typecheck methods
+
+    return new TypedTypeDefinitionStatement(typeName, newType, statement);
 }
 
 QList<TypedEnumFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNodes(

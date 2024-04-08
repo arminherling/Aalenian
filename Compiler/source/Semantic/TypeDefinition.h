@@ -11,7 +11,8 @@ enum class TypeKind
 {
     Invalid,
     Builtin,
-    Enum
+    Enum,
+    Type
 };
 
 class TypeDefinition

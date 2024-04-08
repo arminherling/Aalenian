@@ -11,7 +11,7 @@ struct COMPILER_API Token
     i32 lexemeIndex = -1;
     i32 locationIndex = -1;
 
-    [[nodiscard]] static Token ToError(const Token& token) const noexcept
+    [[nodiscard]] static Token ToError(const Token& token) noexcept
     {
         return { .kind = TokenKind::Error, .locationIndex = token.locationIndex };
     }

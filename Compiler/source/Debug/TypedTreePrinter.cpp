@@ -40,6 +40,11 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
             PrettyPrintTypedEnumDefinitionStatement((TypedEnumDefinitionStatement*)node);
             break;
         }
+        case NodeKind::TypedTypeDefinitionStatement:
+        {
+            PrettyPrintTypedTypeDefinitionStatement((TypedTypeDefinitionStatement*)node);
+            break;
+        }
         case NodeKind::TypedNegationExpression:
         {
             PrettyPrintTypedNegationExpression((TypedNegationExpression*)node);
@@ -109,8 +114,8 @@ void TypedTreePrinter::PrettyPrintTypedEnumDefinitionStatement(TypedEnumDefiniti
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
 
-    stream() << Indentation() << QString("Type: enum") << NewLine();
-    stream() << Indentation() << QString("Name: ") << statement->name() << NewLine();
+    stream() << Indentation() << QString("TypeKind: enum") << NewLine();
+    stream() << Indentation() << QString("TypeName: ") << statement->name() << NewLine();
 
     auto baseTypeDefinition = m_typeDatabase.getTypeDefinition(statement->baseType());
     stream() << Indentation() << QString("BaseType: ") << baseTypeDefinition.name() << NewLine();
@@ -128,6 +133,28 @@ void TypedTreePrinter::PrettyPrintTypedEnumDefinitionStatement(TypedEnumDefiniti
         stream() << Indentation() << QString("}") << NewLine();
     }
 
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void TypedTreePrinter::PrettyPrintTypedTypeDefinitionStatement(TypedTypeDefinitionStatement* statement)
+{
+    stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << QString("TypeKind: type") << NewLine();
+    stream() << Indentation() << QString("TypeName: ") << statement->name() << NewLine();
+
+    stream() << Indentation() << QString("Fields(%1): {").arg(0) << NewLine();
+    PushIndentation();
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    stream() << Indentation() << QString("Methods(%1): {").arg(0) << NewLine();
+    PushIndentation();
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 

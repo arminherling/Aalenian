@@ -13,6 +13,7 @@
 #include <Semantic/TypedNegationExpression.h>
 #include <Semantic/TypedNode.h>
 #include <Semantic/TypedTree.h>
+#include <Semantic/TypedTypeDefinitionStatement.h>
 #include <Semantic/U8Literal.h>
 
 class COMPILER_API TypedTreePrinter : public BasePrinter
@@ -27,6 +28,7 @@ private:
 
     void PrettyPrintTypedAssignmentStatement(TypedAssignmentStatement* statement);
     void PrettyPrintTypedEnumDefinitionStatement(TypedEnumDefinitionStatement* statement);
+    void PrettyPrintTypedTypeDefinitionStatement(TypedTypeDefinitionStatement* statement);
     void PrettyPrintTypedNegationExpression(TypedNegationExpression* expression);
     void PrettyPrintTypedEnumFieldAccessExpression(TypedEnumFieldAccessExpression* expression);
     void PrettyPrintTypedGlobalValue(TypedGlobalValue* value);

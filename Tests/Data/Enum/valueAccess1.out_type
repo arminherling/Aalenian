@@ -1,6 +1,6 @@
 TypedEnumDefinitionStatement: {
-    Type: enum
-    Name: Values
+    TypeKind: enum
+    TypeName: Values
     BaseType: u8
     Fields(2): {
         TypedEnumFieldDefinitionNode: {
