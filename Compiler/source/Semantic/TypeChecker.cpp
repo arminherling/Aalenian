@@ -8,6 +8,7 @@
 #include <Semantic/TypedEnumFieldAccessExpression.h>
 #include <Semantic/TypedFunctionCallExpression.h>
 #include <Semantic/TypedGlobalValue.h>
+#include <Semantic/TypedNegationExpression.h>
 
 TypeChecker::TypeChecker(
     const ParseTree& parseTree, 
@@ -69,6 +70,10 @@ TypedExpression* TypeChecker::typeCheckExpression(Expression* expression)
 {
     switch (expression->kind())
     {
+        case NodeKind::UnaryExpression:
+        {
+            return typeCheckUnaryExpressionExpression((UnaryExpression*)expression);
+        }
         case NodeKind::BinaryExpression:
         {
             return typeCheckBinaryExpressionExpression((BinaryExpression*)expression);
@@ -101,17 +106,21 @@ TypedStatement* TypeChecker::typeCheckAssignmentStatement(AssignmentStatement* s
     auto left = typeCheckExpression(statement->leftExpression());
     auto right = typeCheckExpression(statement->rightExpression());
 
-    auto inferedType = Type::Undefined();
-    if (left->type() == Type::Undefined() && right != nullptr)
+    auto inferedType = inferType(right);
+    
+    if (left->type() == Type::Undefined())
     {
-        inferedType = inferType(right);
         left->setType(inferedType);
-    }
 
-    if (left->kind() == NodeKind::TypedGlobalValue)
-    {
         auto globalValue = ((TypedGlobalValue*)left);
         m_environment.addBinding(globalValue->name(), globalValue->type());
+    }
+
+    auto leftType = left->type();
+    if (leftType != Type::Discard()
+        && leftType != inferedType)
+    {
+        TODO("error type mismatch!!");
     }
 
     return new TypedAssignmentStatement(left, right, statement, inferedType);
@@ -135,9 +144,8 @@ TypedStatement* TypeChecker::typeCheckEnumDefinitionStatement(EnumDefinitionStat
 
     if (baseType == Type::Undefined())
     {
-        // TODO We need an error node and need to print diagnostics about unknown enum base type
+        TODO("We need an error node and need to print diagnostics about unknown enum base type");
     }
-
 
     auto nameToken = statement->name();
     auto enumName = m_parseTree.tokens().getLexeme(nameToken);
@@ -185,6 +193,27 @@ QList<TypedEnumFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNo
     return enumFields;
 }
 
+TypedExpression* TypeChecker::typeCheckUnaryExpressionExpression(UnaryExpression* unaryExpression)
+{
+    switch (unaryExpression->unaryOperator())
+    {
+        case UnaryOperatornKind::Negation:
+        {
+            auto expression = unaryExpression->expression();
+            auto typedExpression = typeCheckExpression(expression);
+            //TODO if possible check that values are still in range after negation
+            auto type = typedExpression->type();
+            return new TypedNegationExpression(type, typedExpression, unaryExpression);
+        }
+        default:
+        {
+            TODO("Missing UnaryOperatornKind!!");
+        }
+    }
+
+    return nullptr;
+}
+
 TypedExpression* TypeChecker::typeCheckBinaryExpressionExpression(BinaryExpression* binaryExpression)
 {
     switch (binaryExpression->binaryOperator())
@@ -215,7 +244,7 @@ TypedExpression* TypeChecker::typeCheckBinaryExpressionExpression(BinaryExpressi
         }
         default:
         {
-            TODO("Missing Expression!!");
+            TODO("Missing BinaryOperatornKind!!");
         }
     }
 
@@ -275,6 +304,9 @@ TypedExpression* TypeChecker::typeCheckFunctionCallExpression(FunctionCallExpres
 
 Type TypeChecker::inferType(TypedNode* node)
 {
+    if (node == nullptr)
+        return Type::Undefined();
+
     return node->type();
 }
 
@@ -322,5 +354,4 @@ std::tuple<TypedExpression*, i32> TypeChecker::convertValueToTypedLiteral(i32 va
     }
 
     return { nullptr, 0 };
-
 }

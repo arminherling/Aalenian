@@ -1,0 +1,24 @@
+TypedAssignmentStatement: {
+    Left: {
+        Discard: {
+            Type: _
+        }
+    }
+    Right: {
+        TypedNegationExpression: {
+            Type: i32
+            Expression: {
+                TypedNegationExpression: {
+                    Type: i32
+                    Expression: {
+                        I32Literal: {
+                            Value: 1
+                            Type: i32
+                        }
+                    }
+                }
+            }
+        }
+    }
+    Type: i32
+}

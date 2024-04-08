@@ -40,6 +40,11 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
             PrettyPrintTypedEnumDefinitionStatement((TypedEnumDefinitionStatement*)node);
             break;
         }
+        case NodeKind::TypedNegationExpression:
+        {
+            PrettyPrintTypedNegationExpression((TypedNegationExpression*)node);
+            break;
+        }
         case NodeKind::TypedEnumFieldAccessExpression:
         {
             PrettyPrintTypedEnumFieldAccessExpression((TypedEnumFieldAccessExpression*)node);
@@ -122,6 +127,24 @@ void TypedTreePrinter::PrettyPrintTypedEnumDefinitionStatement(TypedEnumDefiniti
         PopIndentation();
         stream() << Indentation() << QString("}") << NewLine();
     }
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void TypedTreePrinter::PrettyPrintTypedNegationExpression(TypedNegationExpression* expression)
+{
+    stream() << Indentation() << StringifyNodeKind(expression->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << PrettyPrintType(expression->type()) << NewLine();
+    stream() << Indentation() << QString("Expression: {") << NewLine();
+    PushIndentation();
+
+    PrettyPrintNode(expression->expression());
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();

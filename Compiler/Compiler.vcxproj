@@ -112,6 +112,7 @@
     <ClCompile Include="source\Semantic\TypedEnumFieldAccessExpression.cpp" />
     <ClCompile Include="source\Semantic\TypedEnumFieldDefinitionNode.cpp" />
     <ClCompile Include="source\Semantic\TypedFunctionCallExpression.cpp" />
+    <ClCompile Include="source\Semantic\TypedNegationExpression.cpp" />
     <ClCompile Include="source\Semantic\U8Literal.cpp" />
     <ClCompile Include="source\Syntax\NodeKind.cpp" />
     <ClCompile Include="source\Syntax\ArgumentNode.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="source\Semantic\TypedEnumFieldAccessExpression.h" />
     <ClInclude Include="source\Semantic\TypedEnumFieldDefinitionNode.h" />
     <ClInclude Include="source\Semantic\TypedFunctionCallExpression.h" />
+    <ClInclude Include="source\Semantic\TypedNegationExpression.h" />
     <ClInclude Include="source\Semantic\U8Literal.h" />
     <ClInclude Include="source\Syntax\NodeKind.h" />
     <ClInclude Include="source\Syntax\ArgumentNode.h" />
