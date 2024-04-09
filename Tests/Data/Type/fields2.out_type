@@ -5,12 +5,19 @@ TypedTypeDefinitionStatement: {
         TypedFieldDefinitionNode: {
             Type: i32
             Name: x
-            Value: 0
+            Expression: {
+                I32Literal: {
+                    Type: i32
+                    Value: 0
+                }
+            }
         }
         TypedFieldDefinitionNode: {
             Type: i32
             Name: y
-            Value: uninitialized
+            Expression: {
+                null
+            }
         }
     }
     Methods(0): {

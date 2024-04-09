@@ -1,4 +1,5 @@
 TypedAssignmentStatement: {
+    Type: i32
     Left: {
         Discard: {
             Type: _
@@ -9,11 +10,10 @@ TypedAssignmentStatement: {
             Type: i32
             Expression: {
                 I32Literal: {
-                    Value: 1
                     Type: i32
+                    Value: 1
                 }
             }
         }
     }
-    Type: i32
 }

@@ -5,17 +5,32 @@ TypedTypeDefinitionStatement: {
         TypedFieldDefinitionNode: {
             Type: i32
             Name: x
-            Value: 0
+            Expression: {
+                I32Literal: {
+                    Type: i32
+                    Value: 0
+                }
+            }
         }
         TypedFieldDefinitionNode: {
             Type: i32
             Name: y
-            Value: 0
+            Expression: {
+                I32Literal: {
+                    Type: i32
+                    Value: 0
+                }
+            }
         }
         TypedFieldDefinitionNode: {
             Type: i32
             Name: z
-            Value: 0
+            Expression: {
+                I32Literal: {
+                    Type: i32
+                    Value: 0
+                }
+            }
         }
     }
     Methods(0): {

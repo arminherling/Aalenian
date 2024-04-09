@@ -6,7 +6,12 @@ TypedEnumDefinitionStatement: {
         TypedFieldDefinitionNode: {
             Type: i32
             Name: Value
-            Value: 0
+            Expression: {
+                I32Literal: {
+                    Type: i32
+                    Value: 0
+                }
+            }
         }
     }
 }

@@ -6,17 +6,32 @@ TypedEnumDefinitionStatement: {
         TypedFieldDefinitionNode: {
             Type: u8
             Name: First
-            Value: 0
+            Expression: {
+                U8Literal: {
+                    Type: u8
+                    Value: 0
+                }
+            }
         }
         TypedFieldDefinitionNode: {
             Type: u8
             Name: Second
-            Value: 5
+            Expression: {
+                U8Literal: {
+                    Type: u8
+                    Value: 5
+                }
+            }
         }
         TypedFieldDefinitionNode: {
             Type: u8
             Name: Third
-            Value: 6
+            Expression: {
+                U8Literal: {
+                    Type: u8
+                    Value: 6
+                }
+            }
         }
     }
 }

@@ -40,7 +40,6 @@ private:
     void PrettyPrintTypedFieldDefinitionNode(TypedFieldDefinitionNode* field);
     void PrettyPrintTypedArgumentsNode();
     [[nodiscard]] QString PrettyPrintType(Type type) noexcept;
-    [[nodiscard]] QString PrettyPrintFieldValue(TypedExpression* exppression) const noexcept;
 
     TypedTree& m_typedTree;
     TypeDatabase m_typeDatabase;

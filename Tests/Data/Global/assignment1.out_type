@@ -1,15 +1,15 @@
 TypedAssignmentStatement: {
+    Type: i32
     Left: {
         TypedGlobalValue: {
-            Name: a
             Type: i32
+            Name: a
         }
     }
     Right: {
         I32Literal: {
-            Value: 1
             Type: i32
+            Value: 1
         }
     }
-    Type: i32
 }

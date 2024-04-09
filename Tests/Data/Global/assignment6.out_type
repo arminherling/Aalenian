@@ -1,15 +1,15 @@
 TypedAssignmentStatement: {
+    Type: u8
     Left: {
         TypedGlobalValue: {
-            Name: a
             Type: u8
+            Name: a
         }
     }
     Right: {
         U8Literal: {
-            Value: 0
             Type: u8
+            Value: 0
         }
     }
-    Type: u8
 }

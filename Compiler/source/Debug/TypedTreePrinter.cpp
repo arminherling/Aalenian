@@ -24,7 +24,7 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
 {
     if (node == nullptr)
     {
-        stream() << Indentation() << QString("TypedNode was null!!") << NewLine();
+        stream() << Indentation() << QString("null") << NewLine();
         return;
     }
 
@@ -91,6 +91,8 @@ void TypedTreePrinter::PrettyPrintTypedAssignmentStatement(TypedAssignmentStatem
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
 
+    stream() << Indentation() << PrettyPrintType(statement->type()) << NewLine();
+
     stream() << Indentation() << QString("Left: {") << NewLine();
     PushIndentation();
     PrettyPrintNode(statement->leftExpression());
@@ -102,8 +104,6 @@ void TypedTreePrinter::PrettyPrintTypedAssignmentStatement(TypedAssignmentStatem
     PrettyPrintNode(statement->rightExpression());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
-
-    stream() << Indentation() << PrettyPrintType(statement->type()) << NewLine();
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
@@ -187,7 +187,11 @@ void TypedTreePrinter::PrettyPrintTypedEnumFieldAccessExpression(TypedEnumFieldA
 
     stream() << Indentation() << PrettyPrintType(expression->type()) << NewLine();
     stream() << Indentation() << QString("Name: ") << expression->fieldName() << NewLine();
-    stream() << Indentation() << QString("Value: ") << PrettyPrintFieldValue(expression->field()->value()) << NewLine();
+    stream() << Indentation() << QString("Expression: {") << NewLine();
+    PushIndentation();
+    PrettyPrintNode(expression->field()->value());
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
@@ -198,8 +202,8 @@ void TypedTreePrinter::PrettyPrintTypedGlobalValue(TypedGlobalValue* value)
     stream() << Indentation() << StringifyNodeKind(value->kind()) << QString(": {") << NewLine();
     PushIndentation();
 
-    stream() << Indentation() << QString("Name: ") << value->name() << NewLine();
     stream() << Indentation() << PrettyPrintType(value->type()) << NewLine();
+    stream() << Indentation() << QString("Name: ") << value->name() << NewLine();
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
@@ -211,9 +215,9 @@ void TypedTreePrinter::PrettyPrintTypedFunctionCallExpression(TypedFunctionCallE
 
     PushIndentation();
 
+    stream() << Indentation() << PrettyPrintType(functionCall->type()) << NewLine();
     stream() << Indentation() << QString("Name: ") << functionCall->name() << NewLine();
     PrettyPrintTypedArgumentsNode(/*functionCall->arguments()*/); // TODO
-    stream() << Indentation() << PrettyPrintType(functionCall->type()) << NewLine();
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
@@ -235,8 +239,8 @@ void TypedTreePrinter::PrettyPrintU8Literal(U8Literal* literal)
     stream() << Indentation() << StringifyNodeKind(literal->kind()) << QString(": {") << NewLine();
     PushIndentation();
 
-    stream() << Indentation() << QString("Value: ") << literal->value() << NewLine();
     stream() << Indentation() << PrettyPrintType(literal->type()) << NewLine();
+    stream() << Indentation() << QString("Value: ") << literal->value() << NewLine();
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
@@ -247,8 +251,8 @@ void TypedTreePrinter::PrettyPrintI32Literal(I32Literal* literal)
     stream() << Indentation() << StringifyNodeKind(literal->kind()) << QString(": {") << NewLine();
     PushIndentation();
 
-    stream() << Indentation() << QString("Value: ") << literal->value() << NewLine();
     stream() << Indentation() << PrettyPrintType(literal->type()) << NewLine();
+    stream() << Indentation() << QString("Value: ") << literal->value() << NewLine();
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
@@ -260,8 +264,13 @@ void TypedTreePrinter::PrettyPrintTypedFieldDefinitionNode(TypedFieldDefinitionN
     PushIndentation();
     stream() << Indentation() << PrettyPrintType(field->valueType()) << NewLine();
     stream() << Indentation() << QString("Name: ") << field->name() << NewLine();
-    // TODO its better to pretty print expressions here but i need to add test input for that first
-    stream() << Indentation() << QString("Value: ") << PrettyPrintFieldValue(field->value()) << NewLine();
+
+    stream() << Indentation() << QString("Expression: {") << NewLine();
+    PushIndentation();
+    PrettyPrintNode(field->value());
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 }
@@ -279,30 +288,4 @@ QString TypedTreePrinter::PrettyPrintType(Type type) noexcept
 {
     auto definition = m_typeDatabase.getTypeDefinition(type);
     return QString("Type: %1").arg(definition.name());
-}
-
-QString TypedTreePrinter::PrettyPrintFieldValue(TypedExpression* expression) const noexcept
-{
-    if (expression == nullptr)
-        return QString("uninitialized");
-
-    switch (expression->kind())
-    {
-        case NodeKind::U8Literal:
-        {
-            auto u8Literal = (U8Literal*)expression;
-            return QString::number(u8Literal->value());
-        }
-        case NodeKind::I32Literal:
-        {
-            auto i32Literal = (I32Literal*)expression;
-            return QString::number(i32Literal->value());
-        }
-        default:
-        {
-            TODO("Missing NodeKind!!");
-        }
-    }
-
-    return QString();
 }

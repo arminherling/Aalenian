@@ -6,28 +6,43 @@ TypedEnumDefinitionStatement: {
         TypedFieldDefinitionNode: {
             Type: u8
             Name: First
-            Value: 0
+            Expression: {
+                U8Literal: {
+                    Type: u8
+                    Value: 0
+                }
+            }
         }
         TypedFieldDefinitionNode: {
             Type: u8
             Name: Second
-            Value: 1
+            Expression: {
+                U8Literal: {
+                    Type: u8
+                    Value: 1
+                }
+            }
         }
     }
 }
 TypedAssignmentStatement: {
+    Type: Values
     Left: {
         TypedGlobalValue: {
-            Name: s
             Type: Values
+            Name: s
         }
     }
     Right: {
         TypedEnumFieldAccessExpression: {
             Type: Values
             Name: Second
-            Value: 1
+            Expression: {
+                U8Literal: {
+                    Type: u8
+                    Value: 1
+                }
+            }
         }
     }
-    Type: Values
 }

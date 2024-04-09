@@ -1,17 +1,17 @@
 TypedAssignmentStatement: {
+    Type: ???
     Left: {
         TypedGlobalValue: {
-            Name: a
             Type: ???
+            Name: a
         }
     }
     Right: {
         TypedFunctionCallExpression: {
+            Type: ???
             Name: func
             ArgumentsNode(0): {
             }
-            Type: ???
         }
     }
-    Type: ???
 }
