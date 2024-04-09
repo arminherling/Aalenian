@@ -1,0 +1,23 @@
+TypedTypeDefinitionStatement: {
+    TypeKind: type
+    TypeName: Vector3D
+    Fields(3): {
+        TypedFieldDefinitionNode: {
+            Type: i32
+            Name: x
+            Value: 0
+        }
+        TypedFieldDefinitionNode: {
+            Type: i32
+            Name: y
+            Value: 0
+        }
+        TypedFieldDefinitionNode: {
+            Type: i32
+            Name: z
+            Value: 0
+        }
+    }
+    Methods(0): {
+    }
+}

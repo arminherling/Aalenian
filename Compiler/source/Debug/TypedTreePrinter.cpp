@@ -125,12 +125,7 @@ void TypedTreePrinter::PrettyPrintTypedEnumDefinitionStatement(TypedEnumDefiniti
     PushIndentation();
     for (const auto& field : fields)
     {
-        stream() << Indentation() << StringifyNodeKind(field->kind()) << QString(": {") << NewLine();
-        PushIndentation();
-        stream() << Indentation() << QString("Name: ") << field->name() << NewLine();
-        stream() << Indentation() << QString("Value: ") << PrettyPrintEnumFieldValue(field->value()) << NewLine();
-        PopIndentation();
-        stream() << Indentation() << QString("}") << NewLine();
+        PrettyPrintTypedFieldDefinitionNode(field);
     }
 
     PopIndentation();
@@ -148,8 +143,13 @@ void TypedTreePrinter::PrettyPrintTypedTypeDefinitionStatement(TypedTypeDefiniti
     stream() << Indentation() << QString("TypeKind: type") << NewLine();
     stream() << Indentation() << QString("TypeName: ") << statement->name() << NewLine();
 
-    stream() << Indentation() << QString("Fields(%1): {").arg(0) << NewLine();
+    auto fields = statement->fields();
+    stream() << Indentation() << QString("Fields(%1): {").arg(fields.count()) << NewLine();
     PushIndentation();
+    for (const auto& field : fields)
+    {
+        PrettyPrintTypedFieldDefinitionNode(field);
+    }
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 
@@ -187,7 +187,7 @@ void TypedTreePrinter::PrettyPrintTypedEnumFieldAccessExpression(TypedEnumFieldA
 
     stream() << Indentation() << PrettyPrintType(expression->type()) << NewLine();
     stream() << Indentation() << QString("Name: ") << expression->fieldName() << NewLine();
-    stream() << Indentation() << QString("Value: ") << PrettyPrintEnumFieldValue(expression->field()->value()) << NewLine();
+    stream() << Indentation() << QString("Value: ") << PrettyPrintFieldValue(expression->field()->value()) << NewLine();
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
@@ -247,9 +247,21 @@ void TypedTreePrinter::PrettyPrintI32Literal(I32Literal* literal)
     stream() << Indentation() << StringifyNodeKind(literal->kind()) << QString(": {") << NewLine();
     PushIndentation();
 
-    stream() << Indentation() << QString("Value: ") << literal->value() <<  NewLine();
+    stream() << Indentation() << QString("Value: ") << literal->value() << NewLine();
     stream() << Indentation() << PrettyPrintType(literal->type()) << NewLine();
 
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void TypedTreePrinter::PrettyPrintTypedFieldDefinitionNode(TypedFieldDefinitionNode* field)
+{
+    stream() << Indentation() << StringifyNodeKind(field->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+    stream() << Indentation() << PrettyPrintType(field->valueType()) << NewLine();
+    stream() << Indentation() << QString("Name: ") << field->name() << NewLine();
+    // TODO its better to pretty print expressions here but i need to add test input for that first
+    stream() << Indentation() << QString("Value: ") << PrettyPrintFieldValue(field->value()) << NewLine();
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 }
@@ -269,19 +281,26 @@ QString TypedTreePrinter::PrettyPrintType(Type type) noexcept
     return QString("Type: %1").arg(definition.name());
 }
 
-QString TypedTreePrinter::PrettyPrintEnumFieldValue(TypedExpression* exppression) const noexcept
+QString TypedTreePrinter::PrettyPrintFieldValue(TypedExpression* expression) const noexcept
 {
-    switch (exppression->kind())
+    if (expression == nullptr)
+        return QString("uninitialized");
+
+    switch (expression->kind())
     {
         case NodeKind::U8Literal:
         {
-            auto u8Literal = (U8Literal*)exppression;
+            auto u8Literal = (U8Literal*)expression;
             return QString::number(u8Literal->value());
         }
         case NodeKind::I32Literal:
         {
-            auto i32Literal = (I32Literal*)exppression;
+            auto i32Literal = (I32Literal*)expression;
             return QString::number(i32Literal->value());
+        }
+        default:
+        {
+            TODO("Missing NodeKind!!");
         }
     }
 

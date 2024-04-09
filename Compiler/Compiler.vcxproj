@@ -110,7 +110,7 @@
     <ClCompile Include="source\Semantic\TypeDefinition.cpp" />
     <ClCompile Include="source\Semantic\TypedEnumDefinitionStatement.cpp" />
     <ClCompile Include="source\Semantic\TypedEnumFieldAccessExpression.cpp" />
-    <ClCompile Include="source\Semantic\TypedEnumFieldDefinitionNode.cpp" />
+    <ClCompile Include="source\Semantic\TypedFieldDefinitionNode.cpp" />
     <ClCompile Include="source\Semantic\TypedFunctionCallExpression.cpp" />
     <ClCompile Include="source\Semantic\TypedNegationExpression.cpp" />
     <ClCompile Include="source\Semantic\TypedTypeDefinitionStatement.cpp" />
@@ -186,7 +186,7 @@
     <ClInclude Include="source\Semantic\TypeDefinition.h" />
     <ClInclude Include="source\Semantic\TypedEnumDefinitionStatement.h" />
     <ClInclude Include="source\Semantic\TypedEnumFieldAccessExpression.h" />
-    <ClInclude Include="source\Semantic\TypedEnumFieldDefinitionNode.h" />
+    <ClInclude Include="source\Semantic\TypedFieldDefinitionNode.h" />
     <ClInclude Include="source\Semantic\TypedFunctionCallExpression.h" />
     <ClInclude Include="source\Semantic\TypedNegationExpression.h" />
     <ClInclude Include="source\Semantic\TypedTypeDefinitionStatement.h" />

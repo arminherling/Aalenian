@@ -37,9 +37,10 @@ private:
     void PrettyPrintU8Literal(U8Literal* literal);
     void PrettyPrintI32Literal(I32Literal* literal);
 
+    void PrettyPrintTypedFieldDefinitionNode(TypedFieldDefinitionNode* field);
     void PrettyPrintTypedArgumentsNode();
     [[nodiscard]] QString PrettyPrintType(Type type) noexcept;
-    [[nodiscard]] QString PrettyPrintEnumFieldValue(TypedExpression* exppression) const noexcept;
+    [[nodiscard]] QString PrettyPrintFieldValue(TypedExpression* exppression) const noexcept;
 
     TypedTree& m_typedTree;
     TypeDatabase m_typeDatabase;

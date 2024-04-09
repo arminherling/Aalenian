@@ -3,7 +3,8 @@ TypedEnumDefinitionStatement: {
     TypeName: Values
     BaseType: i32
     Fields(1): {
-        TypedEnumFieldDefinitionNode: {
+        TypedFieldDefinitionNode: {
+            Type: i32
             Name: Value
             Value: 0
         }

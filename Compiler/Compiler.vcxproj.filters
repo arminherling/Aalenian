@@ -221,7 +221,7 @@
     <ClCompile Include="source\Semantic\TypedEnumDefinitionStatement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Semantic\TypedEnumFieldDefinitionNode.cpp">
+    <ClCompile Include="source\Semantic\TypedFieldDefinitionNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Semantic\U8Literal.cpp">
@@ -478,7 +478,7 @@
     <ClInclude Include="source\Semantic\TypedEnumDefinitionStatement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Semantic\TypedEnumFieldDefinitionNode.h">
+    <ClInclude Include="source\Semantic\TypedFieldDefinitionNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Semantic\U8Literal.h">

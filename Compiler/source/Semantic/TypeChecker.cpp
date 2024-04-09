@@ -10,6 +10,7 @@
 #include <Semantic/TypedGlobalValue.h>
 #include <Semantic/TypedNegationExpression.h>
 #include <Semantic/TypedTypeDefinitionStatement.h>
+#include <Syntax/FieldDeclarationStatement.h>
 
 TypeChecker::TypeChecker(
     const ParseTree& parseTree, 
@@ -155,10 +156,10 @@ TypedStatement* TypeChecker::typeCheckEnumDefinitionStatement(EnumDefinitionStat
     auto nameToken = statement->name();
     auto enumName = m_parseTree.tokens().getLexeme(nameToken);
     // TODO check if there is already a type with the name
-    auto enumType = m_typeDatabase.createType(enumName, TypeKind::Enum);
-    auto enumFields = typeCheckEnumFieldDefinitionNodes(enumType, baseType, statement->fieldDefinitions());
+    auto newType = m_typeDatabase.createType(enumName, TypeKind::Enum);
+    auto enumFields = typeCheckEnumFieldDefinitionNodes(newType, baseType, statement->fieldDefinitions());
 
-    return new TypedEnumDefinitionStatement(enumName, enumType, baseType, enumFields, statement);
+    return new TypedEnumDefinitionStatement(enumName, newType, baseType, enumFields, statement);
 }
 
 TypedStatement* TypeChecker::typeCheckTypeDefinitionStatement(TypeDefinitionStatement* statement)
@@ -167,20 +168,20 @@ TypedStatement* TypeChecker::typeCheckTypeDefinitionStatement(TypeDefinitionStat
     auto typeName = m_parseTree.tokens().getLexeme(nameToken);
     // TODO check if there is already a type with the name
     auto newType = m_typeDatabase.createType(typeName, TypeKind::Type);
-    // TODO typecheck fields
+    auto typeFields = typeCheckTypeFieldDefinitionNodes(newType, statement->body());
     // TODO typecheck methods
 
-    return new TypedTypeDefinitionStatement(typeName, newType, statement);
+    return new TypedTypeDefinitionStatement(typeName, newType, typeFields, statement);
 }
 
-QList<TypedEnumFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNodes(
-    Type enumType, 
+QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNodes(
+    Type newType, 
     Type baseType, 
     const QList<EnumFieldDefinitionStatement*>& fieldDefinitions)
 {
-    auto& enumTypeDefinition = m_typeDatabase.getTypeDefinition(enumType);
+    auto& enumTypeDefinition = m_typeDatabase.getTypeDefinition(newType);
 
-    QList<TypedEnumFieldDefinitionNode*> enumFields;
+    QList<TypedFieldDefinitionNode*> enumFields;
     int nextValue = 0;
     for (const auto definition : fieldDefinitions)
     {
@@ -197,8 +198,8 @@ QList<TypedEnumFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNo
             if (typedLiteral != nullptr)
             {
                 nextValue = value + 1;
-                enumFields.append(new TypedEnumFieldDefinitionNode(name, typedLiteral));
-                enumTypeDefinition.addField(enumType, name, typedLiteral);
+                enumFields.append(new TypedFieldDefinitionNode(name, baseType, typedLiteral));
+                enumTypeDefinition.addField(newType, name, typedLiteral);
             }
         }
         else
@@ -206,12 +207,63 @@ QList<TypedEnumFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNo
             auto [typedLiteral, value] = convertValueToTypedLiteral(nextValue++, baseType, definition);
             if (typedLiteral != nullptr)
             {
-                enumFields.append(new TypedEnumFieldDefinitionNode(name, typedLiteral));
-                enumTypeDefinition.addField(enumType, name, typedLiteral);
+                enumFields.append(new TypedFieldDefinitionNode(name, baseType, typedLiteral));
+                enumTypeDefinition.addField(newType, name, typedLiteral);
             }
         }
     }
     return enumFields;
+}
+
+QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckTypeFieldDefinitionNodes(Type newType, BlockNode* body)
+{
+    auto& typeDefinition = m_typeDatabase.getTypeDefinition(newType);
+
+    QList<TypedFieldDefinitionNode*> typeFields;
+
+    for (const auto statement : body->statements())
+    {
+        if (statement->kind() != NodeKind::FieldDeclarationStatement)
+            continue;
+
+        auto fieldDeclaration = (FieldDeclarationStatement*)statement;
+        auto nameToken = fieldDeclaration->name()->identifier();
+        auto name = m_parseTree.tokens().getLexeme(nameToken);
+        
+        auto type = Type::Undefined();
+        if (fieldDeclaration->type().has_value())
+        {
+            auto fieldTypeName = fieldDeclaration->type().value();
+            type = convertTypeNameToType(fieldTypeName);
+        }
+
+        TypedExpression* expression = nullptr;
+        if (fieldDeclaration->expression().has_value())
+        {
+            auto fieldExpression = fieldDeclaration->expression().value();
+            expression = typeCheckExpression(fieldExpression);
+
+            if (type == Type::Undefined())
+            {
+                type = expression->type();
+            }
+            else if (type != expression->type())
+            {
+                TODO("error type mismatch!!");
+            }
+        }
+
+        if (type == Type::Undefined())
+        {
+            // NOTE We might want to infer the types in the constructor in the future
+            TODO("error missing type for field!!");
+        }
+
+        typeFields.append(new TypedFieldDefinitionNode(name, type, expression));
+        typeDefinition.addField(newType, name, expression);
+    }
+
+    return typeFields;
 }
 
 TypedExpression* TypeChecker::typeCheckUnaryExpressionExpression(UnaryExpression* unaryExpression)
@@ -329,6 +381,16 @@ Type TypeChecker::inferType(TypedNode* node)
         return Type::Undefined();
 
     return node->type();
+}
+
+Type TypeChecker::convertTypeNameToType(const TypeName& typeName)
+{
+    auto nameToken = typeName.name()->identifier();
+    auto nameLexeme = m_parseTree.tokens().getLexeme(nameToken);
+
+    // TODO handle ref
+    // returns Type::Undefined() if the name wasnt found
+    return m_typeDatabase.getTypeByName(nameLexeme);
 }
 
 std::tuple<TypedExpression*, i32> TypeChecker::convertValueToTypedLiteral(QStringView valueLexeme, Type type, Node* source)

@@ -1,0 +1,18 @@
+TypedTypeDefinitionStatement: {
+    TypeKind: type
+    TypeName: Vector2D
+    Fields(2): {
+        TypedFieldDefinitionNode: {
+            Type: i32
+            Name: x
+            Value: 0
+        }
+        TypedFieldDefinitionNode: {
+            Type: i32
+            Name: y
+            Value: uninitialized
+        }
+    }
+    Methods(0): {
+    }
+}

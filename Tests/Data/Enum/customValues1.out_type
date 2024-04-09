@@ -3,15 +3,18 @@ TypedEnumDefinitionStatement: {
     TypeName: Values
     BaseType: u8
     Fields(3): {
-        TypedEnumFieldDefinitionNode: {
+        TypedFieldDefinitionNode: {
+            Type: u8
             Name: First
             Value: 0
         }
-        TypedEnumFieldDefinitionNode: {
+        TypedFieldDefinitionNode: {
+            Type: u8
             Name: Second
             Value: 5
         }
-        TypedEnumFieldDefinitionNode: {
+        TypedFieldDefinitionNode: {
+            Type: u8
             Name: Third
             Value: 6
         }

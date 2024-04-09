@@ -6,7 +6,7 @@
 #include <Semantic/Type.h>
 #include <Semantic/TypeCheckerOptions.h>
 #include <Semantic/TypeDatabase.h>
-#include <Semantic/TypedEnumFieldDefinitionNode.h>
+#include <Semantic/TypedFieldDefinitionNode.h>
 #include <Semantic/TypedExpression.h>
 #include <Semantic/TypedNode.h>
 #include <Semantic/TypedStatement.h>
@@ -41,10 +41,11 @@ private:
     [[nodiscard]] TypedStatement* typeCheckAssignmentStatement(AssignmentStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckTypeDefinitionStatement(TypeDefinitionStatement* statement);
-    [[nodiscard]] QList<TypedEnumFieldDefinitionNode*> typeCheckEnumFieldDefinitionNodes(
-        Type enumType, 
+    [[nodiscard]] QList<TypedFieldDefinitionNode*> typeCheckEnumFieldDefinitionNodes(
+        Type newType, 
         Type baseType, 
         const QList<EnumFieldDefinitionStatement*>& fieldDefinitions);
+    [[nodiscard]] QList<TypedFieldDefinitionNode*> typeCheckTypeFieldDefinitionNodes(Type newType, BlockNode* body);
     [[nodiscard]] TypedExpression* typeCheckUnaryExpressionExpression(UnaryExpression* unaryExpression);
     [[nodiscard]] TypedExpression* typeCheckBinaryExpressionExpression(BinaryExpression* binaryExpression);
     [[nodiscard]] TypedExpression* typeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression); 
@@ -53,6 +54,7 @@ private:
     [[nodiscard]] TypedExpression* typeCheckNumberLiteral(NumberLiteral* literal);
 
     [[nodiscard]] Type inferType(TypedNode* node);
+    [[nodiscard]] Type convertTypeNameToType(const TypeName& typeName);
     [[nodiscard]] std::tuple<TypedExpression*, i32> convertValueToTypedLiteral(QStringView literal, Type type, Node* source);
     [[nodiscard]] std::tuple<TypedExpression*, i32> convertValueToTypedLiteral(i32 value, Type type, Node* source);
 
