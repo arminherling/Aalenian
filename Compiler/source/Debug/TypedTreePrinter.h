@@ -6,6 +6,7 @@
 #include <Semantic/I32Literal.h>
 #include <Semantic/TypedAssignmentStatement.h>
 #include <Semantic/TypeDatabase.h>
+#include <Semantic/TypedBinaryExpression.h>
 #include <Semantic/TypedEnumDefinitionStatement.h>
 #include <Semantic/TypedEnumFieldAccessExpression.h>
 #include <Semantic/TypedFunctionCallExpression.h>
@@ -31,6 +32,7 @@ private:
     void PrettyPrintTypedTypeDefinitionStatement(TypedTypeDefinitionStatement* statement);
     void PrettyPrintTypedNegationExpression(TypedNegationExpression* expression);
     void PrettyPrintTypedEnumFieldAccessExpression(TypedEnumFieldAccessExpression* expression);
+    void PrettyPrintTypedBinaryExpression(TypedBinaryExpression* expression);
     void PrettyPrintTypedGlobalValue(TypedGlobalValue* value);
     void PrettyPrintTypedFunctionCallExpression(TypedFunctionCallExpression* functionCall);
     void PrettyPrintDiscard(Discard* discard);

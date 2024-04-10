@@ -46,6 +46,10 @@ enum class COMPILER_API NodeKind
 
     TypedNegationExpression,
     TypedEnumFieldAccessExpression,
+    TypedAdditionExpression,
+    TypedSubtractionExpression,
+    TypedMultiplicationExpression,
+    TypedDivisionExpression,
     TypedFunctionCallExpression,
 
     TypedGlobalValue,

@@ -1,0 +1,36 @@
+TypedAssignmentStatement: {
+    Type: i32
+    Left: {
+        Discard: {
+            Type: _
+        }
+    }
+    Right: {
+        TypedSubtractionExpression: {
+            Type: i32
+            Left: {
+                I32Literal: {
+                    Type: i32
+                    Value: 1
+                }
+            }
+            Right: {
+                TypedMultiplicationExpression: {
+                    Type: i32
+                    Left: {
+                        I32Literal: {
+                            Type: i32
+                            Value: 2
+                        }
+                    }
+                    Right: {
+                        I32Literal: {
+                            Type: i32
+                            Value: 2
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

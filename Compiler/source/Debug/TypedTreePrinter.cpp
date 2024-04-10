@@ -55,6 +55,14 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
             PrettyPrintTypedEnumFieldAccessExpression((TypedEnumFieldAccessExpression*)node);
             break;
         }
+        case NodeKind::TypedAdditionExpression:
+        case NodeKind::TypedSubtractionExpression:
+        case NodeKind::TypedMultiplicationExpression:
+        case NodeKind::TypedDivisionExpression:
+        {
+            PrettyPrintTypedBinaryExpression((TypedBinaryExpression*)node);
+            break;
+        }
         case NodeKind::TypedFunctionCallExpression:
         {
             PrettyPrintTypedFunctionCallExpression((TypedFunctionCallExpression*)node);
@@ -190,6 +198,29 @@ void TypedTreePrinter::PrettyPrintTypedEnumFieldAccessExpression(TypedEnumFieldA
     stream() << Indentation() << QString("Expression: {") << NewLine();
     PushIndentation();
     PrettyPrintNode(expression->field()->value());
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void TypedTreePrinter::PrettyPrintTypedBinaryExpression(TypedBinaryExpression* expression)
+{
+    stream() << Indentation() << StringifyNodeKind(expression->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << PrettyPrintType(expression->type()) << NewLine();
+
+    stream() << Indentation() << QString("Left: {") << NewLine();
+    PushIndentation();
+    PrettyPrintNode(expression->leftExpression());
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    stream() << Indentation() << QString("Right: {") << NewLine();
+    PushIndentation();
+    PrettyPrintNode(expression->rightExpression());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 

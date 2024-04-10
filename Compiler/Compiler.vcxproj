@@ -107,6 +107,7 @@
     <ClCompile Include="source\Semantic\Environment.cpp" />
     <ClCompile Include="source\Debug\BasePrinter.cpp" />
     <ClCompile Include="source\Debug\TypedTreePrinter.cpp" />
+    <ClCompile Include="source\Semantic\TypedBinaryExpression.cpp" />
     <ClCompile Include="source\Semantic\TypeDefinition.cpp" />
     <ClCompile Include="source\Semantic\TypedEnumDefinitionStatement.cpp" />
     <ClCompile Include="source\Semantic\TypedEnumFieldAccessExpression.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="source\Debug\BasePrinter.h" />
     <ClInclude Include="source\Debug\TypedTreePrinter.h" />
     <ClInclude Include="source\Semantic\TypeCheckerOptions.h" />
+    <ClInclude Include="source\Semantic\TypedBinaryExpression.h" />
     <ClInclude Include="source\Semantic\TypeDefinition.h" />
     <ClInclude Include="source\Semantic\TypedEnumDefinitionStatement.h" />
     <ClInclude Include="source\Semantic\TypedEnumFieldAccessExpression.h" />

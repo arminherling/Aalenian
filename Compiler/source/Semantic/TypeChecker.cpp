@@ -3,6 +3,7 @@
 #include <Semantic/Discard.h>
 #include <Semantic/I32Literal.h>
 #include <Semantic/U8Literal.h>
+#include <Semantic/TypedBinaryExpression.h>
 #include <Semantic/TypedAssignmentStatement.h>
 #include <Semantic/TypedEnumDefinitionStatement.h>
 #include <Semantic/TypedEnumFieldAccessExpression.h>
@@ -317,6 +318,33 @@ TypedExpression* TypeChecker::typeCheckBinaryExpressionExpression(BinaryExpressi
                     auto enumField = scopeTypeDefinition.getFieldByName(fieldName);
                     return new TypedEnumFieldAccessExpression(scopeType, enumField, binaryExpression);
                 }
+            }
+        }
+        case BinaryOperatornKind::Addition:
+        case BinaryOperatornKind::Subtraction:
+        case BinaryOperatornKind::Multiplication:
+        case BinaryOperatornKind::Division:
+        {
+            auto typedLeftExpression = typeCheckExpression(binaryExpression->leftExpression());
+            auto typedRightExpression = typeCheckExpression(binaryExpression->rightExpression());
+
+            // TODO we need to be able look up the resulting type for a binary expression, 
+            // for now we'll just make sure left and right have the same type and use that one
+            assert(typedLeftExpression->type() == typedRightExpression->type());
+            auto type = typedLeftExpression->type();
+            
+            switch (binaryExpression->binaryOperator())
+            {
+                case BinaryOperatornKind::Addition:
+                    return new TypedAdditionExpression(type, typedLeftExpression, typedRightExpression, binaryExpression);
+                case BinaryOperatornKind::Subtraction:
+                    return new TypedSubtractionExpression(type, typedLeftExpression, typedRightExpression, binaryExpression);
+                case BinaryOperatornKind::Multiplication:
+                    return new TypedMultiplicationExpression(type, typedLeftExpression, typedRightExpression, binaryExpression);
+                case BinaryOperatornKind::Division:
+                    return new TypedDivisionExpression(type, typedLeftExpression, typedRightExpression, binaryExpression);
+                default:
+                    TODO("Missing TypedBinaryExpression!!");
             }
         }
         default:

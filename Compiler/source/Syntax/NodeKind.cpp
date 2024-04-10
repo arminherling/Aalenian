@@ -80,6 +80,14 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("TypedNegationExpression");
         case NodeKind::TypedEnumFieldAccessExpression:
             return QString("TypedEnumFieldAccessExpression");
+        case NodeKind::TypedAdditionExpression:
+            return QString("TypedAdditionExpression");
+        case NodeKind::TypedSubtractionExpression:
+            return QString("TypedSubtractionExpression");
+        case NodeKind::TypedMultiplicationExpression:
+            return QString("TypedMultiplicationExpression");
+        case NodeKind::TypedDivisionExpression:
+            return QString("TypedDivisionExpression");
         case NodeKind::TypedFunctionCallExpression:
             return QString("TypedFunctionCallExpression");
 
