@@ -92,6 +92,10 @@ TypedExpression* TypeChecker::typeCheckExpression(Expression* expression)
         {
             return typeCheckNameExpression((NameExpression*)expression);
         }
+        case NodeKind::GroupingExpression:
+        {
+            return typeCheckGroupingExpression((GroupingExpression*)expression);
+        }
         case NodeKind::DiscardLiteral:
         {
             return typeCheckDiscardLiteral((DiscardLiteral*)expression);
@@ -330,6 +334,11 @@ TypedExpression* TypeChecker::typeCheckNameExpression(NameExpression* expression
     auto lexeme = m_parseTree.tokens().getLexeme(identifier);
     auto type = m_environment.tryGetBinding(lexeme);
     return new TypedGlobalValue(lexeme, expression, type);
+}
+
+TypedExpression* TypeChecker::typeCheckGroupingExpression(GroupingExpression* expression)
+{
+    return typeCheckExpression(expression->expression());
 }
 
 TypedExpression* TypeChecker::typeCheckDiscardLiteral(DiscardLiteral* literal)

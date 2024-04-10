@@ -59,6 +59,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Expressions", "Expressions"
 		Tests\Data\Expressions\division2.out_parse = Tests\Data\Expressions\division2.out_parse
 		Tests\Data\Expressions\grouping1.in = Tests\Data\Expressions\grouping1.in
 		Tests\Data\Expressions\grouping1.out_parse = Tests\Data\Expressions\grouping1.out_parse
+		Tests\Data\Expressions\grouping1.out_type = Tests\Data\Expressions\grouping1.out_type
 		Tests\Data\Expressions\grouping2.in = Tests\Data\Expressions\grouping2.in
 		Tests\Data\Expressions\grouping2.out_parse = Tests\Data\Expressions\grouping2.out_parse
 		Tests\Data\Expressions\grouping3.in = Tests\Data\Expressions\grouping3.in

@@ -16,6 +16,7 @@
 #include <Syntax/DiscardLiteral.h>
 #include <Syntax/EnumDefinitionStatement.h>
 #include <Syntax/FunctionCallExpression.h>
+#include <Syntax/GroupingExpression.h>
 #include <Syntax/NameExpression.h>
 #include <Syntax/NumberLiteral.h>
 #include <Syntax/ParseTree.h>
@@ -50,6 +51,7 @@ private:
     [[nodiscard]] TypedExpression* typeCheckBinaryExpressionExpression(BinaryExpression* binaryExpression);
     [[nodiscard]] TypedExpression* typeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression); 
     [[nodiscard]] TypedExpression* typeCheckNameExpression(NameExpression* expression);
+    [[nodiscard]] TypedExpression* typeCheckGroupingExpression(GroupingExpression* expression);
     [[nodiscard]] TypedExpression* typeCheckDiscardLiteral(DiscardLiteral* literal);
     [[nodiscard]] TypedExpression* typeCheckNumberLiteral(NumberLiteral* literal);
 
