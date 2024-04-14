@@ -43,6 +43,7 @@ enum class COMPILER_API NodeKind
     TypedEnumDefinitionStatement,
     TypedFieldDefinitionNode,
     TypedTypeDefinitionStatement,
+    TypedFunctionDefinitionStatement,
 
     TypedNegationExpression,
     TypedEnumFieldAccessExpression,

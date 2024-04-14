@@ -1,7 +1,8 @@
 #include "Type.h"
 
-Type::Type(i32 id)
+Type::Type(i32 id, TypeKind kind)
     : m_id{ id }
+    , m_kind{ kind }
 {
 }
 

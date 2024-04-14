@@ -16,6 +16,7 @@ public:
     [[nodiscard]] TypeDefinition& getTypeDefinition(Type type) noexcept;
 
     [[nodiscard]] Type createType(QStringView name, TypeKind kind) noexcept;
+    [[nodiscard]] Type createFunction(Type scope, QStringView name, TypeKind kind) noexcept;
 
 private:
     std::unordered_map<QString, Type> m_typeNames;

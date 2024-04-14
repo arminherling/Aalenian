@@ -10,6 +10,7 @@
 #include <Semantic/TypedEnumDefinitionStatement.h>
 #include <Semantic/TypedEnumFieldAccessExpression.h>
 #include <Semantic/TypedFunctionCallExpression.h>
+#include <Semantic/TypedFunctionDefinitionStatement.h>
 #include <Semantic/TypedGlobalValue.h>
 #include <Semantic/TypedNegationExpression.h>
 #include <Semantic/TypedNode.h>
@@ -30,6 +31,7 @@ private:
     void PrettyPrintTypedAssignmentStatement(TypedAssignmentStatement* statement);
     void PrettyPrintTypedEnumDefinitionStatement(TypedEnumDefinitionStatement* statement);
     void PrettyPrintTypedTypeDefinitionStatement(TypedTypeDefinitionStatement* statement);
+    void PrettyPrintTypedFunctionDefinitionStatement(TypedFunctionDefinitionStatement* statement);
     void PrettyPrintTypedNegationExpression(TypedNegationExpression* expression);
     void PrettyPrintTypedEnumFieldAccessExpression(TypedEnumFieldAccessExpression* expression);
     void PrettyPrintTypedBinaryExpression(TypedBinaryExpression* expression);

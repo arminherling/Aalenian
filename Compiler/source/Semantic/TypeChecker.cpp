@@ -8,6 +8,7 @@
 #include <Semantic/TypedEnumDefinitionStatement.h>
 #include <Semantic/TypedEnumFieldAccessExpression.h>
 #include <Semantic/TypedFunctionCallExpression.h>
+#include <Semantic/TypedFunctionDefinitionStatement.h>
 #include <Semantic/TypedGlobalValue.h>
 #include <Semantic/TypedNegationExpression.h>
 #include <Semantic/TypedTypeDefinitionStatement.h>
@@ -65,6 +66,10 @@ TypedStatement* TypeChecker::typeCheckStatement(Statement* statement)
         case NodeKind::TypeDefinitionStatement:
         {
             return typeCheckTypeDefinitionStatement((TypeDefinitionStatement*)statement);
+        }
+        case NodeKind::FunctionDefinitionStatement:
+        {
+            return typeCheckFunctionDefinitionStatement((FunctionDefinitionStatement*)statement);
         }
         default:
         {
@@ -169,14 +174,27 @@ TypedStatement* TypeChecker::typeCheckEnumDefinitionStatement(EnumDefinitionStat
 
 TypedStatement* TypeChecker::typeCheckTypeDefinitionStatement(TypeDefinitionStatement* statement)
 {
-    auto nameToken = statement->name();
-    auto typeName = m_parseTree.tokens().getLexeme(nameToken);
+    auto& nameToken = statement->name();
+    auto& typeName = m_parseTree.tokens().getLexeme(nameToken);
     // TODO check if there is already a type with the name
     auto newType = m_typeDatabase.createType(typeName, TypeKind::Type);
     auto typeFields = typeCheckTypeFieldDefinitionNodes(newType, statement->body());
     // TODO typecheck methods
 
     return new TypedTypeDefinitionStatement(typeName, newType, typeFields, statement);
+}
+
+TypedStatement* TypeChecker::typeCheckFunctionDefinitionStatement(FunctionDefinitionStatement* statement)
+{
+    auto& nameToken = statement->name();
+    auto& functionName = m_parseTree.tokens().getLexeme(nameToken);
+    // TODO typeCheck parameters
+    // TODO check if function with those parameters exists already
+    // TODO create scopes for functions, instead of just passing a type
+    auto newFunction = m_typeDatabase.createFunction(Type::Undefined(), functionName, TypeKind::Function);
+    // TODO typecheck body and return types
+
+    return new TypedFunctionDefinitionStatement(functionName, newFunction, statement);
 }
 
 QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNodes(
@@ -306,7 +324,7 @@ TypedExpression* TypeChecker::typeCheckBinaryExpressionExpression(BinaryExpressi
             auto scopeType = m_typeDatabase.getTypeByName(scopeName);
             auto scopeTypeDefinition = m_typeDatabase.getTypeDefinition(scopeType);
 
-            switch (scopeTypeDefinition.kind())
+            switch (scopeType.kind())
             {
                 case TypeKind::Enum:
                 {

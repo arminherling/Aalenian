@@ -1,0 +1,11 @@
+TypedFunctionDefinitionStatement: {
+    TypeKind: function
+    Type: ()->()
+    Name: func
+    Parameters(0): {
+    }
+    ReturnTypes(0): {
+    }
+    Body(0): {
+    }
+}

@@ -1,7 +1,7 @@
 #include "TypeDatabase.h"
 
 TypeDatabase::TypeDatabase()
-    : m_invalidType{ Type::Undefined().id(), QString("???"), TypeKind::Invalid }
+    : m_invalidType{ Type::Undefined().id(), QString("???") }
     , m_nextId{ 100 }
 {
     addBuiltinType(Type::Discard(), QStringView(u"_"));
@@ -30,15 +30,24 @@ TypeDefinition& TypeDatabase::getTypeDefinition(Type type) noexcept
 Type TypeDatabase::createType(QStringView name, TypeKind kind) noexcept
 {
     auto typeName = name.toString();
-    m_typeNames.emplace(typeName, Type{ m_nextId });
-    m_typeDefinitions.emplace(m_nextId, TypeDefinition{ m_nextId, typeName, kind });
-    return Type{ m_nextId++ };
+    m_typeNames.emplace(typeName, Type{ m_nextId, kind });
+    m_typeDefinitions.emplace(m_nextId, TypeDefinition{ m_nextId, typeName });
+    return Type{ m_nextId++, kind };
+}
+
+Type TypeDatabase::createFunction(Type scope, QStringView name, TypeKind kind) noexcept
+{
+    auto& definition = getTypeDefinition(scope);
+    auto type = Type{ m_nextId++, kind };
+    definition.addFunction(type, name);
+
+    return type;
 }
 
 void TypeDatabase::addBuiltinType(Type type, QStringView name) noexcept
 {
     auto id = type.id();
     auto typeName = name.toString();
-    m_typeNames.emplace(typeName, Type{ id });
-    m_typeDefinitions.emplace(id, TypeDefinition{ id, typeName, TypeKind::Builtin });
+    m_typeNames.emplace(typeName, type);
+    m_typeDefinitions.emplace(id, TypeDefinition{ id, typeName });
 }

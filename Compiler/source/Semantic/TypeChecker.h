@@ -16,6 +16,7 @@
 #include <Syntax/DiscardLiteral.h>
 #include <Syntax/EnumDefinitionStatement.h>
 #include <Syntax/FunctionCallExpression.h>
+#include <Syntax/FunctionDefinitionStatement.h>
 #include <Syntax/GroupingExpression.h>
 #include <Syntax/NameExpression.h>
 #include <Syntax/NumberLiteral.h>
@@ -42,6 +43,7 @@ private:
     [[nodiscard]] TypedStatement* typeCheckAssignmentStatement(AssignmentStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckTypeDefinitionStatement(TypeDefinitionStatement* statement);
+    [[nodiscard]] TypedStatement* typeCheckFunctionDefinitionStatement(FunctionDefinitionStatement* statement);
     [[nodiscard]] QList<TypedFieldDefinitionNode*> typeCheckEnumFieldDefinitionNodes(
         Type newType, 
         Type baseType, 

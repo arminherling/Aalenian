@@ -1,15 +1,18 @@
 #include "TypeDefinition.h"
 
-TypeDefinition::TypeDefinition(i32 id, const QString& name, TypeKind kind)
+TypeDefinition::TypeDefinition(i32 id, const QString& name)
     : m_id{ id }
     , m_name{ name }
-    , m_kind{ kind }
 {
 }
 
 void TypeDefinition::addField(Type type, QStringView name, TypedExpression* expression) noexcept
 {
     m_fields.emplace(name.toString(), new Field(type, name, expression));
+}
+
+void TypeDefinition::addFunction(Type type, QStringView name) noexcept
+{
 }
 
 Field* TypeDefinition::getFieldByName(QStringView fieldName) const noexcept

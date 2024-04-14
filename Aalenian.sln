@@ -157,6 +157,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global", "Global", "{170649
 		Tests\Data\Global\functionCall8.out_parse = Tests\Data\Global\functionCall8.out_parse
 		Tests\Data\Global\functionDefinition1.in = Tests\Data\Global\functionDefinition1.in
 		Tests\Data\Global\functionDefinition1.out_parse = Tests\Data\Global\functionDefinition1.out_parse
+		Tests\Data\Global\functionDefinition1.out_type = Tests\Data\Global\functionDefinition1.out_type
 		Tests\Data\Global\functionDefinition2.in = Tests\Data\Global\functionDefinition2.in
 		Tests\Data\Global\functionDefinition2.out_parse = Tests\Data\Global\functionDefinition2.out_parse
 		Tests\Data\Global\functionDefinition3.in = Tests\Data\Global\functionDefinition3.in

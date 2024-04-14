@@ -45,6 +45,11 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
             PrettyPrintTypedTypeDefinitionStatement((TypedTypeDefinitionStatement*)node);
             break;
         }
+        case NodeKind::TypedFunctionDefinitionStatement:
+        {
+            PrettyPrintTypedFunctionDefinitionStatement((TypedFunctionDefinitionStatement*)node);
+            break;
+        }
         case NodeKind::TypedNegationExpression:
         {
             PrettyPrintTypedNegationExpression((TypedNegationExpression*)node);
@@ -162,6 +167,34 @@ void TypedTreePrinter::PrettyPrintTypedTypeDefinitionStatement(TypedTypeDefiniti
     stream() << Indentation() << QString("}") << NewLine();
 
     stream() << Indentation() << QString("Methods(%1): {").arg(0) << NewLine();
+    PushIndentation();
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void TypedTreePrinter::PrettyPrintTypedFunctionDefinitionStatement(TypedFunctionDefinitionStatement* statement)
+{
+    stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << QString("TypeKind: function") << NewLine();
+    stream() << Indentation() << QString("Type: ()->()") << NewLine();
+    stream() << Indentation() << QString("Name: ") << statement->name() << NewLine();
+
+    stream() << Indentation() << QString("Parameters(%1): {").arg(0) << NewLine();
+    PushIndentation();
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    stream() << Indentation() << QString("ReturnTypes(%1): {").arg(0) << NewLine();
+    PushIndentation();
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    stream() << Indentation() << QString("Body(%1): {").arg(0) << NewLine();
     PushIndentation();
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();

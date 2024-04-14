@@ -7,25 +7,17 @@
 #include <QList>
 #include <QString>
 
-enum class TypeKind
-{
-    Invalid,
-    Builtin,
-    Enum,
-    Type
-};
-
 class TypeDefinition
 {
 public:
-    TypeDefinition(i32 id, const QString& name, TypeKind kind);
+    TypeDefinition(i32 id, const QString& name);
 
     [[nodiscard]] i32 id() const noexcept { return m_id; }
     [[nodiscard]] const QString& name() const noexcept { return m_name; }
-    [[nodiscard]] TypeKind kind() const noexcept { return m_kind; }
     [[nodiscard]] Field* getFieldByName(QStringView fieldName) const noexcept;
 
     void addField(Type type, QStringView name, TypedExpression* expression) noexcept;
+    void addFunction(Type type, QStringView name) noexcept;
 
 private:
     i32 m_id;
