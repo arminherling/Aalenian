@@ -13,6 +13,7 @@ void TypeDefinition::addField(Type type, QStringView name, TypedExpression* expr
 
 void TypeDefinition::addFunction(Type type, QStringView name) noexcept
 {
+    // TODO
 }
 
 Field* TypeDefinition::getFieldByName(QStringView fieldName) const noexcept

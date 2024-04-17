@@ -5,7 +5,6 @@
 #include <Debug/TypedTreePrinter.h>
 #include <iostream>
 #include <QDirIterator>
-#include <Semantic/Environment.h>
 #include <Semantic/TypeChecker.h>
 #include <Semantic/TypeCheckerOptions.h>
 #include <Semantic/TypeDatabase.h>
@@ -29,14 +28,13 @@ namespace
         auto parseTree = Parse(tokens, diagnostics);
 
         TypeDatabase typeDatabase;
-        Environment environment;
         TypeCheckerOptions options{
             .defaultIntegerType = Type::I32(),
             .defaultEnumBaseType = Type::U8()
         };
 
         auto startTime = std::chrono::high_resolution_clock::now();
-        auto typedTree = TypeCheck(parseTree, options, environment, typeDatabase, diagnostics);
+        auto typedTree = TypeCheck(parseTree, options, typeDatabase, diagnostics);
         auto endTime = std::chrono::high_resolution_clock::now();
 
         std::cout << "      Type check(): " << Stringify(endTime - startTime).toStdString() << std::endl;

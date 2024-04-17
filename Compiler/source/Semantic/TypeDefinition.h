@@ -22,6 +22,5 @@ public:
 private:
     i32 m_id;
     QString m_name;
-    TypeKind m_kind;
     std::unordered_map<QString, Field*> m_fields;
 };

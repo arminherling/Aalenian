@@ -104,7 +104,7 @@
     <ClCompile Include="source\Semantic\Discard.cpp" />
     <ClCompile Include="source\Semantic\Field.cpp" />
     <ClCompile Include="source\Semantic\I32Literal.cpp" />
-    <ClCompile Include="source\Semantic\Environment.cpp" />
+    <ClCompile Include="source\Semantic\Scope.cpp" />
     <ClCompile Include="source\Debug\BasePrinter.cpp" />
     <ClCompile Include="source\Debug\TypedTreePrinter.cpp" />
     <ClCompile Include="source\Semantic\TypedBinaryExpression.cpp" />
@@ -181,7 +181,7 @@
     <ClInclude Include="source\Semantic\Discard.h" />
     <ClInclude Include="source\Semantic\Field.h" />
     <ClInclude Include="source\Semantic\I32Literal.h" />
-    <ClInclude Include="source\Semantic\Environment.h" />
+    <ClInclude Include="source\Semantic\Scope.h" />
     <ClInclude Include="source\Debug\BasePrinter.h" />
     <ClInclude Include="source\Debug\TypedTreePrinter.h" />
     <ClInclude Include="source\Semantic\TypeCheckerOptions.h" />

@@ -15,17 +15,16 @@
 #include <Syntax/FieldDeclarationStatement.h>
 
 TypeChecker::TypeChecker(
-    const ParseTree& parseTree, 
-    const TypeCheckerOptions& options, 
-    Environment& environment, 
-    TypeDatabase& typeDatabase, 
+    const ParseTree& parseTree,
+    const TypeCheckerOptions& options,
+    TypeDatabase& typeDatabase,
     DiagnosticsBag& diagnostics)
     : m_parseTree{ parseTree }
     , m_options{ options }
-    , m_environment{ environment }
     , m_typeDatabase{ typeDatabase }
     , m_diagnostics{ diagnostics }
 {
+    m_scopes.emplace_back(std::make_unique<Scope>(nullptr));
 }
 
 TypedTree TypeChecker::typeCheck()
@@ -41,13 +40,12 @@ TypedTree TypeChecker::typeCheck()
 }
 
 TypedTree TypeCheck(
-    const ParseTree& parseTree, 
-    const TypeCheckerOptions& options, 
-    Environment& environment, 
-    TypeDatabase& typeDatabase, 
+    const ParseTree& parseTree,
+    const TypeCheckerOptions& options,
+    TypeDatabase& typeDatabase,
     DiagnosticsBag& diagnostics) noexcept
 {
-    TypeChecker typeChecker{ parseTree, options, environment, typeDatabase, diagnostics };
+    TypeChecker typeChecker{ parseTree, options, typeDatabase, diagnostics };
     return typeChecker.typeCheck();
 }
 
@@ -123,13 +121,13 @@ TypedStatement* TypeChecker::typeCheckAssignmentStatement(AssignmentStatement* s
     auto right = typeCheckExpression(statement->rightExpression());
 
     auto inferedType = inferType(right);
-    
+
     if (left->type() == Type::Undefined())
     {
         left->setType(inferedType);
 
         auto globalValue = ((TypedGlobalValue*)left);
-        m_environment.addBinding(globalValue->name(), globalValue->type());
+        currentScope()->addVariableBinding(globalValue->name(), inferedType);
     }
 
     auto leftType = left->type();
@@ -169,6 +167,7 @@ TypedStatement* TypeChecker::typeCheckEnumDefinitionStatement(EnumDefinitionStat
     auto newType = m_typeDatabase.createType(enumName, TypeKind::Enum);
     auto enumFields = typeCheckEnumFieldDefinitionNodes(newType, baseType, statement->fieldDefinitions());
 
+    currentScope()->addTypeBinding(enumName, newType);
     return new TypedEnumDefinitionStatement(enumName, newType, baseType, enumFields, statement);
 }
 
@@ -181,6 +180,7 @@ TypedStatement* TypeChecker::typeCheckTypeDefinitionStatement(TypeDefinitionStat
     auto typeFields = typeCheckTypeFieldDefinitionNodes(newType, statement->body());
     // TODO typecheck methods
 
+    currentScope()->addTypeBinding(typeName, newType);
     return new TypedTypeDefinitionStatement(typeName, newType, typeFields, statement);
 }
 
@@ -191,15 +191,16 @@ TypedStatement* TypeChecker::typeCheckFunctionDefinitionStatement(FunctionDefini
     // TODO typeCheck parameters
     // TODO check if function with those parameters exists already
     // TODO create scopes for functions, instead of just passing a type
-    auto newFunction = m_typeDatabase.createFunction(Type::Undefined(), functionName, TypeKind::Function);
+    auto newFunctionType = m_typeDatabase.createFunction(Type::Undefined(), functionName, TypeKind::Function);
     // TODO typecheck body and return types
 
-    return new TypedFunctionDefinitionStatement(functionName, newFunction, statement);
+    currentScope()->addFunctionBinding(functionName, newFunctionType);
+    return new TypedFunctionDefinitionStatement(functionName, newFunctionType, statement);
 }
 
 QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNodes(
-    Type newType, 
-    Type baseType, 
+    Type newType,
+    Type baseType,
     const QList<EnumFieldDefinitionStatement*>& fieldDefinitions)
 {
     auto& enumTypeDefinition = m_typeDatabase.getTypeDefinition(newType);
@@ -210,7 +211,7 @@ QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNodes(
     {
         auto nameToken = definition->name()->identifier();
         auto name = m_parseTree.tokens().getLexeme(nameToken);
-        
+
         if (definition->value().has_value())
         {
             auto numberLiteral = definition->value().value();
@@ -252,7 +253,7 @@ QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckTypeFieldDefinitionNodes(
         auto fieldDeclaration = (FieldDeclarationStatement*)statement;
         auto nameToken = fieldDeclaration->name()->identifier();
         auto name = m_parseTree.tokens().getLexeme(nameToken);
-        
+
         auto type = Type::Undefined();
         if (fieldDeclaration->type().has_value())
         {
@@ -350,7 +351,7 @@ TypedExpression* TypeChecker::typeCheckBinaryExpressionExpression(BinaryExpressi
             // for now we'll just make sure left and right have the same type and use that one
             assert(typedLeftExpression->type() == typedRightExpression->type());
             auto type = typedLeftExpression->type();
-            
+
             switch (binaryExpression->binaryOperator())
             {
                 case BinaryOperatornKind::Addition:
@@ -378,7 +379,8 @@ TypedExpression* TypeChecker::typeCheckNameExpression(NameExpression* expression
 {
     auto identifier = expression->identifier();
     auto lexeme = m_parseTree.tokens().getLexeme(identifier);
-    auto type = m_environment.tryGetBinding(lexeme);
+    auto type = currentScope()->tryGetVariableBinding(lexeme);
+
     return new TypedGlobalValue(lexeme, expression, type);
 }
 
@@ -400,7 +402,7 @@ TypedExpression* TypeChecker::typeCheckNumberLiteral(NumberLiteral* literal)
         auto typeToken = literal->type().value();
         auto identifierToken = typeToken.name()->identifier();
         auto typeName = m_parseTree.tokens().getLexeme(identifierToken);
-        
+
         numberType = m_typeDatabase.getTypeByName(typeName);
     }
     else
@@ -423,10 +425,11 @@ TypedExpression* TypeChecker::typeCheckFunctionCallExpression(FunctionCallExpres
 {
     auto name = functionCallExpression->name();
     auto lexeme = m_parseTree.tokens().getLexeme(name);
-    auto type = m_environment.tryGetBinding(lexeme);
+    auto type = currentScope()->tryGetFunctionBinding(lexeme);
     // TODO type check parameters and find the correct function call
     // TODO check if function was defined before and what type it returns, assume undefined for now
     // TODO print diagnostic if the function wasnt defined before
+    // TODO pass the return type instead of Type::Undefined
     return new TypedFunctionCallExpression(lexeme, functionCallExpression, Type::Undefined());
 }
 
@@ -455,7 +458,7 @@ std::tuple<TypedExpression*, i32> TypeChecker::convertValueToTypedLiteral(QStrin
         bool ok;
         auto value = valueLexeme.toInt(&ok);
         assert(ok);
-        
+
         // TODO add error for values outside of the u8 range
         assert(value >= 0);
         assert(value <= UINT8_MAX);
@@ -492,4 +495,21 @@ std::tuple<TypedExpression*, i32> TypeChecker::convertValueToTypedLiteral(i32 va
     }
 
     return { nullptr, 0 };
+}
+
+void TypeChecker::pushScope()
+{
+    auto parent = m_scopes.back().get();
+    m_scopes.emplace_back(std::make_unique<Scope>(parent));
+}
+
+void TypeChecker::popScope()
+{
+    m_scopes.pop_back();
+    assert(m_scopes.size() >= 1);
+}
+
+Scope* TypeChecker::currentScope() const noexcept
+{
+    return m_scopes.back().get();
 }

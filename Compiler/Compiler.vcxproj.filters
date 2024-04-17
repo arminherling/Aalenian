@@ -185,7 +185,7 @@
     <ClCompile Include="source\Semantic\TypedNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Semantic\Environment.cpp">
+    <ClCompile Include="source\Semantic\Scope.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Semantic\TypeDatabase.cpp">
@@ -445,7 +445,7 @@
     <ClInclude Include="source\Semantic\TypedNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Semantic\Environment.h">
+    <ClInclude Include="source\Semantic\Scope.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Semantic\TypeDatabase.h">
