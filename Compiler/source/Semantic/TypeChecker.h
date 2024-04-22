@@ -21,6 +21,7 @@
 #include <Syntax/NameExpression.h>
 #include <Syntax/NumberLiteral.h>
 #include <Syntax/ParseTree.h>
+#include <Syntax/ReturnStatement.h>
 #include <Syntax/TypeDefinitionStatement.h>
 #include <Syntax/UnaryExpression.h>
 
@@ -45,11 +46,13 @@ private:
     [[nodiscard]] TypedStatement* typeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckTypeDefinitionStatement(TypeDefinitionStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckFunctionDefinitionStatement(FunctionDefinitionStatement* statement);
+    [[nodiscard]] TypedStatement* typeCheckReturnStatement(ReturnStatement* statement);
     [[nodiscard]] QList<TypedFieldDefinitionNode*> typeCheckEnumFieldDefinitionNodes(
         Type newType, 
         Type baseType, 
         const QList<EnumFieldDefinitionStatement*>& fieldDefinitions);
     [[nodiscard]] QList<TypedFieldDefinitionNode*> typeCheckTypeFieldDefinitionNodes(Type newType, BlockNode* body);
+    [[nodiscard]] std::tuple<QList<TypedStatement*>, QList<Type>> typeCheckFunctionBodyNode(BlockNode* body);
     [[nodiscard]] TypedExpression* typeCheckUnaryExpressionExpression(UnaryExpression* unaryExpression);
     [[nodiscard]] TypedExpression* typeCheckBinaryExpressionExpression(BinaryExpression* binaryExpression);
     [[nodiscard]] TypedExpression* typeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression); 
@@ -63,7 +66,7 @@ private:
     [[nodiscard]] std::tuple<TypedExpression*, i32> convertValueToTypedLiteral(QStringView literal, Type type, Node* source);
     [[nodiscard]] std::tuple<TypedExpression*, i32> convertValueToTypedLiteral(i32 value, Type type, Node* source);
 
-    void pushScope();
+    void pushScope(ScopeKind kind);
     void popScope();
     [[nodiscard]] Scope* currentScope() const noexcept;
 

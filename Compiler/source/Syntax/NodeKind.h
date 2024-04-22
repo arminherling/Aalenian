@@ -44,6 +44,7 @@ enum class COMPILER_API NodeKind
     TypedFieldDefinitionNode,
     TypedTypeDefinitionStatement,
     TypedFunctionDefinitionStatement,
+    TypedReturnStatement,
 
     TypedNegationExpression,
     TypedEnumFieldAccessExpression,
@@ -53,7 +54,8 @@ enum class COMPILER_API NodeKind
     TypedDivisionExpression,
     TypedFunctionCallExpression,
 
-    TypedGlobalValue,
+    TypedGlobalValue, // TODO rename to TypedConstant?
+    TypedVariable,
     Discard,
     U8Literal,
     I32Literal

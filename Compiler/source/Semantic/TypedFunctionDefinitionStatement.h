@@ -13,18 +13,18 @@ public:
         QStringView name,
         Type type,
         //const QList<Parameters*>& parameters,
-        //const QList<Type>& returnTypes,
-        //const QList<TypedStatement*>& statements,
+        const QList<Type>& returnTypes,
+        const QList<TypedStatement*>& statements,
         Node* source);
 
     [[nodiscard]] QStringView name() const noexcept { return m_name; }
     //[[nodiscard]] QList<Parameters*> parameters() const noexcept { return m_parameters; }
-    //[[nodiscard]] QList<Type> returnTypes() const noexcept { return m_returnTypes; }
-    //[[nodiscard]] QList<TypedStatement*>& body() const noexcept { return m_body; }
+    [[nodiscard]] const QList<Type>& returnTypes() const noexcept { return m_returnTypes; }
+    [[nodiscard]] const QList<TypedStatement*>& body() const noexcept { return m_statements; }
 
 private:
     QStringView m_name;
     //QList<Parameters*> m_parameters;
-    //QList<Type> m_returnTypes;
-    //QList<TypedStatement*> m_statements;
+    QList<Type> m_returnTypes;
+    QList<TypedStatement*> m_statements;
 };

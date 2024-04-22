@@ -16,6 +16,11 @@ void TypeDefinition::addFunction(Type type, QStringView name) noexcept
     // TODO
 }
 
+void TypeDefinition::setReturnTypes(const QList<Type>& returnTypes)
+{
+    m_returnTypes = returnTypes;
+}
+
 Field* TypeDefinition::getFieldByName(QStringView fieldName) const noexcept
 {
     auto name = fieldName.toString();

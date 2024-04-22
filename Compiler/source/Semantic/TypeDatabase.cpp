@@ -5,6 +5,7 @@ TypeDatabase::TypeDatabase()
     , m_nextId{ 100 }
 {
     addBuiltinType(Type::Discard(), QStringView(u"_"));
+    addBuiltinType(Type::Void(), QStringView(u"void"));
     addBuiltinType(Type::U8(), QStringView(u"u8"));
     addBuiltinType(Type::I32(), QStringView(u"i32"));
 }

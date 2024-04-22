@@ -14,8 +14,10 @@
 #include <Semantic/TypedGlobalValue.h>
 #include <Semantic/TypedNegationExpression.h>
 #include <Semantic/TypedNode.h>
+#include <Semantic/TypedReturnStatement.h>
 #include <Semantic/TypedTree.h>
 #include <Semantic/TypedTypeDefinitionStatement.h>
+#include <Semantic/TypedVariable.h>
 #include <Semantic/U8Literal.h>
 
 class COMPILER_API TypedTreePrinter : public BasePrinter
@@ -32,10 +34,12 @@ private:
     void PrettyPrintTypedEnumDefinitionStatement(TypedEnumDefinitionStatement* statement);
     void PrettyPrintTypedTypeDefinitionStatement(TypedTypeDefinitionStatement* statement);
     void PrettyPrintTypedFunctionDefinitionStatement(TypedFunctionDefinitionStatement* statement);
+    void PrettyPrintTypedReturnStatement(TypedReturnStatement* statement);
     void PrettyPrintTypedNegationExpression(TypedNegationExpression* expression);
     void PrettyPrintTypedEnumFieldAccessExpression(TypedEnumFieldAccessExpression* expression);
     void PrettyPrintTypedBinaryExpression(TypedBinaryExpression* expression);
     void PrettyPrintTypedGlobalValue(TypedGlobalValue* value);
+    void PrettyPrintTypedVariable(TypedVariable* value);
     void PrettyPrintTypedFunctionCallExpression(TypedFunctionCallExpression* functionCall);
     void PrettyPrintDiscard(Discard* discard);
     void PrettyPrintU8Literal(U8Literal* literal);

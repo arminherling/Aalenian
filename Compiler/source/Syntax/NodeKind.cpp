@@ -77,6 +77,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("TypedTypeDefinitionStatement");
         case NodeKind::TypedFunctionDefinitionStatement:
             return QString("TypedFunctionDefinitionStatement");
+        case NodeKind::TypedReturnStatement:
+            return QString("TypedReturnStatement");
 
         case NodeKind::TypedNegationExpression:
             return QString("TypedNegationExpression");
@@ -95,6 +97,8 @@ QString StringifyNodeKind(NodeKind kind)
 
         case NodeKind::TypedGlobalValue:
             return QString("TypedGlobalValue");
+        case NodeKind::TypedVariable:
+            return QString("TypedVariable");
         case NodeKind::Discard:
             return QString("Discard");
         case NodeKind::U8Literal:

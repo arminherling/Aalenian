@@ -50,6 +50,11 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
             PrettyPrintTypedFunctionDefinitionStatement((TypedFunctionDefinitionStatement*)node);
             break;
         }
+        case NodeKind::TypedReturnStatement:
+        {
+            PrettyPrintTypedReturnStatement((TypedReturnStatement*)node);
+            break;
+        }
         case NodeKind::TypedNegationExpression:
         {
             PrettyPrintTypedNegationExpression((TypedNegationExpression*)node);
@@ -76,6 +81,11 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
         case NodeKind::TypedGlobalValue:
         {
             PrettyPrintTypedGlobalValue((TypedGlobalValue*)node);
+            break;
+        }
+        case NodeKind::TypedVariable:
+        {
+            PrettyPrintTypedVariable((TypedVariable*)node);
             break;
         }
         case NodeKind::Discard:
@@ -181,7 +191,7 @@ void TypedTreePrinter::PrettyPrintTypedFunctionDefinitionStatement(TypedFunction
     PushIndentation();
 
     stream() << Indentation() << QString("TypeKind: function") << NewLine();
-    stream() << Indentation() << QString("Type: ()->()") << NewLine();
+    stream() << Indentation() << PrettyPrintType(statement->type()) << NewLine();
     stream() << Indentation() << QString("Name: ") << statement->name() << NewLine();
 
     stream() << Indentation() << QString("Parameters(%1): {").arg(0) << NewLine();
@@ -189,13 +199,43 @@ void TypedTreePrinter::PrettyPrintTypedFunctionDefinitionStatement(TypedFunction
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 
-    stream() << Indentation() << QString("ReturnTypes(%1): {").arg(0) << NewLine();
+    auto returnTypes = statement->returnTypes();
+    stream() << Indentation() << QString("ReturnTypes(%1): {").arg(returnTypes.count()) << NewLine();
     PushIndentation();
+    for (const auto returnType : returnTypes)
+    {
+        stream() << Indentation() << PrettyPrintType(returnType) << NewLine();
+    }
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 
-    stream() << Indentation() << QString("Body(%1): {").arg(0) << NewLine();
+    auto body = statement->body();
+    stream() << Indentation() << QString("Body(%1): {").arg(body.count()) << NewLine();
     PushIndentation();
+    for (const auto bodyStatement : body)
+    {
+        PrettyPrintNode(bodyStatement);
+    }
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void TypedTreePrinter::PrettyPrintTypedReturnStatement(TypedReturnStatement* statement)
+{
+    stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << PrettyPrintType(statement->type()) << NewLine();
+    stream() << Indentation() << QString("Expression: {") << NewLine();
+    PushIndentation();
+
+    auto optionalExpression = statement->expression();
+    if(optionalExpression.has_value())
+    PrettyPrintNode(optionalExpression.value());
+
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 
@@ -262,6 +302,18 @@ void TypedTreePrinter::PrettyPrintTypedBinaryExpression(TypedBinaryExpression* e
 }
 
 void TypedTreePrinter::PrettyPrintTypedGlobalValue(TypedGlobalValue* value)
+{
+    stream() << Indentation() << StringifyNodeKind(value->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << PrettyPrintType(value->type()) << NewLine();
+    stream() << Indentation() << QString("Name: ") << value->name() << NewLine();
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void TypedTreePrinter::PrettyPrintTypedVariable(TypedVariable* value)
 {
     stream() << Indentation() << StringifyNodeKind(value->kind()) << QString(": {") << NewLine();
     PushIndentation();
@@ -350,6 +402,22 @@ void TypedTreePrinter::PrettyPrintTypedArgumentsNode()
 
 QString TypedTreePrinter::PrettyPrintType(Type type) noexcept
 {
-    auto definition = m_typeDatabase.getTypeDefinition(type);
+    auto& definition = m_typeDatabase.getTypeDefinition(type);
+    if (type.kind() == TypeKind::Function)
+    {
+        auto returnTypes = definition.returnTypes();
+        QStringList stringifiedReturnTypes;
+        for (const auto& returnType : returnTypes)
+        {
+            stringifiedReturnTypes.append(
+                m_typeDatabase.getTypeDefinition(returnType).name());
+        }
+
+        return QString("Type: (%1)->(%2)")
+            .arg(
+                QString(), 
+                stringifiedReturnTypes.join(QString(", ")));
+    }
+
     return QString("Type: %1").arg(definition.name());
 }

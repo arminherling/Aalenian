@@ -2,16 +2,18 @@
 
 #include <Semantic/Discard.h>
 #include <Semantic/I32Literal.h>
-#include <Semantic/U8Literal.h>
-#include <Semantic/TypedBinaryExpression.h>
 #include <Semantic/TypedAssignmentStatement.h>
+#include <Semantic/TypedBinaryExpression.h>
 #include <Semantic/TypedEnumDefinitionStatement.h>
 #include <Semantic/TypedEnumFieldAccessExpression.h>
 #include <Semantic/TypedFunctionCallExpression.h>
 #include <Semantic/TypedFunctionDefinitionStatement.h>
 #include <Semantic/TypedGlobalValue.h>
 #include <Semantic/TypedNegationExpression.h>
+#include <Semantic/TypedReturnStatement.h>
 #include <Semantic/TypedTypeDefinitionStatement.h>
+#include <Semantic/TypedVariable.h>
+#include <Semantic/U8Literal.h>
 #include <Syntax/FieldDeclarationStatement.h>
 
 TypeChecker::TypeChecker(
@@ -24,7 +26,7 @@ TypeChecker::TypeChecker(
     , m_typeDatabase{ typeDatabase }
     , m_diagnostics{ diagnostics }
 {
-    m_scopes.emplace_back(std::make_unique<Scope>(nullptr));
+    m_scopes.emplace_back(std::make_unique<Scope>(nullptr, ScopeKind::Global));
 }
 
 TypedTree TypeChecker::typeCheck()
@@ -68,6 +70,10 @@ TypedStatement* TypeChecker::typeCheckStatement(Statement* statement)
         case NodeKind::FunctionDefinitionStatement:
         {
             return typeCheckFunctionDefinitionStatement((FunctionDefinitionStatement*)statement);
+        }
+        case NodeKind::ReturnStatement:
+        {
+            return typeCheckReturnStatement((ReturnStatement*)statement);
         }
         default:
         {
@@ -188,14 +194,35 @@ TypedStatement* TypeChecker::typeCheckFunctionDefinitionStatement(FunctionDefini
 {
     auto& nameToken = statement->name();
     auto& functionName = m_parseTree.tokens().getLexeme(nameToken);
-    // TODO typeCheck parameters
-    // TODO check if function with those parameters exists already
     // TODO create scopes for functions, instead of just passing a type
     auto newFunctionType = m_typeDatabase.createFunction(Type::Undefined(), functionName, TypeKind::Function);
-    // TODO typecheck body and return types
-
+    auto& functionTypeDefinition = m_typeDatabase.getTypeDefinition(newFunctionType);
+    // TODO check if function with those parameters exists already
     currentScope()->addFunctionBinding(functionName, newFunctionType);
-    return new TypedFunctionDefinitionStatement(functionName, newFunctionType, statement);
+
+    pushScope(ScopeKind::Function);
+    // TODO typeCheck parameters
+    // TODO set parameters for function type
+
+    auto [typedBody, returnTypes] = typeCheckFunctionBodyNode(statement->body());
+    
+    functionTypeDefinition.setReturnTypes(returnTypes);
+
+    popScope();
+
+    return new TypedFunctionDefinitionStatement(functionName, newFunctionType, returnTypes, typedBody, statement);
+}
+
+TypedStatement* TypeChecker::typeCheckReturnStatement(ReturnStatement* statement)
+{
+    if (statement->expression().has_value())
+    {
+        auto typedExpression = typeCheckExpression(statement->expression().value());
+        // TODO handle multiple return types
+        return new TypedReturnStatement(typedExpression, statement, typedExpression->type());
+    }
+
+    return new TypedReturnStatement(std::nullopt, statement, Type::Void());
 }
 
 QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNodes(
@@ -290,6 +317,24 @@ QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckTypeFieldDefinitionNodes(
     return typeFields;
 }
 
+std::tuple<QList<TypedStatement*>, QList<Type>> TypeChecker::typeCheckFunctionBodyNode(BlockNode* body)
+{
+    QList<TypedStatement*> typedStatements;
+    QList<Type> returnTypes;
+    for (const auto statement : body->statements())
+    {
+        auto typedStatement = typeCheckStatement(statement);
+        if (typedStatement->kind() == NodeKind::TypedReturnStatement)
+        {
+            // TODO this isnt correct when the function has multiple returns but works for now
+            returnTypes.append(typedStatement->type());
+        }
+        typedStatements.append(typedStatement);
+    }
+
+    return { typedStatements, returnTypes };
+}
+
 TypedExpression* TypeChecker::typeCheckUnaryExpressionExpression(UnaryExpression* unaryExpression)
 {
     switch (unaryExpression->unaryOperator())
@@ -377,11 +422,14 @@ TypedExpression* TypeChecker::typeCheckBinaryExpressionExpression(BinaryExpressi
 
 TypedExpression* TypeChecker::typeCheckNameExpression(NameExpression* expression)
 {
-    auto identifier = expression->identifier();
-    auto lexeme = m_parseTree.tokens().getLexeme(identifier);
-    auto type = currentScope()->tryGetVariableBinding(lexeme);
+    auto& identifier = expression->identifier();
+    auto& name = m_parseTree.tokens().getLexeme(identifier);
+    auto type = currentScope()->tryGetVariableBinding(name);
 
-    return new TypedGlobalValue(lexeme, expression, type);
+    if(currentScope()->kind() == ScopeKind::Global)
+        return new TypedGlobalValue(name, expression, type);
+
+    return new TypedVariable(name, expression, type);
 }
 
 TypedExpression* TypeChecker::typeCheckGroupingExpression(GroupingExpression* expression)
@@ -497,10 +545,10 @@ std::tuple<TypedExpression*, i32> TypeChecker::convertValueToTypedLiteral(i32 va
     return { nullptr, 0 };
 }
 
-void TypeChecker::pushScope()
+void TypeChecker::pushScope(ScopeKind kind)
 {
     auto parent = m_scopes.back().get();
-    m_scopes.emplace_back(std::make_unique<Scope>(parent));
+    m_scopes.emplace_back(std::make_unique<Scope>(parent, kind));
 }
 
 void TypeChecker::popScope()

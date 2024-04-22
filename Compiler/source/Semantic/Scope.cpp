@@ -1,7 +1,8 @@
 #include "Scope.h"
 
-Scope::Scope(Scope* parent)
-    : m_parent(parent)
+Scope::Scope(Scope* parent, ScopeKind kind)
+    : m_parent{ parent }
+    , m_kind{ kind }
 {
 }
 

@@ -115,7 +115,9 @@
     <ClCompile Include="source\Semantic\TypedFunctionCallExpression.cpp" />
     <ClCompile Include="source\Semantic\TypedFunctionDefinitionStatement.cpp" />
     <ClCompile Include="source\Semantic\TypedNegationExpression.cpp" />
+    <ClCompile Include="source\Semantic\TypedReturnStatement.cpp" />
     <ClCompile Include="source\Semantic\TypedTypeDefinitionStatement.cpp" />
+    <ClCompile Include="source\Semantic\TypedVariable.cpp" />
     <ClCompile Include="source\Semantic\U8Literal.cpp" />
     <ClCompile Include="source\Syntax\NodeKind.cpp" />
     <ClCompile Include="source\Syntax\ArgumentNode.cpp" />
@@ -193,7 +195,9 @@
     <ClInclude Include="source\Semantic\TypedFunctionCallExpression.h" />
     <ClInclude Include="source\Semantic\TypedFunctionDefinitionStatement.h" />
     <ClInclude Include="source\Semantic\TypedNegationExpression.h" />
+    <ClInclude Include="source\Semantic\TypedReturnStatement.h" />
     <ClInclude Include="source\Semantic\TypedTypeDefinitionStatement.h" />
+    <ClInclude Include="source\Semantic\TypedVariable.h" />
     <ClInclude Include="source\Semantic\U8Literal.h" />
     <ClInclude Include="source\Syntax\NodeKind.h" />
     <ClInclude Include="source\Syntax\ArgumentNode.h" />

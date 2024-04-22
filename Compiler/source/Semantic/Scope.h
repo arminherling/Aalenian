@@ -6,12 +6,21 @@
 #include <Semantic/Type.h>
 #include <unordered_map>
 
+enum class ScopeKind
+{
+    Invalid,
+    Global,
+    Function,
+    Type,
+    Method,
+};
+
 class COMPILER_API Scope
 {
 public:
-    Scope(Scope* parent);
-    //~Scope() = default;
-    //Scope(Scope&&) = default;
+    Scope(Scope* parent, ScopeKind kind);
+
+    [[nodiscard]] ScopeKind kind() const noexcept { return m_kind; }
 
     void addTypeBinding(QStringView identifier, Type node);
     void addVariableBinding(QStringView identifier, Type node);
@@ -22,6 +31,7 @@ public:
 
 private:
     Scope* m_parent;
+    ScopeKind m_kind;
     std::unordered_map<QString, Type> m_typeBindings;
     std::unordered_map<QString, Type> m_variableBindings;
     std::unordered_map<QString, Type> m_functionBindings;
