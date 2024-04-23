@@ -4,10 +4,10 @@
 #include <Semantic/Type.h>
 #include <Semantic/TypedExpression.h>
 
-class COMPILER_API TypedGlobalValue : public TypedExpression
+class COMPILER_API TypedConstant : public TypedExpression
 {
 public:
-    TypedGlobalValue(QStringView name, Node* source, Type type);
+    TypedConstant(QStringView name, Node* source, Type type);
 
     [[nodiscard]] QStringView name() const noexcept { return m_name; }
 

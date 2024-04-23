@@ -1,7 +1,7 @@
 TypedAssignmentStatement: {
     Type: u8
     Left: {
-        TypedGlobalValue: {
+        TypedConstant: {
             Type: u8
             Name: a
         }

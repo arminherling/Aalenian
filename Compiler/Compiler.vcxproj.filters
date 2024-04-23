@@ -191,7 +191,7 @@
     <ClCompile Include="source\Semantic\TypeDatabase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Semantic\TypedGlobalValue.cpp">
+    <ClCompile Include="source\Semantic\TypedConstant.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Semantic\I32Literal.cpp">
@@ -457,7 +457,7 @@
     <ClInclude Include="source\Semantic\TypeDatabase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Semantic\TypedGlobalValue.h">
+    <ClInclude Include="source\Semantic\TypedConstant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Semantic\I32Literal.h">

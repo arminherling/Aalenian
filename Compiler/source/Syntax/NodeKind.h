@@ -54,7 +54,7 @@ enum class COMPILER_API NodeKind
     TypedDivisionExpression,
     TypedFunctionCallExpression,
 
-    TypedGlobalValue, // TODO rename to TypedConstant?
+    TypedConstant,
     TypedVariable,
     Discard,
     U8Literal,

@@ -28,7 +28,7 @@ TypedEnumDefinitionStatement: {
 TypedAssignmentStatement: {
     Type: Values
     Left: {
-        TypedGlobalValue: {
+        TypedConstant: {
             Type: Values
             Name: s
         }

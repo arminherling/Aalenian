@@ -1,7 +1,7 @@
 TypedAssignmentStatement: {
     Type: i32
     Left: {
-        TypedGlobalValue: {
+        TypedConstant: {
             Type: i32
             Name: a
         }

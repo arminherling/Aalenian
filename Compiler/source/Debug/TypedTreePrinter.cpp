@@ -78,9 +78,9 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
             PrettyPrintTypedFunctionCallExpression((TypedFunctionCallExpression*)node);
             break;
         }
-        case NodeKind::TypedGlobalValue:
+        case NodeKind::TypedConstant:
         {
-            PrettyPrintTypedGlobalValue((TypedGlobalValue*)node);
+            PrettyPrintTypedConstant((TypedConstant*)node);
             break;
         }
         case NodeKind::TypedVariable:
@@ -301,7 +301,7 @@ void TypedTreePrinter::PrettyPrintTypedBinaryExpression(TypedBinaryExpression* e
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-void TypedTreePrinter::PrettyPrintTypedGlobalValue(TypedGlobalValue* value)
+void TypedTreePrinter::PrettyPrintTypedConstant(TypedConstant* value)
 {
     stream() << Indentation() << StringifyNodeKind(value->kind()) << QString(": {") << NewLine();
     PushIndentation();

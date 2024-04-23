@@ -8,7 +8,7 @@
 #include <Semantic/TypedEnumFieldAccessExpression.h>
 #include <Semantic/TypedFunctionCallExpression.h>
 #include <Semantic/TypedFunctionDefinitionStatement.h>
-#include <Semantic/TypedGlobalValue.h>
+#include <Semantic/TypedConstant.h>
 #include <Semantic/TypedNegationExpression.h>
 #include <Semantic/TypedReturnStatement.h>
 #include <Semantic/TypedTypeDefinitionStatement.h>
@@ -132,7 +132,7 @@ TypedStatement* TypeChecker::typeCheckAssignmentStatement(AssignmentStatement* s
     {
         left->setType(inferedType);
 
-        auto globalValue = ((TypedGlobalValue*)left);
+        auto globalValue = ((TypedConstant*)left);
         currentScope()->addVariableBinding(globalValue->name(), inferedType);
     }
 
@@ -427,7 +427,7 @@ TypedExpression* TypeChecker::typeCheckNameExpression(NameExpression* expression
     auto type = currentScope()->tryGetVariableBinding(name);
 
     if(currentScope()->kind() == ScopeKind::Global)
-        return new TypedGlobalValue(name, expression, type);
+        return new TypedConstant(name, expression, type);
 
     return new TypedVariable(name, expression, type);
 }

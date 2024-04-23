@@ -175,7 +175,7 @@
     <ClCompile Include="source\Semantic\TypedTree.cpp" />
     <ClCompile Include="source\Semantic\TypedNode.cpp" />
     <ClCompile Include="source\Semantic\TypeDatabase.cpp" />
-    <ClCompile Include="source\Semantic\TypedGlobalValue.cpp" />
+    <ClCompile Include="source\Semantic\TypedConstant.cpp" />
     <ClCompile Include="source\Semantic\TypedAssignmentStatement.cpp" />
     <ClCompile Include="source\Semantic\TypedStatement.cpp" />
     <ClCompile Include="source\Semantic\TypedExpression.cpp" />
@@ -265,7 +265,7 @@
     <ClInclude Include="source\Semantic\TypedTree.h" />
     <ClInclude Include="source\Semantic\TypedNode.h" />
     <ClInclude Include="source\Semantic\TypeDatabase.h" />
-    <ClInclude Include="source\Semantic\TypedGlobalValue.h" />
+    <ClInclude Include="source\Semantic\TypedConstant.h" />
     <ClInclude Include="source\Semantic\TypedAssignmentStatement.h" />
     <ClInclude Include="source\Semantic\TypedStatement.h" />
     <ClInclude Include="source\Semantic\TypedExpression.h" />
