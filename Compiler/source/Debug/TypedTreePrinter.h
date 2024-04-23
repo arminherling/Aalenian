@@ -19,6 +19,7 @@
 #include <Semantic/TypedTypeDefinitionStatement.h>
 #include <Semantic/TypedVariable.h>
 #include <Semantic/U8Literal.h>
+#include <Semantic/Parameter.h>
 
 class COMPILER_API TypedTreePrinter : public BasePrinter
 {
@@ -38,8 +39,9 @@ private:
     void PrettyPrintTypedNegationExpression(TypedNegationExpression* expression);
     void PrettyPrintTypedEnumFieldAccessExpression(TypedEnumFieldAccessExpression* expression);
     void PrettyPrintTypedBinaryExpression(TypedBinaryExpression* expression);
-    void PrettyPrintTypedConstant(TypedConstant* value);
-    void PrettyPrintTypedVariable(TypedVariable* value);
+    void PrettyPrintTypedConstant(TypedConstant* constant);
+    void PrettyPrintTypedVariable(TypedVariable* variable);
+    void PrettyPrintParameter(Parameter* parameter);
     void PrettyPrintTypedFunctionCallExpression(TypedFunctionCallExpression* functionCall);
     void PrettyPrintDiscard(Discard* discard);
     void PrettyPrintU8Literal(U8Literal* literal);

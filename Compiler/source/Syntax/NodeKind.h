@@ -58,7 +58,9 @@ enum class COMPILER_API NodeKind
     TypedVariable,
     Discard,
     U8Literal,
-    I32Literal
+    I32Literal,
+
+    Parameter
 };
 
 COMPILER_API [[nodiscard]] QString StringifyNodeKind(NodeKind kind);

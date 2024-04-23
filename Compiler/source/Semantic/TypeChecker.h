@@ -2,6 +2,7 @@
 
 #include <Defines.h>
 #include <Compiler/DiagnosticsBag.h>
+#include <Semantic/Parameter.h>
 #include <Semantic/Scope.h>
 #include <Semantic/Type.h>
 #include <Semantic/TypeCheckerOptions.h>
@@ -52,6 +53,7 @@ private:
         Type baseType, 
         const QList<EnumFieldDefinitionStatement*>& fieldDefinitions);
     [[nodiscard]] QList<TypedFieldDefinitionNode*> typeCheckTypeFieldDefinitionNodes(Type newType, BlockNode* body);
+    [[nodiscard]] QList<Parameter*> typeCheckFunctionParameters(ParametersNode* parameterNode);
     [[nodiscard]] std::tuple<QList<TypedStatement*>, QList<Type>> typeCheckFunctionBodyNode(BlockNode* body);
     [[nodiscard]] TypedExpression* typeCheckUnaryExpressionExpression(UnaryExpression* unaryExpression);
     [[nodiscard]] TypedExpression* typeCheckBinaryExpressionExpression(BinaryExpression* binaryExpression);

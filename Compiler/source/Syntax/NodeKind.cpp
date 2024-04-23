@@ -106,6 +106,9 @@ QString StringifyNodeKind(NodeKind kind)
         case NodeKind::I32Literal:
             return QString("I32Literal");
 
+        case NodeKind::Parameter:
+            return QString("Parameter");
+
         default:
             TODO("String for NodeKind value was not defined yet");
     }

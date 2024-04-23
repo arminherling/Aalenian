@@ -192,25 +192,26 @@ TypedStatement* TypeChecker::typeCheckTypeDefinitionStatement(TypeDefinitionStat
 
 TypedStatement* TypeChecker::typeCheckFunctionDefinitionStatement(FunctionDefinitionStatement* statement)
 {
+    auto parentScope = currentScope();
+    pushScope(ScopeKind::Function);
+
     auto& nameToken = statement->name();
     auto& functionName = m_parseTree.tokens().getLexeme(nameToken);
     // TODO create scopes for functions, instead of just passing a type
+    // TODO check if function with same name and parameters exists already
     auto newFunctionType = m_typeDatabase.createFunction(Type::Undefined(), functionName, TypeKind::Function);
+    parentScope->addFunctionBinding(functionName, newFunctionType);
     auto& functionTypeDefinition = m_typeDatabase.getTypeDefinition(newFunctionType);
-    // TODO check if function with those parameters exists already
-    currentScope()->addFunctionBinding(functionName, newFunctionType);
 
-    pushScope(ScopeKind::Function);
-    // TODO typeCheck parameters
-    // TODO set parameters for function type
+    auto parameters = typeCheckFunctionParameters(statement->parameters());
+    functionTypeDefinition.setParameters(parameters);
 
     auto [typedBody, returnTypes] = typeCheckFunctionBodyNode(statement->body());
-    
     functionTypeDefinition.setReturnTypes(returnTypes);
 
     popScope();
 
-    return new TypedFunctionDefinitionStatement(functionName, newFunctionType, returnTypes, typedBody, statement);
+    return new TypedFunctionDefinitionStatement(functionName, newFunctionType, parameters, returnTypes, typedBody, statement);
 }
 
 TypedStatement* TypeChecker::typeCheckReturnStatement(ReturnStatement* statement)
@@ -317,6 +318,21 @@ QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckTypeFieldDefinitionNodes(
     return typeFields;
 }
 
+QList<Parameter*> TypeChecker::typeCheckFunctionParameters(ParametersNode* parametersNode)
+{
+    QList<Parameter*> parameters;
+
+    for (const auto parameterNode : parametersNode->parameters())
+    {
+        auto& parameterName = m_parseTree.tokens().getLexeme(parameterNode->name()->identifier());
+        auto parameterType = convertTypeNameToType(parameterNode->type());
+        currentScope()->addVariableBinding(parameterName, parameterType);
+
+        parameters.append(new Parameter(parameterName, parameterNode, parameterType));
+    }
+    return parameters;
+}
+
 std::tuple<QList<TypedStatement*>, QList<Type>> TypeChecker::typeCheckFunctionBodyNode(BlockNode* body)
 {
     QList<TypedStatement*> typedStatements;
@@ -366,9 +382,9 @@ TypedExpression* TypeChecker::typeCheckBinaryExpressionExpression(BinaryExpressi
             //TODO disallow other expressions
             assert(leftExpression->kind() == NodeKind::NameExpression);
             auto scopeNameExpression = (NameExpression*)leftExpression;
-            auto scopeName = m_parseTree.tokens().getLexeme(scopeNameExpression->identifier());
+            auto& scopeName = m_parseTree.tokens().getLexeme(scopeNameExpression->identifier());
             auto scopeType = m_typeDatabase.getTypeByName(scopeName);
-            auto scopeTypeDefinition = m_typeDatabase.getTypeDefinition(scopeType);
+            auto& scopeTypeDefinition = m_typeDatabase.getTypeDefinition(scopeType);
 
             switch (scopeType.kind())
             {
@@ -378,7 +394,7 @@ TypedExpression* TypeChecker::typeCheckBinaryExpressionExpression(BinaryExpressi
                     //TODO allow/disallow other expressions
                     assert(rightExpression->kind() == NodeKind::NameExpression);
                     auto fieldNameExpression = (NameExpression*)rightExpression;
-                    auto fieldName = m_parseTree.tokens().getLexeme(fieldNameExpression->identifier());
+                    auto& fieldName = m_parseTree.tokens().getLexeme(fieldNameExpression->identifier());
                     auto enumField = scopeTypeDefinition.getFieldByName(fieldName);
                     return new TypedEnumFieldAccessExpression(scopeType, enumField, binaryExpression);
                 }
@@ -474,7 +490,7 @@ TypedExpression* TypeChecker::typeCheckFunctionCallExpression(FunctionCallExpres
     auto name = functionCallExpression->name();
     auto lexeme = m_parseTree.tokens().getLexeme(name);
     auto type = currentScope()->tryGetFunctionBinding(lexeme);
-    // TODO type check parameters and find the correct function call
+    // TODO type check arguments and find the correct function call
     // TODO check if function was defined before and what type it returns, assume undefined for now
     // TODO print diagnostic if the function wasnt defined before
     // TODO pass the return type instead of Type::Undefined
