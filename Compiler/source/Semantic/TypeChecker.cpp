@@ -3,6 +3,7 @@
 #include <Semantic/Discard.h>
 #include <Semantic/I32Literal.h>
 #include <Semantic/TypedAssignmentStatement.h>
+#include <Semantic/TypedExpressionStatement.h>
 #include <Semantic/TypedBinaryExpression.h>
 #include <Semantic/TypedEnumDefinitionStatement.h>
 #include <Semantic/TypedEnumFieldAccessExpression.h>
@@ -58,6 +59,10 @@ TypedStatement* TypeChecker::typeCheckStatement(Statement* statement)
         case NodeKind::AssignmentStatement:
         {
             return typeCheckAssignmentStatement((AssignmentStatement*)statement);
+        }
+        case NodeKind::ExpressionStatement:
+        {
+            return typeCheckExpressionStatement((ExpressionStatement*)statement);
         }
         case NodeKind::EnumDefinitionStatement:
         {
@@ -146,15 +151,21 @@ TypedStatement* TypeChecker::typeCheckAssignmentStatement(AssignmentStatement* s
     return new TypedAssignmentStatement(left, right, statement, inferedType);
 }
 
+TypedStatement* TypeChecker::typeCheckExpressionStatement(ExpressionStatement* statement)
+{
+    auto expression = typeCheckExpression(statement->expression());
+    return new TypedExpressionStatement(expression, statement, expression->type());
+}
+
 TypedStatement* TypeChecker::typeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement)
 {
-    auto optionalBaseTypeName = statement->baseType();
+    auto& optionalBaseTypeName = statement->baseType();
     auto baseType = Type::Undefined();
     if (optionalBaseTypeName.has_value())
     {
         auto typeName = optionalBaseTypeName.value().name();
-        auto identifier = typeName->identifier();
-        auto lexeme = m_parseTree.tokens().getLexeme(identifier);
+        auto& identifier = typeName->identifier();
+        auto& lexeme = m_parseTree.tokens().getLexeme(identifier);
         baseType = m_typeDatabase.getTypeByName(lexeme);
     }
     else
@@ -167,8 +178,8 @@ TypedStatement* TypeChecker::typeCheckEnumDefinitionStatement(EnumDefinitionStat
         TODO("We need an error node and need to print diagnostics about unknown enum base type");
     }
 
-    auto nameToken = statement->name();
-    auto enumName = m_parseTree.tokens().getLexeme(nameToken);
+    auto& nameToken = statement->name();
+    auto& enumName = m_parseTree.tokens().getLexeme(nameToken);
     // TODO check if there is already a type with the name
     auto newType = m_typeDatabase.createType(enumName, TypeKind::Enum);
     auto enumFields = typeCheckEnumFieldDefinitionNodes(newType, baseType, statement->fieldDefinitions());
@@ -206,12 +217,12 @@ TypedStatement* TypeChecker::typeCheckFunctionDefinitionStatement(FunctionDefini
     auto parameters = typeCheckFunctionParameters(statement->parameters());
     functionTypeDefinition.setParameters(parameters);
 
-    auto [typedBody, returnTypes] = typeCheckFunctionBodyNode(statement->body());
-    functionTypeDefinition.setReturnTypes(returnTypes);
+    auto [typedBody, returnType] = typeCheckFunctionBodyNode(statement->body());
+    functionTypeDefinition.setReturnType(returnType);
 
     popScope();
 
-    return new TypedFunctionDefinitionStatement(functionName, newFunctionType, parameters, returnTypes, typedBody, statement);
+    return new TypedFunctionDefinitionStatement(functionName, newFunctionType, parameters, returnType, typedBody, statement);
 }
 
 TypedStatement* TypeChecker::typeCheckReturnStatement(ReturnStatement* statement)
@@ -237,14 +248,14 @@ QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNodes(
     int nextValue = 0;
     for (const auto definition : fieldDefinitions)
     {
-        auto nameToken = definition->name()->identifier();
-        auto name = m_parseTree.tokens().getLexeme(nameToken);
+        auto& nameToken = definition->name()->identifier();
+        auto& name = m_parseTree.tokens().getLexeme(nameToken);
 
         if (definition->value().has_value())
         {
             auto numberLiteral = definition->value().value();
-            auto numberToken = numberLiteral->token();
-            auto valueLexeme = m_parseTree.tokens().getLexeme(numberToken);
+            auto& numberToken = numberLiteral->token();
+            auto& valueLexeme = m_parseTree.tokens().getLexeme(numberToken);
 
             auto [typedLiteral, value] = convertValueToTypedLiteral(valueLexeme, baseType, definition);
             if (typedLiteral != nullptr)
@@ -279,13 +290,13 @@ QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckTypeFieldDefinitionNodes(
             continue;
 
         auto fieldDeclaration = (FieldDeclarationStatement*)statement;
-        auto nameToken = fieldDeclaration->name()->identifier();
-        auto name = m_parseTree.tokens().getLexeme(nameToken);
+        auto& nameToken = fieldDeclaration->name()->identifier();
+        auto& name = m_parseTree.tokens().getLexeme(nameToken);
 
         auto type = Type::Undefined();
         if (fieldDeclaration->type().has_value())
         {
-            auto fieldTypeName = fieldDeclaration->type().value();
+            auto& fieldTypeName = fieldDeclaration->type().value();
             type = convertTypeNameToType(fieldTypeName);
         }
 
@@ -333,22 +344,23 @@ QList<Parameter*> TypeChecker::typeCheckFunctionParameters(ParametersNode* param
     return parameters;
 }
 
-std::tuple<QList<TypedStatement*>, QList<Type>> TypeChecker::typeCheckFunctionBodyNode(BlockNode* body)
+std::tuple<QList<TypedStatement*>, Type> TypeChecker::typeCheckFunctionBodyNode(BlockNode* body)
 {
     QList<TypedStatement*> typedStatements;
-    QList<Type> returnTypes;
+    auto returnType = Type::Void();
     for (const auto statement : body->statements())
     {
         auto typedStatement = typeCheckStatement(statement);
         if (typedStatement->kind() == NodeKind::TypedReturnStatement)
         {
+            assert(returnType == Type::Void());
             // TODO this isnt correct when the function has multiple returns but works for now
-            returnTypes.append(typedStatement->type());
+            returnType = typedStatement->type();
         }
         typedStatements.append(typedStatement);
     }
 
-    return { typedStatements, returnTypes };
+    return { typedStatements, returnType };
 }
 
 TypedExpression* TypeChecker::typeCheckUnaryExpressionExpression(UnaryExpression* unaryExpression)
@@ -463,9 +475,9 @@ TypedExpression* TypeChecker::typeCheckNumberLiteral(NumberLiteral* literal)
     auto numberType = Type::Undefined();
     if (literal->type().has_value())
     {
-        auto typeToken = literal->type().value();
-        auto identifierToken = typeToken.name()->identifier();
-        auto typeName = m_parseTree.tokens().getLexeme(identifierToken);
+        auto& typeToken = literal->type().value();
+        auto& identifierToken = typeToken.name()->identifier();
+        auto& typeName = m_parseTree.tokens().getLexeme(identifierToken);
 
         numberType = m_typeDatabase.getTypeByName(typeName);
     }
@@ -474,8 +486,8 @@ TypedExpression* TypeChecker::typeCheckNumberLiteral(NumberLiteral* literal)
         numberType = m_options.defaultIntegerType;
     }
 
-    auto numberToken = literal->token();
-    auto valueLexeme = m_parseTree.tokens().getLexeme(numberToken);
+    auto& numberToken = literal->token();
+    auto& valueLexeme = m_parseTree.tokens().getLexeme(numberToken);
 
     auto [typedLiteral, value] = convertValueToTypedLiteral(valueLexeme, numberType, literal);
     if (typedLiteral != nullptr)
@@ -487,14 +499,21 @@ TypedExpression* TypeChecker::typeCheckNumberLiteral(NumberLiteral* literal)
 
 TypedExpression* TypeChecker::typeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression)
 {
-    auto name = functionCallExpression->name();
-    auto lexeme = m_parseTree.tokens().getLexeme(name);
-    auto type = currentScope()->tryGetFunctionBinding(lexeme);
+    auto& name = functionCallExpression->name();
+    auto& lexeme = m_parseTree.tokens().getLexeme(name);
+    auto functionType = currentScope()->tryGetFunctionBinding(lexeme);
+
     // TODO type check arguments and find the correct function call
     // TODO check if function was defined before and what type it returns, assume undefined for now
     // TODO print diagnostic if the function wasnt defined before
-    // TODO pass the return type instead of Type::Undefined
-    return new TypedFunctionCallExpression(lexeme, functionCallExpression, Type::Undefined());
+    if (functionType != Type::Undefined())
+    {
+        auto& typeDefinition = m_typeDatabase.getTypeDefinition(functionType);
+        auto returnType = typeDefinition.returnType();
+        return new TypedFunctionCallExpression(lexeme, functionType, functionCallExpression, returnType);
+    }
+
+    return new TypedFunctionCallExpression(lexeme, Type::Undefined(), functionCallExpression, Type::Undefined());
 }
 
 Type TypeChecker::inferType(TypedNode* node)
@@ -507,8 +526,8 @@ Type TypeChecker::inferType(TypedNode* node)
 
 Type TypeChecker::convertTypeNameToType(const TypeName& typeName)
 {
-    auto nameToken = typeName.name()->identifier();
-    auto nameLexeme = m_parseTree.tokens().getLexeme(nameToken);
+    auto& nameToken = typeName.name()->identifier();
+    auto& nameLexeme = m_parseTree.tokens().getLexeme(nameToken);
 
     // TODO handle ref
     // returns Type::Undefined() if the name wasnt found

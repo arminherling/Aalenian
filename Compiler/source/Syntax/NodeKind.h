@@ -40,6 +40,7 @@ enum class COMPILER_API NodeKind
     BlockNode,
 
     TypedAssignmentStatement,
+    TypedExpressionStatement,
     TypedEnumDefinitionStatement,
     TypedFieldDefinitionNode,
     TypedTypeDefinitionStatement,

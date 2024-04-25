@@ -254,6 +254,9 @@
     <ClCompile Include="source\Semantic\Parameter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Semantic\TypedExpressionStatement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Compiler\DiagnosticsBag.h">
@@ -524,6 +527,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Semantic\Parameter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Semantic\TypedExpressionStatement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

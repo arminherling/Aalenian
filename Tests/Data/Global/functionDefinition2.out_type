@@ -4,7 +4,7 @@ TypedFunctionDefinitionStatement: {
     Name: func
     Parameters(0): {
     }
-    ReturnTypes(1): {
+    ReturnType: {
         Type: i32
     }
     Body(2): {

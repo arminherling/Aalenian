@@ -3,6 +3,7 @@
 TypeDefinition::TypeDefinition(i32 id, const QString& name)
     : m_id{ id }
     , m_name{ name }
+    , m_returnType{ Type::Undefined() }
 {
 }
 
@@ -21,9 +22,9 @@ void TypeDefinition::setParameters(const QList<Parameter*>& parameters)
     m_parameters = parameters;
 }
 
-void TypeDefinition::setReturnTypes(const QList<Type>& returnTypes)
+void TypeDefinition::setReturnType(Type returnType)
 {
-    m_returnTypes = returnTypes;
+    m_returnType = returnType;
 }
 
 Field* TypeDefinition::getFieldByName(QStringView fieldName) const noexcept

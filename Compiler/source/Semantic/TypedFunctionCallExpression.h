@@ -7,10 +7,12 @@
 class COMPILER_API TypedFunctionCallExpression : public TypedExpression
 {
 public:
-    TypedFunctionCallExpression(QStringView name, Node* source, Type type);
+    TypedFunctionCallExpression(QStringView name, Type functionType, Node* source, Type type);
 
     [[nodiscard]] QStringView name() const noexcept { return m_name; }
+    [[nodiscard]] Type functionType() const noexcept { return m_functionType; }
 
 private:
     QStringView m_name;
+    Type m_functionType;
 };

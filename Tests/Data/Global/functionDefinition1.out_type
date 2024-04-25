@@ -4,7 +4,8 @@ TypedFunctionDefinitionStatement: {
     Name: func
     Parameters(0): {
     }
-    ReturnTypes(0): {
+    ReturnType: {
+        Type: void
     }
     Body(0): {
     }

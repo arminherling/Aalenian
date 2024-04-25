@@ -1,0 +1,35 @@
+TypedFunctionDefinitionStatement: {
+    TypeKind: function
+    Type: ()->()
+    Name: inner
+    Parameters(0): {
+    }
+    ReturnType: {
+        Type: void
+    }
+    Body(0): {
+    }
+}
+TypedFunctionDefinitionStatement: {
+    TypeKind: function
+    Type: ()->()
+    Name: outer
+    Parameters(0): {
+    }
+    ReturnType: {
+        Type: void
+    }
+    Body(1): {
+        TypedExpressionStatement: {
+            Type: void
+            Expression: {
+                TypedFunctionCallExpression: {
+                    Type: void
+                    Name: inner
+                    ArgumentsNode(0): {
+                    }
+                }
+            }
+        }
+    }
+}

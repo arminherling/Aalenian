@@ -8,7 +8,7 @@ TypedFunctionDefinitionStatement: {
             Name: x
         }
     }
-    ReturnTypes(1): {
+    ReturnType: {
         Type: i32
     }
     Body(1): {

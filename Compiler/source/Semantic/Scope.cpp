@@ -41,6 +41,8 @@ Type Scope::tryGetFunctionBinding(QStringView identifier) const noexcept
 {
     if (auto search = m_functionBindings.find(identifier.toString()); search != m_functionBindings.end())
         return search->second;
+    else if (m_parent != nullptr)
+        return m_parent->tryGetFunctionBinding(identifier);
     else
         return Type::Undefined();
 }

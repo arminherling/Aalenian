@@ -4,13 +4,13 @@ TypedFunctionDefinitionStatement::TypedFunctionDefinitionStatement(
     QStringView name,
     Type type,
     const QList<Parameter*>& parameters,
-    const QList<Type>& returnTypes,
+    Type returnType,
     const QList<TypedStatement*>& statements,
     Node* source)
     : TypedStatement(source, NodeKind::TypedFunctionDefinitionStatement, type)
     , m_name{ name }
     , m_parameters{ parameters }
-    , m_returnTypes{ returnTypes }
+    , m_returnType{ returnType }
     , m_statements{ statements }
 {
 }

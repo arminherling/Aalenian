@@ -16,6 +16,7 @@
 #include <Syntax/BinaryExpression.h>
 #include <Syntax/DiscardLiteral.h>
 #include <Syntax/EnumDefinitionStatement.h>
+#include <Syntax/ExpressionStatement.h>
 #include <Syntax/FunctionCallExpression.h>
 #include <Syntax/FunctionDefinitionStatement.h>
 #include <Syntax/GroupingExpression.h>
@@ -44,6 +45,7 @@ private:
     [[nodiscard]] TypedExpression* typeCheckExpression(Expression* expression);
 
     [[nodiscard]] TypedStatement* typeCheckAssignmentStatement(AssignmentStatement* statement);
+    [[nodiscard]] TypedStatement* typeCheckExpressionStatement(ExpressionStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckTypeDefinitionStatement(TypeDefinitionStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckFunctionDefinitionStatement(FunctionDefinitionStatement* statement);
@@ -54,7 +56,7 @@ private:
         const QList<EnumFieldDefinitionStatement*>& fieldDefinitions);
     [[nodiscard]] QList<TypedFieldDefinitionNode*> typeCheckTypeFieldDefinitionNodes(Type newType, BlockNode* body);
     [[nodiscard]] QList<Parameter*> typeCheckFunctionParameters(ParametersNode* parameterNode);
-    [[nodiscard]] std::tuple<QList<TypedStatement*>, QList<Type>> typeCheckFunctionBodyNode(BlockNode* body);
+    [[nodiscard]] std::tuple<QList<TypedStatement*>, Type> typeCheckFunctionBodyNode(BlockNode* body);
     [[nodiscard]] TypedExpression* typeCheckUnaryExpressionExpression(UnaryExpression* unaryExpression);
     [[nodiscard]] TypedExpression* typeCheckBinaryExpressionExpression(BinaryExpression* binaryExpression);
     [[nodiscard]] TypedExpression* typeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression); 

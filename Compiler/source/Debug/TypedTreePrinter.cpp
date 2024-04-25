@@ -35,6 +35,11 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
             PrettyPrintTypedAssignmentStatement((TypedAssignmentStatement*)node);
             break;
         }
+        case NodeKind::TypedExpressionStatement:
+        {
+            PrettyPrintTypedExpressionStatement((TypedExpressionStatement*)node);
+            break;
+        }
         case NodeKind::TypedEnumDefinitionStatement:
         {
             PrettyPrintTypedEnumDefinitionStatement((TypedEnumDefinitionStatement*)node);
@@ -137,6 +142,23 @@ void TypedTreePrinter::PrettyPrintTypedAssignmentStatement(TypedAssignmentStatem
     stream() << Indentation() << QString("}") << NewLine();
 }
 
+void TypedTreePrinter::PrettyPrintTypedExpressionStatement(TypedExpressionStatement* statement)
+{
+    stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << PrettyPrintType(statement->type()) << NewLine();
+
+    stream() << Indentation() << QString("Expression: {") << NewLine();
+    PushIndentation();
+    PrettyPrintNode(statement->expression());
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
 void TypedTreePrinter::PrettyPrintTypedEnumDefinitionStatement(TypedEnumDefinitionStatement* statement)
 {
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
@@ -145,7 +167,7 @@ void TypedTreePrinter::PrettyPrintTypedEnumDefinitionStatement(TypedEnumDefiniti
     stream() << Indentation() << QString("TypeKind: enum") << NewLine();
     stream() << Indentation() << QString("TypeName: ") << statement->name() << NewLine();
 
-    auto baseTypeDefinition = m_typeDatabase.getTypeDefinition(statement->baseType());
+    auto& baseTypeDefinition = m_typeDatabase.getTypeDefinition(statement->baseType());
     stream() << Indentation() << QString("BaseType: ") << baseTypeDefinition.name() << NewLine();
 
     auto fields = statement->fields();
@@ -209,13 +231,10 @@ void TypedTreePrinter::PrettyPrintTypedFunctionDefinitionStatement(TypedFunction
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 
-    auto& returnTypes = statement->returnTypes();
-    stream() << Indentation() << QString("ReturnTypes(%1): {").arg(returnTypes.count()) << NewLine();
+    auto returnType = statement->returnType();
+    stream() << Indentation() << QString("ReturnType: {") << NewLine();
     PushIndentation();
-    for (const auto& returnType : returnTypes)
-    {
-        stream() << Indentation() << PrettyPrintType(returnType) << NewLine();
-    }
+    stream() << Indentation() << PrettyPrintType(returnType) << NewLine();
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 
@@ -435,18 +454,17 @@ QString TypedTreePrinter::PrettyPrintType(Type type) noexcept
                 m_typeDatabase.getTypeDefinition(parameter->type()).name());
         }
 
-        auto returnTypes = definition.returnTypes();
-        QStringList stringifiedReturnTypes;
-        for (const auto& returnType : returnTypes)
+        auto returnType = definition.returnType();
+        QString returnTypeName;
+        if (returnType != Type::Void())
         {
-            stringifiedReturnTypes.append(
-                m_typeDatabase.getTypeDefinition(returnType).name());
+            returnTypeName = m_typeDatabase.getTypeDefinition(returnType).name();
         }
 
         return QString("Type: (%1)->(%2)")
             .arg(
                 stringifiedParameterTypes.join(QString(", ")),
-                stringifiedReturnTypes.join(QString(", ")));
+                returnTypeName);
     }
 
     return QString("Type: %1").arg(definition.name());

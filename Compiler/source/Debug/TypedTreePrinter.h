@@ -4,14 +4,16 @@
 #include <Defines.h>
 #include <Semantic/Discard.h>
 #include <Semantic/I32Literal.h>
+#include <Semantic/Parameter.h>
 #include <Semantic/TypedAssignmentStatement.h>
 #include <Semantic/TypeDatabase.h>
 #include <Semantic/TypedBinaryExpression.h>
+#include <Semantic/TypedConstant.h>
 #include <Semantic/TypedEnumDefinitionStatement.h>
 #include <Semantic/TypedEnumFieldAccessExpression.h>
+#include <Semantic/TypedExpressionStatement.h>
 #include <Semantic/TypedFunctionCallExpression.h>
 #include <Semantic/TypedFunctionDefinitionStatement.h>
-#include <Semantic/TypedConstant.h>
 #include <Semantic/TypedNegationExpression.h>
 #include <Semantic/TypedNode.h>
 #include <Semantic/TypedReturnStatement.h>
@@ -19,7 +21,6 @@
 #include <Semantic/TypedTypeDefinitionStatement.h>
 #include <Semantic/TypedVariable.h>
 #include <Semantic/U8Literal.h>
-#include <Semantic/Parameter.h>
 
 class COMPILER_API TypedTreePrinter : public BasePrinter
 {
@@ -32,6 +33,7 @@ private:
     void PrettyPrintNode(TypedNode* node);
 
     void PrettyPrintTypedAssignmentStatement(TypedAssignmentStatement* statement);
+    void PrettyPrintTypedExpressionStatement(TypedExpressionStatement* statement);
     void PrettyPrintTypedEnumDefinitionStatement(TypedEnumDefinitionStatement* statement);
     void PrettyPrintTypedTypeDefinitionStatement(TypedTypeDefinitionStatement* statement);
     void PrettyPrintTypedFunctionDefinitionStatement(TypedFunctionDefinitionStatement* statement);
