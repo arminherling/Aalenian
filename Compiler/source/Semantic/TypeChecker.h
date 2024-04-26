@@ -55,11 +55,12 @@ private:
         Type baseType, 
         const QList<EnumFieldDefinitionStatement*>& fieldDefinitions);
     [[nodiscard]] QList<TypedFieldDefinitionNode*> typeCheckTypeFieldDefinitionNodes(Type newType, BlockNode* body);
-    [[nodiscard]] QList<Parameter*> typeCheckFunctionParameters(ParametersNode* parameterNode);
+    [[nodiscard]] QList<Parameter*> typeCheckFunctionParameters(ParametersNode* parametersNode);
     [[nodiscard]] std::tuple<QList<TypedStatement*>, Type> typeCheckFunctionBodyNode(BlockNode* body);
     [[nodiscard]] TypedExpression* typeCheckUnaryExpressionExpression(UnaryExpression* unaryExpression);
     [[nodiscard]] TypedExpression* typeCheckBinaryExpressionExpression(BinaryExpression* binaryExpression);
     [[nodiscard]] TypedExpression* typeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression); 
+    [[nodiscard]] QList<TypedExpression*> typeCheckFunctionCallArguments(ArgumentsNode* argumentsNode);
     [[nodiscard]] TypedExpression* typeCheckNameExpression(NameExpression* expression);
     [[nodiscard]] TypedExpression* typeCheckGroupingExpression(GroupingExpression* expression);
     [[nodiscard]] TypedExpression* typeCheckDiscardLiteral(DiscardLiteral* literal);

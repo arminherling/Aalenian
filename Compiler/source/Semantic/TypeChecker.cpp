@@ -508,12 +508,26 @@ TypedExpression* TypeChecker::typeCheckFunctionCallExpression(FunctionCallExpres
     // TODO print diagnostic if the function wasnt defined before
     if (functionType != Type::Undefined())
     {
+        auto arguments = typeCheckFunctionCallArguments(functionCallExpression->arguments());
+
         auto& typeDefinition = m_typeDatabase.getTypeDefinition(functionType);
         auto returnType = typeDefinition.returnType();
-        return new TypedFunctionCallExpression(lexeme, functionType, functionCallExpression, returnType);
+        return new TypedFunctionCallExpression(lexeme, functionType, arguments, functionCallExpression, returnType);
     }
 
-    return new TypedFunctionCallExpression(lexeme, Type::Undefined(), functionCallExpression, Type::Undefined());
+    return new TypedFunctionCallExpression(lexeme, Type::Undefined(), QList<TypedExpression*>(), functionCallExpression, Type::Undefined());
+}
+
+QList<TypedExpression*> TypeChecker::typeCheckFunctionCallArguments(ArgumentsNode* argumentsNode)
+{
+    QList<TypedExpression*> arguments;
+
+    for (const auto argument : argumentsNode->arguments())
+    {
+        arguments.append(typeCheckExpression(argument->expression()));
+    }
+
+    return arguments;
 }
 
 Type TypeChecker::inferType(TypedNode* node)

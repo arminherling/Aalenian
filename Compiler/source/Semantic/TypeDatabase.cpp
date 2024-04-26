@@ -38,8 +38,8 @@ Type TypeDatabase::createType(QStringView name, TypeKind kind) noexcept
 
 Type TypeDatabase::createFunction(Type scope, QStringView name, TypeKind kind) noexcept
 {
-    auto type = Type{ m_nextId++, kind };
-    
+    auto type = createType(name, kind);
+
     if (scope != Type::Undefined())
     {
         auto& definition = getTypeDefinition(scope);

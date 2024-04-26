@@ -9,7 +9,7 @@ TypedAssignmentStatement: {
         TypedFunctionCallExpression: {
             Type: ???
             Name: func
-            ArgumentsNode(0): {
+            Arguments(0): {
             }
         }
     }

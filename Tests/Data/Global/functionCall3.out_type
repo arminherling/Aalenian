@@ -1,8 +1,12 @@
 TypedFunctionDefinitionStatement: {
     TypeKind: function
-    Type: ()->()
+    Type: (i32)->()
     Name: inner
-    Parameters(0): {
+    Parameters(1): {
+        Parameter: {
+            Type: i32
+            Name: x
+        }
     }
     ReturnType: {
         Type: void
@@ -26,7 +30,11 @@ TypedFunctionDefinitionStatement: {
                 TypedFunctionCallExpression: {
                     Type: void
                     Name: inner
-                    Arguments(0): {
+                    Arguments(1): {
+                        I32Literal: {
+                            Type: i32
+                            Value: 10
+                        }
                     }
                 }
             }

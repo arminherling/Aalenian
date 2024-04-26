@@ -1,12 +1,6 @@
-TypedAssignmentStatement: {
+TypedExpressionStatement: {
     Type: ???
-    Left: {
-        TypedConstant: {
-            Type: ???
-            Name: a
-        }
-    }
-    Right: {
+    Expression: {
         TypedFunctionCallExpression: {
             Type: ???
             Name: func

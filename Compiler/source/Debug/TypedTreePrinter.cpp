@@ -374,7 +374,16 @@ void TypedTreePrinter::PrettyPrintTypedFunctionCallExpression(TypedFunctionCallE
 
     stream() << Indentation() << PrettyPrintType(functionCall->type()) << NewLine();
     stream() << Indentation() << QString("Name: ") << functionCall->name() << NewLine();
-    PrettyPrintTypedArgumentsNode(/*functionCall->arguments()*/); // TODO
+
+    auto arguments = functionCall->arguments();
+    stream() << Indentation() << QString("Arguments(%1): {").arg(arguments.count()) << NewLine();
+    PushIndentation();
+    for (const auto argument : arguments)
+    {
+        PrettyPrintNode(argument);
+    }
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
