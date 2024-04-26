@@ -21,6 +21,7 @@
 #include <Semantic/TypedTypeDefinitionStatement.h>
 #include <Semantic/TypedVariable.h>
 #include <Semantic/U8Literal.h>
+#include <Semantic/BoolValue.h>
 
 class COMPILER_API TypedTreePrinter : public BasePrinter
 {
@@ -46,8 +47,9 @@ private:
     void PrettyPrintParameter(Parameter* parameter);
     void PrettyPrintTypedFunctionCallExpression(TypedFunctionCallExpression* functionCall);
     void PrettyPrintDiscard(Discard* discard);
-    void PrettyPrintU8Literal(U8Literal* literal);
-    void PrettyPrintI32Literal(I32Literal* literal);
+    void PrettyPrintBoolValue(BoolValue* value);
+    void PrettyPrintU8Literal(U8Literal* value);
+    void PrettyPrintI32Literal(I32Literal* value);
 
     void PrettyPrintTypedFieldDefinitionNode(TypedFieldDefinitionNode* field);
     void PrettyPrintTypedArgumentsNode();

@@ -1,15 +1,16 @@
 #include "TypeChecker.h"
 
+#include <Semantic/BoolValue.h>
 #include <Semantic/Discard.h>
 #include <Semantic/I32Literal.h>
 #include <Semantic/TypedAssignmentStatement.h>
-#include <Semantic/TypedExpressionStatement.h>
 #include <Semantic/TypedBinaryExpression.h>
+#include <Semantic/TypedConstant.h>
 #include <Semantic/TypedEnumDefinitionStatement.h>
 #include <Semantic/TypedEnumFieldAccessExpression.h>
+#include <Semantic/TypedExpressionStatement.h>
 #include <Semantic/TypedFunctionCallExpression.h>
 #include <Semantic/TypedFunctionDefinitionStatement.h>
-#include <Semantic/TypedConstant.h>
 #include <Semantic/TypedNegationExpression.h>
 #include <Semantic/TypedReturnStatement.h>
 #include <Semantic/TypedTypeDefinitionStatement.h>
@@ -114,6 +115,10 @@ TypedExpression* TypeChecker::typeCheckExpression(Expression* expression)
         case NodeKind::DiscardLiteral:
         {
             return typeCheckDiscardLiteral((DiscardLiteral*)expression);
+        }
+        case NodeKind::BoolLiteral:
+        {
+            return typeCheckBoolLiteral((BoolLiteral*)expression);
         }
         case NodeKind::NumberLiteral:
         {
@@ -468,6 +473,11 @@ TypedExpression* TypeChecker::typeCheckGroupingExpression(GroupingExpression* ex
 TypedExpression* TypeChecker::typeCheckDiscardLiteral(DiscardLiteral* literal)
 {
     return new Discard(literal);
+}
+
+TypedExpression* TypeChecker::typeCheckBoolLiteral(BoolLiteral* literal)
+{
+    return new BoolValue(literal);
 }
 
 TypedExpression* TypeChecker::typeCheckNumberLiteral(NumberLiteral* literal)

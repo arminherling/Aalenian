@@ -14,6 +14,7 @@
 #include <Semantic/TypedTree.h>
 #include <Syntax/AssignmentStatement.h>
 #include <Syntax/BinaryExpression.h>
+#include <Syntax/BoolLiteral.h>
 #include <Syntax/DiscardLiteral.h>
 #include <Syntax/EnumDefinitionStatement.h>
 #include <Syntax/ExpressionStatement.h>
@@ -64,6 +65,7 @@ private:
     [[nodiscard]] TypedExpression* typeCheckNameExpression(NameExpression* expression);
     [[nodiscard]] TypedExpression* typeCheckGroupingExpression(GroupingExpression* expression);
     [[nodiscard]] TypedExpression* typeCheckDiscardLiteral(DiscardLiteral* literal);
+    [[nodiscard]] TypedExpression* typeCheckBoolLiteral(BoolLiteral* literal);
     [[nodiscard]] TypedExpression* typeCheckNumberLiteral(NumberLiteral* literal);
 
     [[nodiscard]] Type inferType(TypedNode* node);

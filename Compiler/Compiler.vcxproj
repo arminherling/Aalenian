@@ -101,6 +101,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Semantic\BoolValue.cpp" />
     <ClCompile Include="source\Semantic\Discard.cpp" />
     <ClCompile Include="source\Semantic\Field.cpp" />
     <ClCompile Include="source\Semantic\I32Literal.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="source\Semantic\TypedStatement.cpp" />
     <ClCompile Include="source\Semantic\TypedExpression.cpp" />
     <ClCompile Include="source\Semantic\Type.cpp" />
+    <ClInclude Include="source\Semantic\BoolValue.h" />
     <ClInclude Include="source\Semantic\Discard.h" />
     <ClInclude Include="source\Semantic\Field.h" />
     <ClInclude Include="source\Semantic\I32Literal.h" />

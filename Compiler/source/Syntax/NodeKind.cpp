@@ -103,6 +103,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("TypedVariable");
         case NodeKind::Discard:
             return QString("Discard");
+        case NodeKind::BoolValue:
+            return QString("BoolValue");
         case NodeKind::U8Literal:
             return QString("U8Literal");
         case NodeKind::I32Literal:

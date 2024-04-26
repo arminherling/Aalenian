@@ -22,8 +22,9 @@ public:
     [[nodiscard]] static Type Discard() noexcept { return Type(-2, TypeKind::Builtin); }
     [[nodiscard]] static Type Undefined() noexcept { return Type(-1, TypeKind::Builtin); }
     [[nodiscard]] static Type Void() noexcept { return Type(1, TypeKind::Builtin); }
-    [[nodiscard]] static Type U8() noexcept { return Type(2, TypeKind::Builtin); }
-    [[nodiscard]] static Type I32() noexcept { return Type(3, TypeKind::Builtin); }
+    [[nodiscard]] static Type Bool() noexcept { return Type(2, TypeKind::Builtin); }
+    [[nodiscard]] static Type U8() noexcept { return Type(3, TypeKind::Builtin); }
+    [[nodiscard]] static Type I32() noexcept { return Type(4, TypeKind::Builtin); }
 
 private:
     i32 m_id;

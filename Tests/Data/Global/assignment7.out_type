@@ -1,0 +1,15 @@
+TypedAssignmentStatement: {
+    Type: bool
+    Left: {
+        TypedConstant: {
+            Type: bool
+            Name: a
+        }
+    }
+    Right: {
+        BoolValue: {
+            Type: bool
+            Value: true
+        }
+    }
+}

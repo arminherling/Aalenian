@@ -103,6 +103,11 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
             PrettyPrintDiscard((Discard*)node);
             break;
         }
+        case NodeKind::BoolValue:
+        {
+            PrettyPrintBoolValue((BoolValue*)node);
+            break;
+        }
         case NodeKind::U8Literal:
         {
             PrettyPrintU8Literal((U8Literal*)node);
@@ -400,25 +405,38 @@ void TypedTreePrinter::PrettyPrintDiscard(Discard* discard)
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-void TypedTreePrinter::PrettyPrintU8Literal(U8Literal* literal)
+void TypedTreePrinter::PrettyPrintBoolValue(BoolValue* value)
 {
-    stream() << Indentation() << StringifyNodeKind(literal->kind()) << QString(": {") << NewLine();
+    stream() << Indentation() << StringifyNodeKind(value->kind()) << QString(": {") << NewLine();
     PushIndentation();
 
-    stream() << Indentation() << PrettyPrintType(literal->type()) << NewLine();
-    stream() << Indentation() << QString("Value: ") << literal->value() << NewLine();
+    stream() << Indentation() << PrettyPrintType(value->type()) << NewLine();
+    auto v = (value->value() ? QString("true") : QString("false"));
+    stream() << Indentation() << QString("Value: ") << v << NewLine();
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-void TypedTreePrinter::PrettyPrintI32Literal(I32Literal* literal)
+void TypedTreePrinter::PrettyPrintU8Literal(U8Literal* value)
 {
-    stream() << Indentation() << StringifyNodeKind(literal->kind()) << QString(": {") << NewLine();
+    stream() << Indentation() << StringifyNodeKind(value->kind()) << QString(": {") << NewLine();
     PushIndentation();
 
-    stream() << Indentation() << PrettyPrintType(literal->type()) << NewLine();
-    stream() << Indentation() << QString("Value: ") << literal->value() << NewLine();
+    stream() << Indentation() << PrettyPrintType(value->type()) << NewLine();
+    stream() << Indentation() << QString("Value: ") << value->value() << NewLine();
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void TypedTreePrinter::PrettyPrintI32Literal(I32Literal* value)
+{
+    stream() << Indentation() << StringifyNodeKind(value->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << PrettyPrintType(value->type()) << NewLine();
+    stream() << Indentation() << QString("Value: ") << value->value() << NewLine();
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();

@@ -6,6 +6,7 @@ TypeDatabase::TypeDatabase()
 {
     addBuiltinType(Type::Discard(), QStringView(u"_"));
     addBuiltinType(Type::Void(), QStringView(u"void"));
+    addBuiltinType(Type::Bool(), QStringView(u"bool"));
     addBuiltinType(Type::U8(), QStringView(u"u8"));
     addBuiltinType(Type::I32(), QStringView(u"i32"));
 }

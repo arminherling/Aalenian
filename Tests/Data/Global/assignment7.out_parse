@@ -1,0 +1,8 @@
+AssignmentStatement: {
+    Left: {
+        NameExpression: a
+    }
+    Right: {
+        BoolLiteral: true
+    }
+}
