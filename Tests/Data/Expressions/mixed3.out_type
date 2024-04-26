@@ -12,13 +12,13 @@ TypedAssignmentStatement: {
                 TypedAdditionExpression: {
                     Type: i32
                     Left: {
-                        I32Literal: {
+                        I32Value: {
                             Type: i32
                             Value: 2
                         }
                     }
                     Right: {
-                        I32Literal: {
+                        I32Value: {
                             Type: i32
                             Value: 2
                         }
@@ -26,7 +26,7 @@ TypedAssignmentStatement: {
                 }
             }
             Right: {
-                I32Literal: {
+                I32Value: {
                     Type: i32
                     Value: 5
                 }

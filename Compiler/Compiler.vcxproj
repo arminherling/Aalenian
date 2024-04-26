@@ -104,7 +104,7 @@
     <ClCompile Include="source\Semantic\BoolValue.cpp" />
     <ClCompile Include="source\Semantic\Discard.cpp" />
     <ClCompile Include="source\Semantic\Field.cpp" />
-    <ClCompile Include="source\Semantic\I32Literal.cpp" />
+    <ClCompile Include="source\Semantic\I32Value.cpp" />
     <ClCompile Include="source\Semantic\Parameter.cpp" />
     <ClCompile Include="source\Semantic\Scope.cpp" />
     <ClCompile Include="source\Debug\BasePrinter.cpp" />
@@ -121,7 +121,7 @@
     <ClCompile Include="source\Semantic\TypedReturnStatement.cpp" />
     <ClCompile Include="source\Semantic\TypedTypeDefinitionStatement.cpp" />
     <ClCompile Include="source\Semantic\TypedVariable.cpp" />
-    <ClCompile Include="source\Semantic\U8Literal.cpp" />
+    <ClCompile Include="source\Semantic\U8Value.cpp" />
     <ClCompile Include="source\Syntax\NodeKind.cpp" />
     <ClCompile Include="source\Syntax\ArgumentNode.cpp" />
     <ClCompile Include="source\Syntax\ArgumentsNode.cpp" />
@@ -186,7 +186,7 @@
     <ClInclude Include="source\Semantic\BoolValue.h" />
     <ClInclude Include="source\Semantic\Discard.h" />
     <ClInclude Include="source\Semantic\Field.h" />
-    <ClInclude Include="source\Semantic\I32Literal.h" />
+    <ClInclude Include="source\Semantic\I32Value.h" />
     <ClInclude Include="source\Semantic\Parameter.h" />
     <ClInclude Include="source\Semantic\Scope.h" />
     <ClInclude Include="source\Debug\BasePrinter.h" />
@@ -204,7 +204,7 @@
     <ClInclude Include="source\Semantic\TypedReturnStatement.h" />
     <ClInclude Include="source\Semantic\TypedTypeDefinitionStatement.h" />
     <ClInclude Include="source\Semantic\TypedVariable.h" />
-    <ClInclude Include="source\Semantic\U8Literal.h" />
+    <ClInclude Include="source\Semantic\U8Value.h" />
     <ClInclude Include="source\Syntax\NodeKind.h" />
     <ClInclude Include="source\Syntax\ArgumentNode.h" />
     <ClInclude Include="source\Syntax\ArgumentsNode.h" />

@@ -7,7 +7,7 @@ TypedAssignmentStatement: {
         }
     }
     Right: {
-        U8Literal: {
+        U8Value: {
             Type: u8
             Value: 0
         }

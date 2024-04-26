@@ -31,7 +31,7 @@ TypedFunctionDefinitionStatement: {
                     Type: void
                     Name: inner
                     Arguments(1): {
-                        I32Literal: {
+                        I32Value: {
                             Type: i32
                             Value: 10
                         }

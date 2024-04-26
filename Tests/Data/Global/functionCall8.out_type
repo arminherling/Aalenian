@@ -7,7 +7,7 @@ TypedEnumDefinitionStatement: {
             Type: u8
             Name: First
             Expression: {
-                U8Literal: {
+                U8Value: {
                     Type: u8
                     Value: 0
                 }
@@ -17,7 +17,7 @@ TypedEnumDefinitionStatement: {
             Type: u8
             Name: Second
             Expression: {
-                U8Literal: {
+                U8Value: {
                     Type: u8
                     Value: 1
                 }
@@ -62,7 +62,7 @@ TypedFunctionDefinitionStatement: {
                             Type: Values
                             Name: First
                             Expression: {
-                                U8Literal: {
+                                U8Value: {
                                     Type: u8
                                     Value: 0
                                 }

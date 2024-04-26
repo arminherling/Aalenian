@@ -105,10 +105,10 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("Discard");
         case NodeKind::BoolValue:
             return QString("BoolValue");
-        case NodeKind::U8Literal:
-            return QString("U8Literal");
-        case NodeKind::I32Literal:
-            return QString("I32Literal");
+        case NodeKind::U8Value:
+            return QString("U8Value");
+        case NodeKind::I32Value:
+            return QString("I32Value");
 
         case NodeKind::Parameter:
             return QString("Parameter");

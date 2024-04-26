@@ -194,7 +194,7 @@
     <ClCompile Include="source\Semantic\TypedConstant.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Semantic\I32Literal.cpp">
+    <ClCompile Include="source\Semantic\I32Value.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Semantic\TypedAssignmentStatement.cpp">
@@ -224,7 +224,7 @@
     <ClCompile Include="source\Semantic\TypedFieldDefinitionNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Semantic\U8Literal.cpp">
+    <ClCompile Include="source\Semantic\U8Value.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Semantic\Field.cpp">
@@ -469,7 +469,7 @@
     <ClInclude Include="source\Semantic\TypedConstant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Semantic\I32Literal.h">
+    <ClInclude Include="source\Semantic\I32Value.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Semantic\TypedAssignmentStatement.h">
@@ -502,7 +502,7 @@
     <ClInclude Include="source\Semantic\TypedFieldDefinitionNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Semantic\U8Literal.h">
+    <ClInclude Include="source\Semantic\U8Value.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Semantic\Field.h">

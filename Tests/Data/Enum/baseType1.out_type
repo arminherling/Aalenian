@@ -7,7 +7,7 @@ TypedEnumDefinitionStatement: {
             Type: i32
             Name: Value
             Expression: {
-                I32Literal: {
+                I32Value: {
                     Type: i32
                     Value: 0
                 }

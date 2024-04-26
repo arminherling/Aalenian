@@ -6,7 +6,7 @@ TypedAssignmentStatement: {
         }
     }
     Right: {
-        I32Literal: {
+        I32Value: {
             Type: i32
             Value: 1
         }

@@ -59,8 +59,8 @@ enum class COMPILER_API NodeKind
     TypedVariable,
     Discard,
     BoolValue,
-    U8Literal,
-    I32Literal,
+    U8Value,
+    I32Value,
 
     Parameter
 };

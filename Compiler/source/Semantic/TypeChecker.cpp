@@ -2,7 +2,7 @@
 
 #include <Semantic/BoolValue.h>
 #include <Semantic/Discard.h>
-#include <Semantic/I32Literal.h>
+#include <Semantic/I32Value.h>
 #include <Semantic/TypedAssignmentStatement.h>
 #include <Semantic/TypedBinaryExpression.h>
 #include <Semantic/TypedConstant.h>
@@ -15,7 +15,7 @@
 #include <Semantic/TypedReturnStatement.h>
 #include <Semantic/TypedTypeDefinitionStatement.h>
 #include <Semantic/TypedVariable.h>
-#include <Semantic/U8Literal.h>
+#include <Semantic/U8Value.h>
 #include <Syntax/FieldDeclarationStatement.h>
 
 TypeChecker::TypeChecker(
@@ -570,7 +570,7 @@ std::tuple<TypedExpression*, i32> TypeChecker::convertValueToTypedLiteral(QStrin
         assert(value >= 0);
         assert(value <= UINT8_MAX);
 
-        return { new U8Literal((u8)value, source, type), value };
+        return { new U8Value((u8)value, source, type), value };
     }
     else if (type == Type::I32())
     {
@@ -580,7 +580,7 @@ std::tuple<TypedExpression*, i32> TypeChecker::convertValueToTypedLiteral(QStrin
 
         // TODO add error for values outside of the i32 range
 
-        return { new I32Literal(value, source, type), value };
+        return { new I32Value(value, source, type), value };
     }
 
     return { nullptr, 0 };
@@ -594,11 +594,11 @@ std::tuple<TypedExpression*, i32> TypeChecker::convertValueToTypedLiteral(i32 va
         assert(value >= 0);
         assert(value <= UINT8_MAX);
 
-        return { new U8Literal((u8)value, source, type), value };
+        return { new U8Value((u8)value, source, type), value };
     }
     else if (type == Type::I32())
     {
-        return { new I32Literal(value, source, type), value };
+        return { new I32Value(value, source, type), value };
     }
 
     return { nullptr, 0 };

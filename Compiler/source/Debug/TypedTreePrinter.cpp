@@ -108,14 +108,14 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
             PrettyPrintBoolValue((BoolValue*)node);
             break;
         }
-        case NodeKind::U8Literal:
+        case NodeKind::U8Value:
         {
-            PrettyPrintU8Literal((U8Literal*)node);
+            PrettyPrintU8Value((U8Value*)node);
             break;
         }
-        case NodeKind::I32Literal:
+        case NodeKind::I32Value:
         {
-            PrettyPrintI32Literal((I32Literal*)node);
+            PrettyPrintI32Value((I32Value*)node);
             break;
         }
         default:
@@ -418,7 +418,7 @@ void TypedTreePrinter::PrettyPrintBoolValue(BoolValue* value)
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-void TypedTreePrinter::PrettyPrintU8Literal(U8Literal* value)
+void TypedTreePrinter::PrettyPrintU8Value(U8Value* value)
 {
     stream() << Indentation() << StringifyNodeKind(value->kind()) << QString(": {") << NewLine();
     PushIndentation();
@@ -430,7 +430,7 @@ void TypedTreePrinter::PrettyPrintU8Literal(U8Literal* value)
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-void TypedTreePrinter::PrettyPrintI32Literal(I32Literal* value)
+void TypedTreePrinter::PrettyPrintI32Value(I32Value* value)
 {
     stream() << Indentation() << StringifyNodeKind(value->kind()) << QString(": {") << NewLine();
     PushIndentation();

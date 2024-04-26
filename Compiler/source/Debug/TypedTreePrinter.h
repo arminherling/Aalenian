@@ -3,7 +3,7 @@
 #include <Debug/BasePrinter.h>
 #include <Defines.h>
 #include <Semantic/Discard.h>
-#include <Semantic/I32Literal.h>
+#include <Semantic/I32Value.h>
 #include <Semantic/Parameter.h>
 #include <Semantic/TypedAssignmentStatement.h>
 #include <Semantic/TypeDatabase.h>
@@ -20,7 +20,7 @@
 #include <Semantic/TypedTree.h>
 #include <Semantic/TypedTypeDefinitionStatement.h>
 #include <Semantic/TypedVariable.h>
-#include <Semantic/U8Literal.h>
+#include <Semantic/U8Value.h>
 #include <Semantic/BoolValue.h>
 
 class COMPILER_API TypedTreePrinter : public BasePrinter
@@ -48,8 +48,8 @@ private:
     void PrettyPrintTypedFunctionCallExpression(TypedFunctionCallExpression* functionCall);
     void PrettyPrintDiscard(Discard* discard);
     void PrettyPrintBoolValue(BoolValue* value);
-    void PrettyPrintU8Literal(U8Literal* value);
-    void PrettyPrintI32Literal(I32Literal* value);
+    void PrettyPrintU8Value(U8Value* value);
+    void PrettyPrintI32Value(I32Value* value);
 
     void PrettyPrintTypedFieldDefinitionNode(TypedFieldDefinitionNode* field);
     void PrettyPrintTypedArgumentsNode();

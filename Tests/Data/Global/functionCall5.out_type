@@ -11,7 +11,7 @@ TypedFunctionDefinitionStatement: {
         TypedReturnStatement: {
             Type: i32
             Expression: {
-                I32Literal: {
+                I32Value: {
                     Type: i32
                     Value: 1
                 }

@@ -6,7 +6,7 @@ TypedTypeDefinitionStatement: {
             Type: i32
             Name: x
             Expression: {
-                I32Literal: {
+                I32Value: {
                     Type: i32
                     Value: 0
                 }
@@ -16,7 +16,7 @@ TypedTypeDefinitionStatement: {
             Type: i32
             Name: y
             Expression: {
-                I32Literal: {
+                I32Value: {
                     Type: i32
                     Value: 0
                 }
@@ -26,7 +26,7 @@ TypedTypeDefinitionStatement: {
             Type: i32
             Name: z
             Expression: {
-                I32Literal: {
+                I32Value: {
                     Type: i32
                     Value: 0
                 }
