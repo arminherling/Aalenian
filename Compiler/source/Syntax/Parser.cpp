@@ -502,7 +502,7 @@ ArgumentsNode* Parser::parseArgumentsNode()
             advanceCurrentIndex();
 
             // if(CurrentToken().kind == TokenKind::CloseParenthesis)
-            // Too many commas or too few arguments
+            // TODO print error for too many commas or too few arguments
         }
         current = currentToken();
     }
@@ -513,6 +513,7 @@ ArgumentsNode* Parser::parseArgumentsNode()
 
 TypeName Parser::parseTypeNode()
 {
+    // TODO ref should probably be an unary operator?
     auto ref = tryMatchKeyword(QString("ref"));
     auto name = parseNameExpression();
     return TypeName(ref, name);
