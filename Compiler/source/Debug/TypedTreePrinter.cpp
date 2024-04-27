@@ -60,6 +60,11 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
             PrettyPrintTypedReturnStatement((TypedReturnStatement*)node);
             break;
         }
+        case NodeKind::TypedReferenceOfExpression:
+        {
+            PrettyPrintTypedReferenceOfExpression((TypedReferenceOfExpression*)node);
+            break;
+        }
         case NodeKind::TypedNegationExpression:
         {
             PrettyPrintTypedNegationExpression((TypedNegationExpression*)node);
@@ -269,6 +274,24 @@ void TypedTreePrinter::PrettyPrintTypedReturnStatement(TypedReturnStatement* sta
     auto optionalExpression = statement->expression();
     if(optionalExpression.has_value())
     PrettyPrintNode(optionalExpression.value());
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void TypedTreePrinter::PrettyPrintTypedReferenceOfExpression(TypedReferenceOfExpression* expression)
+{
+    stream() << Indentation() << StringifyNodeKind(expression->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << PrettyPrintType(expression->type()) << NewLine();
+    stream() << Indentation() << QString("Expression: {") << NewLine();
+    PushIndentation();
+
+    PrettyPrintNode(expression->expression());
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();

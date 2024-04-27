@@ -24,5 +24,6 @@ private:
     TypeDefinition m_invalidType;
     i32 m_nextId;
 
-    void addBuiltinType(Type type, QStringView name) noexcept;
+    void addBuiltinTypesWithVariation(Type type, const QString& name) noexcept;
+    void addBuiltinType(Type type, const QString& name) noexcept;
 };

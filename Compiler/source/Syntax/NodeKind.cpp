@@ -82,6 +82,8 @@ QString StringifyNodeKind(NodeKind kind)
         case NodeKind::TypedReturnStatement:
             return QString("TypedReturnStatement");
 
+        case NodeKind::TypedReferenceOfExpression:
+            return QString("TypedReferenceOfExpression");
         case NodeKind::TypedNegationExpression:
             return QString("TypedNegationExpression");
         case NodeKind::TypedEnumFieldAccessExpression:

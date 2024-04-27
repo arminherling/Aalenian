@@ -2,6 +2,7 @@
 
 #include <Debug/BasePrinter.h>
 #include <Defines.h>
+#include <Semantic/BoolValue.h>
 #include <Semantic/Discard.h>
 #include <Semantic/I32Value.h>
 #include <Semantic/Parameter.h>
@@ -16,12 +17,12 @@
 #include <Semantic/TypedFunctionDefinitionStatement.h>
 #include <Semantic/TypedNegationExpression.h>
 #include <Semantic/TypedNode.h>
+#include <Semantic/TypedReferenceOfExpression.h>
 #include <Semantic/TypedReturnStatement.h>
 #include <Semantic/TypedTree.h>
 #include <Semantic/TypedTypeDefinitionStatement.h>
 #include <Semantic/TypedVariable.h>
 #include <Semantic/U8Value.h>
-#include <Semantic/BoolValue.h>
 
 class COMPILER_API TypedTreePrinter : public BasePrinter
 {
@@ -39,6 +40,7 @@ private:
     void PrettyPrintTypedTypeDefinitionStatement(TypedTypeDefinitionStatement* statement);
     void PrettyPrintTypedFunctionDefinitionStatement(TypedFunctionDefinitionStatement* statement);
     void PrettyPrintTypedReturnStatement(TypedReturnStatement* statement);
+    void PrettyPrintTypedReferenceOfExpression(TypedReferenceOfExpression* expression);
     void PrettyPrintTypedNegationExpression(TypedNegationExpression* expression);
     void PrettyPrintTypedEnumFieldAccessExpression(TypedEnumFieldAccessExpression* expression);
     void PrettyPrintTypedBinaryExpression(TypedBinaryExpression* expression);

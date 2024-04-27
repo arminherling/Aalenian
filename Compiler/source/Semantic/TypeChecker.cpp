@@ -12,6 +12,7 @@
 #include <Semantic/TypedFunctionCallExpression.h>
 #include <Semantic/TypedFunctionDefinitionStatement.h>
 #include <Semantic/TypedNegationExpression.h>
+#include <Semantic/TypedReferenceOfExpression.h>
 #include <Semantic/TypedReturnStatement.h>
 #include <Semantic/TypedTypeDefinitionStatement.h>
 #include <Semantic/TypedVariable.h>
@@ -379,6 +380,18 @@ TypedExpression* TypeChecker::typeCheckUnaryExpressionExpression(UnaryExpression
             //TODO if possible check that values are still in range after negation
             auto type = typedExpression->type();
             return new TypedNegationExpression(type, typedExpression, unaryExpression);
+        }
+        case UnaryOperatornKind::ReferenceOf:
+        {
+            auto expression = unaryExpression->expression();
+            auto typedExpression = typeCheckExpression(expression);
+            //TODO super ugly code, maybe we could group related types to make it easier to get a nullable/ref type variation
+            auto type = typedExpression->type();
+            auto& typeDefinition = m_typeDatabase.getTypeDefinition(type);
+            auto refTypeName = QString("ref %1").arg(typeDefinition.name());
+            auto refType = m_typeDatabase.getTypeByName(refTypeName);
+
+            return new TypedReferenceOfExpression(refType, typedExpression, unaryExpression);
         }
         default:
         {

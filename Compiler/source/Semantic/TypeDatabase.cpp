@@ -4,11 +4,11 @@ TypeDatabase::TypeDatabase()
     : m_invalidType{ Type::Undefined().id(), QString("???") }
     , m_nextId{ 100 }
 {
-    addBuiltinType(Type::Discard(), QStringView(u"_"));
-    addBuiltinType(Type::Void(), QStringView(u"void"));
-    addBuiltinType(Type::Bool(), QStringView(u"bool"));
-    addBuiltinType(Type::U8(), QStringView(u"u8"));
-    addBuiltinType(Type::I32(), QStringView(u"i32"));
+    addBuiltinType(Type::Discard(), QString("_"));
+    addBuiltinType(Type::Void(), QString("void"));
+    addBuiltinTypesWithVariation(Type::Bool(), QString("bool"));
+    addBuiltinTypesWithVariation(Type::U8(), QString("u8"));
+    addBuiltinTypesWithVariation(Type::I32(), QString("i32"));
 }
 
 Type TypeDatabase::getTypeByName(QStringView typeName) const noexcept
@@ -50,10 +50,25 @@ Type TypeDatabase::createFunction(Type scope, QStringView name, TypeKind kind) n
     return type;
 }
 
-void TypeDatabase::addBuiltinType(Type type, QStringView name) noexcept
+void TypeDatabase::addBuiltinTypesWithVariation(Type type, const QString& name) noexcept
 {
-    auto id = type.id();
-    auto typeName = name.toString();
-    m_typeNames.emplace(typeName, type);
-    m_typeDefinitions.emplace(id, TypeDefinition{ id, typeName });
+    addBuiltinType(type, name);
+
+    auto refTypeName = QString("ref %1").arg(name);
+    auto refType = Type(type.id() + 1, type.kind());
+    addBuiltinType(refType, refTypeName);
+
+    //auto nullableTypeName = QString("%1?").arg(name);
+    //auto nullableType = Type(type.id() + 2, type.kind());
+    //addBuiltinType(nullableType, nullableTypeName);
+
+    //auto nullableRefTypeName = QString("ref %1?").arg(name);
+    //auto nullableRefType = Type(type.id() + 3, type.kind());
+    //addBuiltinType(nullableRefType, nullableRefTypeName);
+}
+
+void TypeDatabase::addBuiltinType(Type type, const QString& name) noexcept
+{
+    m_typeNames.emplace(name, type);
+    m_typeDefinitions.emplace(type.id(), TypeDefinition{ type.id(), name });
 }
