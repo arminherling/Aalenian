@@ -55,6 +55,11 @@ bool IsFalseKeyword(const QStringView& lexeme)
     return lexeme == QString("false");
 }
 
+bool IsRefKeyword(const QStringView& lexeme)
+{
+    return lexeme == QString("ref");
+}
+
 Parser::Parser(const TokenBuffer& tokens, DiagnosticsBag& diagnostics)
     : m_tokens{ tokens }
     , m_diagnostics{ diagnostics }
@@ -96,7 +101,7 @@ QList<Statement*> Parser::parseStatements(StatementScope scope)
             }
             case TokenKind::Identifier:
             {
-                auto lexeme = m_tokens.getLexeme(current);
+                auto& lexeme = m_tokens.getLexeme(current);
                 if (scope == StatementScope::Global)
                 {
                     if (IsFunctionDefinitionKeyword(lexeme))
@@ -343,9 +348,9 @@ Statement* Parser::parseReturnStatement()
     std::optional<Expression*> expression;
     // Special case: we need to disambiguate between returns in void functions and normal functions
     // we do this by breaking the code up with a line break
-    if(hasPossibleReturnValue(keyword))
+    if (hasPossibleReturnValue(keyword))
         expression = parseExpression();
-    
+
     return new ReturnStatement(keyword, expression);
 }
 
@@ -382,7 +387,7 @@ Expression* Parser::parseBinaryExpression(i32 parentPrecedence)
     Expression* left = nullptr;
     auto unaryOperatorToken = currentToken();
 
-    auto unaryPrecedence = UnaryOperatorPrecedence(unaryOperatorToken.kind);
+    auto unaryPrecedence = unaryOperatorPrecedence(unaryOperatorToken);
     if (unaryPrecedence == 0 || unaryPrecedence < parentPrecedence)
     {
         left = parsePrimaryExpression();
@@ -390,7 +395,7 @@ Expression* Parser::parseBinaryExpression(i32 parentPrecedence)
     else
     {
         advanceCurrentIndex();
-        auto unaryOperator = convertUnaryOperatorTokenKindToEnum(unaryOperatorToken.kind);
+        auto unaryOperator = convertUnaryOperatorTokenKindToEnum(unaryOperatorToken);
         auto expression = parseBinaryExpression(unaryPrecedence);
         left = new UnaryExpression(unaryOperatorToken, unaryOperator, expression);
     }
@@ -401,7 +406,7 @@ Expression* Parser::parseBinaryExpression(i32 parentPrecedence)
         if (binaryOperatorToken.kind == TokenKind::EndOfFile)
             break;
 
-        auto binaryPrecedence = BinaryOperatorPrecedence(binaryOperatorToken.kind);
+        auto binaryPrecedence = binaryOperatorPrecedence(binaryOperatorToken.kind);
         if (binaryPrecedence == 0 || binaryPrecedence <= parentPrecedence)
             break;
 
@@ -701,7 +706,7 @@ bool Parser::hasPossibleReturnValue(const Token& returnKeyword)
     return isOnSameLine;
 }
 
-BinaryOperatornKind Parser::convertBinaryOperatorTokenKindToEnum(TokenKind kind)
+BinaryOperatornKind Parser::convertBinaryOperatorTokenKindToEnum(TokenKind kind) const
 {
     switch (kind)
     {
@@ -722,15 +727,46 @@ BinaryOperatornKind Parser::convertBinaryOperatorTokenKindToEnum(TokenKind kind)
     }
 }
 
-UnaryOperatornKind Parser::convertUnaryOperatorTokenKindToEnum(TokenKind kind)
+UnaryOperatornKind Parser::convertUnaryOperatorTokenKindToEnum(Token token) const
+{
+    auto kind = token.kind;
+    if (kind == TokenKind::Identifier && IsRefKeyword(m_tokens.getLexeme(token)))
+        return UnaryOperatornKind::ReferenceOf;
+
+    if (kind == TokenKind::Minus)
+        return UnaryOperatornKind::Negation;
+
+    return UnaryOperatornKind::Invalid;
+}
+
+i32 Parser::unaryOperatorPrecedence(Token token) const
+{
+    auto kind = token.kind;
+    if (kind == TokenKind::Identifier && IsRefKeyword(m_tokens.getLexeme(token)))
+        return 5;
+
+    if (kind == TokenKind::Minus)
+        return 4;
+
+    return 0;
+}
+
+i32 Parser::binaryOperatorPrecedence(TokenKind kind) const
 {
     switch (kind)
     {
+        case TokenKind::Dot:
+        case TokenKind::DoubleColon:
+            return 3;
+        case TokenKind::Star:
+        case TokenKind::Slash:
+            return 2;
+        case TokenKind::Plus:
         case TokenKind::Minus:
-            return UnaryOperatornKind::Negation;
-        default:
-            return UnaryOperatornKind::Invalid;
+            return 1;
     }
+
+    return 0;
 }
 
 ParseTree Parse(const TokenBuffer& tokens, DiagnosticsBag& diagnostics) noexcept

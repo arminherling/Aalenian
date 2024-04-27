@@ -17,6 +17,8 @@ QString StringifyUnaryOperation(UnaryOperatornKind kind)
     {
         case UnaryOperatornKind::Negation:
             return QString("Negation");
+        case UnaryOperatornKind::ReferenceOf:
+            return QString("ReferenceOf");
         default:
             TODO("String for UnaryOperatorn value was not defined yet");
     }

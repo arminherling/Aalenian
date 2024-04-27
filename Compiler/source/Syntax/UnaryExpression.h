@@ -8,6 +8,7 @@ enum class UnaryOperatornKind
 {
     Invalid,
     Negation,
+    ReferenceOf
 };
 
 class COMPILER_API UnaryExpression : public Expression

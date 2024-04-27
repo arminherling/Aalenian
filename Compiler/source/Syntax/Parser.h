@@ -78,8 +78,11 @@ private:
 
     bool hasLineBreakSinceLastMemberAccess();
     bool hasPossibleReturnValue(const Token& returnKeyword);
-    BinaryOperatornKind convertBinaryOperatorTokenKindToEnum(TokenKind kind);
-    UnaryOperatornKind convertUnaryOperatorTokenKindToEnum(TokenKind kind);
+
+    i32 unaryOperatorPrecedence(Token token) const;
+    i32 binaryOperatorPrecedence(TokenKind kind) const;
+    UnaryOperatornKind convertUnaryOperatorTokenKindToEnum(Token token) const;
+    BinaryOperatornKind convertBinaryOperatorTokenKindToEnum(TokenKind kind) const;
 
     TokenBuffer m_tokens;
     DiagnosticsBag& m_diagnostics;
