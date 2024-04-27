@@ -547,7 +547,7 @@ QList<TypedExpression*> TypeChecker::typeCheckFunctionCallArguments(ArgumentsNod
 
     for (const auto argument : argumentsNode->arguments())
     {
-        arguments.append(typeCheckExpression(argument->expression()));
+        arguments.append(typeCheckExpression(argument));
     }
 
     return arguments;

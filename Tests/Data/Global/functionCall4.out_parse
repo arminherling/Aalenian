@@ -27,9 +27,11 @@ FunctionDefinitionStatement: {
             FunctionCallExpression: {
                 NameExpression: inner
                 ArgumentsNode(1): {
-                    ArgumentNode: {
-                        Ref: true
-                        NameExpression: x
+                    UnaryExpression: {
+                        Operation: ReferenceOf
+                        Expression: {
+                            NameExpression: x
+                        }
                     }
                 }
             }

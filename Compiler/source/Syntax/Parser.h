@@ -2,7 +2,6 @@
 
 #include <Defines.h>
 #include <Compiler/DiagnosticsBag.h>
-#include <Syntax/ArgumentNode.h>
 #include <Syntax/ArgumentsNode.h>
 #include <Syntax/BinaryExpression.h>
 #include <Syntax/BlockNode.h>
@@ -59,7 +58,6 @@ private:
     BlockNode* parseMethodBody();
     BlockNode* parseBlockNode(StatementScope scope);
     ParameterNode* parseParameterNode();
-    ArgumentNode* parseArgumentNode();
     TypeName parseTypeNode();
     NameExpression* parseNameExpression();
     NumberLiteral* parseNumberLiteral();

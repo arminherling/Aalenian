@@ -498,10 +498,10 @@ ArgumentsNode* Parser::parseArgumentsNode()
     auto openParenthesis = advanceOnMatch(TokenKind::OpenParenthesis);
     auto current = currentToken();
 
-    QList<ArgumentNode*> arguments;
+    QList<Expression*> arguments;
     while (current.kind != TokenKind::CloseParenthesis)
     {
-        arguments.append(parseArgumentNode());
+        arguments.append(parseExpression());
         if (currentToken().kind == TokenKind::Comma)
         {
             advanceCurrentIndex();
@@ -518,8 +518,7 @@ ArgumentsNode* Parser::parseArgumentsNode()
 
 TypeName Parser::parseTypeNode()
 {
-    // TODO ref should probably be an unary operator?
-    auto ref = tryMatchKeyword(QString("ref"));
+    auto ref = tryMatchKeyword(QStringView(u"ref"));
     auto name = parseNameExpression();
     return TypeName(ref, name);
 }
@@ -601,14 +600,6 @@ ParameterNode* Parser::parseParameterNode()
     auto type = parseTypeNode();
 
     return new ParameterNode(name, colon, type);
-}
-
-ArgumentNode* Parser::parseArgumentNode()
-{
-    auto ref = tryMatchKeyword(QString("ref"));
-    auto expression = parseExpression();
-
-    return new ArgumentNode(ref, expression);
 }
 
 Token Parser::advanceOnMatch(TokenKind kind)

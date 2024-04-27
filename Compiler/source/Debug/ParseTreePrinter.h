@@ -2,7 +2,6 @@
 
 #include <Debug/BasePrinter.h>
 #include <Defines.h>
-#include <Syntax/ArgumentNode.h>
 #include <Syntax/ArgumentsNode.h>
 #include <Syntax/AssignmentStatement.h>
 #include <Syntax/BinaryExpression.h>
@@ -51,7 +50,6 @@ private:
     void PrettyPrintIfStatement(IfStatement* statement);
     void PrettyPrintWhileStatement(WhileStatement* statement);
     void PrettyPrintReturnStatement(ReturnStatement* statement);
-    void PrettyPrintArgumentNode(ArgumentNode* argument);
     void PrettyPrintArgumentsNode(ArgumentsNode* arguments);
     void PrettyPrintParameterNode(ParameterNode* parameter);
     void PrettyPrintParametersNode(ParametersNode* parameters);

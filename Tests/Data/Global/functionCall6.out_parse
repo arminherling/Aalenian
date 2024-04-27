@@ -18,15 +18,13 @@ FunctionDefinitionStatement: {
             FunctionCallExpression: {
                 NameExpression: inner
                 ArgumentsNode(1): {
-                    ArgumentNode: {
-                        BinaryExpression: {
-                            Left: {
-                                NumberLiteral: 5
-                            }
-                            Operation: Addition
-                            Right: {
-                                NumberLiteral: 5
-                            }
+                    BinaryExpression: {
+                        Left: {
+                            NumberLiteral: 5
+                        }
+                        Operation: Addition
+                        Right: {
+                            NumberLiteral: 5
                         }
                     }
                 }

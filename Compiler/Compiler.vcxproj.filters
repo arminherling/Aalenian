@@ -89,9 +89,6 @@
     <ClCompile Include="source\Syntax\TypeName.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Syntax\ArgumentNode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\Syntax\FieldDeclarationStatement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -368,9 +365,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Syntax\ParameterNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Syntax\ArgumentNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Syntax\FieldDeclarationStatement.h">

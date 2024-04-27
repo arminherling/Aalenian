@@ -29,11 +29,9 @@ FunctionDefinitionStatement: {
             FunctionCallExpression: {
                 NameExpression: inner
                 ArgumentsNode(1): {
-                    ArgumentNode: {
-                        FunctionCallExpression: {
-                            NameExpression: one
-                            ArgumentsNode(0): {
-                            }
+                    FunctionCallExpression: {
+                        NameExpression: one
+                        ArgumentsNode(0): {
                         }
                     }
                 }

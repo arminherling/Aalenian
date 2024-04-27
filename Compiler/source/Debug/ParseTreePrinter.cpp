@@ -75,11 +75,6 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
             PrettyPrintReturnStatement((ReturnStatement*)node);
             break;
         }
-        case NodeKind::ArgumentNode:
-        {
-            PrettyPrintArgumentNode((ArgumentNode*)node);
-            break;
-        }
         case NodeKind::ParameterNode:
         {
             PrettyPrintParameterNode((ParameterNode*)node);
@@ -325,20 +320,6 @@ void ParseTreePrinter::PrettyPrintReturnStatement(ReturnStatement* statement)
 
     if (statement->expression().has_value())
         PrettyPrintNode(statement->expression().value());
-
-    PopIndentation();
-    stream() << Indentation() << QString("}") << NewLine();
-}
-
-void ParseTreePrinter::PrettyPrintArgumentNode(ArgumentNode* argument)
-{
-    stream() << Indentation() << StringifyNodeKind(argument->kind()) << QString(": {") << NewLine();
-    PushIndentation();
-
-    if (argument->isReference())
-        stream() << Indentation() << QString("Ref: true") << NewLine();
-
-    PrettyPrintNode(argument->expression());
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();

@@ -18,9 +18,7 @@ FunctionDefinitionStatement: {
             FunctionCallExpression: {
                 NameExpression: inner
                 ArgumentsNode(1): {
-                    ArgumentNode: {
-                        BoolLiteral: false
-                    }
+                    BoolLiteral: false
                 }
             }
         }

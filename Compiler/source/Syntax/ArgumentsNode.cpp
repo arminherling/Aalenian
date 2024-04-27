@@ -2,7 +2,7 @@
 
 ArgumentsNode::ArgumentsNode(
     const Token& openParenthesis,
-    const QList<ArgumentNode*>& arguments,
+    const QList<Expression*>& arguments,
     const Token& closeParenthesis)
     : Node(NodeKind::ArgumentsNode)
     , m_openParenthesis{ openParenthesis }

@@ -29,15 +29,13 @@ FunctionDefinitionStatement: {
             FunctionCallExpression: {
                 NameExpression: inner
                 ArgumentsNode(1): {
-                    ArgumentNode: {
-                        BinaryExpression: {
-                            Left: {
-                                NameExpression: Values
-                            }
-                            Operation: Scope Access
-                            Right: {
-                                NameExpression: First
-                            }
+                    BinaryExpression: {
+                        Left: {
+                            NameExpression: Values
+                        }
+                        Operation: Scope Access
+                        Right: {
+                            NameExpression: First
                         }
                     }
                 }

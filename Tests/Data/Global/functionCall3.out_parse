@@ -18,9 +18,7 @@ FunctionDefinitionStatement: {
             FunctionCallExpression: {
                 NameExpression: inner
                 ArgumentsNode(1): {
-                    ArgumentNode: {
-                        NumberLiteral: 10
-                    }
+                    NumberLiteral: 10
                 }
             }
         }
