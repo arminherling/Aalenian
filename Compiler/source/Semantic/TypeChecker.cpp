@@ -566,9 +566,10 @@ Type TypeChecker::convertTypeNameToType(const TypeName& typeName)
     auto& nameToken = typeName.name()->identifier();
     auto& nameLexeme = m_parseTree.tokens().getLexeme(nameToken);
 
-    // TODO handle ref
-    // returns Type::Undefined() if the name wasnt found
-    return m_typeDatabase.getTypeByName(nameLexeme);
+    auto ref = (typeName.isReference() ? QString("ref ") : QString());
+    auto name = ref + nameLexeme.toString();
+
+    return m_typeDatabase.getTypeByName(name);
 }
 
 std::tuple<TypedExpression*, i32> TypeChecker::convertValueToTypedLiteral(QStringView valueLexeme, Type type, Node* source)

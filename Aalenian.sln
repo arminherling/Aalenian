@@ -156,6 +156,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global", "Global", "{170649
 		Tests\Data\Global\functionCall3.out_type = Tests\Data\Global\functionCall3.out_type
 		Tests\Data\Global\functionCall4.in = Tests\Data\Global\functionCall4.in
 		Tests\Data\Global\functionCall4.out_parse = Tests\Data\Global\functionCall4.out_parse
+		Tests\Data\Global\functionCall4.out_type = Tests\Data\Global\functionCall4.out_type
 		Tests\Data\Global\functionCall5.in = Tests\Data\Global\functionCall5.in
 		Tests\Data\Global\functionCall5.out_parse = Tests\Data\Global\functionCall5.out_parse
 		Tests\Data\Global\functionCall5.out_type = Tests\Data\Global\functionCall5.out_type
@@ -179,6 +180,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global", "Global", "{170649
 		Tests\Data\Global\functionDefinition3.out_type = Tests\Data\Global\functionDefinition3.out_type
 		Tests\Data\Global\functionDefinition4.in = Tests\Data\Global\functionDefinition4.in
 		Tests\Data\Global\functionDefinition4.out_parse = Tests\Data\Global\functionDefinition4.out_parse
+		Tests\Data\Global\functionDefinition4.out_type = Tests\Data\Global\functionDefinition4.out_type
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Type", "Type", "{0E8FF76D-706A-4B6B-931D-583A0525AFC6}"
