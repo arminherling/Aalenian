@@ -55,11 +55,6 @@ bool IsFalseKeyword(const QStringView& lexeme)
     return lexeme == QString("false");
 }
 
-bool IsRefKeyword(const QStringView& lexeme)
-{
-    return lexeme == QString("ref");
-}
-
 Parser::Parser(const TokenBuffer& tokens, DiagnosticsBag& diagnostics)
     : m_tokens{ tokens }
     , m_diagnostics{ diagnostics }
@@ -363,6 +358,7 @@ ParametersNode* Parser::parseParametersNode()
     while (current.kind != TokenKind::CloseParenthesis)
     {
         parameters.append(parseParameterNode());
+        // TODO we need a function like skipUntil but for multiple tokens until we find a comma, identifier closing parent or EOF
         if (currentToken().kind == TokenKind::Comma)
         {
             advanceCurrentIndex();
@@ -387,7 +383,7 @@ Expression* Parser::parseBinaryExpression(i32 parentPrecedence)
     Expression* left = nullptr;
     auto unaryOperatorToken = currentToken();
 
-    auto unaryPrecedence = unaryOperatorPrecedence(unaryOperatorToken);
+    auto unaryPrecedence = UnaryOperatorPrecedence(unaryOperatorToken.kind);
     if (unaryPrecedence == 0 || unaryPrecedence < parentPrecedence)
     {
         left = parsePrimaryExpression();
@@ -395,7 +391,7 @@ Expression* Parser::parseBinaryExpression(i32 parentPrecedence)
     else
     {
         advanceCurrentIndex();
-        auto unaryOperator = convertUnaryOperatorTokenKindToEnum(unaryOperatorToken);
+        auto unaryOperator = convertUnaryOperatorTokenKindToEnum(unaryOperatorToken.kind);
         auto expression = parseBinaryExpression(unaryPrecedence);
         left = new UnaryExpression(unaryOperatorToken, unaryOperator, expression);
     }
@@ -406,7 +402,7 @@ Expression* Parser::parseBinaryExpression(i32 parentPrecedence)
         if (binaryOperatorToken.kind == TokenKind::EndOfFile)
             break;
 
-        auto binaryPrecedence = binaryOperatorPrecedence(binaryOperatorToken.kind);
+        auto binaryPrecedence = BinaryOperatorPrecedence(binaryOperatorToken.kind);
         if (binaryPrecedence == 0 || binaryPrecedence <= parentPrecedence)
             break;
 
@@ -518,7 +514,7 @@ ArgumentsNode* Parser::parseArgumentsNode()
 
 TypeName Parser::parseTypeNode()
 {
-    auto ref = tryMatchKeyword(QStringView(u"ref"));
+    auto ref = tryMatchKind(TokenKind::ReferenceOf);
     auto name = parseNameExpression();
     return TypeName(ref, name);
 }
@@ -621,7 +617,7 @@ Token Parser::advanceOnMatch(TokenKind kind)
 std::optional<BoolLiteral*> Parser::tryParseBoolLiteral()
 {
     auto current = currentToken();
-    auto lexeme = m_tokens.getLexeme(current);
+    auto& lexeme = m_tokens.getLexeme(current);
     if (IsTrueKeyword(lexeme))
     {
         advanceCurrentIndex();
@@ -635,11 +631,10 @@ std::optional<BoolLiteral*> Parser::tryParseBoolLiteral()
     return {};
 }
 
-std::optional<Token> Parser::tryMatchKeyword(const QStringView& keyword)
+std::optional<Token> Parser::tryMatchKind(TokenKind kind)
 {
     auto current = currentToken();
-    if (current.kind == TokenKind::Identifier
-        && m_tokens.getLexeme(current) == keyword)
+    if (current.kind == kind)
     {
         advanceCurrentIndex();
         return current;
@@ -677,8 +672,8 @@ bool Parser::hasLineBreakSinceLastMemberAccess()
         return false;
 
     auto lastToken = peek(-1);
-    auto lastTokenLocation = m_tokens.getSourceLocation(lastToken);
-    auto currentTokenLocation = m_tokens.getSourceLocation(current);
+    auto& lastTokenLocation = m_tokens.getSourceLocation(lastToken);
+    auto& currentTokenLocation = m_tokens.getSourceLocation(current);
 
     auto hasEmptyLineBreak = (currentTokenLocation.endLine - lastTokenLocation.endLine) >= 2;
     return hasEmptyLineBreak;
@@ -690,8 +685,8 @@ bool Parser::hasPossibleReturnValue(const Token& returnKeyword)
     if (current.kind == TokenKind::CloseBracket)
         return false;
 
-    auto returnTokenLocation = m_tokens.getSourceLocation(returnKeyword);
-    auto currentTokenLocation = m_tokens.getSourceLocation(current);
+    auto& returnTokenLocation = m_tokens.getSourceLocation(returnKeyword);
+    auto& currentTokenLocation = m_tokens.getSourceLocation(current);
 
     auto isOnSameLine = returnTokenLocation.endLine == currentTokenLocation.endLine;
     return isOnSameLine;
@@ -718,46 +713,15 @@ BinaryOperatornKind Parser::convertBinaryOperatorTokenKindToEnum(TokenKind kind)
     }
 }
 
-UnaryOperatornKind Parser::convertUnaryOperatorTokenKindToEnum(Token token) const
+UnaryOperatornKind Parser::convertUnaryOperatorTokenKindToEnum(TokenKind kind) const
 {
-    auto kind = token.kind;
-    if (kind == TokenKind::Identifier && IsRefKeyword(m_tokens.getLexeme(token)))
+    if (kind == TokenKind::ReferenceOf)
         return UnaryOperatornKind::ReferenceOf;
 
     if (kind == TokenKind::Minus)
         return UnaryOperatornKind::Negation;
 
     return UnaryOperatornKind::Invalid;
-}
-
-i32 Parser::unaryOperatorPrecedence(Token token) const
-{
-    auto kind = token.kind;
-    if (kind == TokenKind::Identifier && IsRefKeyword(m_tokens.getLexeme(token)))
-        return 5;
-
-    if (kind == TokenKind::Minus)
-        return 4;
-
-    return 0;
-}
-
-i32 Parser::binaryOperatorPrecedence(TokenKind kind) const
-{
-    switch (kind)
-    {
-        case TokenKind::Dot:
-        case TokenKind::DoubleColon:
-            return 3;
-        case TokenKind::Star:
-        case TokenKind::Slash:
-            return 2;
-        case TokenKind::Plus:
-        case TokenKind::Minus:
-            return 1;
-    }
-
-    return 0;
 }
 
 ParseTree Parse(const TokenBuffer& tokens, DiagnosticsBag& diagnostics) noexcept

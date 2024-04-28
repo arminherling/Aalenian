@@ -66,7 +66,7 @@ private:
 
     Token advanceOnMatch(TokenKind kind);
     std::optional<BoolLiteral*> tryParseBoolLiteral();
-    std::optional<Token> tryMatchKeyword(const QStringView& keyword);
+    std::optional<Token> tryMatchKind(TokenKind kind);
     void skipUntil(TokenKind kind);
 
     Token peek(i32 offset);
@@ -77,9 +77,7 @@ private:
     bool hasLineBreakSinceLastMemberAccess();
     bool hasPossibleReturnValue(const Token& returnKeyword);
 
-    i32 unaryOperatorPrecedence(Token token) const;
-    i32 binaryOperatorPrecedence(TokenKind kind) const;
-    UnaryOperatornKind convertUnaryOperatorTokenKindToEnum(Token token) const;
+    UnaryOperatornKind convertUnaryOperatorTokenKindToEnum(TokenKind kind) const;
     BinaryOperatornKind convertBinaryOperatorTokenKindToEnum(TokenKind kind) const;
 
     TokenBuffer m_tokens;

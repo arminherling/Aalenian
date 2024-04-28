@@ -38,6 +38,8 @@ QString Stringify(TokenKind kind)
 			return QString("Number");
 		case TokenKind::String:
 			return QString("String");
+		case TokenKind::ReferenceOf:
+			return QString("ReferenceOf");
 		case TokenKind::Error:
 			return QString("Error");
 		case TokenKind::Unknown:
@@ -47,4 +49,35 @@ QString Stringify(TokenKind kind)
 		default:
 			TODO("String for TokenKind value was not defined yet");
 	}
+}
+
+i32 UnaryOperatorPrecedence(TokenKind kind)
+{
+	switch (kind)
+	{
+		case TokenKind::ReferenceOf:
+			return 5;
+		case TokenKind::Minus:
+			return 4;
+	}
+
+	return 0;
+}
+
+i32 BinaryOperatorPrecedence(TokenKind kind)
+{
+	switch (kind)
+	{
+		case TokenKind::Dot:
+		case TokenKind::DoubleColon:
+			return 3;
+		case TokenKind::Star:
+		case TokenKind::Slash:
+			return 2;
+		case TokenKind::Plus:
+		case TokenKind::Minus:
+			return 1;
+	}
+
+	return 0;
 }

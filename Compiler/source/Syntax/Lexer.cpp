@@ -106,6 +106,13 @@ auto AddTokenKindAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr&
     return tokenBuffer.addToken({ .kind = tokenKind, .lexemeIndex = identifierIndex, .locationIndex = locationIndex });
 };
 
+auto IsRefKeyword(const QString& source, i32 currentIndex, i32 startIndex) noexcept
+{
+    static const auto refStringView = QStringView(u"ref");
+    auto length = currentIndex - startIndex;
+    return refStringView == QStringView(source).sliced(startIndex, length);
+}
+
 auto LexIdentifier(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn) noexcept
 {
     auto startIndex = currentIndex;
@@ -113,6 +120,9 @@ auto LexIdentifier(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, 
     auto startColumn = currentColumn;
     while (IsLetterOrNumberOrUnderscore(PeekCurrentChar(source, currentIndex)))
         AdvanceCurrentIndex(currentIndex, currentColumn);
+
+    if(IsRefKeyword(source->text, currentIndex, startIndex))
+        return AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::ReferenceOf);
 
     return AddLexemeAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Identifier, startIndex, startColumn, startLine);
 };

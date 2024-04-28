@@ -27,7 +27,11 @@ enum class COMPILER_API TokenKind
     Number,
     String,
 
+    ReferenceOf,
+
     EndOfFile
 };
 
 COMPILER_API [[nodiscard]] QString Stringify(TokenKind kind);
+COMPILER_API [[nodiscard]] i32 UnaryOperatorPrecedence(TokenKind kind);
+COMPILER_API [[nodiscard]] i32 BinaryOperatorPrecedence(TokenKind kind);

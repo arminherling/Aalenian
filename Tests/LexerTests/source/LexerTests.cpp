@@ -19,7 +19,7 @@ namespace
         DiagnosticsBag diagnostics;
 
         auto tokens = Lex(source, diagnostics);
-        auto token = tokens[0];
+        auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
         std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
@@ -62,7 +62,7 @@ namespace
         DiagnosticsBag diagnostics;
 
         auto tokens = Lex(source, diagnostics);
-        auto token = tokens[0];
+        auto& token = tokens[0];
 
         auto endTime = std::chrono::high_resolution_clock::now();
         std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
@@ -210,6 +210,22 @@ namespace
         };
     }
 
+    void Ref()
+    {
+        auto startTime = std::chrono::high_resolution_clock::now();
+
+        auto source = std::make_shared<SourceText>(QString("ref"));
+        DiagnosticsBag diagnostics;
+
+        auto tokens = Lex(source, diagnostics);
+        auto& token = tokens[0];
+
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
+
+        AalTest::AreEqual(token.kind, TokenKind::ReferenceOf);
+    }
+
     void WholeInput(QString input, i32 tokenCount)
     {
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -272,6 +288,7 @@ TestSuite LexerTestsSuite()
     suite.add(QString("Numbers"), Numbers, Numbers_Data);
     suite.add(QString("Strings"), Strings, Strings_Data);
     suite.add(QString("UnterminatedStrings"), UnterminatedStrings, UnterminatedStrings_Data);
+    suite.add(QString("Ref"), Ref);
     suite.add(QString("WholeInput"), WholeInput, WholeInput_Data);
     suite.add(QString("OneMilLinesTime"), OneMilLinesTime);
 
