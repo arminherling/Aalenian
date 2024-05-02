@@ -97,7 +97,7 @@ namespace
         std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         AalTest::AreEqual(token.kind, TokenKind::Identifier);
-        auto& lexeme = tokens.getLexeme(token);
+        auto lexeme = tokens.getLexeme(token);
         AalTest::AreEqual(lexeme, expectedLexeme);
     }
 
@@ -133,7 +133,7 @@ namespace
         std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         AalTest::AreEqual(token.kind, TokenKind::Number);
-        auto& lexeme = tokens.getLexeme(token);
+        auto lexeme = tokens.getLexeme(token);
         AalTest::AreEqual(lexeme, expectedLexeme);
     }
 
@@ -166,7 +166,7 @@ namespace
         std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         AalTest::AreEqual(token.kind, TokenKind::String);
-        auto& lexeme = tokens.getLexeme(token);
+        auto lexeme = tokens.getLexeme(token);
         AalTest::AreEqual(lexeme, expectedLexeme);
     }
 
@@ -196,7 +196,7 @@ namespace
         std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         AalTest::AreEqual(token.kind, TokenKind::Error);
-        auto& lexeme = tokens.getLexeme(token);
+        auto lexeme = tokens.getLexeme(token);
         AalTest::AreEqual(lexeme, expectedLexeme);
     }
 

@@ -15,42 +15,42 @@
 #include <Syntax/Error.h>
 #include <Syntax/FunctionCallExpression.h>
 
-bool IsFunctionDefinitionKeyword(const QStringView& lexeme)
+bool IsFunctionDefinitionKeyword(QStringView lexeme)
 {
     return lexeme == QString("define");
 }
 
-bool IsEnumDefinitionKeyword(const QStringView& lexeme)
+bool IsEnumDefinitionKeyword(QStringView lexeme)
 {
     return lexeme == QString("enum");
 }
 
-bool IsTypeDefinitionKeyword(const QStringView& lexeme)
+bool IsTypeDefinitionKeyword(QStringView lexeme)
 {
     return lexeme == QString("type");
 }
 
-bool IsIfKeyword(const QStringView& lexeme)
+bool IsIfKeyword(QStringView lexeme)
 {
     return lexeme == QString("if");
 }
 
-bool IsWhileKeyword(const QStringView& lexeme)
+bool IsWhileKeyword(QStringView lexeme)
 {
     return lexeme == QString("while");
 }
 
-bool IsReturnKeyword(const QStringView& lexeme)
+bool IsReturnKeyword(QStringView lexeme)
 {
     return lexeme == QString("return");
 }
 
-bool IsTrueKeyword(const QStringView& lexeme)
+bool IsTrueKeyword(QStringView lexeme)
 {
     return lexeme == QString("true");
 }
 
-bool IsFalseKeyword(const QStringView& lexeme)
+bool IsFalseKeyword(QStringView lexeme)
 {
     return lexeme == QString("false");
 }
@@ -96,7 +96,7 @@ QList<Statement*> Parser::parseStatements(StatementScope scope)
             }
             case TokenKind::Identifier:
             {
-                auto& lexeme = m_tokens.getLexeme(current);
+                auto lexeme = m_tokens.getLexeme(current);
                 if (scope == StatementScope::Global)
                 {
                     if (IsFunctionDefinitionKeyword(lexeme))
@@ -617,7 +617,7 @@ Token Parser::advanceOnMatch(TokenKind kind)
 std::optional<BoolLiteral*> Parser::tryParseBoolLiteral()
 {
     auto current = currentToken();
-    auto& lexeme = m_tokens.getLexeme(current);
+    auto lexeme = m_tokens.getLexeme(current);
     if (IsTrueKeyword(lexeme))
     {
         advanceCurrentIndex();

@@ -171,7 +171,7 @@ TypedStatement* TypeChecker::typeCheckEnumDefinitionStatement(EnumDefinitionStat
     {
         auto typeName = optionalBaseTypeName.value().name();
         auto& identifier = typeName->identifier();
-        auto& lexeme = m_parseTree.tokens().getLexeme(identifier);
+        auto lexeme = m_parseTree.tokens().getLexeme(identifier);
         baseType = m_typeDatabase.getTypeByName(lexeme);
     }
     else
@@ -185,7 +185,7 @@ TypedStatement* TypeChecker::typeCheckEnumDefinitionStatement(EnumDefinitionStat
     }
 
     auto& nameToken = statement->name();
-    auto& enumName = m_parseTree.tokens().getLexeme(nameToken);
+    auto enumName = m_parseTree.tokens().getLexeme(nameToken);
     // TODO check if there is already a type with the name
     auto newType = m_typeDatabase.createType(enumName, TypeKind::Enum);
     auto enumFields = typeCheckEnumFieldDefinitionNodes(newType, baseType, statement->fieldDefinitions());
@@ -197,7 +197,7 @@ TypedStatement* TypeChecker::typeCheckEnumDefinitionStatement(EnumDefinitionStat
 TypedStatement* TypeChecker::typeCheckTypeDefinitionStatement(TypeDefinitionStatement* statement)
 {
     auto& nameToken = statement->name();
-    auto& typeName = m_parseTree.tokens().getLexeme(nameToken);
+    auto typeName = m_parseTree.tokens().getLexeme(nameToken);
     // TODO check if there is already a type with the name
     auto newType = m_typeDatabase.createType(typeName, TypeKind::Type);
     auto typeFields = typeCheckTypeFieldDefinitionNodes(newType, statement->body());
@@ -213,7 +213,7 @@ TypedStatement* TypeChecker::typeCheckFunctionDefinitionStatement(FunctionDefini
     pushScope(ScopeKind::Function);
 
     auto& nameToken = statement->name();
-    auto& functionName = m_parseTree.tokens().getLexeme(nameToken);
+    auto functionName = m_parseTree.tokens().getLexeme(nameToken);
     // TODO create scopes for functions, instead of just passing a type
     // TODO check if function with same name and parameters exists already
     auto newFunctionType = m_typeDatabase.createFunction(Type::Undefined(), functionName, TypeKind::Function);
@@ -255,13 +255,13 @@ QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNodes(
     for (const auto definition : fieldDefinitions)
     {
         auto& nameToken = definition->name()->identifier();
-        auto& name = m_parseTree.tokens().getLexeme(nameToken);
+        auto name = m_parseTree.tokens().getLexeme(nameToken);
 
         if (definition->value().has_value())
         {
             auto numberLiteral = definition->value().value();
             auto& numberToken = numberLiteral->token();
-            auto& valueLexeme = m_parseTree.tokens().getLexeme(numberToken);
+            auto valueLexeme = m_parseTree.tokens().getLexeme(numberToken);
 
             auto [typedLiteral, value] = convertValueToTypedLiteral(valueLexeme, baseType, definition);
             if (typedLiteral != nullptr)
@@ -297,7 +297,7 @@ QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckTypeFieldDefinitionNodes(
 
         auto fieldDeclaration = (FieldDeclarationStatement*)statement;
         auto& nameToken = fieldDeclaration->name()->identifier();
-        auto& name = m_parseTree.tokens().getLexeme(nameToken);
+        auto name = m_parseTree.tokens().getLexeme(nameToken);
 
         auto type = Type::Undefined();
         if (fieldDeclaration->type().has_value())
@@ -341,7 +341,7 @@ QList<Parameter*> TypeChecker::typeCheckFunctionParameters(ParametersNode* param
 
     for (const auto parameterNode : parametersNode->parameters())
     {
-        auto& parameterName = m_parseTree.tokens().getLexeme(parameterNode->name()->identifier());
+        auto parameterName = m_parseTree.tokens().getLexeme(parameterNode->name()->identifier());
         auto parameterType = convertTypeNameToType(parameterNode->type());
         currentScope()->addVariableBinding(parameterName, parameterType);
 
@@ -412,7 +412,7 @@ TypedExpression* TypeChecker::typeCheckBinaryExpressionExpression(BinaryExpressi
             //TODO disallow other expressions
             assert(leftExpression->kind() == NodeKind::NameExpression);
             auto scopeNameExpression = (NameExpression*)leftExpression;
-            auto& scopeName = m_parseTree.tokens().getLexeme(scopeNameExpression->identifier());
+            auto scopeName = m_parseTree.tokens().getLexeme(scopeNameExpression->identifier());
             auto scopeType = m_typeDatabase.getTypeByName(scopeName);
             auto& scopeTypeDefinition = m_typeDatabase.getTypeDefinition(scopeType);
 
@@ -424,7 +424,7 @@ TypedExpression* TypeChecker::typeCheckBinaryExpressionExpression(BinaryExpressi
                     //TODO allow/disallow other expressions
                     assert(rightExpression->kind() == NodeKind::NameExpression);
                     auto fieldNameExpression = (NameExpression*)rightExpression;
-                    auto& fieldName = m_parseTree.tokens().getLexeme(fieldNameExpression->identifier());
+                    auto fieldName = m_parseTree.tokens().getLexeme(fieldNameExpression->identifier());
                     auto enumField = scopeTypeDefinition.getFieldByName(fieldName);
                     return new TypedEnumFieldAccessExpression(scopeType, enumField, binaryExpression);
                 }
@@ -469,7 +469,7 @@ TypedExpression* TypeChecker::typeCheckBinaryExpressionExpression(BinaryExpressi
 TypedExpression* TypeChecker::typeCheckNameExpression(NameExpression* expression)
 {
     auto& identifier = expression->identifier();
-    auto& name = m_parseTree.tokens().getLexeme(identifier);
+    auto name = m_parseTree.tokens().getLexeme(identifier);
     auto type = currentScope()->tryGetVariableBinding(name);
 
     if(currentScope()->kind() == ScopeKind::Global)
@@ -500,7 +500,7 @@ TypedExpression* TypeChecker::typeCheckNumberLiteral(NumberLiteral* literal)
     {
         auto& typeToken = literal->type().value();
         auto& identifierToken = typeToken.name()->identifier();
-        auto& typeName = m_parseTree.tokens().getLexeme(identifierToken);
+        auto typeName = m_parseTree.tokens().getLexeme(identifierToken);
 
         numberType = m_typeDatabase.getTypeByName(typeName);
     }
@@ -510,7 +510,7 @@ TypedExpression* TypeChecker::typeCheckNumberLiteral(NumberLiteral* literal)
     }
 
     auto& numberToken = literal->token();
-    auto& valueLexeme = m_parseTree.tokens().getLexeme(numberToken);
+    auto valueLexeme = m_parseTree.tokens().getLexeme(numberToken);
 
     auto [typedLiteral, value] = convertValueToTypedLiteral(valueLexeme, numberType, literal);
     if (typedLiteral != nullptr)
@@ -523,7 +523,7 @@ TypedExpression* TypeChecker::typeCheckNumberLiteral(NumberLiteral* literal)
 TypedExpression* TypeChecker::typeCheckFunctionCallExpression(FunctionCallExpression* functionCallExpression)
 {
     auto& name = functionCallExpression->name();
-    auto& lexeme = m_parseTree.tokens().getLexeme(name);
+    auto lexeme = m_parseTree.tokens().getLexeme(name);
     auto functionType = currentScope()->tryGetFunctionBinding(lexeme);
 
     // TODO type check arguments and find the correct function call
@@ -564,7 +564,7 @@ Type TypeChecker::inferType(TypedNode* node)
 Type TypeChecker::convertTypeNameToType(const TypeName& typeName)
 {
     auto& nameToken = typeName.name()->identifier();
-    auto& nameLexeme = m_parseTree.tokens().getLexeme(nameToken);
+    auto nameLexeme = m_parseTree.tokens().getLexeme(nameToken);
 
     auto ref = (typeName.isReference() ? QString("ref ") : QString());
     auto name = ref + nameLexeme.toString();

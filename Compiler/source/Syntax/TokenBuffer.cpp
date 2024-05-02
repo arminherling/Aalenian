@@ -16,7 +16,7 @@ Token TokenBuffer::addToken(const Token& token) noexcept
     return token;
 }
 
-i32 TokenBuffer::addLexeme(const QStringView& lexeme) noexcept
+i32 TokenBuffer::addLexeme(QStringView lexeme) noexcept
 {
     lexemes.push_back(lexeme);
     return lexemes.size() - 1;
@@ -43,7 +43,7 @@ const SourceLocation& TokenBuffer::getSourceLocation(const Token& token) const n
     return sourceLocations.at(token.locationIndex);
 }
 
-const QStringView& TokenBuffer::getLexeme(const Token& token) const noexcept
+QStringView TokenBuffer::getLexeme(const Token& token) const noexcept
 {
     return lexemes.at(token.lexemeIndex);
 }

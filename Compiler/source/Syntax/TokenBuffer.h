@@ -14,14 +14,14 @@ public:
     TokenBuffer(i32 initialSize);
 
     Token addToken(const Token& token) noexcept;
-    i32 addLexeme(const QStringView& lexeme) noexcept;
+    i32 addLexeme(QStringView lexeme) noexcept;
     i32 addSourceLocation(const SourceLocation& sourceLocation) noexcept;
 
     i32 size() const noexcept;
     const Token& operator[](i32 position) const noexcept;
 
     const SourceLocation& getSourceLocation(const Token& token) const noexcept;
-    const QStringView& getLexeme(const Token& token) const noexcept;
+    QStringView getLexeme(const Token& token) const noexcept;
 
 private:
     std::vector<Token> tokens;
