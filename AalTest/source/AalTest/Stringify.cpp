@@ -27,6 +27,11 @@ QString Stringify(const char* str)
     return QString("\"%1\"").arg(sanitize(QString::fromLocal8Bit(str)));
 }
 
+QString Stringify(const QStringView stringView)
+{
+    return Stringify(stringView.toString());
+}
+
 QString Stringify(const QString& string)
 {
     return QString("\"%1\"").arg(sanitize(string));
