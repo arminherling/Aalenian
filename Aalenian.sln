@@ -114,12 +114,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FlowControl", "FlowControl"
 		Tests\Data\FlowControl\if1.out_parse = Tests\Data\FlowControl\if1.out_parse
 		Tests\Data\FlowControl\return1.in = Tests\Data\FlowControl\return1.in
 		Tests\Data\FlowControl\return1.out_parse = Tests\Data\FlowControl\return1.out_parse
+		Tests\Data\FlowControl\return1.out_type = Tests\Data\FlowControl\return1.out_type
 		Tests\Data\FlowControl\return2.in = Tests\Data\FlowControl\return2.in
 		Tests\Data\FlowControl\return2.out_parse = Tests\Data\FlowControl\return2.out_parse
+		Tests\Data\FlowControl\return2.out_type = Tests\Data\FlowControl\return2.out_type
 		Tests\Data\FlowControl\return3.in = Tests\Data\FlowControl\return3.in
 		Tests\Data\FlowControl\return3.out_parse = Tests\Data\FlowControl\return3.out_parse
+		Tests\Data\FlowControl\return3.out_type = Tests\Data\FlowControl\return3.out_type
 		Tests\Data\FlowControl\return4.in = Tests\Data\FlowControl\return4.in
 		Tests\Data\FlowControl\return4.out_parse = Tests\Data\FlowControl\return4.out_parse
+		Tests\Data\FlowControl\return4.out_type = Tests\Data\FlowControl\return4.out_type
 		Tests\Data\FlowControl\while1.in = Tests\Data\FlowControl\while1.in
 		Tests\Data\FlowControl\while1.out_parse = Tests\Data\FlowControl\while1.out_parse
 	EndProjectSection

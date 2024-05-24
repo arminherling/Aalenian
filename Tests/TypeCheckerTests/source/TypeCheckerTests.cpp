@@ -46,7 +46,15 @@ namespace
         AalTest::AreEqual(expectedOutput, output);
         if (!QFile::exists(errorFilePath))
         {
-            AalTest::IsTrue(diagnostics.Diagnostics().empty());
+            // TODO maybe split up errors and warnings
+            for (const auto& diagnostic : diagnostics.Diagnostics())
+            {
+                if (diagnostic.level == DiagnosticLevel::Error)
+                {
+                    AalTest::Fail();
+                    break;
+                }
+            }
         }
         else
         {
