@@ -21,6 +21,7 @@
 #include <Syntax/FunctionCallExpression.h>
 #include <Syntax/FunctionDefinitionStatement.h>
 #include <Syntax/GroupingExpression.h>
+#include <Syntax/IfStatement.h>
 #include <Syntax/NameExpression.h>
 #include <Syntax/NumberLiteral.h>
 #include <Syntax/ParseTree.h>
@@ -50,6 +51,7 @@ private:
     [[nodiscard]] TypedStatement* typeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckTypeDefinitionStatement(TypeDefinitionStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckFunctionDefinitionStatement(FunctionDefinitionStatement* statement);
+    [[nodiscard]] TypedStatement* typeCheckIfStatement(IfStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckReturnStatement(ReturnStatement* statement);
     [[nodiscard]] QList<TypedFieldDefinitionNode*> typeCheckEnumFieldDefinitionNodes(
         Type newType, 

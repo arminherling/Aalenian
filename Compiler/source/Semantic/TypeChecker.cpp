@@ -11,6 +11,7 @@
 #include <Semantic/TypedExpressionStatement.h>
 #include <Semantic/TypedFunctionCallExpression.h>
 #include <Semantic/TypedFunctionDefinitionStatement.h>
+#include <Semantic/TypedIfStatement.h>
 #include <Semantic/TypedNegationExpression.h>
 #include <Semantic/TypedReferenceOfExpression.h>
 #include <Semantic/TypedReturnStatement.h>
@@ -77,6 +78,10 @@ TypedStatement* TypeChecker::typeCheckStatement(Statement* statement)
         case NodeKind::FunctionDefinitionStatement:
         {
             return typeCheckFunctionDefinitionStatement((FunctionDefinitionStatement*)statement);
+        }
+        case NodeKind::IfStatement:
+        {
+            return typeCheckIfStatement((IfStatement*)statement);
         }
         case NodeKind::ReturnStatement:
         {
@@ -229,6 +234,20 @@ TypedStatement* TypeChecker::typeCheckFunctionDefinitionStatement(FunctionDefini
     popScope();
 
     return new TypedFunctionDefinitionStatement(functionName, newFunctionType, parameters, returnType, typedBody, statement);
+}
+
+TypedStatement* TypeChecker::typeCheckIfStatement(IfStatement* statement)
+{
+    auto typedCondition = typeCheckExpression(statement->condition());
+    if (typedCondition->type() != Type::Bool())
+    {
+        TODO("Add an error because only bool is allowed");
+    }
+    // TODO create a function that typechecks blocks
+    auto [typedBody, returnType] = typeCheckFunctionBodyNode(statement->body());
+    
+    // TODO else block
+    return new TypedIfStatement(typedCondition, typedBody, std::nullopt, statement, Type::Undefined());
 }
 
 TypedStatement* TypeChecker::typeCheckReturnStatement(ReturnStatement* statement)

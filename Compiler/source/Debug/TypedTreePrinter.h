@@ -15,6 +15,7 @@
 #include <Semantic/TypedExpressionStatement.h>
 #include <Semantic/TypedFunctionCallExpression.h>
 #include <Semantic/TypedFunctionDefinitionStatement.h>
+#include <Semantic/TypedIfStatement.h>
 #include <Semantic/TypedNegationExpression.h>
 #include <Semantic/TypedNode.h>
 #include <Semantic/TypedReferenceOfExpression.h>
@@ -39,6 +40,7 @@ private:
     void PrettyPrintTypedEnumDefinitionStatement(TypedEnumDefinitionStatement* statement);
     void PrettyPrintTypedTypeDefinitionStatement(TypedTypeDefinitionStatement* statement);
     void PrettyPrintTypedFunctionDefinitionStatement(TypedFunctionDefinitionStatement* statement);
+    void PrettyPrintTypedIfStatement(TypedIfStatement* statement);
     void PrettyPrintTypedReturnStatement(TypedReturnStatement* statement);
     void PrettyPrintTypedReferenceOfExpression(TypedReferenceOfExpression* expression);
     void PrettyPrintTypedNegationExpression(TypedNegationExpression* expression);

@@ -260,6 +260,9 @@
     <ClCompile Include="source\Semantic\TypedReferenceOfExpression.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Semantic\TypedIfStatement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Compiler\DiagnosticsBag.h">
@@ -536,6 +539,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Semantic\TypedReferenceOfExpression.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Semantic\TypedIfStatement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

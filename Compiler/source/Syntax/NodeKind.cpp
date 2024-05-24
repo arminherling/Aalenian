@@ -77,6 +77,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("TypedTypeDefinitionStatement");
         case NodeKind::TypedFunctionDefinitionStatement:
             return QString("TypedFunctionDefinitionStatement");
+        case NodeKind::TypedIfStatement:
+            return QString("TypedIfStatement");
         case NodeKind::TypedReturnStatement:
             return QString("TypedReturnStatement");
 

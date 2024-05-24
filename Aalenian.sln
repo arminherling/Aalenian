@@ -112,6 +112,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FlowControl", "FlowControl"
 	ProjectSection(SolutionItems) = preProject
 		Tests\Data\FlowControl\if1.in = Tests\Data\FlowControl\if1.in
 		Tests\Data\FlowControl\if1.out_parse = Tests\Data\FlowControl\if1.out_parse
+		Tests\Data\FlowControl\if1.out_type = Tests\Data\FlowControl\if1.out_type
 		Tests\Data\FlowControl\return1.in = Tests\Data\FlowControl\return1.in
 		Tests\Data\FlowControl\return1.out_parse = Tests\Data\FlowControl\return1.out_parse
 		Tests\Data\FlowControl\return1.out_type = Tests\Data\FlowControl\return1.out_type
