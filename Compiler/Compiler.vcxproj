@@ -123,6 +123,7 @@
     <ClCompile Include="source\Semantic\TypedReturnStatement.cpp" />
     <ClCompile Include="source\Semantic\TypedTypeDefinitionStatement.cpp" />
     <ClCompile Include="source\Semantic\TypedVariable.cpp" />
+    <ClCompile Include="source\Semantic\TypedWhileStatement.cpp" />
     <ClCompile Include="source\Semantic\U8Value.cpp" />
     <ClCompile Include="source\Syntax\NodeKind.cpp" />
     <ClCompile Include="source\Syntax\ArgumentsNode.cpp" />
@@ -207,6 +208,7 @@
     <ClInclude Include="source\Semantic\TypedReturnStatement.h" />
     <ClInclude Include="source\Semantic\TypedTypeDefinitionStatement.h" />
     <ClInclude Include="source\Semantic\TypedVariable.h" />
+    <ClInclude Include="source\Semantic\TypedWhileStatement.h" />
     <ClInclude Include="source\Semantic\U8Value.h" />
     <ClInclude Include="source\Syntax\NodeKind.h" />
     <ClInclude Include="source\Syntax\ArgumentsNode.h" />

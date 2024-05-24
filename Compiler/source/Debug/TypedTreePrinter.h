@@ -23,6 +23,7 @@
 #include <Semantic/TypedTree.h>
 #include <Semantic/TypedTypeDefinitionStatement.h>
 #include <Semantic/TypedVariable.h>
+#include <Semantic/TypedWhileStatement.h>
 #include <Semantic/U8Value.h>
 
 class COMPILER_API TypedTreePrinter : public BasePrinter
@@ -41,6 +42,7 @@ private:
     void PrettyPrintTypedTypeDefinitionStatement(TypedTypeDefinitionStatement* statement);
     void PrettyPrintTypedFunctionDefinitionStatement(TypedFunctionDefinitionStatement* statement);
     void PrettyPrintTypedIfStatement(TypedIfStatement* statement);
+    void PrettyPrintTypedWhileStatement(TypedWhileStatement* statement);
     void PrettyPrintTypedReturnStatement(TypedReturnStatement* statement);
     void PrettyPrintTypedReferenceOfExpression(TypedReferenceOfExpression* expression);
     void PrettyPrintTypedNegationExpression(TypedNegationExpression* expression);

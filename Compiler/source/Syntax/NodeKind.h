@@ -45,6 +45,7 @@ enum class COMPILER_API NodeKind
     TypedTypeDefinitionStatement,
     TypedFunctionDefinitionStatement,
     TypedIfStatement,
+    TypedWhileStatement,
     TypedReturnStatement,
 
     TypedReferenceOfExpression,

@@ -60,6 +60,11 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
             PrettyPrintTypedIfStatement((TypedIfStatement*)node);
             break;
         }
+        case NodeKind::TypedWhileStatement:
+        {
+            PrettyPrintTypedWhileStatement((TypedWhileStatement*)node);
+            break;
+        }
         case NodeKind::TypedReturnStatement:
         {
             PrettyPrintTypedReturnStatement((TypedReturnStatement*)node);
@@ -293,6 +298,31 @@ void TypedTreePrinter::PrettyPrintTypedIfStatement(TypedIfStatement* statement)
     auto optionalElseBlock = statement->elseBlock();
     if(optionalElseBlock.has_value())
         PrettyPrintNode(optionalElseBlock.value());
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void TypedTreePrinter::PrettyPrintTypedWhileStatement(TypedWhileStatement* statement)
+{
+    stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << QString("Condition: {") << NewLine();
+    PushIndentation();
+    PrettyPrintNode(statement->condition());
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    auto& body = statement->body();
+    stream() << Indentation() << QString("Body(%1): {").arg(body.count()) << NewLine();
+    PushIndentation();
+    for (const auto bodyStatement : body)
+    {
+        PrettyPrintNode(bodyStatement);
+    }
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 

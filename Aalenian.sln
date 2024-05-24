@@ -127,6 +127,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FlowControl", "FlowControl"
 		Tests\Data\FlowControl\return4.out_type = Tests\Data\FlowControl\return4.out_type
 		Tests\Data\FlowControl\while1.in = Tests\Data\FlowControl\while1.in
 		Tests\Data\FlowControl\while1.out_parse = Tests\Data\FlowControl\while1.out_parse
+		Tests\Data\FlowControl\while1.out_type = Tests\Data\FlowControl\while1.out_type
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global", "Global", "{170649E9-BBB5-4D3A-881D-0701F74920A6}"

@@ -17,6 +17,7 @@
 #include <Semantic/TypedReturnStatement.h>
 #include <Semantic/TypedTypeDefinitionStatement.h>
 #include <Semantic/TypedVariable.h>
+#include <Semantic/TypedWhileStatement.h>
 #include <Semantic/U8Value.h>
 #include <Syntax/FieldDeclarationStatement.h>
 
@@ -82,6 +83,10 @@ TypedStatement* TypeChecker::typeCheckStatement(Statement* statement)
         case NodeKind::IfStatement:
         {
             return typeCheckIfStatement((IfStatement*)statement);
+        }
+        case NodeKind::WhileStatement:
+        {
+            return typeCheckWhileStatement((WhileStatement*)statement);
         }
         case NodeKind::ReturnStatement:
         {
@@ -248,6 +253,19 @@ TypedStatement* TypeChecker::typeCheckIfStatement(IfStatement* statement)
     
     // TODO else block
     return new TypedIfStatement(typedCondition, typedBody, std::nullopt, statement, Type::Undefined());
+}
+
+TypedStatement* TypeChecker::typeCheckWhileStatement(WhileStatement* statement)
+{
+    auto typedCondition = typeCheckExpression(statement->condition());
+    if (typedCondition->type() != Type::Bool())
+    {
+        TODO("Add an error because only bool is allowed");
+    }
+    // TODO create a function that typechecks blocks
+    auto [typedBody, returnType] = typeCheckFunctionBodyNode(statement->body());
+
+    return new TypedWhileStatement(typedCondition, typedBody, statement, Type::Undefined());
 }
 
 TypedStatement* TypeChecker::typeCheckReturnStatement(ReturnStatement* statement)

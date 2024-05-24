@@ -28,6 +28,7 @@
 #include <Syntax/ReturnStatement.h>
 #include <Syntax/TypeDefinitionStatement.h>
 #include <Syntax/UnaryExpression.h>
+#include <Syntax/WhileStatement.h>
 
 class COMPILER_API TypeChecker
 {
@@ -52,6 +53,7 @@ private:
     [[nodiscard]] TypedStatement* typeCheckTypeDefinitionStatement(TypeDefinitionStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckFunctionDefinitionStatement(FunctionDefinitionStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckIfStatement(IfStatement* statement);
+    [[nodiscard]] TypedStatement* typeCheckWhileStatement(WhileStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckReturnStatement(ReturnStatement* statement);
     [[nodiscard]] QList<TypedFieldDefinitionNode*> typeCheckEnumFieldDefinitionNodes(
         Type newType, 
