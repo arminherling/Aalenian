@@ -339,11 +339,17 @@ Statement* Parser::parseWhileStatement(StatementScope scope)
 Statement* Parser::parseReturnStatement()
 {
     auto keyword = advanceOnMatch(TokenKind::Identifier);
+    auto current = currentToken();
 
     std::optional<Expression*> expression;
-    // Special case: we need to disambiguate between returns in void functions and normal functions
-    // we do this by breaking the code up with a line break
-    if (hasPossibleReturnValue(keyword))
+    if (current.kind != TokenKind::CloseBracket && tokenIsOnNextLine())
+    {
+        // TODO add proper warning for expressions on the next line after returns
+        const auto& location = m_tokens.getSourceLocation(current);
+        m_diagnostics.AddWarning(DiagnosticKind::Unknown, location);
+    }
+
+    if (current.kind != TokenKind::CloseBracket && !hasEmptyLineSinceLastToken())
         expression = parseExpression();
 
     return new ReturnStatement(keyword, expression);
@@ -407,7 +413,7 @@ Expression* Parser::parseBinaryExpression(i32 parentPrecedence)
             break;
 
         // Special case: empty lines prevent unintended method chaining
-        if (hasLineBreakSinceLastMemberAccess())
+        if (binaryOperatorToken.kind == TokenKind::Dot && hasEmptyLineSinceLastToken())
             break;
 
         advanceCurrentIndex();
@@ -665,31 +671,24 @@ Token Parser::peek(i32 offset)
     return m_tokens[index];
 }
 
-bool Parser::hasLineBreakSinceLastMemberAccess()
+i32 Parser::lineDistanceSinceLastToken()
 {
-    auto current = currentToken();
-    if (current.kind != TokenKind::Dot)
-        return false;
-
     auto lastToken = peek(-1);
+    auto current = currentToken();
     auto& lastTokenLocation = m_tokens.getSourceLocation(lastToken);
     auto& currentTokenLocation = m_tokens.getSourceLocation(current);
 
-    auto hasEmptyLineBreak = (currentTokenLocation.endLine - lastTokenLocation.endLine) >= 2;
-    return hasEmptyLineBreak;
+    return currentTokenLocation.startLine - lastTokenLocation.endLine;
 }
 
-bool Parser::hasPossibleReturnValue(const Token& returnKeyword)
+bool Parser::tokenIsOnNextLine()
 {
-    auto current = currentToken();
-    if (current.kind == TokenKind::CloseBracket)
-        return false;
+    return lineDistanceSinceLastToken() == 1;
+}
 
-    auto& returnTokenLocation = m_tokens.getSourceLocation(returnKeyword);
-    auto& currentTokenLocation = m_tokens.getSourceLocation(current);
-
-    auto isOnSameLine = returnTokenLocation.endLine == currentTokenLocation.endLine;
-    return isOnSameLine;
+bool Parser::hasEmptyLineSinceLastToken()
+{
+    return lineDistanceSinceLastToken() >= 2;
 }
 
 BinaryOperatornKind Parser::convertBinaryOperatorTokenKindToEnum(TokenKind kind) const

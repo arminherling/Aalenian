@@ -2,8 +2,10 @@ FunctionDefinitionStatement: {
     NameExpression: func
     ParametersNode(0): {
     }
-    BlockNode(1): {
+    BlockNode(2): {
         ReturnStatement: {
+        }
+        ExpressionStatement: {
             BinaryExpression: {
                 Left: {
                     NumberLiteral: 1

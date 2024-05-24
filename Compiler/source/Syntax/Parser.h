@@ -74,8 +74,9 @@ private:
     Token nextToken() { return peek(1); }
     void advanceCurrentIndex() { m_currentIndex++; }
 
-    bool hasLineBreakSinceLastMemberAccess();
-    bool hasPossibleReturnValue(const Token& returnKeyword);
+    i32 lineDistanceSinceLastToken();
+    bool tokenIsOnNextLine();
+    bool hasEmptyLineSinceLastToken();
 
     UnaryOperatornKind convertUnaryOperatorTokenKindToEnum(TokenKind kind) const;
     BinaryOperatornKind convertBinaryOperatorTokenKindToEnum(TokenKind kind) const;
