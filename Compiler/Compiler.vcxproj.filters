@@ -266,6 +266,9 @@
     <ClCompile Include="source\Semantic\TypedWhileStatement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Semantic\EnumDefinition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Compiler\DiagnosticsBag.h">
@@ -548,6 +551,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Semantic\TypedWhileStatement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Semantic\EnumDefinition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

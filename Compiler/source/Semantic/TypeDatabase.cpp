@@ -1,7 +1,8 @@
 #include "TypeDatabase.h"
 
 TypeDatabase::TypeDatabase()
-    : m_invalidType{ Type::Undefined().id(), QString("???") }
+    : m_invalidEnum{ Type::Undefined().id(), QString("???") }
+    , m_invalidType{ Type::Undefined().id(), QString("???") }
     , m_nextId{ 100 }
 {
     addBuiltinType(Type::Discard(), QString("_"));
@@ -14,10 +15,19 @@ TypeDatabase::TypeDatabase()
 Type TypeDatabase::getTypeByName(QStringView typeName) const noexcept
 {
     auto name = typeName.toString();
-    if (m_typeNames.contains(name))
-        return m_typeNames.at(name);
+    if (m_names.contains(name))
+        return m_names.at(name);
     else
         return Type::Undefined();
+}
+
+EnumDefinition& TypeDatabase::getEnumDefinition(Type type) noexcept
+{
+    auto id = type.id();
+    if (m_enumDefinitions.contains(id))
+        return m_enumDefinitions.at(id);
+    else
+        return m_invalidEnum;
 }
 
 TypeDefinition& TypeDatabase::getTypeDefinition(Type type) noexcept
@@ -29,10 +39,18 @@ TypeDefinition& TypeDatabase::getTypeDefinition(Type type) noexcept
         return m_invalidType;
 }
 
+Type TypeDatabase::createEnum(QStringView name) noexcept
+{
+    auto enumName = name.toString();
+    m_names.emplace(enumName, Type{ m_nextId, TypeKind::Enum });
+    m_enumDefinitions.emplace(m_nextId, EnumDefinition{ m_nextId, enumName });
+    return Type{ m_nextId++, TypeKind::Enum };
+}
+
 Type TypeDatabase::createType(QStringView name, TypeKind kind) noexcept
 {
     auto typeName = name.toString();
-    m_typeNames.emplace(typeName, Type{ m_nextId, kind });
+    m_names.emplace(typeName, Type{ m_nextId, kind });
     m_typeDefinitions.emplace(m_nextId, TypeDefinition{ m_nextId, typeName });
     return Type{ m_nextId++, kind };
 }
@@ -69,6 +87,6 @@ void TypeDatabase::addBuiltinTypesWithVariation(Type type, const QString& name) 
 
 void TypeDatabase::addBuiltinType(Type type, const QString& name) noexcept
 {
-    m_typeNames.emplace(name, type);
+    m_names.emplace(name, type);
     m_typeDefinitions.emplace(type.id(), TypeDefinition{ type.id(), name });
 }

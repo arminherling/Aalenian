@@ -197,7 +197,7 @@ TypedStatement* TypeChecker::typeCheckEnumDefinitionStatement(EnumDefinitionStat
     auto& nameToken = statement->name();
     auto enumName = m_parseTree.tokens().getLexeme(nameToken);
     // TODO check if there is already a type with the name
-    auto newType = m_typeDatabase.createType(enumName, TypeKind::Enum);
+    auto newType = m_typeDatabase.createEnum(enumName);
     auto enumFields = typeCheckEnumFieldDefinitionNodes(newType, baseType, statement->fieldDefinitions());
 
     currentScope()->addTypeBinding(enumName, newType);
@@ -211,7 +211,7 @@ TypedStatement* TypeChecker::typeCheckTypeDefinitionStatement(TypeDefinitionStat
     // TODO check if there is already a type with the name
     auto newType = m_typeDatabase.createType(typeName, TypeKind::Type);
     auto typeFields = typeCheckTypeFieldDefinitionNodes(newType, statement->body());
-    // TODO typecheck methods
+    //auto typedMethods = typeCheckTypeMethodDefinitionNodes(newType, statement->body());
 
     currentScope()->addTypeBinding(typeName, newType);
     return new TypedTypeDefinitionStatement(typeName, newType, typeFields, statement);
@@ -285,7 +285,7 @@ QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNodes(
     Type baseType,
     const QList<EnumFieldDefinitionStatement*>& fieldDefinitions)
 {
-    auto& enumTypeDefinition = m_typeDatabase.getTypeDefinition(newType);
+    auto& enumDefinition = m_typeDatabase.getEnumDefinition(newType);
 
     QList<TypedFieldDefinitionNode*> enumFields;
     int nextValue = 0;
@@ -305,7 +305,7 @@ QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNodes(
             {
                 nextValue = value + 1;
                 enumFields.append(new TypedFieldDefinitionNode(name, baseType, typedLiteral));
-                enumTypeDefinition.addField(newType, name, typedLiteral);
+                enumDefinition.addField(newType, name, typedLiteral);
             }
         }
         else
@@ -314,7 +314,7 @@ QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckEnumFieldDefinitionNodes(
             if (typedLiteral != nullptr)
             {
                 enumFields.append(new TypedFieldDefinitionNode(name, baseType, typedLiteral));
-                enumTypeDefinition.addField(newType, name, typedLiteral);
+                enumDefinition.addField(newType, name, typedLiteral);
             }
         }
     }
@@ -451,18 +451,18 @@ TypedExpression* TypeChecker::typeCheckBinaryExpressionExpression(BinaryExpressi
             auto scopeNameExpression = (NameExpression*)leftExpression;
             auto scopeName = m_parseTree.tokens().getLexeme(scopeNameExpression->identifier());
             auto scopeType = m_typeDatabase.getTypeByName(scopeName);
-            auto& scopeTypeDefinition = m_typeDatabase.getTypeDefinition(scopeType);
 
             switch (scopeType.kind())
             {
                 case TypeKind::Enum:
                 {
+                    auto& scopeEnumDefinition = m_typeDatabase.getEnumDefinition(scopeType);
                     auto rightExpression = binaryExpression->rightExpression();
                     //TODO allow/disallow other expressions
                     assert(rightExpression->kind() == NodeKind::NameExpression);
                     auto fieldNameExpression = (NameExpression*)rightExpression;
                     auto fieldName = m_parseTree.tokens().getLexeme(fieldNameExpression->identifier());
-                    auto enumField = scopeTypeDefinition.getFieldByName(fieldName);
+                    auto enumField = scopeEnumDefinition.getFieldByName(fieldName);
                     return new TypedEnumFieldAccessExpression(scopeType, enumField, binaryExpression);
                 }
             }

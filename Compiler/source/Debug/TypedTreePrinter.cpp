@@ -569,14 +569,14 @@ QString TypedTreePrinter::PrettyPrintType(Type type) noexcept
         for (const auto& parameter: parameters)
         {
             stringifiedParameterTypes.append(
-                m_typeDatabase.getTypeDefinition(parameter->type()).name());
+                PrettyPrintTypeName(parameter->type()));
         }
 
         auto returnType = definition.returnType();
         QString returnTypeName;
         if (returnType != Type::Void())
         {
-            returnTypeName = m_typeDatabase.getTypeDefinition(returnType).name();
+            returnTypeName = PrettyPrintTypeName(returnType);
         }
 
         return QString("Type: (%1)->(%2)")
@@ -585,5 +585,21 @@ QString TypedTreePrinter::PrettyPrintType(Type type) noexcept
                 returnTypeName);
     }
 
-    return QString("Type: %1").arg(definition.name());
+    return QString("Type: %1").arg(PrettyPrintTypeName(type));
+}
+
+QString TypedTreePrinter::PrettyPrintTypeName(Type type) noexcept
+{
+    if (type.kind() == TypeKind::Type || type.kind() == TypeKind::Builtin)
+    {
+        auto& typeDefinition = m_typeDatabase.getTypeDefinition(type);
+        return typeDefinition.name();
+    }
+    else if (type.kind() == TypeKind::Enum)
+    {
+        auto& enumDefinition = m_typeDatabase.getEnumDefinition(type);
+        return enumDefinition.name();
+    }
+
+    return QString("???");
 }

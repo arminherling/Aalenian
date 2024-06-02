@@ -103,6 +103,7 @@
   <ItemGroup>
     <ClCompile Include="source\Semantic\BoolValue.cpp" />
     <ClCompile Include="source\Semantic\Discard.cpp" />
+    <ClCompile Include="source\Semantic\EnumDefinition.cpp" />
     <ClCompile Include="source\Semantic\Field.cpp" />
     <ClCompile Include="source\Semantic\I32Value.cpp" />
     <ClCompile Include="source\Semantic\Parameter.cpp" />
@@ -187,6 +188,7 @@
     <ClCompile Include="source\Semantic\Type.cpp" />
     <ClInclude Include="source\Semantic\BoolValue.h" />
     <ClInclude Include="source\Semantic\Discard.h" />
+    <ClInclude Include="source\Semantic\EnumDefinition.h" />
     <ClInclude Include="source\Semantic\Field.h" />
     <ClInclude Include="source\Semantic\I32Value.h" />
     <ClInclude Include="source\Semantic\Parameter.h" />
