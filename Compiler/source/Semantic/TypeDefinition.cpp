@@ -3,7 +3,6 @@
 TypeDefinition::TypeDefinition(i32 id, const QString& name)
     : m_id{ id }
     , m_name{ name }
-    , m_returnType{ Type::Undefined() }
 {
 }
 
@@ -15,16 +14,6 @@ void TypeDefinition::addField(Type type, QStringView name, TypedExpression* expr
 void TypeDefinition::addFunction(Type type, QStringView name) noexcept
 {
     // TODO
-}
-
-void TypeDefinition::setParameters(const QList<Parameter*>& parameters)
-{
-    m_parameters = parameters;
-}
-
-void TypeDefinition::setReturnType(Type returnType)
-{
-    m_returnType = returnType;
 }
 
 Field* TypeDefinition::getFieldByName(QStringView fieldName) const noexcept
