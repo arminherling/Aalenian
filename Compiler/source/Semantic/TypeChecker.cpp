@@ -226,15 +226,15 @@ TypedStatement* TypeChecker::typeCheckFunctionDefinitionStatement(FunctionDefini
     auto functionName = m_parseTree.tokens().getLexeme(nameToken);
     // TODO create scopes for functions, instead of just passing a type
     // TODO check if function with same name and parameters exists already
-    auto newFunctionType = m_typeDatabase.createFunction(Type::Undefined(), functionName, TypeKind::Function);
+    auto newFunctionType = m_typeDatabase.createFunction(functionName);
     parentScope->addFunctionBinding(functionName, newFunctionType);
-    auto& functionTypeDefinition = m_typeDatabase.getTypeDefinition(newFunctionType);
+    auto& functionDefinition = m_typeDatabase.getFunctionDefinition(newFunctionType);
 
     auto parameters = typeCheckFunctionParameters(statement->parameters());
-    functionTypeDefinition.setParameters(parameters);
+    functionDefinition.setParameters(parameters);
 
     auto [typedBody, returnType] = typeCheckFunctionBodyNode(statement->body());
-    functionTypeDefinition.setReturnType(returnType);
+    functionDefinition.setReturnType(returnType);
 
     popScope();
 
@@ -570,8 +570,8 @@ TypedExpression* TypeChecker::typeCheckFunctionCallExpression(FunctionCallExpres
     {
         auto arguments = typeCheckFunctionCallArguments(functionCallExpression->arguments());
 
-        auto& typeDefinition = m_typeDatabase.getTypeDefinition(functionType);
-        auto returnType = typeDefinition.returnType();
+        auto& functionDefinition = m_typeDatabase.getFunctionDefinition(functionType);
+        auto returnType = functionDefinition.returnType();
         return new TypedFunctionCallExpression(lexeme, functionType, arguments, functionCallExpression, returnType);
     }
 

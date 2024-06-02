@@ -3,6 +3,7 @@
 TypeDatabase::TypeDatabase()
     : m_invalidEnum{ Type::Undefined().id(), QString("???") }
     , m_invalidType{ Type::Undefined().id(), QString("???") }
+    , m_invalidFunction{ Type::Undefined().id(), QString("???") }
     , m_nextId{ 100 }
 {
     addBuiltinType(Type::Discard(), QString("_"));
@@ -39,6 +40,15 @@ TypeDefinition& TypeDatabase::getTypeDefinition(Type type) noexcept
         return m_invalidType;
 }
 
+FunctionDefinition& TypeDatabase::getFunctionDefinition(Type type) noexcept
+{
+    auto id = type.id();
+    if (m_functionDefinitions.contains(id))
+        return m_functionDefinitions.at(id);
+    else
+        return m_invalidFunction;
+}
+
 Type TypeDatabase::createEnum(QStringView name) noexcept
 {
     auto enumName = name.toString();
@@ -55,17 +65,12 @@ Type TypeDatabase::createType(QStringView name, TypeKind kind) noexcept
     return Type{ m_nextId++, kind };
 }
 
-Type TypeDatabase::createFunction(Type scope, QStringView name, TypeKind kind) noexcept
+Type TypeDatabase::createFunction(QStringView name) noexcept
 {
-    auto type = createType(name, kind);
-
-    if (scope != Type::Undefined())
-    {
-        auto& definition = getTypeDefinition(scope);
-        definition.addFunction(type, name);
-    }
-
-    return type;
+    auto functionName = name.toString();
+    m_names.emplace(functionName, Type{ m_nextId, TypeKind::Function });
+    m_functionDefinitions.emplace(m_nextId, FunctionDefinition{ m_nextId, functionName });
+    return Type{ m_nextId++, TypeKind::Function };
 }
 
 void TypeDatabase::addBuiltinTypesWithVariation(Type type, const QString& name) noexcept

@@ -561,9 +561,9 @@ void TypedTreePrinter::PrettyPrintTypedArgumentsNode()
 
 QString TypedTreePrinter::PrettyPrintType(Type type) noexcept
 {
-    auto& definition = m_typeDatabase.getTypeDefinition(type);
     if (type.kind() == TypeKind::Function)
     {
+        auto& definition = m_typeDatabase.getFunctionDefinition(type);
         auto parameters = definition.parameters();
         QStringList stringifiedParameterTypes;
         for (const auto& parameter: parameters)
