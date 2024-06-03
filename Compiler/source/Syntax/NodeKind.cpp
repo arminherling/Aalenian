@@ -69,14 +69,16 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("TypedAssignmentStatement");
         case NodeKind::TypedExpressionStatement:
             return QString("TypedExpressionStatement");
+        case NodeKind::TypedFunctionDefinitionStatement:
+            return QString("TypedFunctionDefinitionStatement");
         case NodeKind::TypedEnumDefinitionStatement:
             return QString("TypedEnumDefinitionStatement");
         case NodeKind::TypedFieldDefinitionNode:
             return QString("TypedFieldDefinitionNode");
         case NodeKind::TypedTypeDefinitionStatement:
             return QString("TypedTypeDefinitionStatement");
-        case NodeKind::TypedFunctionDefinitionStatement:
-            return QString("TypedFunctionDefinitionStatement");
+        case NodeKind::TypedMethodDefinitionStatement:
+            return QString("TypedMethodDefinitionStatement");
         case NodeKind::TypedIfStatement:
             return QString("TypedIfStatement");
         case NodeKind::TypedWhileStatement:

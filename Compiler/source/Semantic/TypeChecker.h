@@ -9,6 +9,7 @@
 #include <Semantic/TypeDatabase.h>
 #include <Semantic/TypedExpression.h>
 #include <Semantic/TypedFieldDefinitionNode.h>
+#include <Semantic/TypedMethodDefinitionStatement.h>
 #include <Semantic/TypedNode.h>
 #include <Semantic/TypedStatement.h>
 #include <Semantic/TypedTree.h>
@@ -20,6 +21,7 @@
 #include <Syntax/ExpressionStatement.h>
 #include <Syntax/FunctionCallExpression.h>
 #include <Syntax/FunctionDefinitionStatement.h>
+#include <Syntax/MethodDefinitionStatement.h>
 #include <Syntax/GroupingExpression.h>
 #include <Syntax/IfStatement.h>
 #include <Syntax/NameExpression.h>
@@ -52,6 +54,7 @@ private:
     [[nodiscard]] TypedStatement* typeCheckEnumDefinitionStatement(EnumDefinitionStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckTypeDefinitionStatement(TypeDefinitionStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckFunctionDefinitionStatement(FunctionDefinitionStatement* statement);
+    [[nodiscard]] TypedMethodDefinitionStatement* typeCheckTypeMethodDefinitionStatement(Type newRefType, Type newType, MethodDefinitionStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckIfStatement(IfStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckWhileStatement(WhileStatement* statement);
     [[nodiscard]] TypedStatement* typeCheckReturnStatement(ReturnStatement* statement);
@@ -60,6 +63,7 @@ private:
         Type baseType, 
         const QList<EnumFieldDefinitionStatement*>& fieldDefinitions);
     [[nodiscard]] QList<TypedFieldDefinitionNode*> typeCheckTypeFieldDefinitionNodes(Type newType, BlockNode* body);
+    [[nodiscard]] QList<TypedMethodDefinitionStatement*> typeCheckTypeMethodDefinitions(Type newRefType, Type newType, BlockNode* body);
     [[nodiscard]] QList<Parameter*> typeCheckFunctionParameters(ParametersNode* parametersNode);
     [[nodiscard]] std::tuple<QList<TypedStatement*>, Type> typeCheckFunctionBodyNode(BlockNode* body);
     [[nodiscard]] TypedExpression* typeCheckUnaryExpressionExpression(UnaryExpression* unaryExpression);

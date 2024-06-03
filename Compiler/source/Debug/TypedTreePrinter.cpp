@@ -223,8 +223,13 @@ void TypedTreePrinter::PrettyPrintTypedTypeDefinitionStatement(TypedTypeDefiniti
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 
-    stream() << Indentation() << QString("Methods(%1): {").arg(0) << NewLine();
+    auto methods = statement->methods();
+    stream() << Indentation() << QString("Methods(%1): {").arg(methods.count()) << NewLine();
     PushIndentation();
+    for (const auto& method : methods)
+    {
+        PrettyPrintTypedMethodDefinitionStatement(method);
+    }
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
 
@@ -238,6 +243,46 @@ void TypedTreePrinter::PrettyPrintTypedFunctionDefinitionStatement(TypedFunction
     PushIndentation();
 
     stream() << Indentation() << QString("TypeKind: function") << NewLine();
+    stream() << Indentation() << PrettyPrintType(statement->type()) << NewLine();
+    stream() << Indentation() << QString("Name: ") << statement->name() << NewLine();
+
+    auto& parameters = statement->parameters();
+    stream() << Indentation() << QString("Parameters(%1): {").arg(parameters.count()) << NewLine();
+    PushIndentation();
+    for (const auto parameter : parameters)
+    {
+        PrettyPrintParameter(parameter);
+    }
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    auto returnType = statement->returnType();
+    stream() << Indentation() << QString("ReturnType: {") << NewLine();
+    PushIndentation();
+    stream() << Indentation() << PrettyPrintType(returnType) << NewLine();
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    auto& body = statement->body();
+    stream() << Indentation() << QString("Body(%1): {").arg(body.count()) << NewLine();
+    PushIndentation();
+    for (const auto bodyStatement : body)
+    {
+        PrettyPrintNode(bodyStatement);
+    }
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void TypedTreePrinter::PrettyPrintTypedMethodDefinitionStatement(TypedMethodDefinitionStatement* statement)
+{
+    stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << QString("TypeKind: method") << NewLine();
     stream() << Indentation() << PrettyPrintType(statement->type()) << NewLine();
     stream() << Indentation() << QString("Name: ") << statement->name() << NewLine();
 

@@ -209,12 +209,18 @@ TypedStatement* TypeChecker::typeCheckTypeDefinitionStatement(TypeDefinitionStat
     auto& nameToken = statement->name();
     auto typeName = m_parseTree.tokens().getLexeme(nameToken);
     // TODO check if there is already a type with the name
+    // TODO create all type variations
+    auto refName = QString("ref ") + typeName.toString();
+    auto newRefType = m_typeDatabase.createType(refName, TypeKind::Type);
     auto newType = m_typeDatabase.createType(typeName, TypeKind::Type);
-    auto typeFields = typeCheckTypeFieldDefinitionNodes(newType, statement->body());
-    //auto typedMethods = typeCheckTypeMethodDefinitionNodes(newType, statement->body());
-
     currentScope()->addTypeBinding(typeName, newType);
-    return new TypedTypeDefinitionStatement(typeName, newType, typeFields, statement);
+
+    pushScope(ScopeKind::Type);
+    auto typeFields = typeCheckTypeFieldDefinitionNodes(newType, statement->body());
+    auto typedMethods = typeCheckTypeMethodDefinitions(newRefType, newType, statement->body());
+    popScope();
+
+    return new TypedTypeDefinitionStatement(typeName, newType, typeFields, typedMethods, statement);
 }
 
 TypedStatement* TypeChecker::typeCheckFunctionDefinitionStatement(FunctionDefinitionStatement* statement)
@@ -224,7 +230,6 @@ TypedStatement* TypeChecker::typeCheckFunctionDefinitionStatement(FunctionDefini
 
     auto& nameToken = statement->name();
     auto functionName = m_parseTree.tokens().getLexeme(nameToken);
-    // TODO create scopes for functions, instead of just passing a type
     // TODO check if function with same name and parameters exists already
     auto newFunctionType = m_typeDatabase.createFunction(functionName);
     parentScope->addFunctionBinding(functionName, newFunctionType);
@@ -239,6 +244,31 @@ TypedStatement* TypeChecker::typeCheckFunctionDefinitionStatement(FunctionDefini
     popScope();
 
     return new TypedFunctionDefinitionStatement(functionName, newFunctionType, parameters, returnType, typedBody, statement);
+}
+
+TypedMethodDefinitionStatement* TypeChecker::typeCheckTypeMethodDefinitionStatement(Type newRefType, Type newType, MethodDefinitionStatement* statement)
+{
+    auto parentScope = currentScope();
+    pushScope(ScopeKind::Method);
+
+    auto& nameToken = statement->name();
+    auto methodName = m_parseTree.tokens().getLexeme(nameToken);
+    // TODO check if method with same name and parameters exists already
+    auto newMethodType = m_typeDatabase.createFunction(methodName);
+    parentScope->addFunctionBinding(methodName, newMethodType);
+    auto& methodDefinition = m_typeDatabase.getFunctionDefinition(newMethodType);
+
+    auto selfParameter = new Parameter(QStringView(), nullptr, newRefType);
+    auto parameters = typeCheckFunctionParameters(statement->parameters());
+    parameters.prepend(selfParameter);
+    methodDefinition.setParameters(parameters);
+
+    auto [typedBody, returnType] = typeCheckFunctionBodyNode(statement->body());
+    methodDefinition.setReturnType(returnType);
+
+    popScope();
+
+    return new TypedMethodDefinitionStatement(methodName, newType, newMethodType, parameters, returnType, typedBody, statement);
 }
 
 TypedStatement* TypeChecker::typeCheckIfStatement(IfStatement* statement)
@@ -370,6 +400,19 @@ QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckTypeFieldDefinitionNodes(
     }
 
     return typeFields;
+}
+
+QList<TypedMethodDefinitionStatement*> TypeChecker::typeCheckTypeMethodDefinitions(Type newRefType, Type newType, BlockNode* body)
+{
+    QList<TypedMethodDefinitionStatement*> methods;
+    for (const auto statement : body->statements())
+    {
+        if (statement->kind() != NodeKind::MethodDefinitionStatement)
+            continue;
+
+        methods.append(typeCheckTypeMethodDefinitionStatement(newRefType, newType, (MethodDefinitionStatement*)statement));
+    }
+    return methods;
 }
 
 QList<Parameter*> TypeChecker::typeCheckFunctionParameters(ParametersNode* parametersNode)

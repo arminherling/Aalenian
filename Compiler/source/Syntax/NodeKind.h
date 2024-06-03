@@ -40,10 +40,11 @@ enum class COMPILER_API NodeKind
 
     TypedAssignmentStatement,
     TypedExpressionStatement,
+    TypedFunctionDefinitionStatement,
     TypedEnumDefinitionStatement,
     TypedFieldDefinitionNode,
     TypedTypeDefinitionStatement,
-    TypedFunctionDefinitionStatement,
+    TypedMethodDefinitionStatement,
     TypedIfStatement,
     TypedWhileStatement,
     TypedReturnStatement,
