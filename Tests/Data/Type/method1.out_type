@@ -11,7 +11,7 @@ TypedTypeDefinitionStatement: {
             Parameters(1): {
                 Parameter: {
                     Type: ref Zero
-                    Name: 
+                    Name: this
                 }
             }
             ReturnType: {

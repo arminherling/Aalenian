@@ -258,9 +258,9 @@ TypedMethodDefinitionStatement* TypeChecker::typeCheckTypeMethodDefinitionStatem
     parentScope->addFunctionBinding(methodName, newMethodType);
     auto& methodDefinition = m_typeDatabase.getFunctionDefinition(newMethodType);
 
-    auto selfParameter = new Parameter(QStringView(), nullptr, newRefType);
+    auto thisParameter = new Parameter(QStringView(u"this"), nullptr, newRefType);
     auto parameters = typeCheckFunctionParameters(statement->parameters());
-    parameters.prepend(selfParameter);
+    parameters.prepend(thisParameter);
     methodDefinition.setParameters(parameters);
 
     auto [typedBody, returnType] = typeCheckFunctionBodyNode(statement->body());
