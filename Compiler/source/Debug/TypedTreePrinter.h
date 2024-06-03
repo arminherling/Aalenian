@@ -11,7 +11,7 @@
 #include <Semantic/TypedBinaryExpression.h>
 #include <Semantic/TypedConstant.h>
 #include <Semantic/TypedEnumDefinitionStatement.h>
-#include <Semantic/TypedEnumFieldAccessExpression.h>
+#include <Semantic/TypedEnumValueAccessExpression.h>
 #include <Semantic/TypedExpressionStatement.h>
 #include <Semantic/TypedFieldAccessExpression.h>
 #include <Semantic/TypedFunctionCallExpression.h>
@@ -49,7 +49,7 @@ private:
     void PrettyPrintTypedReturnStatement(TypedReturnStatement* statement);
     void PrettyPrintTypedReferenceOfExpression(TypedReferenceOfExpression* expression);
     void PrettyPrintTypedNegationExpression(TypedNegationExpression* expression);
-    void PrettyPrintTypedEnumFieldAccessExpression(TypedEnumFieldAccessExpression* expression);
+    void PrettyPrintTypedEnumFieldAccessExpression(TypedEnumValueAccessExpression* expression);
     void PrettyPrintTypedFieldAccessExpression(TypedFieldAccessExpression* expression);
     void PrettyPrintTypedBinaryExpression(TypedBinaryExpression* expression);
     void PrettyPrintTypedConstant(TypedConstant* constant);

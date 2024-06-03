@@ -5,10 +5,10 @@
 #include <Semantic/TypedExpression.h>
 #include <Semantic/Field.h>
 
-class COMPILER_API TypedEnumFieldAccessExpression : public TypedExpression
+class COMPILER_API TypedEnumValueAccessExpression : public TypedExpression
 {
 public:
-    TypedEnumFieldAccessExpression(Type type, Field* field, Node* source);
+    TypedEnumValueAccessExpression(Type type, Field* field, Node* source);
 
     [[nodiscard]] Field* field() const noexcept { return m_field; }
     [[nodiscard]] QStringView fieldName() const noexcept { return m_field->name(); }

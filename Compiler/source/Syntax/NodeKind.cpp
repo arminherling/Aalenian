@@ -90,8 +90,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("TypedReferenceOfExpression");
         case NodeKind::TypedNegationExpression:
             return QString("TypedNegationExpression");
-        case NodeKind::TypedEnumFieldAccessExpression:
-            return QString("TypedEnumFieldAccessExpression");
+        case NodeKind::TypedEnumValueAccessExpression:
+            return QString("TypedEnumValueAccessExpression");
         case NodeKind::TypedFieldAccessExpression:
             return QString("TypedFieldAccessExpression");
         case NodeKind::TypedAdditionExpression:

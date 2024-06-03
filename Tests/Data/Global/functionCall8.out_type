@@ -58,7 +58,7 @@ TypedFunctionDefinitionStatement: {
                     Type: void
                     Name: inner
                     Arguments(1): {
-                        TypedEnumFieldAccessExpression: {
+                        TypedEnumValueAccessExpression: {
                             Type: Values
                             Name: First
                             Expression: {

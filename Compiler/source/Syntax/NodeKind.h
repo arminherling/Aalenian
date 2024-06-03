@@ -51,7 +51,7 @@ enum class COMPILER_API NodeKind
 
     TypedReferenceOfExpression,
     TypedNegationExpression,
-    TypedEnumFieldAccessExpression,
+    TypedEnumValueAccessExpression,
     TypedFieldAccessExpression,
     TypedAdditionExpression,
     TypedSubtractionExpression,

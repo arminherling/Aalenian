@@ -7,7 +7,7 @@
 #include <Semantic/TypedBinaryExpression.h>
 #include <Semantic/TypedConstant.h>
 #include <Semantic/TypedEnumDefinitionStatement.h>
-#include <Semantic/TypedEnumFieldAccessExpression.h>
+#include <Semantic/TypedEnumValueAccessExpression.h>
 #include <Semantic/TypedExpressionStatement.h>
 #include <Semantic/TypedFieldAccessExpression.h>
 #include <Semantic/TypedFunctionCallExpression.h>
@@ -514,7 +514,7 @@ TypedExpression* TypeChecker::typeCheckBinaryExpressionExpression(BinaryExpressi
                     auto fieldNameExpression = (NameExpression*)rightExpression;
                     auto fieldName = m_parseTree.tokens().getLexeme(fieldNameExpression->identifier());
                     auto enumField = scopeEnumDefinition.getFieldByName(fieldName);
-                    return new TypedEnumFieldAccessExpression(scopeType, enumField, binaryExpression);
+                    return new TypedEnumValueAccessExpression(scopeType, enumField, binaryExpression);
                 }
             }
         }

@@ -34,7 +34,7 @@ TypedAssignmentStatement: {
         }
     }
     Right: {
-        TypedEnumFieldAccessExpression: {
+        TypedEnumValueAccessExpression: {
             Type: Values
             Name: Second
             Expression: {
