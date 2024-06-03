@@ -207,6 +207,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Type", "Type", "{0E8FF76D-7
 		Tests\Data\Type\method1.out_type = Tests\Data\Type\method1.out_type
 		Tests\Data\Type\method2.in = Tests\Data\Type\method2.in
 		Tests\Data\Type\method2.out_parse = Tests\Data\Type\method2.out_parse
+		Tests\Data\Type\method2.out_type = Tests\Data\Type\method2.out_type
 		Tests\Data\Type\method3.in = Tests\Data\Type\method3.in
 		Tests\Data\Type\method3.out_parse = Tests\Data\Type\method3.out_parse
 	EndProjectSection

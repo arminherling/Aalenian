@@ -85,6 +85,11 @@ void TypedTreePrinter::PrettyPrintNode(TypedNode* node)
             PrettyPrintTypedEnumFieldAccessExpression((TypedEnumFieldAccessExpression*)node);
             break;
         }
+        case NodeKind::TypedFieldAccessExpression:
+        {
+            PrettyPrintTypedFieldAccessExpression((TypedFieldAccessExpression*)node);
+            break;
+        }
         case NodeKind::TypedAdditionExpression:
         case NodeKind::TypedSubtractionExpression:
         case NodeKind::TypedMultiplicationExpression:
@@ -443,6 +448,19 @@ void TypedTreePrinter::PrettyPrintTypedEnumFieldAccessExpression(TypedEnumFieldA
     PrettyPrintNode(expression->field()->value());
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();
+
+    PopIndentation();
+    stream() << Indentation() << QString("}") << NewLine();
+}
+
+void TypedTreePrinter::PrettyPrintTypedFieldAccessExpression(TypedFieldAccessExpression* expression)
+{
+    stream() << Indentation() << StringifyNodeKind(expression->kind()) << QString(": {") << NewLine();
+    PushIndentation();
+
+    stream() << Indentation() << PrettyPrintType(expression->type()) << NewLine();
+    stream() << Indentation() << QString("Scope: ") << PrettyPrintTypeName(expression->scopeType()) << NewLine();
+    stream() << Indentation() << QString("Name: ") << expression->fieldName() << NewLine();
 
     PopIndentation();
     stream() << Indentation() << QString("}") << NewLine();

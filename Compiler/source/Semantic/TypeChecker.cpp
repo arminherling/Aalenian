@@ -9,6 +9,7 @@
 #include <Semantic/TypedEnumDefinitionStatement.h>
 #include <Semantic/TypedEnumFieldAccessExpression.h>
 #include <Semantic/TypedExpressionStatement.h>
+#include <Semantic/TypedFieldAccessExpression.h>
 #include <Semantic/TypedFunctionCallExpression.h>
 #include <Semantic/TypedFunctionDefinitionStatement.h>
 #include <Semantic/TypedIfStatement.h>
@@ -122,6 +123,10 @@ TypedExpression* TypeChecker::typeCheckExpression(Expression* expression)
         case NodeKind::GroupingExpression:
         {
             return typeCheckGroupingExpression((GroupingExpression*)expression);
+        }
+        case NodeKind::MemberAccessExpression:
+        {
+            return typeCheckMemberAccessExpression((MemberAccessExpression*)expression);
         }
         case NodeKind::DiscardLiteral:
         {
@@ -258,6 +263,9 @@ TypedMethodDefinitionStatement* TypeChecker::typeCheckTypeMethodDefinitionStatem
     parentScope->addFunctionBinding(methodName, newMethodType);
     auto& methodDefinition = m_typeDatabase.getFunctionDefinition(newMethodType);
 
+    // TODO this is wrong but works for now, change to ref type once we register fields and methods in all type variants
+    currentScope()->addTypeBinding(QStringView(u"this"), newType);
+    // TODO add method to type
     auto thisParameter = new Parameter(QStringView(u"this"), nullptr, newRefType);
     auto parameters = typeCheckFunctionParameters(statement->parameters());
     parameters.prepend(thisParameter);
@@ -391,12 +399,12 @@ QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckTypeFieldDefinitionNodes(
 
         if (type == Type::Undefined())
         {
-            // NOTE We might want to infer the types in the constructor in the future
+            // TODO Maybe we want to infer the types in the constructor in the future?
             TODO("error missing type for field!!");
         }
 
         typeFields.append(new TypedFieldDefinitionNode(name, type, expression));
-        typeDefinition.addField(newType, name, expression);
+        typeDefinition.addField(type, name, expression);
     }
 
     return typeFields;
@@ -561,6 +569,43 @@ TypedExpression* TypeChecker::typeCheckNameExpression(NameExpression* expression
 TypedExpression* TypeChecker::typeCheckGroupingExpression(GroupingExpression* expression)
 {
     return typeCheckExpression(expression->expression());
+}
+
+TypedExpression* TypeChecker::typeCheckMemberAccessExpression(MemberAccessExpression* expression)
+{
+    auto scopeType = currentScope()->tryGetTypeBinding(QStringView(u"this"));
+    auto& typeDefinition = m_typeDatabase.getTypeDefinition(scopeType);
+    auto innerExpression = expression->expression();
+
+    switch (innerExpression->kind())
+    {
+        // Field access
+        case NodeKind::NameExpression:
+        {
+            auto nameExpression = (NameExpression*)innerExpression;
+            auto& identifier = nameExpression->identifier();
+            auto name = m_parseTree.tokens().getLexeme(identifier);
+            auto field = typeDefinition.getFieldByName(name);
+
+            if (field == nullptr)
+            {
+                // TODO print diagnostic if the field wasnt defined before
+                return nullptr;
+            }
+
+            return new TypedFieldAccessExpression(scopeType, field, expression);
+        }
+        case NodeKind::FunctionCallExpression:
+        {
+            TODO("FunctionCallExpression");
+            return nullptr;
+        }
+        default:
+        {
+            TODO("Missing MemberAccessExpression kind");
+            return nullptr;
+        }
+    }
 }
 
 TypedExpression* TypeChecker::typeCheckDiscardLiteral(DiscardLiteral* literal)

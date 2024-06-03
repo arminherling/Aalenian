@@ -21,9 +21,10 @@
 #include <Syntax/ExpressionStatement.h>
 #include <Syntax/FunctionCallExpression.h>
 #include <Syntax/FunctionDefinitionStatement.h>
-#include <Syntax/MethodDefinitionStatement.h>
 #include <Syntax/GroupingExpression.h>
 #include <Syntax/IfStatement.h>
+#include <Syntax/MemberAccessExpression.h>
+#include <Syntax/MethodDefinitionStatement.h>
 #include <Syntax/NameExpression.h>
 #include <Syntax/NumberLiteral.h>
 #include <Syntax/ParseTree.h>
@@ -72,6 +73,7 @@ private:
     [[nodiscard]] QList<TypedExpression*> typeCheckFunctionCallArguments(ArgumentsNode* argumentsNode);
     [[nodiscard]] TypedExpression* typeCheckNameExpression(NameExpression* expression);
     [[nodiscard]] TypedExpression* typeCheckGroupingExpression(GroupingExpression* expression);
+    [[nodiscard]] TypedExpression* typeCheckMemberAccessExpression(MemberAccessExpression* expression);
     [[nodiscard]] TypedExpression* typeCheckDiscardLiteral(DiscardLiteral* literal);
     [[nodiscard]] TypedExpression* typeCheckBoolLiteral(BoolLiteral* literal);
     [[nodiscard]] TypedExpression* typeCheckNumberLiteral(NumberLiteral* literal);

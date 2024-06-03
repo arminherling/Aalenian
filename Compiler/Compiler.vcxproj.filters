@@ -275,6 +275,9 @@
     <ClCompile Include="source\Semantic\TypedMethodDefinitionStatement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Semantic\TypedFieldAccessExpression.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Compiler\DiagnosticsBag.h">
@@ -566,6 +569,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Semantic\TypedMethodDefinitionStatement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Semantic\TypedFieldAccessExpression.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
