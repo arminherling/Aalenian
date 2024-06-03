@@ -12,7 +12,7 @@
 #include <Syntax/EnumFieldDefinitionStatement.h>
 #include <Syntax/Error.h>
 #include <Syntax/ExpressionStatement.h>
-#include <Syntax/FieldDeclarationStatement.h>
+#include <Syntax/FieldDefinitionStatement.h>
 #include <Syntax/FunctionCallExpression.h>
 #include <Syntax/FunctionDefinitionStatement.h>
 #include <Syntax/GroupingExpression.h>
@@ -45,7 +45,7 @@ private:
     void PrettyPrintEnumDefinitionStatement(EnumDefinitionStatement* statement);
     void PrettyPrintEnumFieldDefinitionStatement(EnumFieldDefinitionStatement* statement);
     void PrettyPrintTypeDefinitionStatement(TypeDefinitionStatement* statement);
-    void PrettyPrintFieldDeclarationStatement(FieldDeclarationStatement* statement);
+    void PrettyPrintFieldDeclarationStatement(FieldDefinitionStatement* statement);
     void PrettyPrintMethodDefinitionStatement(MethodDefinitionStatement* statement);
     void PrettyPrintIfStatement(IfStatement* statement);
     void PrettyPrintWhileStatement(WhileStatement* statement);

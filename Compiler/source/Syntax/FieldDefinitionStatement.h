@@ -6,10 +6,10 @@
 #include <Syntax/TypeName.h>
 #include <Syntax/Expression.h>
 
-class COMPILER_API FieldDeclarationStatement : public Statement
+class COMPILER_API FieldDefinitionStatement : public Statement
 {
 public:
-    FieldDeclarationStatement(
+    FieldDefinitionStatement(
         NameExpression* name,
         const std::optional<Token>& colon,
         const std::optional<TypeName>& type,

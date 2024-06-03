@@ -20,7 +20,7 @@
 #include <Semantic/TypedVariable.h>
 #include <Semantic/TypedWhileStatement.h>
 #include <Semantic/U8Value.h>
-#include <Syntax/FieldDeclarationStatement.h>
+#include <Syntax/FieldDefinitionStatement.h>
 
 TypeChecker::TypeChecker(
     const ParseTree& parseTree,
@@ -367,10 +367,10 @@ QList<TypedFieldDefinitionNode*> TypeChecker::typeCheckTypeFieldDefinitionNodes(
 
     for (const auto statement : body->statements())
     {
-        if (statement->kind() != NodeKind::FieldDeclarationStatement)
+        if (statement->kind() != NodeKind::FieldDefinitionStatement)
             continue;
 
-        auto fieldDeclaration = (FieldDeclarationStatement*)statement;
+        auto fieldDeclaration = (FieldDefinitionStatement*)statement;
         auto& nameToken = fieldDeclaration->name()->identifier();
         auto name = m_parseTree.tokens().getLexeme(nameToken);
 

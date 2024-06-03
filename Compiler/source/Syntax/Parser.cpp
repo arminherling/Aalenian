@@ -4,7 +4,7 @@
 #include <Syntax/FunctionDefinitionStatement.h>
 #include <Syntax/EnumDefinitionStatement.h>
 #include <Syntax/TypeDefinitionStatement.h>
-#include <Syntax/FieldDeclarationStatement.h>
+#include <Syntax/FieldDefinitionStatement.h>
 #include <Syntax/MethodDefinitionStatement.h>
 #include <Syntax/IfStatement.h>
 #include <Syntax/WhileStatement.h>
@@ -305,7 +305,7 @@ Statement* Parser::parseFieldDeclarationStatement()
         expression = parseExpression();
     }
 
-    return new FieldDeclarationStatement(name, colon, type, equals, expression);
+    return new FieldDefinitionStatement(name, colon, type, equals, expression);
 }
 
 Statement* Parser::parseMethodDefinitionStatement()

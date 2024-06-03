@@ -14,7 +14,7 @@ enum class COMPILER_API NodeKind
     EnumDefinitionStatement,
     EnumFieldDefinitionStatement,
     TypeDefinitionStatement,
-    FieldDeclarationStatement,
+    FieldDefinitionStatement,
     MethodDefinitionStatement,
     IfStatement,
     WhileStatement,
