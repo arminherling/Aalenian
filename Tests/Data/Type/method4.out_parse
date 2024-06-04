@@ -1,0 +1,55 @@
+TypeDefinitionStatement: {
+    NameExpression: Two
+    BlockNode(3): {
+        FieldDeclarationStatement: {
+            Field: {
+                NameExpression: one
+            }
+            Value: {
+                NumberLiteral: 1
+            }
+        }
+        MethodDefinitionStatement: {
+            NameExpression: value
+            ParametersNode(0): {
+            }
+            BlockNode(1): {
+                ReturnStatement: {
+                    BinaryExpression: {
+                        Left: {
+                            MemberAccessExpression: {
+                                FunctionCallExpression: {
+                                    NameExpression: one
+                                    ArgumentsNode(0): {
+                                    }
+                                }
+                            }
+                        }
+                        Operation: Addition
+                        Right: {
+                            MemberAccessExpression: {
+                                FunctionCallExpression: {
+                                    NameExpression: one
+                                    ArgumentsNode(0): {
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        MethodDefinitionStatement: {
+            NameExpression: one
+            ParametersNode(0): {
+            }
+            BlockNode(1): {
+                ReturnStatement: {
+                    MemberAccessExpression: {
+                        NameExpression: one
+                    }
+                }
+            }
+        }
+    }
+}
