@@ -1,7 +1,7 @@
 #include "TypeDefinition.h"
 
-TypeDefinition::TypeDefinition(i32 id, const QString& name)
-    : m_id{ id }
+TypeDefinition::TypeDefinition(Type type, const QString& name)
+    : m_type{ type }
     , m_name{ name }
 {
 }

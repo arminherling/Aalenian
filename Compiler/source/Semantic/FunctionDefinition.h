@@ -13,7 +13,6 @@ public:
     FunctionDefinition(Type type, const QString& name);
 
     [[nodiscard]] Type type() const noexcept { return m_type; }
-    [[nodiscard]] i32 id() const noexcept { return m_type.id(); }
     [[nodiscard]] QString name() const noexcept { return m_name; }
     [[nodiscard]] QList<Parameter*> parameters() const noexcept { return m_parameters; }
     [[nodiscard]] Type returnType() const noexcept { return m_returnType; }

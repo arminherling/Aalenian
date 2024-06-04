@@ -12,9 +12,9 @@
 class TypeDefinition
 {
 public:
-    TypeDefinition(i32 id, const QString& name);
+    TypeDefinition(Type type, const QString& name);
 
-    [[nodiscard]] i32 id() const noexcept { return m_id; }
+    [[nodiscard]] Type type() const noexcept { return m_type; }
     [[nodiscard]] QString name() const noexcept { return m_name; }
     [[nodiscard]] Field* getFieldByName(QStringView fieldName) const noexcept;
     [[nodiscard]] FunctionDefinition& getFunctionDefinition(Type type) noexcept;
@@ -24,7 +24,7 @@ public:
     void addFunction(Type type, QStringView name) noexcept;
 
 private:
-    i32 m_id;
+    Type m_type;
     QString m_name;
     std::unordered_map<QString, Field*> m_fields;
     std::unordered_map<QString, Type> m_functionNames;

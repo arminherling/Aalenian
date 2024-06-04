@@ -1,7 +1,7 @@
 #include "EnumDefinition.h"
 
-EnumDefinition::EnumDefinition(i32 id, const QString& name)
-    : m_id{ id }
+EnumDefinition::EnumDefinition(Type type, const QString& name)
+    : m_type{ type }
     , m_name{ name }
 {
 }

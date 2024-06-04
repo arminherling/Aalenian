@@ -21,7 +21,7 @@ Type TypeDatabase::getTypeByName(QStringView typeName) const noexcept
 
 EnumDefinition& TypeDatabase::getEnumDefinition(Type type) noexcept
 {
-    static auto invalidEnum = EnumDefinition{ Type::Undefined().id(), QString("???") };
+    static auto invalidEnum = EnumDefinition{ Type::Undefined(), QString("???") };
 
     auto id = type.id();
     if (m_enumDefinitions.contains(id))
@@ -32,7 +32,7 @@ EnumDefinition& TypeDatabase::getEnumDefinition(Type type) noexcept
 
 TypeDefinition& TypeDatabase::getTypeDefinition(Type type) noexcept
 {
-    static auto invalidType = TypeDefinition{ Type::Undefined().id(), QString("???") };
+    static auto invalidType = TypeDefinition{ Type::Undefined(), QString("???") };
 
     auto id = type.id();
     if (m_typeDefinitions.contains(id))
@@ -55,25 +55,25 @@ FunctionDefinition& TypeDatabase::getFunctionDefinition(Type type) noexcept
 Type TypeDatabase::createEnum(QStringView name) noexcept
 {
     auto enumName = name.toString();
-    m_names.emplace(enumName, Type{ m_nextId, TypeKind::Enum });
-    m_enumDefinitions.emplace(m_nextId, EnumDefinition{ m_nextId, enumName });
-    return Type{ m_nextId++, TypeKind::Enum };
+    auto enumType = Type{ m_nextId++, TypeKind::Enum };
+    m_enumDefinitions.emplace(enumType.id(), EnumDefinition{enumType, enumName});
+    return enumType;
 }
 
 Type TypeDatabase::createType(QStringView name, TypeKind kind) noexcept
 {
     auto typeName = name.toString();
-    m_names.emplace(typeName, Type{ m_nextId, kind });
-    m_typeDefinitions.emplace(m_nextId, TypeDefinition{ m_nextId, typeName });
-    return Type{ m_nextId++, kind };
+    auto type = Type{ m_nextId++, kind };
+    m_names.emplace(typeName, type);
+    m_typeDefinitions.emplace(type.id(), TypeDefinition{type, typeName});
+    return type;
 }
 
 Type TypeDatabase::createFunction(QStringView name) noexcept
 {
     auto functionName = name.toString();
     auto functionType = Type{ m_nextId++, TypeKind::Function };
-    m_names.emplace(functionName, functionType);
-    m_functionDefinitions.emplace(m_nextId, FunctionDefinition{ functionType, functionName });
+    m_functionDefinitions.emplace(functionType.id(), FunctionDefinition{functionType, functionName});
     return functionType;
 }
 
@@ -97,5 +97,5 @@ void TypeDatabase::addBuiltinTypesWithVariation(Type type, const QString& name) 
 void TypeDatabase::addBuiltinType(Type type, const QString& name) noexcept
 {
     m_names.emplace(name, type);
-    m_typeDefinitions.emplace(type.id(), TypeDefinition{ type.id(), name });
+    m_typeDefinitions.emplace(type.id(), TypeDefinition{ type, name });
 }
