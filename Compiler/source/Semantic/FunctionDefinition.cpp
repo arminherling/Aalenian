@@ -1,7 +1,7 @@
 #include "FunctionDefinition.h"
 
-FunctionDefinition::FunctionDefinition(i32 id, const QString& name)
-    : m_id{ id }
+FunctionDefinition::FunctionDefinition(Type type, const QString& name)
+    : m_type{ type }
     , m_name{ name }
     , m_returnType{ Type::Undefined() }
 {

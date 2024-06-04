@@ -33,7 +33,7 @@ TypedTypeDefinitionStatement: {
                     Expression: {
                         TypedFieldAccessExpression: {
                             Type: i32
-                            Scope: One
+                            ThisType: One
                             Name: one
                         }
                     }

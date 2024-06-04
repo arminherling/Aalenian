@@ -10,9 +10,10 @@
 class FunctionDefinition
 {
 public:
-    FunctionDefinition(i32 id, const QString& name);
+    FunctionDefinition(Type type, const QString& name);
 
-    [[nodiscard]] i32 id() const noexcept { return m_id; }
+    [[nodiscard]] Type type() const noexcept { return m_type; }
+    [[nodiscard]] i32 id() const noexcept { return m_type.id(); }
     [[nodiscard]] QString name() const noexcept { return m_name; }
     [[nodiscard]] QList<Parameter*> parameters() const noexcept { return m_parameters; }
     [[nodiscard]] Type returnType() const noexcept { return m_returnType; }
@@ -21,7 +22,7 @@ public:
     void setReturnType(Type returnType);
 
 private:
-    i32 m_id;
+    Type m_type;
     QString m_name;
     QList<Parameter*> m_parameters;
     Type m_returnType;

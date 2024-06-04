@@ -5,8 +5,8 @@ TypedFunctionCallExpression::TypedFunctionCallExpression(
     Type functionType, 
     const QList<TypedExpression*>& arguments, 
     Node* source, 
-    Type type)
-    : TypedExpression(source, NodeKind::TypedFunctionCallExpression, type)
+    Type returnType)
+    : TypedExpression(source, NodeKind::TypedFunctionCallExpression, returnType)
     , m_name{ name }
     , m_functionType{ functionType }
     , m_arguments{ arguments }

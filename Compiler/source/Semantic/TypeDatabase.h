@@ -28,9 +28,6 @@ private:
     std::unordered_map<i32, EnumDefinition> m_enumDefinitions;
     std::unordered_map<i32, TypeDefinition> m_typeDefinitions;
     std::unordered_map<i32, FunctionDefinition> m_functionDefinitions;
-    EnumDefinition m_invalidEnum;
-    TypeDefinition m_invalidType;
-    FunctionDefinition m_invalidFunction;
     i32 m_nextId;
 
     void addBuiltinTypesWithVariation(Type type, const QString& name) noexcept;

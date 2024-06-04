@@ -104,6 +104,8 @@ QString StringifyNodeKind(NodeKind kind)
             return QString("TypedDivisionExpression");
         case NodeKind::TypedFunctionCallExpression:
             return QString("TypedFunctionCallExpression");
+        case NodeKind::TypedMethodCallExpression:
+            return QString("TypedMethodCallExpression");
 
         case NodeKind::TypedConstant:
             return QString("TypedConstant");

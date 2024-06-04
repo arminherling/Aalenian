@@ -17,6 +17,7 @@
 #include <Semantic/TypedFunctionCallExpression.h>
 #include <Semantic/TypedFunctionDefinitionStatement.h>
 #include <Semantic/TypedIfStatement.h>
+#include <Semantic/TypedMethodCallExpression.h>
 #include <Semantic/TypedMethodDefinitionStatement.h>
 #include <Semantic/TypedNegationExpression.h>
 #include <Semantic/TypedNode.h>
@@ -56,6 +57,7 @@ private:
     void PrettyPrintTypedVariable(TypedVariable* variable);
     void PrettyPrintParameter(Parameter* parameter);
     void PrettyPrintTypedFunctionCallExpression(TypedFunctionCallExpression* functionCall);
+    void PrettyPrintTypedMethodCallExpression(TypedMethodCallExpression* methodCall);
     void PrettyPrintDiscard(Discard* discard);
     void PrettyPrintBoolValue(BoolValue* value);
     void PrettyPrintU8Value(U8Value* value);
@@ -63,7 +65,7 @@ private:
 
     void PrettyPrintTypedFieldDefinitionNode(TypedFieldDefinitionNode* field);
     void PrettyPrintTypedArgumentsNode();
-    [[nodiscard]] QString PrettyPrintType(Type type) noexcept;
+    [[nodiscard]] QString PrettyPrintType(Type type, Type scope = Type::Undefined()) noexcept;
     [[nodiscard]] QString PrettyPrintTypeName(Type type) noexcept;
 
     TypedTree& m_typedTree;

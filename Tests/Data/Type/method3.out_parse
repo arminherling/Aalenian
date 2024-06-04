@@ -10,6 +10,18 @@ TypeDefinitionStatement: {
             }
         }
         MethodDefinitionStatement: {
+            NameExpression: one
+            ParametersNode(0): {
+            }
+            BlockNode(1): {
+                ReturnStatement: {
+                    MemberAccessExpression: {
+                        NameExpression: one
+                    }
+                }
+            }
+        }
+        MethodDefinitionStatement: {
             NameExpression: value
             ParametersNode(0): {
             }
@@ -35,18 +47,6 @@ TypeDefinitionStatement: {
                                 }
                             }
                         }
-                    }
-                }
-            }
-        }
-        MethodDefinitionStatement: {
-            NameExpression: one
-            ParametersNode(0): {
-            }
-            BlockNode(1): {
-                ReturnStatement: {
-                    MemberAccessExpression: {
-                        NameExpression: one
                     }
                 }
             }

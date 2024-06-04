@@ -11,6 +11,7 @@
 #include <Semantic/TypedExpressionStatement.h>
 #include <Semantic/TypedFieldAccessExpression.h>
 #include <Semantic/TypedFunctionCallExpression.h>
+#include <Semantic/TypedMethodCallExpression.h>
 #include <Semantic/TypedFunctionDefinitionStatement.h>
 #include <Semantic/TypedIfStatement.h>
 #include <Semantic/TypedNegationExpression.h>
@@ -261,7 +262,9 @@ TypedMethodDefinitionStatement* TypeChecker::typeCheckTypeMethodDefinitionStatem
     // TODO check if method with same name and parameters exists already
     auto newMethodType = m_typeDatabase.createFunction(methodName);
     parentScope->addFunctionBinding(methodName, newMethodType);
-    auto& methodDefinition = m_typeDatabase.getFunctionDefinition(newMethodType);
+    auto& typeDefinition = m_typeDatabase.getTypeDefinition(newType);
+    typeDefinition.addFunction(newMethodType, methodName);
+    auto& methodDefinition = typeDefinition.getFunctionDefinition(newMethodType);
 
     // TODO this is wrong but works for now, change to ref type once we register fields and methods in all type variants
     currentScope()->addTypeBinding(QStringView(u"this"), newType);
@@ -501,20 +504,20 @@ TypedExpression* TypeChecker::typeCheckBinaryExpressionExpression(BinaryExpressi
             assert(leftExpression->kind() == NodeKind::NameExpression);
             auto scopeNameExpression = (NameExpression*)leftExpression;
             auto scopeName = m_parseTree.tokens().getLexeme(scopeNameExpression->identifier());
-            auto scopeType = m_typeDatabase.getTypeByName(scopeName);
+            auto thisType = m_typeDatabase.getTypeByName(scopeName);
 
-            switch (scopeType.kind())
+            switch (thisType.kind())
             {
                 case TypeKind::Enum:
                 {
-                    auto& scopeEnumDefinition = m_typeDatabase.getEnumDefinition(scopeType);
+                    auto& scopeEnumDefinition = m_typeDatabase.getEnumDefinition(thisType);
                     auto rightExpression = binaryExpression->rightExpression();
                     //TODO allow/disallow other expressions
                     assert(rightExpression->kind() == NodeKind::NameExpression);
                     auto fieldNameExpression = (NameExpression*)rightExpression;
                     auto fieldName = m_parseTree.tokens().getLexeme(fieldNameExpression->identifier());
                     auto enumField = scopeEnumDefinition.getFieldByName(fieldName);
-                    return new TypedEnumValueAccessExpression(scopeType, enumField, binaryExpression);
+                    return new TypedEnumValueAccessExpression(thisType, enumField, binaryExpression);
                 }
             }
         }
@@ -573,8 +576,8 @@ TypedExpression* TypeChecker::typeCheckGroupingExpression(GroupingExpression* ex
 
 TypedExpression* TypeChecker::typeCheckMemberAccessExpression(MemberAccessExpression* expression)
 {
-    auto scopeType = currentScope()->tryGetTypeBinding(QStringView(u"this"));
-    auto& typeDefinition = m_typeDatabase.getTypeDefinition(scopeType);
+    auto thisType = currentScope()->tryGetTypeBinding(QStringView(u"this"));
+    auto& typeDefinition = m_typeDatabase.getTypeDefinition(thisType);
     auto innerExpression = expression->expression();
 
     switch (innerExpression->kind())
@@ -593,12 +596,19 @@ TypedExpression* TypeChecker::typeCheckMemberAccessExpression(MemberAccessExpres
                 return nullptr;
             }
 
-            return new TypedFieldAccessExpression(scopeType, field, expression);
+            return new TypedFieldAccessExpression(thisType, field, expression);
         }
         case NodeKind::FunctionCallExpression:
         {
-            TODO("FunctionCallExpression");
-            return nullptr;
+            auto functionCallExpression = (FunctionCallExpression*)innerExpression;
+            auto& identifier = functionCallExpression->name();
+            auto name = m_parseTree.tokens().getLexeme(identifier);
+            auto& functionDefinition = typeDefinition.getFunctionDefinitionByName(name);
+            auto functionType = functionDefinition.type();
+            auto arguments = typeCheckFunctionCallArguments(functionCallExpression->arguments());
+
+            auto returnType = functionDefinition.returnType();
+            return new TypedMethodCallExpression(name, thisType, functionType, arguments, functionCallExpression, returnType);
         }
         default:
         {

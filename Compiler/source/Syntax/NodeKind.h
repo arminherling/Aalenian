@@ -58,6 +58,7 @@ enum class COMPILER_API NodeKind
     TypedMultiplicationExpression,
     TypedDivisionExpression,
     TypedFunctionCallExpression,
+    TypedMethodCallExpression,
 
     TypedConstant,
     TypedVariable,

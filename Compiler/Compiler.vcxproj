@@ -121,6 +121,7 @@
     <ClCompile Include="source\Semantic\TypedFunctionCallExpression.cpp" />
     <ClCompile Include="source\Semantic\TypedFunctionDefinitionStatement.cpp" />
     <ClCompile Include="source\Semantic\TypedIfStatement.cpp" />
+    <ClCompile Include="source\Semantic\TypedMethodCallExpression.cpp" />
     <ClCompile Include="source\Semantic\TypedMethodDefinitionStatement.cpp" />
     <ClCompile Include="source\Semantic\TypedNegationExpression.cpp" />
     <ClCompile Include="source\Semantic\TypedReferenceOfExpression.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="source\Semantic\TypedFunctionCallExpression.h" />
     <ClInclude Include="source\Semantic\TypedFunctionDefinitionStatement.h" />
     <ClInclude Include="source\Semantic\TypedIfStatement.h" />
+    <ClInclude Include="source\Semantic\TypedMethodCallExpression.h" />
     <ClInclude Include="source\Semantic\TypedMethodDefinitionStatement.h" />
     <ClInclude Include="source\Semantic\TypedNegationExpression.h" />
     <ClInclude Include="source\Semantic\TypedReferenceOfExpression.h" />

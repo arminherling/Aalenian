@@ -8,13 +8,13 @@
 class COMPILER_API TypedFieldAccessExpression : public TypedExpression
 {
 public:
-    TypedFieldAccessExpression(Type scopeType, Field* field, Node* source);
+    TypedFieldAccessExpression(Type thisType, Field* field, Node* source);
 
     [[nodiscard]] Field* field() const noexcept { return m_field; }
     [[nodiscard]] QStringView fieldName() const noexcept { return m_field->name(); }
-    [[nodiscard]] Type scopeType() const noexcept { return m_scopeType; }
+    [[nodiscard]] Type thisType() const noexcept { return m_thisType; }
 
 private:
     Field* m_field;
-    Type m_scopeType;
+    Type m_thisType;
 };
