@@ -1,9 +1,5 @@
-variant V
+variant V : Vector1D | Vector2D | Vector3D
 {
-    d1:Vector1D
-    d2:Vector2D
-    d3:Vector3D
-
     define distance()
     {
         case Vector1D d
@@ -21,10 +17,8 @@ variant V
     }
 }
 
-extend variant V
+extend variant V : Vector4D
 {
-    Vector4D
-
     define distance()
     {
         case Vector4d d
