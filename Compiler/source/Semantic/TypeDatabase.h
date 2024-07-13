@@ -1,12 +1,15 @@
 #pragma once
 
 #include <Defines.h>
-#include <QHash>
-#include <QStringView>
+#include <Compiler/API.h>
 #include <Semantic/EnumDefinition.h>
 #include <Semantic/Type.h>
 #include <Semantic/TypeDefinition.h>
 #include <Semantic/FunctionDefinition.h>
+
+#include <QHash>
+#include <QStringView>
+
 #include <unordered_map>
 
 class COMPILER_API TypeDatabase

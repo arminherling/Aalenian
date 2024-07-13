@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Compiler/API.h>
 #include <Defines.h>
 #include <Semantic/Type.h>
 #include <Semantic/TypedExpression.h>

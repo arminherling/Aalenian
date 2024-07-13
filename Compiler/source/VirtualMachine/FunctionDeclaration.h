@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Defines.h>
+#include <Compiler/API.h>
 #include <VirtualMachine/Label.h>
 
 #include <QString>

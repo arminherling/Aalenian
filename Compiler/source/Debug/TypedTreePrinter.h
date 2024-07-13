@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Compiler/API.h>
 #include <Debug/BasePrinter.h>
 #include <Defines.h>
 #include <Semantic/BoolValue.h>
@@ -50,7 +51,7 @@ private:
     void PrettyPrintTypedReturnStatement(TypedReturnStatement* statement);
     void PrettyPrintTypedReferenceOfExpression(TypedReferenceOfExpression* expression);
     void PrettyPrintTypedNegationExpression(TypedNegationExpression* expression);
-    void PrettyPrintTypedEnumFieldAccessExpression(TypedEnumValueAccessExpression* expression);
+    void PrettyPrintTypedEnumValueAccessExpression(TypedEnumValueAccessExpression* expression);
     void PrettyPrintTypedFieldAccessExpression(TypedFieldAccessExpression* expression);
     void PrettyPrintTypedBinaryExpression(TypedBinaryExpression* expression);
     void PrettyPrintTypedConstant(TypedConstant* constant);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Defines.h>
+#include <Compiler/API.h>
 #include <Compiler/DiagnosticsBag.h>
 #include <Semantic/Parameter.h>
 #include <Semantic/Scope.h>

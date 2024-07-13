@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Defines.h>
+#include <Compiler/API.h>
 #include <Semantic/TypedNode.h>
 
 class COMPILER_API TypedExpression : public TypedNode

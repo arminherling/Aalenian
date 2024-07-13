@@ -1,10 +1,11 @@
 #pragma once
 
-#include <Defines.h>
+#include <Compiler/API.h>
 #include <Semantic/Type.h>
 #include <Semantic/TypedFieldDefinitionNode.h>
 #include <Semantic/TypedMethodDefinitionStatement.h>
 #include <Semantic/TypedStatement.h>
+
 #include <QList>
 
 class COMPILER_API TypedTypeDefinitionStatement : public TypedStatement

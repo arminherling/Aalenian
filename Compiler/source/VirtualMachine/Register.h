@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Defines.h>
+#include <Compiler/API.h>
 
 struct COMPILER_API Register
 {

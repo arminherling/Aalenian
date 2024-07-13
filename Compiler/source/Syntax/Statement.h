@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Defines.h>
+#include <Compiler/API.h>
 #include <Syntax/Node.h>
 
 class COMPILER_API Statement : public Node

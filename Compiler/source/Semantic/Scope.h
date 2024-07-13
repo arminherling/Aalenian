@@ -1,9 +1,11 @@
 #pragma once
 
-#include <Defines.h>
+#include <Compiler/API.h>
+#include <Semantic/Type.h>
+
 #include <QHash>
 #include <QString>
-#include <Semantic/Type.h>
+
 #include <unordered_map>
 
 enum class ScopeKind

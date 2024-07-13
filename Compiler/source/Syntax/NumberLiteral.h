@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Defines.h>
+#include <Compiler/API.h>
 #include <Syntax/Expression.h>
 #include <Syntax/Token.h>
 #include <Syntax/TypeName.h>

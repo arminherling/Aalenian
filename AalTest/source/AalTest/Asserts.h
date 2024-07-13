@@ -3,7 +3,9 @@
 #include <AalTest/API.h>
 #include <AalTest/Stringify.h>
 #include <AalTest/ValueMismatchTestException.h>
+
 #include <QString>
+
 #include <source_location>
 
 namespace AalTest 

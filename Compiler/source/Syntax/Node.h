@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Defines.h>
+#include <Compiler/API.h>
 #include <Syntax/NodeKind.h>
 
 class COMPILER_API Node

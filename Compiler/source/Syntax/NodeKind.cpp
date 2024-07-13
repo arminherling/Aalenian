@@ -1,4 +1,5 @@
 #include "NodeKind.h"
+#include <Defines.h>
 
 QString StringifyNodeKind(NodeKind kind)
 {

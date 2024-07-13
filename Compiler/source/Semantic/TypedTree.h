@@ -1,9 +1,10 @@
 #pragma once
 
-#include <Defines.h>
-#include <QList>
+#include <Compiler/API.h>
 #include <Semantic/TypedStatement.h>
 #include <Syntax/TokenBuffer.h>
+
+#include <QList>
 
 class COMPILER_API TypedTree
 {

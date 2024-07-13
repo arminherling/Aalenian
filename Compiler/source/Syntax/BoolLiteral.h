@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Defines.h>
+#include <Compiler/API.h>
 #include <Syntax/Expression.h>
 
 class COMPILER_API BoolLiteral : public Expression

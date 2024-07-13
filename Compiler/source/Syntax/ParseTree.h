@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Defines.h>
+#include <Compiler/API.h>
 #include <Syntax/TokenBuffer.h>
 #include <Syntax/Node.h>
 #include <Syntax/Statement.h>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Defines.h>
+#include <Compiler/API.h>
 #include <Syntax/BlockNode.h>
 #include <Syntax/EnumFieldDefinitionStatement.h>
 #include <Syntax/Statement.h>

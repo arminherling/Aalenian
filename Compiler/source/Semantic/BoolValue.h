@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Defines.h>
+#include <Compiler/API.h>
 #include <Semantic/TypedExpression.h>
 #include <Syntax/BoolLiteral.h>
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Defines.h>
+#include <Compiler/API.h>
 #include <VirtualMachine/ByteCode.h>
 #include <VirtualMachine/CallFrame.h>
 #include <VirtualMachine/Register.h>

@@ -1,6 +1,9 @@
 #pragma once
 
-#include <Defines.h>
+#include <Compiler/API.h>
+
+#include <QByteArray>
+#include <QString>
 
 class COMPILER_API File
 {

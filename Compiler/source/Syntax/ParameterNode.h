@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Compiler/API.h>
 #include <Syntax/NameExpression.h>
 #include <Syntax/Node.h>
 #include <Syntax/TypeName.h>

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Compiler/API.h>
 #include <Debug/BasePrinter.h>
 #include <Defines.h>
 #include <Syntax/ArgumentsNode.h>

@@ -1,9 +1,10 @@
 #pragma once
 
-#include <Defines.h>
+#include <Compiler/API.h>
 #include <VirtualMachine/ByteCode.h>
+#include <Defines.h>
 
-#include <qtextstream.h>
+#include <QTextStream>
 
 class COMPILER_API ByteCodeDisassembler
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Defines.h>
+#include <Compiler/API.h>
 #include <Syntax/Node.h>
 #include <Syntax/NodeKind.h>
 #include <Semantic/Type.h>

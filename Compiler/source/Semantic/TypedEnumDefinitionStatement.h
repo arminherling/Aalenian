@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Defines.h>
+#include <Compiler/API.h>
 #include <Semantic/Type.h>
 #include <Semantic/TypedStatement.h>
 #include <Semantic/TypedFieldDefinitionNode.h>

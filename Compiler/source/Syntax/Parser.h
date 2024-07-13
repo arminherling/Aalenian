@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Defines.h>
+#include <Compiler/API.h>
 #include <Compiler/DiagnosticsBag.h>
 #include <Syntax/ArgumentsNode.h>
 #include <Syntax/BinaryExpression.h>

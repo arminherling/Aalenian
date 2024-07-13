@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Compiler/API.h>
 #include <Defines.h>
 #include <QTextStream>
 #include <QString>
