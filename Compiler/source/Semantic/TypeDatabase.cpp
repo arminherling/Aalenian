@@ -56,6 +56,7 @@ Type TypeDatabase::createEnum(QStringView name) noexcept
 {
     auto enumName = name.toString();
     auto enumType = Type{ m_nextId++, TypeKind::Enum };
+    m_names.emplace(enumName, enumType);
     m_enumDefinitions.emplace(enumType.id(), EnumDefinition{enumType, enumName});
     return enumType;
 }
