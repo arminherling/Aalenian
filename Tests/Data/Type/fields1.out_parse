@@ -1,7 +1,7 @@
 TypeDefinitionStatement: {
     NameExpression: Vector3D
     BlockNode(3): {
-        FieldDeclarationStatement: {
+        FieldDefinitionStatement: {
             Field: {
                 NameExpression: x
             }
@@ -9,7 +9,7 @@ TypeDefinitionStatement: {
                 NumberLiteral: 0
             }
         }
-        FieldDeclarationStatement: {
+        FieldDefinitionStatement: {
             Field: {
                 NameExpression: y
             }
@@ -17,7 +17,7 @@ TypeDefinitionStatement: {
                 NumberLiteral: 0
             }
         }
-        FieldDeclarationStatement: {
+        FieldDefinitionStatement: {
             Field: {
                 NameExpression: z
             }

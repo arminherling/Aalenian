@@ -1,7 +1,7 @@
 TypeDefinitionStatement: {
     NameExpression: Vector2D
     BlockNode(2): {
-        FieldDeclarationStatement: {
+        FieldDefinitionStatement: {
             Field: {
                 NameExpression: x
             }
@@ -10,7 +10,7 @@ TypeDefinitionStatement: {
                 NumberLiteral: 0
             }
         }
-        FieldDeclarationStatement: {
+        FieldDefinitionStatement: {
             Field: {
                 NameExpression: y
             }

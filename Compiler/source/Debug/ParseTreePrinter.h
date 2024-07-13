@@ -45,7 +45,7 @@ private:
     void PrettyPrintEnumDefinitionStatement(EnumDefinitionStatement* statement);
     void PrettyPrintEnumFieldDefinitionStatement(EnumFieldDefinitionStatement* statement);
     void PrettyPrintTypeDefinitionStatement(TypeDefinitionStatement* statement);
-    void PrettyPrintFieldDeclarationStatement(FieldDefinitionStatement* statement);
+    void PrettyPrintFieldDefinitionStatement(FieldDefinitionStatement* statement);
     void PrettyPrintMethodDefinitionStatement(MethodDefinitionStatement* statement);
     void PrettyPrintIfStatement(IfStatement* statement);
     void PrettyPrintWhileStatement(WhileStatement* statement);

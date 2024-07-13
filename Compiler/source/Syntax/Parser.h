@@ -41,7 +41,7 @@ private:
     Statement* parseEnumDefinitionStatement();
     QList<EnumFieldDefinitionStatement*> parseEnumFieldDefinitions();
     Statement* parseTypeDefinitionStatement();
-    Statement* parseFieldDeclarationStatement();
+    Statement* parseFieldDefinitionStatement();
     Statement* parseMethodDefinitionStatement();
     Statement* parseIfStatement(StatementScope scope);
     Statement* parseWhileStatement(StatementScope scope);

@@ -1,7 +1,7 @@
 TypeDefinitionStatement: {
     NameExpression: One
     BlockNode(2): {
-        FieldDeclarationStatement: {
+        FieldDefinitionStatement: {
             Field: {
                 NameExpression: one
             }

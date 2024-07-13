@@ -141,7 +141,7 @@ QList<Statement*> Parser::parseStatements(StatementScope scope)
                         break;
                     }
 
-                    statements.append(parseFieldDeclarationStatement());
+                    statements.append(parseFieldDefinitionStatement());
                     break;
                 }
 
@@ -282,7 +282,7 @@ Statement* Parser::parseTypeDefinitionStatement()
     return new TypeDefinitionStatement(keyword, name, body);
 }
 
-Statement* Parser::parseFieldDeclarationStatement()
+Statement* Parser::parseFieldDefinitionStatement()
 {
     auto name = parseNameExpression();
     auto current = currentToken();

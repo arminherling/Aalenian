@@ -52,7 +52,7 @@ void ParseTreePrinter::PrettyPrintNode(Node* node)
         }
         case NodeKind::FieldDefinitionStatement:
         {
-            PrettyPrintFieldDeclarationStatement((FieldDefinitionStatement*)node);
+            PrettyPrintFieldDefinitionStatement((FieldDefinitionStatement*)node);
             break;
         }
         case NodeKind::MethodDefinitionStatement:
@@ -238,7 +238,7 @@ void ParseTreePrinter::PrettyPrintTypeDefinitionStatement(TypeDefinitionStatemen
     stream() << Indentation() << QString("}") << NewLine();
 }
 
-void ParseTreePrinter::PrettyPrintFieldDeclarationStatement(FieldDefinitionStatement* statement)
+void ParseTreePrinter::PrettyPrintFieldDefinitionStatement(FieldDefinitionStatement* statement)
 {
     stream() << Indentation() << StringifyNodeKind(statement->kind()) << QString(": {") << NewLine();
     PushIndentation();
