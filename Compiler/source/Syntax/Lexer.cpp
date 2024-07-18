@@ -2,7 +2,7 @@
 
 #include <unordered_map>
 
-[[nodiscard]] auto InitializeTokenSizes() noexcept
+[[nodiscard]] static auto InitializeTokenSizes() noexcept
 {
     return std::unordered_map<TokenKind, i32>{
         { TokenKind::Plus, 1 },
@@ -23,59 +23,59 @@
     };
 }
 
-[[nodiscard]] auto TokenSize(TokenKind kind) noexcept
+[[nodiscard]] static auto TokenSize(TokenKind kind) noexcept
 {
     static const auto tokenSizes = InitializeTokenSizes();
-    if (auto result = tokenSizes.find(kind); result != tokenSizes.end())
+    if (const auto result = tokenSizes.find(kind); result != tokenSizes.end())
         return result->second;
 
     return 1;
 }
 
-[[nodiscard]] auto PeekChar(const SourceTextSharedPtr& source, i32& currentIndex, i32 offset) noexcept
+[[nodiscard]] static auto PeekChar(const SourceTextSharedPtr& source, i32& currentIndex, i32 offset) noexcept
 {
-    auto charIndex = currentIndex + offset;
+    const auto charIndex = currentIndex + offset;
     if (charIndex >= source->text.length())
         return QChar('\0');
 
     return source->text[charIndex];
 };
 
-[[nodiscard]] auto IsNumberOrUnderscore(const QChar& c) noexcept
+[[nodiscard]] static auto IsNumberOrUnderscore(const QChar& c) noexcept
 {
     return c.isNumber() || c == QChar('_');
 }
 
-[[nodiscard]] auto IsLetterOrUnderscore(const QChar& c) noexcept
+[[nodiscard]] static auto IsLetterOrUnderscore(const QChar& c) noexcept
 {
     return c.isLetter() || c == QChar('_');
 }
 
-[[nodiscard]] auto IsLetterOrNumberOrUnderscore(const QChar& c) noexcept
+[[nodiscard]] static auto IsLetterOrNumberOrUnderscore(const QChar& c) noexcept
 {
     return c.isLetterOrNumber() || c == QChar('_');
 }
 
-[[nodiscard]] auto PeekCurrentChar(const SourceTextSharedPtr& source, i32& currentIndex) noexcept { return PeekChar(source, currentIndex, 0); };
-[[nodiscard]] auto PeekNextChar(const SourceTextSharedPtr& source, i32& currentIndex) noexcept { return PeekChar(source, currentIndex, 1); };
+[[nodiscard]] static auto PeekCurrentChar(const SourceTextSharedPtr& source, i32& currentIndex) noexcept { return PeekChar(source, currentIndex, 0); };
+[[nodiscard]] static auto PeekNextChar(const SourceTextSharedPtr& source, i32& currentIndex) noexcept { return PeekChar(source, currentIndex, 1); };
 
-auto AdvanceCurrentIndex(i32& currentIndex, i32& currentColumn) noexcept
+static auto AdvanceCurrentIndex(i32& currentIndex, i32& currentColumn) noexcept
 {
     currentIndex++;
     currentColumn++;
 };
 
-auto AdvanceCurrentIndexAndResetLine(i32& currentIndex, i32& currentLine, i32& currentColumn) noexcept
+static auto AdvanceCurrentIndexAndResetLine(i32& currentIndex, i32& currentLine, i32& currentColumn) noexcept
 {
     currentIndex++;
     currentLine++;
     currentColumn = 1;
 };
 
-auto AddTokenKindAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn, TokenKind tokenKind) noexcept
+static auto AddTokenKindAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn, TokenKind tokenKind) noexcept
 {
-    auto tokenSize = TokenSize(tokenKind);
-    auto locationIndex = tokenBuffer.addSourceLocation(
+    const auto tokenSize = TokenSize(tokenKind);
+    const auto locationIndex = tokenBuffer.addSourceLocation(
         {
             .source = source,
             .startIndex = currentIndex,
@@ -89,11 +89,11 @@ auto AddTokenKindAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr&
     return tokenBuffer.addToken({ .kind = tokenKind, .locationIndex = locationIndex });
 };
 
-[[nodiscard]] auto AddLexemeAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn, TokenKind tokenKind, i32 startIndex, i32 startColumn, i32 startLine) noexcept
+[[nodiscard]] static auto AddLexemeAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn, TokenKind tokenKind, i32 startIndex, i32 startColumn, i32 startLine) noexcept
 {
-    auto length = currentIndex - startIndex;
-    auto identifierIndex = tokenBuffer.addLexeme(QStringView(source->text).sliced(startIndex, length));
-    auto locationIndex = tokenBuffer.addSourceLocation(
+    const auto length = currentIndex - startIndex;
+    const auto identifierIndex = tokenBuffer.addLexeme(QStringView(source->text).sliced(startIndex, length));
+    const auto locationIndex = tokenBuffer.addSourceLocation(
         {
             .source = source,
             .startIndex = startIndex,
@@ -106,18 +106,18 @@ auto AddTokenKindAndAdvance(TokenBuffer& tokenBuffer, const SourceTextSharedPtr&
     return tokenBuffer.addToken({ .kind = tokenKind, .lexemeIndex = identifierIndex, .locationIndex = locationIndex });
 };
 
-auto IsRefKeyword(const QString& source, i32 currentIndex, i32 startIndex) noexcept
+static auto IsRefKeyword(const QString& source, i32 currentIndex, i32 startIndex) noexcept
 {
     static const auto refStringView = QStringView(u"ref");
-    auto length = currentIndex - startIndex;
+    const auto length = currentIndex - startIndex;
     return refStringView == QStringView(source).sliced(startIndex, length);
 }
 
-auto LexIdentifier(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn) noexcept
+static auto LexIdentifier(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn) noexcept
 {
-    auto startIndex = currentIndex;
-    auto startLine = currentLine;
-    auto startColumn = currentColumn;
+    const auto startIndex = currentIndex;
+    const auto startLine = currentLine;
+    const auto startColumn = currentColumn;
     while (IsLetterOrNumberOrUnderscore(PeekCurrentChar(source, currentIndex)))
         AdvanceCurrentIndex(currentIndex, currentColumn);
 
@@ -127,11 +127,11 @@ auto LexIdentifier(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, 
     return AddLexemeAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Identifier, startIndex, startColumn, startLine);
 };
 
-auto LexNumber(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn) noexcept
+static auto LexNumber(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn) noexcept
 {
-    auto startIndex = currentIndex;
-    auto startLine = currentLine;
-    auto startColumn = currentColumn;
+    const auto startIndex = currentIndex;
+    const auto startLine = currentLine;
+    const auto startColumn = currentColumn;
 
     auto current = PeekCurrentChar(source, currentIndex);
     while (current.isNumber() || (current == QChar('_') && PeekNextChar(source, currentIndex) != QChar('.')))
@@ -151,11 +151,11 @@ auto LexNumber(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& source, i32&
     return AddLexemeAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Number, startIndex, startColumn, startLine);
 };
 
-auto LexString(TokenBuffer& tokenBuffer, DiagnosticsBag& diagnostics, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn) noexcept
+static auto LexString(TokenBuffer& tokenBuffer, DiagnosticsBag& diagnostics, const SourceTextSharedPtr& source, i32& currentLine, i32& currentIndex, i32& currentColumn) noexcept
 {
-    auto startIndex = currentIndex;
-    auto startLine = currentLine;
-    auto startColumn = currentColumn;
+    const auto startIndex = currentIndex;
+    const auto startLine = currentLine;
+    const auto startColumn = currentColumn;
 
     // Consume opening quotation mark
     AdvanceCurrentIndex(currentIndex, currentColumn);
@@ -170,8 +170,8 @@ auto LexString(TokenBuffer& tokenBuffer, DiagnosticsBag& diagnostics, const Sour
     }
     else
     {
-        auto token = AddLexemeAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Error, startIndex, startColumn, startLine);
-        auto& location = tokenBuffer.getSourceLocation(token);
+        const auto token = AddLexemeAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Error, startIndex, startColumn, startLine);
+        const auto& location = tokenBuffer.getSourceLocation(token);
         diagnostics.AddError(DiagnosticKind::_0002_UnterminatedString, location);
         return token;
     }
@@ -304,7 +304,7 @@ auto LexString(TokenBuffer& tokenBuffer, DiagnosticsBag& diagnostics, const Sour
                     break;
                 }
 
-                auto token = AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Unknown);
+                const auto token = AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Unknown);
                 const auto& location = tokenBuffer.getSourceLocation(token);
                 diagnostics.AddError(DiagnosticKind::_0001_FoundIllegalCharacter, location);
                 break;

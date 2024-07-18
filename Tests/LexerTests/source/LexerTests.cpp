@@ -255,7 +255,7 @@ namespace
         };
     }
 
-    void OneMilLinesTime()
+    void OneMillionLinesTime()
     {
 #ifdef QT_DEBUG
         AalTest::Skip();// ("");
@@ -290,7 +290,7 @@ TestSuite LexerTestsSuite()
     suite.add(QString("UnterminatedStrings"), UnterminatedStrings, UnterminatedStrings_Data);
     suite.add(QString("Ref"), Ref);
     suite.add(QString("WholeInput"), WholeInput, WholeInput_Data);
-    suite.add(QString("OneMilLinesTime"), OneMilLinesTime);
+    suite.add(QString("OneMillionLinesTime"), OneMillionLinesTime);
 
     return suite;
 }
