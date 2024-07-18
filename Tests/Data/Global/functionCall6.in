@@ -1,8 +1,8 @@
-define inner(x: i32) 
+def inner(x: i32) 
 { 
 }
 
-define outer()
+def outer()
 {
     inner(5 + 5)
 }

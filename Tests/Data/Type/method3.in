@@ -2,12 +2,12 @@ type Two
 {
     one = 1
     
-    define one()
+    def one()
     {
         return .one
     }
 
-    define value()
+    def value()
     {
         return .one() + .one()
     }

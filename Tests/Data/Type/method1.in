@@ -1,6 +1,6 @@
 type Zero
 {
-    define value()
+    def value()
     {
         zero = 0
         return zero

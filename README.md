@@ -40,7 +40,7 @@ currentOS = OS::Windows
 The global scope can also contain functions, they can be used to initialize constants.
 
 ```rb
-define square(x: i32) 
+def square(x: i32) 
 { 
     return x * x 
 }
@@ -57,12 +57,12 @@ type Two
 {
     one = 1
     
-    define one()
+    def one()
     {
         return .one
     }
 
-    define value()
+    def value()
     {
         return .one() + .one()
     }
@@ -92,7 +92,7 @@ Variants, also known as sum types or tagged unions, are Aalenian's way to do pol
 ```rb
 variant V : Vector1D | Vector2D | Vector3D
 {
-    define distance()
+    def distance()
     {
         case Vector1D d
         {
@@ -111,7 +111,7 @@ variant V : Vector1D | Vector2D | Vector3D
 
 extend variant V : Vector4D
 {
-    define distance()
+    def distance()
     {
         case Vector4d d
         {

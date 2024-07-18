@@ -4,11 +4,11 @@ enum Values
     Second
 }
 
-define inner(x: Values) 
+def inner(x: Values) 
 { 
 }
 
-define outer()
+def outer()
 {
     inner(Values::First)
 }

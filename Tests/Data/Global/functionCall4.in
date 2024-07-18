@@ -1,8 +1,8 @@
-define inner(x: ref i32) 
+def inner(x: ref i32) 
 { 
 }
 
-define outer()
+def outer()
 {
     x = 20
     inner(ref x)

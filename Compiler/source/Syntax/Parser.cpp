@@ -17,7 +17,7 @@
 
 bool IsFunctionDefinitionKeyword(QStringView lexeme)
 {
-    return lexeme == QString("define");
+    return lexeme == QString("def");
 }
 
 bool IsEnumDefinitionKeyword(QStringView lexeme)

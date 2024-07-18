@@ -2,7 +2,7 @@ type One
 {
     one = 1
 
-    define value()
+    def value()
     {
         return .one
     }

@@ -1,4 +1,4 @@
-define square(x: i32) 
+def square(x: i32) 
 { 
     return x * x 
 }

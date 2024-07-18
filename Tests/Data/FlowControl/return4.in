@@ -1,4 +1,4 @@
-define func() 
+def func() 
 { 
     return
 
