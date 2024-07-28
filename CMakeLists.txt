@@ -8,11 +8,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 REQUIRED COMPONENTS Core)
 qt_standard_project_setup()
 
+include(CMake/AalTest.cmake)
+
 add_subdirectory(Compiler)
-add_subdirectory(AalTest)
 
 add_subdirectory(Tests/AllInOne)
-add_subdirectory(Tests/AalTestTests)
 add_subdirectory(Tests/LexerTests)
 add_subdirectory(Tests/ParserTests)
 add_subdirectory(Tests/TypeCheckerTests)

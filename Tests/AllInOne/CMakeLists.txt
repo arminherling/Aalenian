@@ -2,7 +2,6 @@ project(AllInOne)
 
 qt_add_executable(
     ${PROJECT_NAME} 
-    "${PROJECT_SOURCE_DIR}/../AalTestTests/source/AalTestTests.cpp"
     "${PROJECT_SOURCE_DIR}/../LexerTests/source/LexerTests.cpp"
     "${PROJECT_SOURCE_DIR}/../ParserTests/source/ParserTests.cpp"
     "${PROJECT_SOURCE_DIR}/../TypeCheckerTests/source/TypeCheckerTests.cpp"

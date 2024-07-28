@@ -1,5 +1,4 @@
 #include <AalTest.h>
-#include "../../AalTestTests/source/AalTestTests.h"
 #include "../../LexerTests/source/LexerTests.h"
 #include "../../ParserTests/source/ParserTests.h"
 #include "../../TypeCheckerTests/source/TypeCheckerTests.h"
@@ -10,8 +9,6 @@ int main()
 {
     TestRunner runner{};
     QList<TestSuite> testSuites{};
-    testSuites << AalTestTestsSuiteSimple();
-    testSuites << AalTestTestsSuiteParameterized();
     testSuites << LexerTestsSuite();
     testSuites << ParserTestsSuite();
     testSuites << TypeCheckerTestsSuite();
