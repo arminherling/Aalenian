@@ -69,14 +69,14 @@ namespace
 
         QList<std::tuple<QString, QString, QString, QString>> data{};
 
-        QDirIterator it(absolutePath, QStringList() << QString("*.in"), QDir::Filter::Files, QDirIterator::IteratorFlag::Subdirectories);
+        QDirIterator it(absolutePath, QStringList() << QString("*.aal"), QDir::Filter::Files, QDirIterator::IteratorFlag::Subdirectories);
         while (it.hasNext())
         {
             auto file = QFileInfo(it.next());
             auto directory = QDir(file.absolutePath());
             auto fullFilePathWithoutExtension = directory.filePath(file.baseName());
 
-            auto inPath = QDir::cleanPath(fullFilePathWithoutExtension + QString(".in"));
+            auto inPath = QDir::cleanPath(fullFilePathWithoutExtension + QString(".aal"));
             auto outPath = QDir::cleanPath(fullFilePathWithoutExtension + QString(".out_type"));
             auto errorPath = QDir::cleanPath(fullFilePathWithoutExtension + QString(".error_type"));
 
