@@ -9,6 +9,8 @@
 #include <iostream>
 #include <QDir>
 
+using namespace AalTest;
+
 namespace
 {
     void SingleCharacter(const QString& testName, const QString& input, TokenKind expectedKind)
@@ -24,7 +26,7 @@ namespace
         auto endTime = std::chrono::high_resolution_clock::now();
         std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
-        AalTest::AreEqual(token.kind, expectedKind);
+        AalTest::AreEqual(expectedKind, token.kind);
     }
 
     QList<std::tuple<QString, QString, TokenKind>> SingleCharacter_Data()
@@ -67,7 +69,7 @@ namespace
         auto endTime = std::chrono::high_resolution_clock::now();
         std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
-        AalTest::AreEqual(token.kind, TokenKind::EndOfFile);
+        AalTest::AreEqual(TokenKind::EndOfFile, token.kind);
     }
 
     QList<std::tuple<QString>> IgnoresWhitespaces_Data()
@@ -96,9 +98,9 @@ namespace
         auto endTime = std::chrono::high_resolution_clock::now();
         std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
-        AalTest::AreEqual(token.kind, TokenKind::Identifier);
+        AalTest::AreEqual(TokenKind::Identifier, token.kind);
         auto lexeme = tokens.getLexeme(token);
-        AalTest::AreEqual(lexeme, expectedLexeme);
+        AalTest::AreEqual(expectedLexeme, lexeme);
     }
 
     QList<std::tuple<QString, QString>> Identifiers_Data()
@@ -132,9 +134,9 @@ namespace
         auto endTime = std::chrono::high_resolution_clock::now();
         std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
-        AalTest::AreEqual(token.kind, TokenKind::Number);
+        AalTest::AreEqual(TokenKind::Number, token.kind);
         auto lexeme = tokens.getLexeme(token);
-        AalTest::AreEqual(lexeme, expectedLexeme);
+        AalTest::AreEqual(expectedLexeme, lexeme);
     }
 
     QList<std::tuple<QString, QString>> Numbers_Data()
@@ -165,9 +167,9 @@ namespace
         auto endTime = std::chrono::high_resolution_clock::now();
         std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
-        AalTest::AreEqual(token.kind, TokenKind::String);
+        AalTest::AreEqual(TokenKind::String, token.kind);
         auto lexeme = tokens.getLexeme(token);
-        AalTest::AreEqual(lexeme, expectedLexeme);
+        AalTest::AreEqual(expectedLexeme, lexeme);
     }
 
     QList<std::tuple<QString, QString>> Strings_Data()
@@ -195,9 +197,9 @@ namespace
         auto endTime = std::chrono::high_resolution_clock::now();
         std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
-        AalTest::AreEqual(token.kind, TokenKind::Error);
+        AalTest::AreEqual(TokenKind::Error, token.kind);
         auto lexeme = tokens.getLexeme(token);
-        AalTest::AreEqual(lexeme, expectedLexeme);
+        AalTest::AreEqual(expectedLexeme, lexeme);
     }
 
     QList<std::tuple<QString, QString>> UnterminatedStrings_Data()
@@ -223,7 +225,7 @@ namespace
         auto endTime = std::chrono::high_resolution_clock::now();
         std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
-        AalTest::AreEqual(token.kind, TokenKind::ReferenceOf);
+        AalTest::AreEqual(TokenKind::ReferenceOf, token.kind);
     }
 
     void WholeInput(QString input, i32 tokenCount)
@@ -239,7 +241,7 @@ namespace
         std::cout << "      Lex(): " << Stringify(endTime - startTime).toStdString() << std::endl;
 
         AalTest::IsTrue(diagnostics.Diagnostics().empty());
-        AalTest::AreEqual(tokens.size(), tokenCount);
+        AalTest::AreEqual(tokenCount, tokens.size());
     }
 
     QList<std::tuple<QString, i32>> WholeInput_Data()
@@ -279,9 +281,9 @@ namespace
     }
 }
 
-TestSuite LexerTestsSuite()
+AalTest::TestSuite LexerTestsSuite()
 {
-    TestSuite suite{};
+    AalTest::TestSuite suite{};
     suite.add(QString("SingleCharacter"), SingleCharacter, SingleCharacter_Data);
     suite.add(QString("IgnoresWhitespaces"), IgnoresWhitespaces, IgnoresWhitespaces_Data);
     suite.add(QString("Identifiers"), Identifiers, Identifiers_Data);

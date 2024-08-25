@@ -36,24 +36,24 @@
 {
     const auto charIndex = currentIndex + offset;
     if (charIndex >= source->text.length())
-        return QChar('\0');
+        return QChar(u'\0');
 
     return source->text[charIndex];
 };
 
 [[nodiscard]] static auto IsNumberOrUnderscore(const QChar& c) noexcept
 {
-    return c.isNumber() || c == QChar('_');
+    return c.isNumber() || c == QChar(u'_');
 }
 
 [[nodiscard]] static auto IsLetterOrUnderscore(const QChar& c) noexcept
 {
-    return c.isLetter() || c == QChar('_');
+    return c.isLetter() || c == QChar(u'_');
 }
 
 [[nodiscard]] static auto IsLetterOrNumberOrUnderscore(const QChar& c) noexcept
 {
-    return c.isLetterOrNumber() || c == QChar('_');
+    return c.isLetterOrNumber() || c == QChar(u'_');
 }
 
 [[nodiscard]] static auto PeekCurrentChar(const SourceTextSharedPtr& source, i32& currentIndex) noexcept { return PeekChar(source, currentIndex, 0); };
@@ -134,13 +134,13 @@ static auto LexNumber(TokenBuffer& tokenBuffer, const SourceTextSharedPtr& sourc
     const auto startColumn = currentColumn;
 
     auto current = PeekCurrentChar(source, currentIndex);
-    while (current.isNumber() || (current == QChar('_') && PeekNextChar(source, currentIndex) != QChar('.')))
+    while (current.isNumber() || (current == QChar(u'_') && PeekNextChar(source, currentIndex) != QChar(u'.')))
     {
         AdvanceCurrentIndex(currentIndex, currentColumn);
         current = PeekCurrentChar(source, currentIndex);
     }
 
-    if (current == QChar('.') && PeekNextChar(source, currentIndex).isNumber())
+    if (current == QChar(u'.') && PeekNextChar(source, currentIndex).isNumber())
     {
         AdvanceCurrentIndex(currentIndex, currentColumn);
 
@@ -159,10 +159,10 @@ static auto LexString(TokenBuffer& tokenBuffer, DiagnosticsBag& diagnostics, con
 
     // Consume opening quotation mark
     AdvanceCurrentIndex(currentIndex, currentColumn);
-    while (PeekCurrentChar(source, currentIndex) != QChar('\"') && PeekCurrentChar(source, currentIndex) != QChar('\0'))
+    while (PeekCurrentChar(source, currentIndex) != QChar(u'\"') && PeekCurrentChar(source, currentIndex) != QChar(u'\0'))
         AdvanceCurrentIndex(currentIndex, currentColumn);
 
-    if (PeekCurrentChar(source, currentIndex) == QChar('\"'))
+    if (PeekCurrentChar(source, currentIndex) == QChar(u'\"'))
     {
         // Consume closing quotation mark
         AdvanceCurrentIndex(currentIndex, currentColumn);
@@ -190,58 +190,58 @@ static auto LexString(TokenBuffer& tokenBuffer, DiagnosticsBag& diagnostics, con
 
         switch (current.unicode())
         {
-            case '\r':
+            case u'\r':
             {
-                if (PeekNextChar(source, currentIndex) == QChar('\n'))
+                if (PeekNextChar(source, currentIndex) == QChar(u'\n'))
                     AdvanceCurrentIndex(currentIndex, currentColumn);
 
                 AdvanceCurrentIndexAndResetLine(currentIndex, currentLine, currentColumn);
                 break;
             }
-            case '\n':
+            case u'\n':
             {
                 AdvanceCurrentIndexAndResetLine(currentIndex, currentLine, currentColumn);
                 break;
             }
-            case '\t':
-            case ' ':
+            case u'\t':
+            case u' ':
             {
                 AdvanceCurrentIndex(currentIndex, currentColumn);
                 break;
             }
-            case '\0':
+            case u'\0':
             {
                 AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::EndOfFile);
                 return tokenBuffer;
             }
-            case '+':
+            case u'+':
             {
                 AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Plus);
                 break;
             }
-            case '-':
+            case u'-':
             {
                 AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Minus);
                 break;
             }
-            case '*':
+            case u'*':
             {
                 AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Star);
                 break;
             }
-            case '/':
+            case u'/':
             {
                 AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Slash);
                 break;
             }
-            case '.':
+            case u'.':
             {
                 AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Dot);
                 break;
             }
-            case ':':
+            case u':':
             {
-                if (PeekNextChar(source, currentIndex) == QChar(':'))
+                if (PeekNextChar(source, currentIndex) == QChar(u':'))
                 {
                     AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::DoubleColon);
                     AdvanceCurrentIndex(currentIndex, currentColumn);
@@ -251,44 +251,44 @@ static auto LexString(TokenBuffer& tokenBuffer, DiagnosticsBag& diagnostics, con
                 AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Colon);
                 break;
             }
-            case ',':
+            case u',':
             {
                 AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Comma);
                 break;
             }
-            case '=':
+            case u'=':
             {
                 AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Equal);
                 break;
             }
-            case '(':
+            case u'(':
             {
                 AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::OpenParenthesis);
                 break;
             }
-            case ')':
+            case u')':
             {
                 AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::CloseParenthesis);
                 break;
             }
-            case '{':
+            case u'{':
             {
                 AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::OpenBracket);
                 break;
             }
-            case '}':
+            case u'}':
             {
                 AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::CloseBracket);
                 break;
             }
-            case '\"':
+            case u'\"':
             {
                 LexString(tokenBuffer, diagnostics, source, currentLine, currentIndex, currentColumn);
                 break;
             }
             default:
             {
-                if (current == QChar('_') && !IsLetterOrNumberOrUnderscore(PeekNextChar(source, currentIndex)))
+                if (current == QChar(u'_') && !IsLetterOrNumberOrUnderscore(PeekNextChar(source, currentIndex)))
                 {
                     AddTokenKindAndAdvance(tokenBuffer, source, currentLine, currentIndex, currentColumn, TokenKind::Underscore);
                     break;

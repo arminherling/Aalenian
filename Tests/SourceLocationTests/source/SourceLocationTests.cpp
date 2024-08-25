@@ -7,6 +7,8 @@
 #include <Text/SourceLocation.h>
 #include <Text/SourceText.h>
 
+using namespace AalTest;
+
 namespace 
 {
     void SingleSourceLocation(const QString& testName, const SourceTextSharedPtr& input, const SourceLocation& expectedLocation)
@@ -116,9 +118,9 @@ namespace
     }
 }
 
-TestSuite SourceLocationTests()
+AalTest::TestSuite SourceLocationTests()
 {
-    TestSuite suite{};
+    AalTest::TestSuite suite{};
 
     suite.add(QString("SingleSourceLocation"), SingleSourceLocation, SingleSourceLocation_Data);
     suite.add(QString("MultipleSourceLocations"), MultipleSourceLocations);

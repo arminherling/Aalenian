@@ -6,6 +6,8 @@
 #include <VirtualMachine/Register.h>
 #include <VirtualMachine/VM.h>
 
+using namespace AalTest;
+
 namespace
 {
     void LoadBool(const QString& testName, bool value)
@@ -820,9 +822,9 @@ namespace
     }
 }
 
-TestSuite VirtualMachineTests()
+AalTest::TestSuite VirtualMachineTests()
 {
-    TestSuite suite{};
+    AalTest::TestSuite suite{};
 
     suite.add(QString("LoadBool"), LoadBool, LoadBool_Data);
     suite.add(QString("NotBool"), NotBool, NotBool_Data);

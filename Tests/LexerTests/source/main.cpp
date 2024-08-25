@@ -1,9 +1,9 @@
 #include <AalTest.h>
 #include "LexerTests.h"
 
-int main()
+int main(int argc, char* argv[])
 {
-    TestRunner runner{};
+    AalTest::TestRunner runner{};
     auto testSuites = LexerTestsSuite();
 
     runner.run(testSuites);

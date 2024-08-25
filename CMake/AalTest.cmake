@@ -1,5 +1,5 @@
 include(FetchContent)
 FetchContent_Declare(AalTest
     GIT_REPOSITORY https://github.com/arminherling/AalTest.git
-    GIT_TAG d9269ca4cf1d098172fe0fbb968e835b0f32f7ab)
+    GIT_TAG 405c3aece0fa333ae30b5e98ed17f3ee9f0e4a78)
 FetchContent_MakeAvailable(AalTest)

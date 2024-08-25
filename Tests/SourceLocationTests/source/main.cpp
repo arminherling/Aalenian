@@ -3,7 +3,7 @@
 
 int main()
 {
-    TestRunner runner{};
+    AalTest::TestRunner runner{};
     auto testSuite = SourceLocationTests();
 
     runner.run(testSuite);

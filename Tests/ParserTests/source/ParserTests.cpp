@@ -8,6 +8,8 @@
 #include <Syntax/Lexer.h>
 #include <Syntax/Parser.h>
 
+using namespace AalTest;
+
 namespace
 {
     void FileTests(const QString& fileName, const QString& inputFilePath, const QString& outputFilePath, const QString& errorFilePath)
@@ -77,9 +79,9 @@ namespace
     }
 }
 
-TestSuite ParserTestsSuite()
+AalTest::TestSuite ParserTestsSuite()
 {
-    TestSuite suite{};
+    AalTest::TestSuite suite{};
 
     suite.add(QString("FileTests"), FileTests, FileTests_Data);
 

@@ -2,4 +2,4 @@
 
 #include <AalTest/TestSuite.h>
 
-TestSuite SourceLocationTests();
+AalTest::TestSuite SourceLocationTests();

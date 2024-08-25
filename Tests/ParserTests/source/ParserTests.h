@@ -2,4 +2,4 @@
 
 #include <AalTest/TestSuite.h>
 
-TestSuite ParserTestsSuite();
+AalTest::TestSuite ParserTestsSuite();

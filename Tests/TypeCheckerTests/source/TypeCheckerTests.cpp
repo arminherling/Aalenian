@@ -11,6 +11,8 @@
 #include <Syntax/Lexer.h>
 #include <Syntax/Parser.h>
 
+using namespace AalTest;
+
 namespace
 {
     void FileTests(const QString& fileName, const QString& inputFilePath, const QString& outputFilePath, const QString& errorFilePath)
@@ -87,9 +89,9 @@ namespace
     }
 }
 
-TestSuite TypeCheckerTestsSuite()
+AalTest::TestSuite TypeCheckerTestsSuite()
 {
-    TestSuite suite{};
+    AalTest::TestSuite suite{};
 
     suite.add(QString("FileTests"), FileTests, FileTests_Data);
 

@@ -7,8 +7,8 @@
 
 int main()
 {
-    TestRunner runner{};
-    QList<TestSuite> testSuites{};
+    AalTest::TestRunner runner{};
+    QList<AalTest::TestSuite> testSuites{};
     testSuites << LexerTestsSuite();
     testSuites << ParserTestsSuite();
     testSuites << TypeCheckerTestsSuite();
